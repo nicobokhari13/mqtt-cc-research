@@ -23,12 +23,17 @@ broker/mosquitto-2.0.18/client/mosquitto_pub
 broker/mosquitto-2.0.18/client/mosquitto_rr
 broker/mosquitto-2.0.18/client/mosquitto_sub
 
-broker/db/
+# Track db, logs, and pid folders, but not their contents
+broker/db/*
+!broker/db/.gitkeepdb
 
-broker/logs/
+broker/logs/*
+!broker/logs/.gitkeeplogs
 
-broker/pid/
+broker/pid/*
+!broker/pid/.gitkeeppid
 
+broker/mosquitto-2.0.18/src/mosquitto
 # Python Client Ignore
 
 prototype/dev/
