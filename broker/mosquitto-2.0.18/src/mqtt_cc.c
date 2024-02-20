@@ -9,10 +9,13 @@ void log_sub(char *sub){
 }
 
 //PRECONDITION: sub is a utf8 string that is a valid topic name
+// online gdb env sends seg fault, probably because of online mem
+//try simple C program on local machine
 bool check_sub_lat_param(char *sub){
     char *latencyStr = "%latency%";
-    size_t latStr_len = strlen(latencyStr);
     char* result = strstr(sub, latencyStr);
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t %s result string", result);
+    size_t latStr_len = strlen(result);
     if(result == NULL){
         return false;
     }

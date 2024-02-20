@@ -41,3 +41,4 @@ prototype/dev/
 # IDE Ignores
 .vscode/c_cpp_properties.json
 .vscode/settings.json
+ToDo.md
