@@ -3,7 +3,7 @@
 
 struct mqttcc{
     char* incoming_topic; 
-    char* temp_lat_position;
+    char* incoming_lat_qos;
 };
 
 #endif

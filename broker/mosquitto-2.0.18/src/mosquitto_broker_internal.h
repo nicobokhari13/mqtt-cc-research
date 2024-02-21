@@ -873,7 +873,8 @@ void xtreport(void);
 /* ============================================================
  * MQTT-CC functions
  * ============================================================ */
-bool check_sub_lat_param(char *sub);
+// TODO: Add MQTT-CC function defs here
+bool check_sub_lat_param(struct mosquitto *context, char *sub);
 void log_sub(char *sub);
 
 #endif

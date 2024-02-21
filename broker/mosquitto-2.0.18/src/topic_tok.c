@@ -96,7 +96,6 @@ int sub__topic_tokenise(const char *subtopic, char **local_sub, char ***topics, 
 		(*topics)[topic_index] = ""; 
 		topic_index++; 
 	}
-	// TODO: back here 
 	token = strtok_hier((*local_sub), &saveptr);
 	while(token){
 		(*topics)[topic_index] = token;

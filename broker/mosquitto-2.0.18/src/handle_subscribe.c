@@ -192,8 +192,6 @@ int handle__subscribe(struct mosquitto *context)
 					mosquitto__free(sub);
 					return rc2;
 			}
-			// TODO: Add function that parses % out
-			// TODO: Update mosquitto.conf file, save Blaze conf separately
 			if(allowed){// since the subscription topic is allowed
         		log_sub(sub); //before removal
 				if(check_sub_lat_param(sub)){

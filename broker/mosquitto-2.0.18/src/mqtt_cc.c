@@ -2,6 +2,7 @@
 #include "config.h"
 
 #include <string.h>
+
 #include "mosquitto_broker_internal.h"
 
 void log_sub(char *sub){
@@ -9,9 +10,10 @@ void log_sub(char *sub){
 }
 
 //PRECONDITION: sub is a utf8 string that is a valid topic name
-// online gdb env sends seg fault, probably because of online mem
-//try simple C program on local machine
-bool check_sub_lat_param(char *sub){
+//TODO: refactor so simple function that checks if true/false
+//create new function to modifySub
+//another function to save the latency into the context's mqtt_cc struct
+bool check_sub_lat_param(struct mosquitto *context, char *sub){
     char *latencyStr = "%latency%";
     char* result = strstr(sub, latencyStr);
     log__printf(NULL, MOSQ_LOG_DEBUG, "\t %s result string", result);
@@ -31,7 +33,7 @@ bool check_sub_lat_param(char *sub){
     }
 }
 
-// TODO: 
+// TODO: Research Meeting Notes 2/14
 // Functions: 
  // add sub to SQLite DB
 
