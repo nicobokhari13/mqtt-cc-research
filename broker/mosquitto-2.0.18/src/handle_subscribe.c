@@ -193,10 +193,10 @@ int handle__subscribe(struct mosquitto *context)
 					return rc2;
 			}
 			if(allowed){// since the subscription topic is allowed
-        		log_sub(sub); //before removal
-				if(check_sub_lat_param(sub)){
-        		 	log_sub(sub); //after removal
+				if(has_lat_qos(sub)){ //check if it has %latency%*
+					store_lat_qos(context, sub); // remove the lat qos from the sub
 				}
+
 				// add the subscription with sub__add in subs.c
 				// the database (mosquitto_db in mosquitto_broker_internal.h) holds an array of mosquitto__subhiers
 				// subhiers are all the subscriptions defined by '/' levels, and have a parent hiearchy + children hierarchies

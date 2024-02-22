@@ -9,29 +9,33 @@ void log_sub(char *sub){
     log__printf(NULL, MOSQ_LOG_DEBUG, "\t %s", sub);
 }
 
-//PRECONDITION: sub is a utf8 string that is a valid topic name
-//TODO: refactor so simple function that checks if true/false
-//create new function to modifySub
-//another function to save the latency into the context's mqtt_cc struct
-bool check_sub_lat_param(struct mosquitto *context, char *sub){
+bool has_lat_qos(char *sub){
     char *latencyStr = "%latency%";
     char* result = strstr(sub, latencyStr);
-    log__printf(NULL, MOSQ_LOG_DEBUG, "\t %s result string", result);
-    size_t latStr_len = strlen(result);
     if(result == NULL){
         return false;
     }
-    else{// the string %latency% exists in sub
-        // remove it from the string
-        while(*result){
+    return true;
+}
+void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos){
+    char *latencyStr = "%latency%";
+    char* result = strstr(sub_with_lat_qos, latencyStr); // result points at %latenct%* in sub_with_lat_qos
+    size_t latStr_len = strlen(result); 
+    //allocate the necessary memory for holding just the latency in context
+    context->mqtt_cc.incoming_lat_qos = malloc(latStr_len - 7);
+    strcpy(context->mqtt_cc.incoming_lat_qos, result + 9); // ignores the %latency% substring, keeps the numbers afterward
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t Latency QoS: %s", context->mqtt_cc.incoming_lat_qos);
+    // remove the latency qos from the subscription
+    while(*result){
             *result = *(result + latStr_len);
             result++;
-        }
-        // sub: /test/topic%latency%
-        // after sub: /test/topic
-        return true;
     }
+    // save the sub, which no longer has the latency qos attached
+    context->mqtt_cc.incoming_topic = sub_with_lat_qos; 
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Topic: %s", context->mqtt_cc.incoming_topic);
+
 }
+
 
 // TODO: Research Meeting Notes 2/14
 // Functions: 
