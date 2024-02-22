@@ -39,7 +39,7 @@ broker/mosquitto-2.0.18/src/mosquitto
 prototype/dev/
 
 # IDE Ignores
-.vscode/c_cpp_properties.json
+.vscode/
 .vscode/settings.json
 ToDo.md
-broker/mosquitto-2.0.18/lib/libmosquitto.so.1
+temp/
