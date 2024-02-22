@@ -23,7 +23,7 @@ broker/mosquitto-2.0.18/client/mosquitto_pub
 broker/mosquitto-2.0.18/client/mosquitto_rr
 broker/mosquitto-2.0.18/client/mosquitto_sub
 
-# Track db, logs, and pid folders, but not their contents
+# Track db, logs, pid, auth folders, but not their contents
 broker/db/*
 !broker/db/.gitkeepdb
 
@@ -32,6 +32,9 @@ broker/logs/*
 
 broker/pid/*
 !broker/pid/.gitkeeppid
+
+broker/auth/*
+!broker/auth/.gitkeepauth
 
 broker/mosquitto-2.0.18/src/mosquitto
 # Python Client Ignore
@@ -42,4 +45,3 @@ prototype/dev/
 .vscode/
 .vscode/settings.json
 ToDo.md
-temp/

@@ -4,6 +4,7 @@
 struct mqttcc{
     char* incoming_topic; 
     char* incoming_lat_qos;
+    char* incoming_sub_clientid;
 };
 
 #endif

@@ -17,6 +17,10 @@ bool has_lat_qos(char *sub){
     }
     return true;
 }
+// note that the subscriber's clientid is stored in context->id
+// important for tracking latencies as subscribers disconnect
+
+// may need to use atoi to convert string numbers to actual integers to store in sqlite DB
 void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos){
     char *latencyStr = "%latency%";
     char* result = strstr(sub_with_lat_qos, latencyStr); // result points at %latenct%* in sub_with_lat_qos
@@ -32,8 +36,9 @@ void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos){
     }
     // save the sub, which no longer has the latency qos attached
     context->mqtt_cc.incoming_topic = sub_with_lat_qos; 
+    context->mqtt_cc.incoming_sub_clientid = context->id;
     log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Topic: %s", context->mqtt_cc.incoming_topic);
-
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Subscriber: %s", context->mqtt_cc.incoming_sub_clientid);
 }
 
 

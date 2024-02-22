@@ -206,7 +206,6 @@ int handle__subscribe(struct mosquitto *context)
 					mosquitto__free(sub);
 					return rc2;
 				}
-				log__printf(NULL, MOSQ_LOG_DEBUG, "Still processing");
 				if(context->protocol == mosq_p_mqtt311 || context->protocol == mosq_p_mqtt31){
 					if(rc2 == MOSQ_ERR_SUCCESS || rc2 == MOSQ_ERR_SUB_EXISTS){
 						if(retain__queue(context, sub, qos, 0)) rc = 1;
