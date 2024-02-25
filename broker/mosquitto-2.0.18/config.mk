@@ -142,6 +142,9 @@ DB_HTML_XSL=man/html.xsl
 
 #MANCOUNTRIES=en_GB
 
+# MQTT_CC Libraries
+LDFLAGS+= -lsqlite3
+
 UNAME:=$(shell uname -s)
 ARCH:=$(shell uname -p)
 

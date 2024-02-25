@@ -267,7 +267,7 @@ int mosquitto_main_loop(struct mosquitto__listener_sock *listensock, int listens
 		}
 #endif
 		plugin__handle_tick();
-	}
+	} // End of while(run)
 
 	mux__cleanup();
 

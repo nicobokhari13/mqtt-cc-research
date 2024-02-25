@@ -877,5 +877,11 @@ void xtreport(void);
 void log_sub(char *sub);
 bool has_lat_qos(char *sub);
 void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos);
+// SQLite DB functions
+void prepare_all_stmts(); // (called in mosquitto.c's main )
+bool topic_exists_in_DB();
+void update_lat_req();
+void insert_topic_in_DB();
+void clear_vars();
 
 #endif

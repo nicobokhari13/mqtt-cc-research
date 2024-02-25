@@ -573,6 +573,8 @@ int main(int argc, char *argv[])
 #endif
 
 	run = 1;
+	// Call MQTT_CC function here to prepare sqlite statements
+
 	rc = mosquitto_main_loop(listensock, listensock_count);
 
 	log__printf(NULL, MOSQ_LOG_INFO, "mosquitto version %s terminating", VERSION);

@@ -26,9 +26,10 @@ void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos){
     char* result = strstr(sub_with_lat_qos, latencyStr); // result points at %latenct%* in sub_with_lat_qos
     size_t latStr_len = strlen(result); 
     //allocate the necessary memory for holding just the latency in context
-    context->mqtt_cc.incoming_lat_qos = malloc(latStr_len - 7);
-    strcpy(context->mqtt_cc.incoming_lat_qos, result + 9); // ignores the %latency% substring, keeps the numbers afterward
-    log__printf(NULL, MOSQ_LOG_DEBUG, "\t Latency QoS: %s", context->mqtt_cc.incoming_lat_qos);
+    char* temp_lat_qos = malloc(latStr_len - 7);
+    strcpy(temp_lat_qos, result + 9); // ignores the %latency% substring, keeps the numbers afterward
+    context->mqtt_cc.incoming_lat_qos = atoi(temp_lat_qos);
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t Latency QoS: %d", context->mqtt_cc.incoming_lat_qos);
     // remove the latency qos from the subscription
     while(*result){
             *result = *(result + latStr_len);
