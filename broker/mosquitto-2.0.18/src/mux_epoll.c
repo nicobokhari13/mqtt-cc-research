@@ -180,7 +180,7 @@ int mux_epoll__handle(void)
 	int i;
 	struct epoll_event ev;
 	sigset_t origsig;
-	struct mosquitto *context;
+	struct mosquitto *context; // this context carries into handle_subscribe()
 	struct mosquitto__listener_sock *listensock;
 	int event_count;
 
@@ -191,6 +191,8 @@ int mux_epoll__handle(void)
 
 	db.now_s = mosquitto_time();
 	db.now_real_s = time(NULL);
+
+	// MQTT_CC Define here since this context carries into handle_subscribe()
 
 	switch(event_count){
 	case -1:

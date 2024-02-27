@@ -45,6 +45,7 @@ int handle__subscribe(struct mosquitto *context)
 	char *sub_mount; // if subscriptions were mounted to a specific port 
 	mosquitto_property *properties = NULL;
 	bool allowed;
+	memset(&context->mqtt_cc, 0, sizeof(struct mqttcc));
 
 	if(!context) return MOSQ_ERR_INVAL;
 
@@ -195,10 +196,9 @@ int handle__subscribe(struct mosquitto *context)
 			if(allowed){// since the subscription topic is allowed
 				if(has_lat_qos(sub)){ //check if it has %latency%*
 					store_lat_qos(context, sub); // remove the lat qos from the sub
-					// if(!topic_exists_in_DB(context)){
-					// 	log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic does not exist in DB");
-						
-					// }
+					if(!topic_exists_in_DB(context)){
+						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic does not exist in DB");
+					}
 				}
 
 				// add the subscription with sub__add in subs.c

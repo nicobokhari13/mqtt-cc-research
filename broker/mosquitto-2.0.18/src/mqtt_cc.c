@@ -10,9 +10,11 @@ void log_sub(char *sub){
 }
 
 bool has_lat_qos(char *sub){
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t in has_lat_qos");
     char *latencyStr = "%latency%";
     char* result = strstr(sub, latencyStr);
     if(result == NULL){
+        log__printf(NULL, MOSQ_LOG_DEBUG, "\t in has_lat_qos if statement");
         return false;
     }
     return true;
@@ -36,44 +38,53 @@ void printStmtResults(sqlite3_stmt *stmt){
 
 // Need full mosquitto context to extract clientid of the subscriber that send incoming_sub
 void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos){
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t in store_lat_qos");
     char *latencyStr = "%latency%";
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t before strstr");
     char* result = strstr(sub_with_lat_qos, latencyStr); // result points at %latenct%* in sub_with_lat_qos
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t after strstr");
     size_t latStr_len = strlen(result); 
     //allocate the necessary memory for holding just the latency in context
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t before allcoating mem to temp_lat_qos");
     char* temp_lat_qos = malloc(latStr_len - 7);
     
     strcpy(temp_lat_qos, result + 9); // ignores the %latency% substring, keeps the numbers afterward
-    context->mqtt_cc->incoming_lat_qos = atoi(temp_lat_qos);
-    log__printf(NULL, MOSQ_LOG_DEBUG, "\t Latency QoS: %d", context->mqtt_cc->incoming_lat_qos);
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t after strcpy");
+    context->mqtt_cc.incoming_lat_qos = atoi(temp_lat_qos);
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t Latency QoS: %d", context->mqtt_cc.incoming_lat_qos);
     // remove the latency qos from the subscription
     while(*result){
             *result = *(result + latStr_len);
             result++;
     }
     // save the sub, which no longer has the latency qos attached
-    context->mqtt_cc->incoming_topic = sub_with_lat_qos; 
-    context->mqtt_cc->incoming_sub_clientid = context->id;
-    log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Topic: %s", context->mqtt_cc->incoming_topic);
-    log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Subscriber: %s", context->mqtt_cc->incoming_sub_clientid);
+    context->mqtt_cc.incoming_topic = sub_with_lat_qos; 
+    context->mqtt_cc.incoming_sub_clientid = context->id;
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Topic: %s", context->mqtt_cc.incoming_topic);
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Subscriber: %s", context->mqtt_cc.incoming_sub_clientid);
 }
 
-void prepare_DB(struct mqttcc *context){
+void prepare_DB(){
 	log__printf(NULL, MOSQ_LOG_INFO, "in prepare DB");
+
+    prototype_db.db_path = "/home/devnico/repos/research/sqlite/mqttcc.db";
+	log__printf(NULL, MOSQ_LOG_INFO, "after set db_path");
+
 
     // Open the Database
     char *err_msg = 0;
-    int rc = sqlite3_open(context->db_path, &context->db);
+    int rc = sqlite3_open(prototype_db.db_path, &prototype_db.db);
 	log__printf(NULL, MOSQ_LOG_INFO, "opened DB");
 
     if (rc != SQLITE_OK){
-        log__printf(NULL, MOSQ_LOG_ERR, "Cannot open database: %s\n", sqlite3_errmsg(context->db));
-        sqlite3_close(context->db);
+        log__printf(NULL, MOSQ_LOG_ERR, "Cannot open database: %s\n", sqlite3_errmsg(prototype_db.db));
+        sqlite3_close(prototype_db.db);
         exit(1);
     }
 
     // Create Tables
     const char *create_table_sql = "CREATE TABLE IF NOT EXISTS subscriptions (topic TEXT PRIMARY KEY, latencyReq TEXT);";
-    rc = sqlite3_exec(context->db, create_table_sql, 0, 0, &err_msg);
+    rc = sqlite3_exec(prototype_db.db, create_table_sql, 0, 0, &err_msg);
 	log__printf(NULL, MOSQ_LOG_INFO, "Created Tables");
 
     if (rc != SQLITE_OK) {
@@ -88,24 +99,24 @@ void prepare_DB(struct mqttcc *context){
     // Prepare Statements
 
         // find existing topic statement
-    rc = sqlite3_prepare_v2(context->db, find_existing_topic_cmd, -1, &context->find_existing_topic, 0);
+    rc = sqlite3_prepare_v2(prototype_db.db, find_existing_topic_cmd, -1, &prototype_db.find_existing_topic, 0);
     if (rc != SQLITE_OK) {
-        log__printf(NULL, MOSQ_LOG_ERR, "Failed to prepare statement: %s\n", sqlite3_errmsg(context->db));
-        sqlite3_close(context->db);
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to prepare statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        sqlite3_close(prototype_db.db);
         exit(1);
     }
         // insert new topic statement
-    rc = sqlite3_prepare_v2(context->db, insert_new_topic_cmd, -1, &context->insert_new_topic, 0);
+    rc = sqlite3_prepare_v2(prototype_db.db, insert_new_topic_cmd, -1, &prototype_db.insert_new_topic, 0);
     if (rc != SQLITE_OK) {
-        log__printf(NULL, MOSQ_LOG_ERR, "Failed to prepare statement: %s\n", sqlite3_errmsg(context->db));
-        sqlite3_close(context->db);
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to prepare statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        sqlite3_close(prototype_db.db);
         exit(1);
     }
             // update latency statement
-    rc = sqlite3_prepare_v2(context->db, update_latency_req_cmd, -1, &context->update_latency_req, 0);
+    rc = sqlite3_prepare_v2(prototype_db.db, update_latency_req_cmd, -1, &prototype_db.update_latency_req, 0);
     if (rc != SQLITE_OK) {
-        log__printf(NULL, MOSQ_LOG_ERR, "Failed to prepare statement: %s\n", sqlite3_errmsg(context->db));
-        sqlite3_close(context->db);
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to prepare statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        sqlite3_close(prototype_db.db);
         exit(1);
     }
 
@@ -114,25 +125,25 @@ void prepare_DB(struct mqttcc *context){
 
 } // (called in mosquitto.c's main )
 
-bool topic_exists_in_DB(struct mqttcc *context){
+bool topic_exists_in_DB(struct mosquitto *context){
     int rc;
     int rc2;
     // bind incoming_topic to find_existing_topic sql statement
-    sqlite3_bind_text(context->find_existing_topic, 1, context->incoming_topic, -1, SQLITE_STATIC);
+    sqlite3_bind_text(prototype_db.find_existing_topic, 1, context->mqtt_cc.incoming_topic, -1, SQLITE_STATIC);
     // execute the statement
-    rc = sqlite3_step(context->find_existing_topic);
+    rc = sqlite3_step(prototype_db.find_existing_topic);
     if(rc == SQLITE_ROW){
-        printStmtResults(context->find_existing_topic);
-        rc2 = sqlite3_reset(context->find_existing_topic);
+        printStmtResults(prototype_db.find_existing_topic);
+        rc2 = sqlite3_reset(prototype_db.find_existing_topic);
         if(rc2 != SQLITE_OK){
-            log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(context->db));
+            log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(prototype_db.db));
             exit(1);
         }
         return true;
     }
     else if (rc != SQLITE_DONE){
-        log__printf(NULL, MOSQ_LOG_ERR, "Failed to execute statement: %s\n", sqlite3_errmsg(context->db));
-        sqlite3_close(context->db);
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to execute statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        sqlite3_close(prototype_db.db);
         exit(1);
     }
     return false;

@@ -57,6 +57,7 @@ Contributors:
 #include "util_mosq.h"
 
 struct mosquitto_db db;
+struct mqttcc_db prototype_db;
 
 static struct mosquitto__listener_sock *listensock = NULL;
 static int listensock_count = 0;
@@ -573,27 +574,12 @@ int main(int argc, char *argv[])
 #endif
 
 	run = 1;
-	log__printf(NULL, MOSQ_LOG_INFO, "before DB prepare");
-	// Creating MQTT_CC variables
-	struct mqttcc proto;
-
-	// Issue: ctxt is NULL here. need to initialize mqtt vars in main_loop
-	proto.incoming_topic = "";
-	proto.incoming_lat_qos = 0;
-	proto.incoming_sub_clientid = "";
-    proto.db_path = "/home/devnico/repos/research/sqlite/mqttcc.db";
-	log__printf(NULL, MOSQ_LOG_INFO, "test");
-	if(ctxt == NULL){
-		log__printf(NULL, MOSQ_LOG_INFO, "test");
-	}
-	else{
-		log__printf(NULL, MOSQ_LOG_INFO, "ctxt is not null");
-	}
-
 	// Call MQTT_CC function here to prepare sqlite statements
-	log__printf(NULL, MOSQ_LOG_INFO, "mqtt_cc pointer %p", ctxt->mqtt_cc);
-	
-	prepare_DB(ctxt->mqtt_cc);
+	log__printf(NULL, MOSQ_LOG_INFO, "Setting memory to prototype_db");
+
+	memset(&prototype_db, 0, sizeof(struct mqttcc_db));
+	log__printf(NULL, MOSQ_LOG_INFO, "before DB prepare");
+	prepare_DB();
 
 	rc = mosquitto_main_loop(listensock, listensock_count);
 

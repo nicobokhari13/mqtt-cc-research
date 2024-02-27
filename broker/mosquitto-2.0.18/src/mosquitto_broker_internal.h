@@ -41,6 +41,7 @@ Contributors:
 
 // MQTT CC includes
 #include <sqlite3.h>
+#include "mqtt_cc.h"
 
 #ifndef __GNUC__
 #define __attribute__(attrib)
@@ -579,6 +580,8 @@ struct libws_mqtt_data {
 
 extern struct mosquitto_db db;
 
+extern struct mqttcc_db prototype_db; // since extern, mqtt_cc.c has access
+
 /* ============================================================
  * Main functions
  * ============================================================ */
@@ -881,8 +884,8 @@ void log_sub(char *sub);
 bool has_lat_qos(char *sub);
 void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos);
 // SQLite DB functions
-void prepare_DB(struct mqttcc *context); // (called in mosquitto.c's main )
-bool topic_exists_in_DB(struct mqttcc *context);
+void prepare_DB(); // (called in mosquitto.c's main )
+bool topic_exists_in_DB(struct mosquitto *context);
 void update_lat_req();
 void insert_topic_in_DB();
 void clear_vars();

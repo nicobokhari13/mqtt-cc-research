@@ -76,7 +76,7 @@ int mux__handle(struct mosquitto__listener_sock *listensock, int listensock_coun
 	// WITH_EPOLL used in Linux Kernel to manage I/O events associated with network sockets
 	return mux_epoll__handle();
 #else
-	return mux_poll__	handle(listensock, listensock_count);
+	return mux_poll__handle(listensock, listensock_count);
 #endif
 }
 

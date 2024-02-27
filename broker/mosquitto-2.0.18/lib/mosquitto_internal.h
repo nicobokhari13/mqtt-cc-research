@@ -362,7 +362,7 @@ struct mosquitto {
 #endif
 	uint32_t events;
 	// MQTT_CC structures
-	struct mqttcc *mqtt_cc;
+	struct mqttcc mqtt_cc;
 };
 
 #define STREMPTY(str) (str[0] == '\0')
