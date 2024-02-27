@@ -142,9 +142,6 @@ DB_HTML_XSL=man/html.xsl
 
 #MANCOUNTRIES=en_GB
 
-# MQTT_CC Libraries
-LDFLAGS+= -lsqlite3
-
 UNAME:=$(shell uname -s)
 ARCH:=$(shell uname -p)
 
@@ -201,10 +198,10 @@ else
 	SEDINPLACE:=-i
 endif
 
-ifeq ($(UNAME),Linux)
-	BROKER_LDADD:=$(BROKER_LDADD) -lrt
+ifeq ($(UNAME),Linux) # Add MQTT-CC libraries here
+	BROKER_LDADD:=$(BROKER_LDADD) -lrt -lsqlite3
 	BROKER_LDFLAGS:=$(BROKER_LDFLAGS) -Wl,--dynamic-list=linker.syms
-	LIB_LIBADD:=$(LIB_LIBADD) -lrt
+	LIB_LIBADD:=$(LIB_LIBADD) -lrt -lsqlite3
 endif
 
 ifeq ($(WITH_SHARED_LIBRARIES),yes)

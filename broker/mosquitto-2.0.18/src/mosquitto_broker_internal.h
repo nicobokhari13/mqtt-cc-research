@@ -39,6 +39,9 @@ Contributors:
 #include "tls_mosq.h"
 #include "uthash.h"
 
+// MQTT CC includes
+#include <sqlite3.h>
+
 #ifndef __GNUC__
 #define __attribute__(attrib)
 #endif
@@ -878,10 +881,11 @@ void log_sub(char *sub);
 bool has_lat_qos(char *sub);
 void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos);
 // SQLite DB functions
-void prepare_all_stmts(); // (called in mosquitto.c's main )
-bool topic_exists_in_DB();
+void prepare_DB(struct mqttcc *context); // (called in mosquitto.c's main )
+bool topic_exists_in_DB(struct mqttcc *context);
 void update_lat_req();
 void insert_topic_in_DB();
 void clear_vars();
+void printStmtResults(sqlite3_stmt *stmt);
 
 #endif
