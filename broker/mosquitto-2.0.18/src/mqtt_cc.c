@@ -5,6 +5,8 @@
 
 #include "mosquitto_broker_internal.h"
 
+
+
 void log_sub(char *sub){
     log__printf(NULL, MOSQ_LOG_DEBUG, "\t %s", sub);
 }
@@ -128,27 +130,103 @@ void prepare_DB(){
 bool topic_exists_in_DB(struct mosquitto *context){
     int rc;
     int rc2;
+    bool returnValue;
     // bind incoming_topic to find_existing_topic sql statement
-    sqlite3_bind_text(prototype_db.find_existing_topic, 1, context->mqtt_cc.incoming_topic, -1, SQLITE_STATIC);
+    log__printf(NULL, MOSQ_LOG_ERR, "Binding %s to find topic in DB \n", context->mqtt_cc.incoming_topic);
+    sqlite3_bind_text(prototype_db.find_existing_topic, 1, (const char*)context->mqtt_cc.incoming_topic, -1, SQLITE_STATIC);
     // execute the statement
     rc = sqlite3_step(prototype_db.find_existing_topic);
-    if(rc == SQLITE_ROW){
-        printStmtResults(prototype_db.find_existing_topic);
-        rc2 = sqlite3_reset(prototype_db.find_existing_topic);
-        if(rc2 != SQLITE_OK){
-            log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(prototype_db.db));
-            exit(1);
-        }
-        return true;
+    log__printf(NULL, MOSQ_LOG_ERR, "return code: %d \n", rc);
+    if(rc == SQLITE_ROW){ // 100
+        //printStmtResults(prototype_db.find_existing_topic);
+        //rc2 = sqlite3_reset(prototype_db.find_existing_topic);
+        // DO NOT RESET, since there is a row in the find_existing_topic statement
+        // RESET will be done in update_latency_req
+        returnValue = true;
     }
     else if (rc != SQLITE_DONE){
         log__printf(NULL, MOSQ_LOG_ERR, "Failed to execute statement: %s\n", sqlite3_errmsg(prototype_db.db));
         sqlite3_close(prototype_db.db);
-        exit(1);
+        exit(1); // error in execution, leave program
     }
-    return false;
+    else{ // since there is no row in the query, we can reset
+        log__printf(NULL, MOSQ_LOG_ERR, "Could not find topic in DB\n");
+        rc2 = sqlite3_reset(prototype_db.find_existing_topic);
+        if(rc2 != SQLITE_OK){ // 0 
+            log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(prototype_db.db));
+            exit(1);
+        }
+        returnValue = false;
+    }
+
+
+    return returnValue;
 
 }
+
+char* create_latency_str(char *clientid, int latencyNum){
+    cJSON *json = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json, clientid, latencyNum);
+    return cJSON_Print(json);
+}
+
+void insert_topic_in_DB(struct mosquitto *context){
+    int rc;
+    int rc2; 
+    // create latency column value
+    char *latencyJsonString = create_latency_str(context->mqtt_cc.incoming_sub_clientid, context->mqtt_cc.incoming_lat_qos);
+
+    //bind topic and latency to prepared statement 
+    sqlite3_bind_text(prototype_db.insert_new_topic, 1, context->mqtt_cc.incoming_topic, -1, SQLITE_STATIC);
+    sqlite3_bind_text(prototype_db.insert_new_topic, 2, latencyJsonString, -1, SQLITE_STATIC);
+    
+    //execute statement
+    rc = sqlite3_step(prototype_db.insert_new_topic);
+
+    //check for error 
+    if (rc != SQLITE_DONE) {
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to execute statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        sqlite3_close(prototype_db.db);
+        exit(1);
+    }
+
+    rc2 = sqlite3_reset(prototype_db.insert_new_topic);
+    if(rc2 != SQLITE_OK){
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        exit(1);
+    }
+    
+    log__printf(NULL, MOSQ_LOG_DEBUG, "Success: Added topic and latency to DB\n");
+    
+}
+
+void update_lat_req(struct mosquitto *context){
+    // at this point, the topic does exist in the DB, and the find_existing_topic stmt contains the row
+    
+    // get the old latency value
+
+    // convert old latency value to json
+
+    // add new item (clientid: latencyNum) to make new latency value
+
+    // convert new latency value back into string
+
+    // bind topic and new latency value to update statement
+
+    // step update statement
+
+    // check if statement is DONE
+
+    // reset update stmt
+
+    // check if reset update stmt was good
+
+    // reset find stmt 
+
+    // check if reset find stmt was good 
+}
+
+
 
 // TODO: Research Meeting Notes 2/14
 // Functions: 

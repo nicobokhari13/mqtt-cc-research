@@ -199,9 +199,9 @@ else
 endif
 
 ifeq ($(UNAME),Linux) # Add MQTT-CC libraries here
-	BROKER_LDADD:=$(BROKER_LDADD) -lrt -lsqlite3
+	BROKER_LDADD:=$(BROKER_LDADD) -lrt -lsqlite3 -lcjson
 	BROKER_LDFLAGS:=$(BROKER_LDFLAGS) -Wl,--dynamic-list=linker.syms
-	LIB_LIBADD:=$(LIB_LIBADD) -lrt -lsqlite3
+	LIB_LIBADD:=$(LIB_LIBADD) -lrt -lsqlite3 -lcjson
 endif
 
 ifeq ($(WITH_SHARED_LIBRARIES),yes)
