@@ -201,7 +201,8 @@ int handle__subscribe(struct mosquitto *context)
 						insert_topic_in_DB(context);
 					}
 					else{
-						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic already exists in DB");
+						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic already exists in DB. Updating latency QoS: \n");
+						update_lat_req(context);
 					}
 				}
 

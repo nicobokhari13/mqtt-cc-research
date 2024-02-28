@@ -16,9 +16,9 @@ struct mqttcc{
 struct mqttcc_db{
     const char* db_path;
     sqlite3 *db;
-    sqlite3_stmt *insert_new_topic; 
-    sqlite3_stmt *update_latency_req; 
-    sqlite3_stmt *find_existing_topic; 
+    sqlite3_stmt *insert_new_topic; // INSERT INTO subscriptions (topic, latencyReq) VALUES (?1, ?2)
+    sqlite3_stmt *update_latency_req; // UPDATE subscriptions SET latencyReq = ?1 WHERE topic = ?2
+    sqlite3_stmt *find_existing_topic; // SELECT * FROM subscriptions WHERE topic = ?1
 };
 
 #endif

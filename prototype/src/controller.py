@@ -1,9 +1,10 @@
 import paho.mqtt.client as mqtt
-import paho.mqtt.publish as publish #publish dependency
+import status_handler as stts
 
-SENSOR_ID = "1234"
-STATUS_TOPIC = "status/" + SENSOR_ID
-PUBLISH_TOPIC = "sensor/" + SENSOR_ID + "/temperature" + "%" + f"{ACCURACY_MIN}"
+USERNAME = "prototype"
+PASSWORD = "adminproto"
+STATUS_TOPIC = "status/#"
+PUBLISH_TOPIC = "sensor/"
 
 # BROKER_HOST = "mqtt.eclipseprojects.io"
 
@@ -18,37 +19,16 @@ def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     # subscribing to FireAlarm topic
-    client.subscribe(FIRE_ALARM_ER_TOPIC)
-    print("Subscribed to topic: " + FIRE_ALARM_ER_TOPIC)
+    client.subscribe(STATUS_TOPIC)
+    print("Subscribed to topic: " + STATUS_TOPIC)
 
 # The callback for when a message is published to the broker, and the backendreceives it
 def on_message(client, userdata, msg):
-    payload = str(msg.payload)
     topic = msg.topic
     # Print MQTT message to console
-    print("From Topic: " + topic)
-    print("Received: " + payload)
-    usernameStart = (topic.rindex("/") + 1)
-    print(f"Index of username: {usernameStart}")
-    username = topic[usernameStart:]
-    print(username)
-    # Create Body for POST to PWA 
-        # sub: Push Notification Subscription
-        # notification: Contains fields that appear on native push notification
-    data = {
-    "username": username,
-    "notification": {
-        "title": "Fire Alarm Emergency", 
-        "message": msg.payload.decode()
-        }
-    }   
-    # Post data to PWA hosted at URL
-    response = requests.post(PWA_PUSH_URL, json = data)
-    print(response.status_code)
-    if response:
-        print(str(response))
-    else:
-        print("An error occured with the response") 
+
+    if mqtt.topic_matches_sub(STATUS_TOPIC, topic):
+        stts.handle_status_msg()
 
 # Executed when script is ran
 

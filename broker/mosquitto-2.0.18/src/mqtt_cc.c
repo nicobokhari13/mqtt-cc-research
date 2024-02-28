@@ -151,12 +151,13 @@ bool topic_exists_in_DB(struct mosquitto *context){
     }
     else{ // since there is no row in the query, we can reset
         log__printf(NULL, MOSQ_LOG_ERR, "Could not find topic in DB\n");
+        returnValue = false;
         rc2 = sqlite3_reset(prototype_db.find_existing_topic);
         if(rc2 != SQLITE_OK){ // 0 
             log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(prototype_db.db));
             exit(1);
         }
-        returnValue = false;
+        log__printf(NULL, MOSQ_LOG_ERR, "Reset find_existing_topic\n");
     }
 
 
@@ -192,9 +193,11 @@ void insert_topic_in_DB(struct mosquitto *context){
 
     rc2 = sqlite3_reset(prototype_db.insert_new_topic);
     if(rc2 != SQLITE_OK){
-        log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to insert_new_topic: %s\n", sqlite3_errmsg(prototype_db.db));
         exit(1);
     }
+    log__printf(NULL, MOSQ_LOG_ERR, "Reset insert_new_topic\n");
+
     
     log__printf(NULL, MOSQ_LOG_DEBUG, "Success: Added topic and latency to DB\n");
     
@@ -202,28 +205,76 @@ void insert_topic_in_DB(struct mosquitto *context){
 
 void update_lat_req(struct mosquitto *context){
     // at this point, the topic does exist in the DB, and the find_existing_topic stmt contains the row
+    int rc;
+    int rc2; 
+
+    // get the old latency value from column 1 (latencyReq)
+    char *oldLatencyValue = sqlite3_column_text(prototype_db.find_existing_topic, 1);
     
-    // get the old latency value
+    log__printf(NULL, MOSQ_LOG_DEBUG, "old Latency Value: %s\n", oldLatencyValue);
 
     // convert old latency value to json
+    cJSON *db_Value = cJSON_Parse(oldLatencyValue);
+    // error checking db_Value
+    if (db_Value == NULL) { 
+        const char *error_ptr = cJSON_GetErrorPtr(); 
+    if (error_ptr != NULL) { 
+        log__printf(NULL, MOSQ_LOG_DEBUG, "Error: %s\n", error_ptr);
+    } 
+        log__printf(NULL, MOSQ_LOG_DEBUG, "Exiting Program with db_Value == NULL \n");
+        cJSON_Delete(db_Value); 
+        exit(1); 
+    }
+    log__printf(NULL, MOSQ_LOG_DEBUG, "Adding clientid %s and latQos %d to topic %s \n", context->mqtt_cc.incoming_sub_clientid, context->mqtt_cc.incoming_lat_qos, context->mqtt_cc.incoming_topic);
 
     // add new item (clientid: latencyNum) to make new latency value
+    cJSON_AddNumberToObject(db_Value, context->mqtt_cc.incoming_sub_clientid, context->mqtt_cc.incoming_lat_qos);
 
     // convert new latency value back into string
+    char *newLatencyValue = cJSON_Print(db_Value);
+    
+    log__printf(NULL, MOSQ_LOG_DEBUG, "new Latency Value: %s\n", newLatencyValue);
 
     // bind topic and new latency value to update statement
 
-    // step update statement
+    sqlite3_bind_text(prototype_db.update_latency_req, 1, newLatencyValue, -1, SQLITE_STATIC);
+    sqlite3_bind_text(prototype_db.update_latency_req, 2, context->mqtt_cc.incoming_topic, -1, SQLITE_STATIC);
+    
+    // step update statement    
+    rc = sqlite3_step(prototype_db.update_latency_req);
 
     // check if statement is DONE
+    if (rc != SQLITE_DONE) {
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to execute statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        sqlite3_close(prototype_db.db);
+        exit(1);
+    }
+
+    log__printf(NULL, MOSQ_LOG_DEBUG, "Success: Added Latency Req %d to topic %s for client %s\n", context->mqtt_cc.incoming_lat_qos, context->mqtt_cc.incoming_topic, context->mqtt_cc.incoming_sub_clientid);
 
     // reset update stmt
 
+    rc2 = sqlite3_reset(prototype_db.update_latency_req);
+    
+
     // check if reset update stmt was good
+    if(rc2 != SQLITE_OK){
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        exit(1);
+    }
+    log__printf(NULL, MOSQ_LOG_ERR, "Reset update_latency_req after \n");
 
     // reset find stmt 
 
+    rc2 = sqlite3_reset(prototype_db.find_existing_topic);
+
     // check if reset find stmt was good 
+    if(rc2 != SQLITE_OK){
+        log__printf(NULL, MOSQ_LOG_ERR, "Failed to reset statement: %s\n", sqlite3_errmsg(prototype_db.db));
+        exit(1);
+    }
+    log__printf(NULL, MOSQ_LOG_ERR, "Reset find_existing_topic\n");
+
 }
 
 
