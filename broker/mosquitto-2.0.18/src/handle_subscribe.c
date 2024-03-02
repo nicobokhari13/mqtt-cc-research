@@ -198,11 +198,12 @@ int handle__subscribe(struct mosquitto *context)
 					store_lat_qos(context, sub); // remove the lat qos from the sub
 					if(!topic_exists_in_DB(context)){
 						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic does not exist in DB. Adding now");
-						insert_topic_in_DB(context);
+						insert_topic_in_DB(context); // while inserting, set max_allowed_latency = incoming_latency
 					}
-					else{
+					else{ // since the topic already exists need to adjust max_allowed_latency
 						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic already exists in DB. Updating latency QoS: \n");
-						update_lat_req(context);
+						// void add_to_existing_topic(struct mosquitto *context); this function will call update_lat_req() and calc_new_max_latency()
+						update_lat_req_max_allowed(context);
 					}
 				}
 

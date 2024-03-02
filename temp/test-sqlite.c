@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <sqlite3.h>
 #include <string.h>
-#include "cJSON.h"
+#include <cjson/cJSON.h>
 
 // Callback function for SELECT queries
 // argc is the number of columns
@@ -75,72 +75,109 @@ char *concat_strings(char *str1, char *str2) {
 
 int main() {
     
-    char *json_str = createLatStr();
-    sqlite3 *db;
-    char *err_msg = 0;
+    //char *json_str = createLatStr();
+    //sqlite3 *db;
+    //char *err_msg = 0;
 
     // Open the database (creates a new one if it doesn't exist)
-    int rc = sqlite3_open("example.db", &db);
+    //int rc = sqlite3_open("example.db", &db);
 
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        return rc;
+    // if (rc != SQLITE_OK) {
+    //     fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+    //     return rc;
+    // }
+
+    cJSON *jsonExample = cJSON_CreateObject();
+    cJSON_AddNumberToObject(jsonExample, "sub01", 100);
+    cJSON_AddNumberToObject(jsonExample, "sub02", 95);
+    cJSON_AddNumberToObject(jsonExample, "sub03", 80);
+
+    int numChildren = 0;
+    cJSON *child = jsonExample->child;
+    while(child != NULL){
+        numChildren++;
+        child = child->next;
+    }
+    printf("Number of Objects: %d", numChildren);
+    if(numChildren == 0){
+        printf("No children in the cJSON object: %d", numChildren);
+        return 1;
     }
 
-    // Create a table
-    const char *create_table_sql = "CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, name TEXT, value INTEGER);";
-    rc = sqlite3_exec(db, create_table_sql, 0, 0, &err_msg);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "SQL error: %s\n", err_msg);
-        sqlite3_free(err_msg);
-    }
-
-    // Insert data into the table
-    const char *insert_data_sql = "INSERT INTO data (name, value) VALUES ('example', 42);";
-    rc = sqlite3_exec(db, insert_data_sql, 0, 0, &err_msg);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "SQL error: %s\n", err_msg);
-        sqlite3_free(err_msg);
-    }
-
-    const char *insert_data_sql_2 = "INSERT INTO data (name, value) VALUES ('blah', 100);";    
-    rc = sqlite3_exec(db, insert_data_sql_2, 0, 0, &err_msg);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "SQL error: %s\n", err_msg);
-        sqlite3_free(err_msg);
-    }
-
-    char *insert_3_begin = "INSERT INTO data (name, value) VALUES ('";
+    int *arr = (int *)malloc(numChildren *sizeof(int));
     
-    char *insert_3_end = "' , 95);";
+    if (arr == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+    int i = 0;
+    cJSON_ArrayForEach(child, jsonExample){
+        printf("Key: %s\n", child->string);
+        printf("Value: %d\n", child->valueint);
+        arr[i] = child->valueint;
+        i++; 
+    }
+    int min = arr[0];
+    for(i = 1; i < numChildren; i++){
+        if(arr[i] < min){
+            min = arr[i];
+        }
+    }
+    printf("Minimum of the array: %d", min);
+    // // Create a table
+    // const char *create_table_sql = "CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, name TEXT, value INTEGER);";
+    // rc = sqlite3_exec(db, create_table_sql, 0, 0, &err_msg);
+
+    // if (rc != SQLITE_OK) {
+    //     fprintf(stderr, "SQL error: %s\n", err_msg);
+    //     sqlite3_free(err_msg);
+    // }
+
+    // // Insert data into the table
+    // const char *insert_data_sql = "INSERT INTO data (name, value) VALUES ('example', 42);";
+    // rc = sqlite3_exec(db, insert_data_sql, 0, 0, &err_msg);
+
+    // if (rc != SQLITE_OK) {
+    //     fprintf(stderr, "SQL error: %s\n", err_msg);
+    //     sqlite3_free(err_msg);
+    // }
+
+    // const char *insert_data_sql_2 = "INSERT INTO data (name, value) VALUES ('blah', 100);";    
+    // rc = sqlite3_exec(db, insert_data_sql_2, 0, 0, &err_msg);
+
+    // if (rc != SQLITE_OK) {
+    //     fprintf(stderr, "SQL error: %s\n", err_msg);
+    //     sqlite3_free(err_msg);
+    // }
+
+    // char *insert_3_begin = "INSERT INTO data (name, value) VALUES ('";
     
-    char *firstHalf = concat_strings(insert_3_begin, json_str);
+    // char *insert_3_end = "' , 95);";
+    
+    // char *firstHalf = concat_strings(insert_3_begin, json_str);
 
-    char *insert_data_sql_3 = concat_strings(firstHalf, insert_3_end);
+    // char *insert_data_sql_3 = concat_strings(firstHalf, insert_3_end);
 
-    rc = sqlite3_exec(db, insert_data_sql_3, 0,0, &err_msg);
+    // rc = sqlite3_exec(db, insert_data_sql_3, 0,0, &err_msg);
 
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "SQL error: %s\n", err_msg);
-        sqlite3_free(err_msg);
-    }
+    // if (rc != SQLITE_OK) {
+    //     fprintf(stderr, "SQL error: %s\n", err_msg);
+    //     sqlite3_free(err_msg);
+    // }
 
-    // Query the data
-    const char *select_data_sql = "SELECT * FROM data WHERE id = 3;";
-    rc = sqlite3_exec(db, select_data_sql, getJSONvalue, 0, &err_msg);
-    //rc = sqlite3_exec(db, select_data_sql, callback, 0, &err_msg);
+    // // Query the data
+    // const char *select_data_sql = "SELECT * FROM data WHERE id = 3;";
+    // rc = sqlite3_exec(db, select_data_sql, getJSONvalue, 0, &err_msg);
+    // //rc = sqlite3_exec(db, select_data_sql, callback, 0, &err_msg);
 
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "SQL error: %s\n", err_msg);
-        sqlite3_free(err_msg);
-    }
+    // if (rc != SQLITE_OK) {
+    //     fprintf(stderr, "SQL error: %s\n", err_msg);
+    //     sqlite3_free(err_msg);
+    // }
 
 
-    // Close the database
-    sqlite3_close(db);
+    // // Close the database
+    // sqlite3_close(db);
 
     return 0;
 }

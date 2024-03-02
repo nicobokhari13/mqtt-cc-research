@@ -888,9 +888,10 @@ char* create_latency_str(char *clientid, int latencyNum);
 // SQLite DB functions
 void prepare_DB(); // (called in mosquitto.c's main )
 bool topic_exists_in_DB(struct mosquitto *context);
-void update_lat_req(struct mosquitto *context);
+void update_lat_req_max_allowed(struct mosquitto *context);
 void insert_topic_in_DB(struct mosquitto *context);
-void clear_vars(struct mosquitto *context);
+int calc_new_max_latency(struct cJSON *latencies);
+void update_max_allowed_lat(struct mosquitto *context);
 void printStmtResults(sqlite3_stmt *stmt);
 
 #endif
