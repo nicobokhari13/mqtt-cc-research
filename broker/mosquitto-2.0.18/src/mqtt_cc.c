@@ -315,48 +315,7 @@ void update_lat_req_max_allowed(struct mosquitto *context){
 
     log__printf(NULL, MOSQ_LOG_ERR, "Reset find_existing_topic\n");
 }
-
-// TODO: Research Meeting Notes 2/14
-// Functions: 
- // add sub to SQLite DB
-
- // Prototype
-
-    // publishers (Iot Devices) publish battery, frequency to /status topic
-        // plugins can customize callbacks for when a message is published to "$CONTROL/<feature>"
-        //MOSQ_CONTROL_EVT
-    
-    // Quick-Dirty -> client
-        // C++ < Python
-        // use standard client
-        // using standard mosquitto msgs
-        // focuses on implementation logic with DB
-        // client is a script running on the broker
-        // when the broker starts, it starts up the client
-    
-
-    // Mosquitto "Correct Way" -> modifies the broker
-
-    // Subscribers
-        // sensor/temp
-        //sub 01 sensor/temp%latency%10ms
-            //sub 02 sensor/temp%latency%20ms 
-            //sub 03 sensor/temp%latency%30ms
-
-    // Experiment Design (Real World test bed)
-        // Broker on Desktop
-            // monitor Desktop for performance
-            // Client monitors IoT devices status and all sensor reading updates
-            // assume linear-rel between sample-freq + latency
-
-        // 2-3 Raspberry Pis (IoT Devices)
-            // need battery packs
-            // in possession, come to Song/Li for sensors + Pis (after Spring Break)
-
-        // Subscribers (on different device, probably desktop)
-
-        // derive some topics for subscribers
-
+ 
 
 
 

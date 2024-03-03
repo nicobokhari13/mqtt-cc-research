@@ -27,6 +27,7 @@ def on_message(client, userdata, msg):
     if mqtt.topic_matches_sub(TEMP_TOPIC, topic):
         print(f"Topic: {topic}")
         print(f"Message: {payload}")
+        print()
 
 # Executed when script is ran
 

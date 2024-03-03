@@ -7,25 +7,18 @@ STATUS_TOPIC = "status/#"
 PUBLISH_TOPIC = "sensor/"
 SUBS_WILL_TOPIC = "subs/will"
 
-# BROKER_HOST = "mqtt.eclipseprojects.io"
-
-# The callback for when the client receives a CONNACK response from the broker.
 def on_connect(client, userdata, flags, rc):
 
-    # print("Connected to Broker. Result Code: "+str(rc))
+    print("Connected with result code "+str(rc))
     if(rc == 5):
         print("Authentication Error on Broker")
         exit()
-    print("Connected with result code "+str(rc))
-    # Subscribing in on_connect() means that if we lose the connection and
-    # reconnect then subscriptions will be renewed.
-    # subscribing to FireAlarm topic
+         
     client.subscribe(SUBS_WILL_TOPIC)
     print("Subscribed to topic: " + SUBS_WILL_TOPIC)
 
-# The callback for when a message is published to the broker, and the backendreceives it
 def on_message(client, userdata, msg):
-    topic = msg.topic
+    topic = msg.topiclear
     payload = msg.payload.decode()
 
     # Print MQTT message to console
@@ -33,12 +26,21 @@ def on_message(client, userdata, msg):
     if mqtt.topic_matches_sub(STATUS_TOPIC, topic):
         stts.handle_status_msg(client, msg)
     if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
+        # TODO 2: create submodule for handling WILL_TOPIC, involves changing the database
         print(f"Topic: {topic}")
         print(f"Payload: {payload}")
 
 # Executed when script is ran
 
 def main():
+
+    # TODO 1: create module to handle db connection, create tables before connecting to the broker
+
+    # see gpt on this
+    
+    # Considering 3rd table be 
+        # Device | Topic | Capability | Publishing
+        # Devices are capable of publishing to many topics, and are publishing to at least 1
 
     # create MQTT Client
     client = mqtt.Client()
@@ -49,6 +51,8 @@ def main():
     client.username_pw_set(username=USERNAME, password=PASSWORD)
     # Connect client to the Broker
     client.connect("localhost", 1883)
+
+    
 
     # Run cliet forever
     while True:

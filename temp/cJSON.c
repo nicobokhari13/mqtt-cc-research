@@ -3081,7 +3081,7 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
             cJSON *b_element = NULL;
             cJSON_ArrayForEach(a_element, a)
             {
-                /* TODO This has O(n^2) runtime, which is horrible! */
+                /* This has O(n^2) runtime, which is horrible! */
                 b_element = get_object_item(b, a_element->string, case_sensitive);
                 if (b_element == NULL)
                 {

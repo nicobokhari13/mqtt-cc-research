@@ -880,7 +880,7 @@ void xtreport(void);
 /* ============================================================
  * MQTT-CC functions
  * ============================================================ */
-// TODO: Add MQTT-CC function defs here
+// Add MQTT-CC function defs here
 void log_sub(char *sub);
 bool has_lat_qos(char *sub);
 void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos);
