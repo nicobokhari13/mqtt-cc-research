@@ -5,6 +5,7 @@ USERNAME = "prototype"
 PASSWORD = "adminproto"
 STATUS_TOPIC = "status/#"
 PUBLISH_TOPIC = "sensor/"
+SUBS_WILL_TOPIC = "subs/will"
 
 # BROKER_HOST = "mqtt.eclipseprojects.io"
 
@@ -19,16 +20,21 @@ def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     # subscribing to FireAlarm topic
-    client.subscribe(STATUS_TOPIC)
-    print("Subscribed to topic: " + STATUS_TOPIC)
+    client.subscribe(SUBS_WILL_TOPIC)
+    print("Subscribed to topic: " + SUBS_WILL_TOPIC)
 
 # The callback for when a message is published to the broker, and the backendreceives it
 def on_message(client, userdata, msg):
     topic = msg.topic
-    # Print MQTT message to console
+    payload = msg.payload.decode()
 
+    # Print MQTT message to console
+    payload = msg.payload
     if mqtt.topic_matches_sub(STATUS_TOPIC, topic):
-        stts.handle_status_msg()
+        stts.handle_status_msg(client, msg)
+    if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
+        print(f"Topic: {topic}")
+        print(f"Payload: {payload}")
 
 # Executed when script is ran
 
@@ -40,7 +46,7 @@ def main():
     client.on_connect = on_connect
     client.on_message = on_message
     # Set username and password 
-    client.username_pw_set(username=CLIENT_USERNAME, password=CLIENT_PASSWORD)
+    client.username_pw_set(username=USERNAME, password=PASSWORD)
     # Connect client to the Broker
     client.connect("localhost", 1883)
 

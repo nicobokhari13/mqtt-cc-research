@@ -1,12 +1,14 @@
 import paho.mqtt.client as mqtt
-import sys
+import sys # command line parameters
+import json # structure will & network latency msg
+
 
 USERNAME = ""
 PASSWORD = ""
 # Read gpt on command line parameters
 TEMP_TOPIC = "sensor/temperature"
 LATENCY_QOS = "%latency%90"
-
+WILL_TOPIC = "subs/will"
 # The callback for when the client receives a CONNACK response from the broker.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -46,6 +48,12 @@ def main():
     client.on_message = on_message
     # Set username and password 
     client.username_pw_set(username=USERNAME, password=PASSWORD)
+    will_data = {
+        "clientid":USERNAME, 
+        "topics:": [TEMP_TOPIC + LATENCY_QOS]
+        }
+    will_payload = json.dumps(will_data)
+    client.will_set(topic=WILL_TOPIC, payload=will_payload, qos=1)
     # Connect client to the Broker
     client.connect("localhost", 1883)
 
