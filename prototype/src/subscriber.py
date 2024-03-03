@@ -29,7 +29,16 @@ def on_message(client, userdata, msg):
 # Executed when script is ran
 
 def main():
-
+    if(len(sys.argv) == 1):
+        print("Using default username and password for subscriber")
+        USERNAME = "sub01"
+        PASSWORD = "mqttcc01"
+    elif(len(sys.argv) > 3):
+        print(f"Error: Expected 3 command line arguments. Received {len(sys.argv)}")
+        exit()
+    else:
+        USERNAME = sys.argv[1]
+        PASSWORD = sys.argv[2]
     # create MQTT Client
     client = mqtt.Client()
     # Set Paho API functions to our defined functions
