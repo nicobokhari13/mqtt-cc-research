@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import proto_db as db
 import status_handler as stts
 
 USERNAME = "prototype"
@@ -33,7 +34,11 @@ def on_message(client, userdata, msg):
 # Executed when script is ran
 
 def main():
-
+    database = db.Database()
+    database.openDB()
+    database.createDeviceTable()
+    database.createPublishSelectTable()
+    print("Finished creating device and publish_select tables")
     # TODO 1: create module to handle db connection, create tables before connecting to the broker
 
     # see gpt on this
