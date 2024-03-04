@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import proto_db as db
-import status_handler as stts
+import status_handler as status
+import will_topic_handler as will
 
 USERNAME = "prototype"
 PASSWORD = "adminproto"
@@ -19,17 +20,16 @@ def on_connect(client, userdata, flags, rc):
     print("Subscribed to topic: " + SUBS_WILL_TOPIC)
 
 def on_message(client, userdata, msg):
-    topic = msg.topiclear
+    topic = msg.topic
     payload = msg.payload.decode()
 
     # Print MQTT message to console
-    payload = msg.payload
     if mqtt.topic_matches_sub(STATUS_TOPIC, topic):
-        stts.handle_status_msg(client, msg)
+        status.handle_status_msg(client, msg)
     if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
-        # TODO 2: create submodule for handling WILL_TOPIC, involves changing the database
         print(f"Topic: {topic}")
-        print(f"Payload: {payload}")
+        will.updateDB(payload)
+        # TODO 2: create submodule for handling WILL_TOPIC, involves changing the database
 
 # Executed when script is ran
 
@@ -38,7 +38,7 @@ def main():
     database.openDB()
     database.createDeviceTable()
     database.createPublishSelectTable()
-    print("Finished creating device and publish_select tables")
+    database.closeDB()
     # TODO 1: create module to handle db connection, create tables before connecting to the broker
 
     # see gpt on this

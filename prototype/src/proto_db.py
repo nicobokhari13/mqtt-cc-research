@@ -36,7 +36,10 @@ class Database:
                                 PRIMARY KEY (deviceMAC, topic)
                                 )''')
         self._db_conn.commit()
-        
+
+    def selectSubscriptionsWithTopic(self, topic):
+        self._db_cursor.execute('''SELECT * FROM subscriptions WHERE topic = ?''', (topic,))
+        # cursor has rows represented as tuples        
     
 
 

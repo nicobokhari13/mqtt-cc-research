@@ -51,7 +51,7 @@ def main():
     client.username_pw_set(username=USERNAME, password=PASSWORD)
     will_data = {
         "clientid":USERNAME, 
-        "topics:": [TEMP_TOPIC + LATENCY_QOS]
+        "topics": [TEMP_TOPIC + LATENCY_QOS]
         }
     will_payload = json.dumps(will_data)
     client.will_set(topic=WILL_TOPIC, payload=will_payload, qos=1)
