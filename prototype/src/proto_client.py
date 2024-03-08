@@ -29,7 +29,6 @@ def on_message(client, userdata, msg):
     if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
         print(f"Topic: {topic}")
         will.updateDB(payload)
-        # TODO 2: create submodule for handling WILL_TOPIC, involves changing the database
 
 # Executed when script is ran
 
@@ -39,9 +38,6 @@ def main():
     database.createDeviceTable()
     database.createPublishSelectTable()
     database.closeDB()
-    # TODO 1: create module to handle db connection, create tables before connecting to the broker
-
-    # see gpt on this
     
     # Considering 3rd table be 
         # Device | Topic | Capability | Publishing

@@ -16,7 +16,14 @@ class Database:
         self._db_cursor = self._db_conn.cursor()
 
     def closeDB(self) -> None:
+        self._db_cursor.close()
         self._db_conn.close()
+
+    # TODO: Add database lock error handling so if a sqlite3.OperationalError is raised, delay for some time, then retry the execution
+        # A generic function with query, values, maxRetries, delay, etc (see GPT)
+    
+    def execute_query_with_retry(self, query:str, values = None, requires_commit=False, max_retries=3, delay = 0.1 ):
+        pass
 
     def createDeviceTable(self) -> None:
         self._db_cursor.execute('''CREATE TABLE IF NOT EXISTS devices (
@@ -39,7 +46,18 @@ class Database:
 
     def selectSubscriptionsWithTopic(self, topic):
         self._db_cursor.execute('''SELECT * FROM subscriptions WHERE topic = ?''', (topic,))
-        # cursor has rows represented as tuples        
+        # cursor has rows represented as tuples
+
+    def updateSubscriptionWithLatency(self, topic, new_lat_qos, new_max_lat):
+        print(f"Topic: {topic}")
+        print(f"Latency Req: {new_lat_qos}")
+        print(f"Max Allowed Latency: {new_max_lat}")
+        values = (new_lat_qos, new_max_lat, topic)
+        update_query = '''UPDATE subscriptions SET latency_req = ?, max_allowed_latency = ? WHERE topic = ?'''
+        self._db_cursor.execute(update_query, values)      
+        # Commit changes
+        self._db_conn.commit()  
+
     
 
 

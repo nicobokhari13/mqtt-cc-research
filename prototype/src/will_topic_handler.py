@@ -1,6 +1,33 @@
 import proto_db as db
 import json
 
+def getImpactedSubscription(topic) -> list:
+    # get database
+    database = db.Database()
+    database.openDB()
+    # call DB select query
+    database.selectSubscriptionsWithTopic(topic)
+    results = database._db_cursor.fetchall()
+    return results
+
+def updateSubscription(topic, new_latency_req, new_max_allowed):
+    # get database
+    database = db.Database()
+    database.openDB()
+    # call DB update 
+    database.updateSubscriptionWithLatency(topic, new_latency_req, new_max_allowed)
+    print("closing DB")
+    database.closeDB()
+
+
+def calculateNewMaxLatency(latency_req_json:dict):
+    # If no latencyQoS left, return None
+    if not latency_req_json: 
+        return None
+    # else, return the min of the dictionary values
+    min_value = min(latency_req_json.values())
+    return min_value
+
 # A subscriber can subscribe to many topics with different latency qos
 def updateDB(willMsg):
     update_values = list()
@@ -19,41 +46,33 @@ def updateDB(willMsg):
 
         print(topics_list[i])
 
-        # Get rows from DB (array of tuple)
+        # Get row from DB (array of 1 tuple since 1 row per topic)
         impacted_sub = getImpactedSubscription(topics_list[i])
         impacted_sub = impacted_sub[0] # only 1 row, convert from array to single tuple 
-        print(f"Old Latency Req: {impacted_sub}")
-        # Convert latency_req to json
+
+        # Convert latency_req to json dictionary
         latency_req_json = json.loads(impacted_sub[1])
+
+        print(f"Old Latency Req: {latency_req_json}")
 
         # Remove item with clientid key
         if(clientid in latency_req_json):
             print(f"Deleting client sub {clientid}")
             del latency_req_json[clientid]
 
+        # Recalculate max_allowed_latency from json dictionary
         new_max_allowed = calculateNewMaxLatency(latency_req_json)
         
         # Convert back to string
         new_latency_req_str = json.dumps(latency_req_json)
 
-        # Calculate new max_allowed_latency
-        print(new_latency_req_str)
+        # Print new values to console
+        print(f"New Latency Req: {new_latency_req_str}")
+        print(f"New max_allowed: {new_max_allowed}")
 
+        updateSubscription(topic=topics_list[i], new_latency_req=new_latency_req_str, new_max_allowed=new_max_allowed)
+        print("Finished update")
 
-def getImpactedSubscription(topic) -> list:
-    # get database
-    database = db.Database()
-    database.openDB()
-    database.selectSubscriptionsWithTopic(topic)
-    results = database._db_cursor.fetchall()
-    return results
-
-def calculateNewMaxLatency(latency_req_json):
-    if not latency_req_json:
-        return None
-    for key in latency_req_json:
-        print(key)
-    pass
 
 #Hash Map (topic: latency_req)
 

@@ -46,3 +46,4 @@ prototype/dev/
 .vscode/settings.json
 ToDo.md
 temp/test
+sqlite/mqttcc.db-journal

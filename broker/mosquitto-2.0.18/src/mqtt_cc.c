@@ -248,9 +248,9 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     // error checking db_Value
     if (db_Value == NULL) { 
         const char *error_ptr = cJSON_GetErrorPtr(); 
-    if (error_ptr != NULL) { 
-        log__printf(NULL, MOSQ_LOG_DEBUG, "Error: %s\n", error_ptr);
-    } 
+        if (error_ptr != NULL) { 
+            log__printf(NULL, MOSQ_LOG_DEBUG, "Error: %s\n", error_ptr);
+        } 
         log__printf(NULL, MOSQ_LOG_DEBUG, "Exiting Program with db_Value == NULL \n");
         cJSON_Delete(db_Value); 
         exit(1); 
