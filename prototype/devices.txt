@@ -1,0 +1,9 @@
+dev01, mqttccd1, MAC addresss, startBattery
+dev02, mqttccd2, MAC address, startBattery
+dev03, mqttccd3, MAC address, startBattery
+dev04, mqttccd4, MAC address, startBattery
+$$$
+MAC address,sensor/humidity,sensor/temperature
+MAC address,sensor/temperature,sensor/airquality
+MAC address,sensor/humidity,sensor/airquality
+MAC address,sensor/humidity,sensor/temperature,sensor/airquality

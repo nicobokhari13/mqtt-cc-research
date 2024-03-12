@@ -6,8 +6,7 @@ def getImpactedSubscription(topic) -> list:
     database = db.Database()
     database.openDB()
     # call DB select query
-    database.selectSubscriptionsWithTopic(topic)
-    results = database._db_cursor.fetchall()
+    results = database.selectSubscriptionsWithTopic(topic)
     return results
 
 def updateSubscription(topic, new_latency_req, new_max_allowed):
@@ -38,13 +37,11 @@ def updateDB(willMsg):
     print(clientid)
     topics_list = willMsg_json["topics"]
     print(type(topics_list))
-
+    # For each topic in the topic list
     for i in range(len(topics_list)):
         # Remove %latency%
         latStringIndex = topics_list[i].rindex("%latency%")
         topics_list[i] = topics_list[i][:latStringIndex]
-
-        print(topics_list[i])
 
         # Get row from DB (array of 1 tuple since 1 row per topic)
         impacted_sub = getImpactedSubscription(topics_list[i])

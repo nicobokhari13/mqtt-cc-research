@@ -16,8 +16,9 @@ PASSWORD = "mqttccd1"
 
 def handle_command(brokerCommand):
     print(brokerCommand)
+# TODO 2: Refactor like subscriber.py to take in command line arg for credentials, topics able to publish to
 
-
+# TODO 2: Add time stamps to mqtt messages
 def on_connect(clinet, userdata, flags, rc):
     if(rc == 5):
         print("Broker Authentication Error")

@@ -8,6 +8,10 @@ PASSWORD = "adminproto"
 STATUS_TOPIC = "status/#"
 PUBLISH_TOPIC = "sensor/"
 SUBS_WILL_TOPIC = "subs/will"
+SUBS_NET_LAT_TOPIC = "subs/netlat"
+
+# TODO 3: Message handling for all topics in subscribers.txt (Large todo, to break up later)
+# TODO 4: Algorithm to assign publish column in publish_select table based on # topics * battery
 
 def on_connect(client, userdata, flags, rc):
 

@@ -1,4 +1,5 @@
 import sqlite3
+import time
 
 class Database:
     _instance = None
@@ -19,20 +20,35 @@ class Database:
         self._db_cursor.close()
         self._db_conn.close()
 
-    # TODO: Add database lock error handling so if a sqlite3.OperationalError is raised, delay for some time, then retry the execution
-        # A generic function with query, values, maxRetries, delay, etc (see GPT)
-    
     def execute_query_with_retry(self, query:str, values = None, requires_commit=False, max_retries=3, delay = 0.1 ):
-        pass
+        for i in range(max_retries):
+            try: 
+                cursor = self._db_conn.cursor()
+                if values:
+                    cursor.execute(query, values)
+                else:
+                    cursor.execute(query)
+                if requires_commit:
+                    self._db_conn.commit()
+                return cursor.fetchall() # if the command does not return rows, then empty list is returned
+            except sqlite3.OperationalError as err:
+                if "database is locked" in str(err):
+                    print(f"Database is locked. Retrying in {delay} seconds...")
+                    time.sleep(delay)
+                    continue
+                else:
+                    raise
+        raise sqlite3.OperationalError("Max retries exceeded. Unable to execute query.")
+        
 
     def createDeviceTable(self) -> None:
-        self._db_cursor.execute('''CREATE TABLE IF NOT EXISTS devices (
+        deviceTable = '''CREATE TABLE IF NOT EXISTS devices (
                                 deviceMAC TEXT PRIMARY KEY, 
-                                battery FLOAT)''')
-        self._db_conn.commit()
+                                battery FLOAT)'''
+        self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
     def createPublishSelectTable(self) -> None:
-        self._db_cursor.execute('''
+        publishSelectTable = '''
                                 CREATE TABLE IF NOT EXISTS publish_select (
                                 deviceMAC TEXT, 
                                 topic TEXT, 
@@ -41,22 +57,21 @@ class Database:
                                 FOREIGN KEY (deviceMAC) REFERENCES devices(deviceMAC),
                                 FOREIGN KEY (topic) REFERENCES subscriptions(topic) 
                                 PRIMARY KEY (deviceMAC, topic)
-                                )''')
-        self._db_conn.commit()
+                                )'''
+        self.execute_query_with_retry(query=publishSelectTable, requires_commit=True)
 
     def selectSubscriptionsWithTopic(self, topic):
-        self._db_cursor.execute('''SELECT * FROM subscriptions WHERE topic = ?''', (topic,))
-        # cursor has rows represented as tuples
+        selectSub = '''SELECT * FROM subscriptions WHERE topic = ?'''
+        # return the rows from the selection
+        return self.execute_query_with_retry(query=selectSub, values=(topic,))
 
     def updateSubscriptionWithLatency(self, topic, new_lat_qos, new_max_lat):
         print(f"Topic: {topic}")
         print(f"Latency Req: {new_lat_qos}")
         print(f"Max Allowed Latency: {new_max_lat}")
-        values = (new_lat_qos, new_max_lat, topic)
+        newSubQoS = (new_lat_qos, new_max_lat, topic)
         update_query = '''UPDATE subscriptions SET latency_req = ?, max_allowed_latency = ? WHERE topic = ?'''
-        self._db_cursor.execute(update_query, values)      
-        # Commit changes
-        self._db_conn.commit()  
+        self.execute_query_with_retry(query=update_query, values=newSubQoS, requires_commit=True)
 
     
 
