@@ -5,6 +5,8 @@ import json # structure will & network latency msg
 # TODO 2: Create Bash script to run multiple background processes of subscribers 
     # Read from subscribers.txt line by line to run subscriber.py with the provided username, password, and topics
     # TODO 1: Refactor subscriber.py to subscribe to topics left in arg list
+        # Expect 4 arguments (filename, username, password, list of topics in [])
+
 
 # TODO 2: Calculate average network latency from timestamps in received messages for each topic
     # Essentially a m X 3 matrix where m = # topics. 
@@ -18,8 +20,7 @@ import json # structure will & network latency msg
         # divide the new latency sum by new total # msgs
     # Send only columns 1 and 2 to the client after the time window 
 
-# Read gpt on command line parameters
-TEMP_TOPIC = "sensor/temperature"
+#TEMP_TOPIC = "sensor/temperature"
 WILL_TOPIC = "subs/will"
 # The callback for when the client receives a CONNACK response from the broker.
 def on_connect(client, userdata, flags, rc):
@@ -32,30 +33,33 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload.decode()
+    # refactor to perform a different action if the proto_client sends a msg asking about netlatency
+    print(f"Topic: {topic}")
+    print(f"Message: {payload}")
+    print()
 
-    # Print MQTT message to console
-    if mqtt.topic_matches_sub(TEMP_TOPIC, topic):
-        print(f"Topic: {topic}")
-        print(f"Message: {payload}")
-        print()
-
-def subscribeToTopic(client, topic, latQos):
-    client.subscribe(topic + latQos)
+def subscribeToTopics(client, topicList:list):
+    for topic in topicList:
+        print(f"Subscribing to {topic}")
+        client.subscribe(topic)
 # Executed when script is ran
 
+# python3 subscriber.py <username> <password>
 def main():
-    if(len(sys.argv) == 1):
-        print("Using default username and password for subscriber")
+    subbed_topics = []
+    if(sys.argv[1] == "default"):
+        print("Using default credentials and topics for subscriber")
         USERNAME = "sub01"
         PASSWORD = "mqttcc01"
-        LATENCY_QOS = "%latency%90"
-    elif(len(sys.argv) > 4):
-        print(f"Error: Expected 4 command line arguments. Received {len(sys.argv)}")
-        exit()
+        subbed_topics = ["sensor/temperature%latency%80", "sensor/airquality%latency%65"]
+    elif(len(sys.argv) < 4 or len(sys.argv) > 5):
+        print("Error: incorrect number of command line parameters. Expected username, password, and topics list")
     else:
         USERNAME = sys.argv[1]
         PASSWORD = sys.argv[2]
-        LATENCY_QOS = "%latency%" + str(sys.argv[3])
+        # topic list delimited by commas, no spaces
+        subbed_topics = sys.argv[3].split(",")
+        print(subbed_topics)
     # create MQTT Client
     client = mqtt.Client()
     # Set Paho API functions to our defined functions
@@ -65,13 +69,14 @@ def main():
     client.username_pw_set(username=USERNAME, password=PASSWORD)
     will_data = {
         "clientid":USERNAME, 
-        "topics": [TEMP_TOPIC + LATENCY_QOS]
+        "topics": subbed_topics
         }
     will_payload = json.dumps(will_data)
     client.will_set(topic=WILL_TOPIC, payload=will_payload, qos=1)
     # Connect client to the Broker
     client.connect("localhost", 1883)
-    subscribeToTopic(client, topic = TEMP_TOPIC, latQos = LATENCY_QOS)
+    
+    subscribeToTopics(client, topicList = subbed_topics)
 
     # Run cliet forever
     while True:
