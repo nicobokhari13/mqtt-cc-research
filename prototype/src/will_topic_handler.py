@@ -42,7 +42,7 @@ def updateDB(willMsg):
         # Remove %latency%
         latStringIndex = topics_list[i].rindex("%latency%")
         topics_list[i] = topics_list[i][:latStringIndex]
-
+        print(f"Getting subs for {topics_list[i]}")
         # Get row from DB (array of 1 tuple since 1 row per topic)
         impacted_sub = getImpactedSubscription(topics_list[i])
         impacted_sub = impacted_sub[0] # only 1 row, convert from array to single tuple 

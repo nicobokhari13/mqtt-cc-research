@@ -8,6 +8,7 @@ PASSWORD = "adminproto"
 STATUS_TOPIC = "status/#"
 PUBLISH_TOPIC = "sensor/"
 SUBS_WILL_TOPIC = "subs/will"
+SUBS_REQ_NET_LAT = "subs/req"
 SUBS_NET_LAT_TOPIC = "subs/netlat"
 
 # TODO 3: Message handling for all topics in subscribers.txt (Large todo, to break up later)
