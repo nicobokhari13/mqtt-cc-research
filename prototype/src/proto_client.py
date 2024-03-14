@@ -8,10 +8,9 @@ USERNAME = "prototype"
 PASSWORD = "adminproto"
 STATUS_TOPIC = "status/#"
 PUBLISH_TOPIC = "sensor/"
-# SUBS_WILL_TOPIC = "subs/will"
+SUBS_WILL_TOPIC = "subs/will"
 
-# will msgs are no longer being used since the experiment will only use connected subscribers
-    # must delete db before restarting system
+# will messages still applicable if something goes wrong in the experiment
 
 SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
 

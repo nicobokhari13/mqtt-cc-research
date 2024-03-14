@@ -2,10 +2,6 @@ import paho.mqtt.client as mqtt
 import sys # command line parameters
 import json # structure will & network latency msg
 
-# TODO 1: Create Bash script to run multiple background processes of subscribers 
-    # Read from subscribers.txt line by line to run subscriber.py with the provided username, password, and topics
-
-
 # TODO 2: Calculate average network latency from timestamps in received messages for each topic
     # Essentially a m X 3 matrix where m = # topics. 
     # In the first column, the name of the topic is stored. 
@@ -17,7 +13,11 @@ import json # structure will & network latency msg
         # increment the total # of msgs
         # divide the new latency sum by new total # msgs
     # Send only columns 1 and 2 to the client after the time window 
-
+    # This matrix is created when the run_subs.py script inputs the topics from subscribers.txt 
+        # matrix will be used to determine topic matching in on_message
+        # consider using accumulated_msgs variable that is reset after time window
+        # so the latency calculations are performed only once per time window pre-determined at start up script
+        # use singleton? 
 #TEMP_TOPIC = "sensor/temperature"
 WILL_TOPIC = "subs/will"
 SUBS_REQ_NET_LAT = "subs/req"
