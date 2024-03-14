@@ -1,6 +1,9 @@
 import proto_db as db
 import json
 
+# DEPRECATED: will msgs won't be used since the experiment is testing a "live" network 
+    # subscribers won't be disconnecting, new subscribers will be connected during experiment
+
 def getImpactedSubscription(topic) -> list:
     # get database
     database = db.Database()
@@ -93,7 +96,6 @@ def updateDB(willMsg):
     # Convert the latency_req back to a string
     # UPDATE subscriptions SET latencyreq = ?, max_allowed_latency = ? WHERE topic = ?
     # values = ()
-
 
 # Edge Cases:
     # Only 1 sub in a topic, when the subscriber disconnects, return an empty json string

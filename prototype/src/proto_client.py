@@ -1,15 +1,19 @@
 import paho.mqtt.client as mqtt
 import proto_db as db
 import status_handler as status
-import will_topic_handler as will
+# import will_topic_handler as will
+import sys
 
 USERNAME = "prototype"
 PASSWORD = "adminproto"
 STATUS_TOPIC = "status/#"
 PUBLISH_TOPIC = "sensor/"
-SUBS_WILL_TOPIC = "subs/will"
-SUBS_REQ_NET_LAT = "subs/req"
-SUBS_NET_LAT_TOPIC = "subs/netlat"
+# SUBS_WILL_TOPIC = "subs/will"
+
+# will msgs are no longer being used since the experiment will only use connected subscribers
+    # must delete db before restarting system
+
+SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
 
 # TODO 3: Message handling for all topics in subscribers.txt (Large todo, to break up later)
 # TODO 4: Algorithm to assign publish column in publish_select table based on # topics * battery
@@ -19,11 +23,8 @@ def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     if(rc == 5):
         print("Authentication Error on Broker")
-        exit()
+        sys.exit()
          
-    client.subscribe(SUBS_WILL_TOPIC)
-    print("Subscribed to topic: " + SUBS_WILL_TOPIC)
-
 def on_message(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload.decode()
@@ -31,10 +32,10 @@ def on_message(client, userdata, msg):
     # Print MQTT message to console
     if mqtt.topic_matches_sub(STATUS_TOPIC, topic):
         status.handle_status_msg(client, msg)
-    if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
-        print(f"Topic: {topic}")
-        will.updateDB(payload)
-
+    # if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
+    #     print(f"Topic: {topic}")
+    #     will.updateDB(payload)
+    
 # Executed when script is ran
 
 def main():

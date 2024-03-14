@@ -2,10 +2,8 @@ import paho.mqtt.client as mqtt
 import sys # command line parameters
 import json # structure will & network latency msg
 
-# TODO 2: Create Bash script to run multiple background processes of subscribers 
+# TODO 1: Create Bash script to run multiple background processes of subscribers 
     # Read from subscribers.txt line by line to run subscriber.py with the provided username, password, and topics
-    # TODO 2: Refactor subscriber so disconnect happens on command from subs/req
-        # TODO 1: Test code for client to publish to subs/req with string command "close "
 
 
 # TODO 2: Calculate average network latency from timestamps in received messages for each topic
@@ -42,11 +40,7 @@ def on_message(client, userdata, msg):
         #print("exiting program")
         with open("subs.txt", "a") as file:
             file.write(f"exiting program {sys.argv[1]}")
-        sys.exit()
-
-def on_disconnect(client, userdata, rc):
-
-
+        sys.ex
 def subscribeToTopics(client, topicList:list):
     for topic in topicList:
         #print(f"Subscribing to {topic}")
@@ -62,7 +56,7 @@ def main():
         PASSWORD = "mqttcc01"
         subbed_topics = ["sensor/temperature%latency%80", "sensor/airquality%latency%65"]
     elif(len(sys.argv) < 4 or len(sys.argv) > 5):
-        print("Error: incorrect number of command line parameters. Expected username, password, and topics list")
+        print(f"Error: incorrect number of command line parameters. {len(sys.argv)} Expected username, password, and topics list")
         sys.exit()
     else:
         USERNAME = sys.argv[1]
@@ -70,6 +64,7 @@ def main():
         # topic list delimited by commas, no spaces
         subbed_topics = sys.argv[3].split(",")
         #print(subbed_topics)
+    print(f"starting subscriber {USERNAME}")
     # create MQTT Client
     client = mqtt.Client()
     # Set Paho API functions to our defined functions
