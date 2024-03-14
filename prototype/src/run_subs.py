@@ -24,10 +24,6 @@ def main():
         for sub in command: 
             print(sub)
             try:
-                # TODO: Get pids from these processes and save them to a file
-                    # each pid is on a new line
-                    # create a bash script that reads this file and kills the subscribers
-                    # to fast track testing
                 process = subprocess.Popen(sub, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 pid = process.pid
                 file.write(str(pid) + "\n")
