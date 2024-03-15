@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the file containing PIDs (one PID per line)
-pid_file="sub_pidfile.txt"
+pid_file="subs/sub_pidfile.txt"
 
 # Check if the file exists
 if [ ! -f "$pid_file" ]; then

@@ -19,8 +19,8 @@ import json # structure will & network latency msg
         # so the latency calculations are performed only once per time window pre-determined at start up script
         # use singleton? 
 #TEMP_TOPIC = "sensor/temperature"
+SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
 WILL_TOPIC = "subs/will"
-SUBS_REQ_NET_LAT = "subs/req"
 # The callback for when the client receives a CONNACK response from the broker.
 def on_connect(client, userdata, flags, rc):
     #print("Connected with result code "+str(rc))
@@ -32,15 +32,10 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload.decode()
-    # refactor to perform a different action if the proto_client sends a msg asking about netlatency
     #print(f"Topic: {topic}")
     #print(f"Message: {payload}")
     #print()
-    if(mqtt.topic_matches_sub(sub=topic, topic=SUBS_REQ_NET_LAT)):
-        #print("exiting program")
-        with open("subs.txt", "a") as file:
-            file.write(f"exiting program {sys.argv[1]}")
-        sys.ex
+
 def subscribeToTopics(client, topicList:list):
     for topic in topicList:
         #print(f"Subscribing to {topic}")
@@ -62,9 +57,7 @@ def main():
         USERNAME = sys.argv[1]
         PASSWORD = sys.argv[2]
         # topic list delimited by commas, no spaces
-        subbed_topics = sys.argv[3].split(",")
-        #print(subbed_topics)
-    print(f"starting subscriber {USERNAME}")
+        subbed_topics = sys.argv[3].split(",") # list of strings 
     # create MQTT Client
     client = mqtt.Client()
     # Set Paho API functions to our defined functions
