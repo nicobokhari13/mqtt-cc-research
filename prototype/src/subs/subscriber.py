@@ -21,6 +21,7 @@ import json # structure will & network latency msg
 #TEMP_TOPIC = "sensor/temperature"
 SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
 WILL_TOPIC = "subs/will"
+
 # The callback for when the client receives a CONNACK response from the broker.
 def on_connect(client, userdata, flags, rc):
     #print("Connected with result code "+str(rc))
@@ -73,7 +74,6 @@ def main():
     client.will_set(topic=WILL_TOPIC, payload=will_payload, qos=1)
     # Connect client to the Broker
     client.connect("localhost", 1883)
-    client.subscribe(SUBS_REQ_NET_LAT)
     subscribeToTopics(client, topicList = subbed_topics)
 
     # Run cliet forever
