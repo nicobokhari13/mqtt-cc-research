@@ -1,15 +1,6 @@
-#!/usr/bin/env python3
-
 import asyncio
 import socket
-import uuid
-
 import paho.mqtt.client as mqtt
-
-client_id = 'paho-mqtt-python/issue72/' + str(uuid.uuid4())
-topic = client_id
-print("Using client_id / topic: " + client_id)
-
 
 class AsyncioHelper:
     def __init__(self, loop, client):
@@ -21,12 +12,9 @@ class AsyncioHelper:
         self.client.on_socket_unregister_write = self.on_socket_unregister_write
 
     def on_socket_open(self, client, userdata, sock):
-        print("Socket opened")
 
         def cb():
-            print("on_socket_open callback: Socket is readable, calling loop_read")
             client.loop_read()
-            print("after loop_read")
 
         self.loop.add_reader(sock, cb) # every time the socket is readable, call the calback function cb()
         self.misc = self.loop.create_task(self.misc_loop())
@@ -98,7 +86,6 @@ class AsyncMqttExample:
         print("connecting to server")
         self.client.connect('mqtt.eclipseprojects.io', 1883, 60)
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
-        
         for c in range(3):
             print(f"main loop {c}")
             await asyncio.sleep(5)
@@ -107,7 +94,6 @@ class AsyncMqttExample:
             self.client.publish(topic, b'Hello' * 40000, qos=1)
             print("waiting for msg")
             msg = await self.got_message
-            print("after await line")
             print("main: Got response with {} bytes".format(len(msg)))
             self.got_message = None
 

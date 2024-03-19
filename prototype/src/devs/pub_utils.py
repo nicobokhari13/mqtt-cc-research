@@ -24,5 +24,5 @@ class PublisherUtils:
         self._STATUS_TOPIC = "sensor/status/" + self._MAC_ADDR # where IoT device sends status
         self._CMD_TOPIC = "sensor/cmd" # where IoT receives command on where to publish
         self._got_cmd = None # set to true and mqtt awaits self. to be set to False after msg is received
-
+        self._end_round = None # 
 
