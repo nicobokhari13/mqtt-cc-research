@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 import proto_db as db
 import status_handler as status
-# import will_topic_handler as will
+import will_topic_handler as will
 import sys
 
 USERNAME = "prototype"
@@ -31,9 +31,11 @@ def on_message(client, userdata, msg):
     # Print MQTT message to console
     if mqtt.topic_matches_sub(STATUS_TOPIC, topic):
         status.handle_status_msg(client, msg)
-    # if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
-    #     print(f"Topic: {topic}")
-    #     will.updateDB(payload)
+    if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
+        will.updateDB(payload)
+    if mqtt.topic_matches_sub(SUBS_NET_LAT_TOPIC):
+        # clientutils.calculateChanges(client)
+        pass
     
 # Executed when script is ran
 
@@ -47,7 +49,7 @@ def main():
     # Considering 3rd table be 
         # Device | Topic | Capability | Publishing
         # Devices are capable of publishing to many topics, and are publishing to at least 1
-
+    
     # create MQTT Client
     client = mqtt.Client()
     # Set Paho API functions to our defined functions
