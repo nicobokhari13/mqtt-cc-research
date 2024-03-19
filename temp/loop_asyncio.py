@@ -26,6 +26,7 @@ class AsyncioHelper:
         def cb():
             print("on_socket_open callback: Socket is readable, calling loop_read")
             client.loop_read()
+            print("after loop_read")
 
         self.loop.add_reader(sock, cb) # every time the socket is readable, call the calback function cb()
         self.misc = self.loop.create_task(self.misc_loop())
@@ -33,6 +34,7 @@ class AsyncioHelper:
     def on_socket_close(self, client, userdata, sock):
         print("Socket closed")
         self.loop.remove_reader(sock)
+        print("after removing reader")
         self.misc.cancel()
 
     def on_socket_register_write(self, client, userdata, sock):
@@ -41,12 +43,14 @@ class AsyncioHelper:
         def cb():
             print("on_socket_register_write callback: Socket is writable, calling loop_write")
             client.loop_write()
+            print("after loop_write")
 
         self.loop.add_writer(sock, cb) # invoke the callback cb when the socket is available for writing
 
     def on_socket_unregister_write(self, client, userdata, sock):
         print("on_socket_unregister_write: Stop watching socket for writability.")
         self.loop.remove_writer(sock)
+        print("after removing writer")
 
     async def misc_loop(self):
         print("misc_loop started")
