@@ -53,15 +53,11 @@ import sys # command line parameters
 import json # structure reading and time
 import time # for timestamp variable 
 
-SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
-
-
-
 # The callback for when the client receives a CONNACK response from the broker.
 def on_connect(client, userdata, flags, rc):
     #print("Connected with result code "+str(rc))
     if(rc == 5):
-        #print("Authentication Error on Broker")
+        print("Authentication Error on Broker")
         exit()
 
 # The callback for when a message is published to the broker, and the backendreceives it
