@@ -44,7 +44,8 @@ class Database:
     def createDeviceTable(self) -> None:
         deviceTable = '''CREATE TABLE IF NOT EXISTS devices (
                                 deviceMAC TEXT PRIMARY KEY, 
-                                battery FLOAT)'''
+                                battery FLOAT, 
+                                sample_frequency_ms INTEGER)'''
         self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
     def createPublishSelectTable(self) -> None:
@@ -58,6 +59,8 @@ class Database:
                                 FOREIGN KEY (topic) REFERENCES subscriptions(topic) 
                                 PRIMARY KEY (deviceMAC, topic)
                                 )'''
+        # capability: True = can publish, False = cannot publish
+        # publish: True = is currently publishing to topic, False = is not currently publishing
         self.execute_query_with_retry(query=publishSelectTable, requires_commit=True)
 
     def selectSubscriptionsWithTopic(self, topic):
