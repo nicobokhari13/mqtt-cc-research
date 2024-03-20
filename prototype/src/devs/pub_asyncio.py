@@ -2,6 +2,10 @@ import asyncio
 import socket
 import sys 
 import paho.mqtt.client as mqtt
+import pub_utils
+import psutil
+import json
+import time
 
 class AsyncioHelper:
     def __init__(self, loop, client):
@@ -34,17 +38,27 @@ class AsyncioHelper:
     def on_socket_unregister_write(self, client, userdata, sock):
         self.loop.remove_writer(sock)
 
+    async def publish_sensing(self, sense_topic):
+        utils = pub_utils.PublisherUtils()
+        payload_json = {
+            "data": 178, 
+            "timestamp": time.time()
+        }
+        payload_str = json.dumps(payload_json) 
+        print("waiting for sample_freq")
+        # sim sample_frequency
+        await asyncio.sleep(utils._SAMPLE_FREQ)
+        print(f"publishing to topic {sense_topic}")
+        self.client.publish(topic = sense_topic, payload = payload_str)
+
     async def misc_loop(self):
+        utils = pub_utils.PublisherUtils()
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
-
-                await asyncio.sleep(1)
+                publishes = [self.publish_sensing(topic) for topic in utils._pubtopics]
+                await asyncio.gather(*publishes)                    
             except asyncio.CancelledError:
                 break
-
-    def pubilshToTopics(self):
-        pass
-
 
 class AsyncMqtt:
     def __init__(self, loop):
@@ -57,22 +71,23 @@ class AsyncMqtt:
         # client.subscribe(topic)
 
     def on_message(self, client, userdata, msg):
+        utils = pub_utils.PublisherUtils()
         # if the topic matches the cmd topic, resolve got_cmd with set_result
-        if not self.got_message:
-            print("Got unexpected message: {}".format(msg.decode()))
+        if mqtt.topic_matches_sub(msg.topic, utils._CMD_TOPIC):
+            utils._got_cmd.set_result(msg.payload.decode()) 
         else:
             # when await self.got_message is called, this function resolves that async
-            print("received msg, resolving await")
-            self.got_message.set_result(msg.payload)
+            print("received msg, resolving await ")
+            utils._got_cmd.set_result(None)
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
 
     async def main(self):
-        # main execution
-
+        # main execution        
         # get pub_utils singleton object
-
+        utils = pub_utils.PublisherUtils()
+        
         self.disconnected = self.loop.create_future()
         self.got_message = None
 
@@ -81,6 +96,7 @@ class AsyncMqtt:
         self.client.on_message = self.on_message
         self.client.on_disconnect = self.on_disconnect
         # set other necessary parameters for the client
+        self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
 
         aioh = AsyncioHelper(self.loop, self.client)
 
@@ -91,40 +107,55 @@ class AsyncMqtt:
 
         while True: #infinite loop
             # await asyncio.sleep(timewindow)
-
+            print("starting window")
+            await asyncio.sleep(utils._timeWindow)
+            print("ending window")
             # create lock object
+            lock = asyncio.Lock()
 
                 # async with lock
-
                 # update pub_utils object with current battery
+            async with lock:
+                utils._battery = psutil.sensors_battery().percent
+                print(f"battery: {utils._battery}")
+
+            status_json = {
+                "MAC_ADDR": utils._MAC_ADDR,
+                "BATTERY": utils._battery,
+                "SAMPLE_FREQ": utils._SAMPLE_FREQ
+            }
+
+            status_str = json.dumps(status_json)
 
             # publish status to status topic
 
+            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)
+
             # create future for got_cmd
+            utils._got_cmd = self.loop.create_future()
 
             # await got_cmd
+            await utils._got_cmd 
 
+            # to test change in publishing topics``
+            # await asyncio.sleep(5)
+            # utils._got_cmd = '{"b8:27:eb:4f:15:95":["sensor/temperature", "sensor/humidity"]}'
+            
+            
             # create lock object
+            lock = asyncio.Lock()
 
                 # async with lock
-                # in cmd, get new pub topics with mac address
-            
-                # change pub_utils publishing topics
-
-            # set got_cmd to None
-
-
-            await asyncio.sleep(5)
-            print("main: Publishing")
-            self.got_message = self.loop.create_future()
-            self.client.publish(topic, b'Hello' * 40000, qos=1)
-            print("waiting for msg")
-            msg = await self.got_message
-            print("main: Got response with {} bytes".format(len(msg)))
-            self.got_message = None
-
-        self.client.disconnect()
-        print("main: Disconnected: {}".format(await self.disconnected))
+            async with lock:
+                if(utils._got_cmd):
+                    cmd_dict = json.loads(utils._got_cmd)
+                    # in cmd, get new pub topics with mac address
+                    # change pub_utils publishing topics
+                    utils._pubtopics = cmd_dict[utils._MAC_ADDR]
+                    print(utils._pubtopics)
+                    print(type(utils._pubtopics))
+                    # set got_cmd to None
+                    utils._got_cmd = None
 
 def run_async_publisher():
     print("Starting")

@@ -31,12 +31,12 @@ def main():
     # extract input parameters
     if(sys.argv[1] == "default"):
         #print("Using default credentials and topics for subscriber")
-        USERNAME = "sub01"
-        PASSWORD = "mqttcc01"
+        USERNAME = "dev01"
+        PASSWORD = "mqttccd1"
         battery = 100.0
-        sampleFrequency = 50000
-        MacAddr = "b8:27:eb:4f:15:95."
-        publishing_topics = ["sensor/temperature", "sensor/airquality"]
+        sampleFrequency = 10
+        MacAddr = "b8:27:eb:4f:15:95"
+        publishing_topics = ["sensor/airquality"]
     elif(len(sys.argv) != 7):
         print(f"Error: incorrect number of command line parameters. {len(sys.argv)} Expected username, password, startBattery, sampleFrequency, MACAddress, and topics list")
         sys.exit()
@@ -49,17 +49,11 @@ def main():
         publishing_topics = sys.argv[6].split(",") # list of strings 
         # topic list delimited by commas, no spaces
     # create single instance of pub_utils with cmd line parameters
-    utils = pub_utils.PublisherUtils(
-                                        username=USERNAME,
-                                        password=PASSWORD,
-                                        pub_topics=publishing_topics,
-                                        sample_frequency=sampleFrequency,
-                                        Mac_addr=MacAddr,
-                                        start_battery=battery
-                                     )
+    utils = pub_utils.PublisherUtils()
+    utils.setParameters(username=USERNAME, password=PASSWORD, pub_topics=publishing_topics, sample_frequency=sampleFrequency, Mac_addr=MacAddr, start_battery=battery)
     # move execution to pub_asyncio
     run_async_publisher()
-    
+
 if __name__ == "__main__":
     main()
 
