@@ -13,10 +13,12 @@ class PublisherUtils:
         return cls._instance
     
     # on Pi, grab mac address with terminal, not programmatically
-    def __init__(self, pub_topics, time_window, sample_frequency, Mac_addr, start_battery) -> None:
+    def __init__(self, username, password, pub_topics, sample_frequency, Mac_addr, start_battery) -> None:
         # Set Attributes to Parameters
+        self._USERNAME = username
+        self._PASSWORD = password
         self._pubtopics = pub_topics # all topics dev is capable of publishing to
-        self._timeWindow = time_window # time window where dev sends status, waits for response on command
+        self._timeWindow = 0 # time window where dev sends status, waits for response on command
         self._MAC_ADDR = Mac_addr # mac address of IoT device 
         self._SAMPLE_FREQ = sample_frequency # fixed sample_freq of IoT device
         self._battery = start_battery

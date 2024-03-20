@@ -7,10 +7,10 @@ class SubscriberUtils:
             cls._instance = super().__new__(cls, *args, **kwargs)
         return cls._instance
     
-    def __init__(self, subbed_topics_with_qos, time_window) -> None:
+    def __init__(self, subbed_topics_with_qos) -> None:
         # Set Attributes to Parameters
         self._subtopics = subbed_topics_with_qos # (list of topics with latency req, must remove)
-        self._timeWindow = time_window
+        self._timeWindow = 0
         self._WILL_TOPIC = "subs/will"
         self._SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
         self._network_latency_dict = dict()
