@@ -44,8 +44,7 @@ class Database:
     def createDeviceTable(self) -> None:
         deviceTable = '''CREATE TABLE IF NOT EXISTS devices (
                                 deviceMAC TEXT PRIMARY KEY, 
-                                battery FLOAT, 
-                                sample_frequency_ms INTEGER)'''
+                                battery FLOAT)'''
         self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
     def createPublishSelectTable(self) -> None:
@@ -77,7 +76,11 @@ class Database:
         self.execute_query_with_retry(query=update_query, values=newSubQoS, requires_commit=True)
 
     
-
+    # TODO: Queries for algorithm
+        
+    # TODO: Queries to update device table after status
+        
+    # TODO: Query to add device topic capability from device txt (DB can be prepared before simulation)
 
 
 

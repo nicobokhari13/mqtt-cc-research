@@ -9,13 +9,8 @@ PASSWORD = "adminproto"
 STATUS_TOPIC = "status/#"
 PUBLISH_TOPIC = "sensor/"
 SUBS_WILL_TOPIC = "subs/will"
-
-# will messages still applicable if something goes wrong in the experiment
-
-SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
-
-# TODO 3: Message handling for all topics in subscribers.txt (Large todo, to break up later)
-# TODO 4: Algorithm to assign publish column in publish_select table based on # topics * battery
+NEW_SUBS_TOPIC = "subs/change" 
+# TODO: subscribe to NEW_SUBS_TOPIC, and when a message is received, start algorithm
 
 def on_connect(client, userdata, flags, rc):
 
@@ -33,15 +28,6 @@ def on_message(client, userdata, msg):
         status.handle_status_msg(client, msg)
     if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
         will.updateDB(payload)
-    if mqtt.topic_matches_sub(SUBS_NET_LAT_TOPIC):
-        # clientutils.calculateChanges(client)
-        # message contains:
-            # {
-            #   "/topic": avgNetLat
-            #   "/topic2": avgNetlat
-            #   ...
-            #   }
-        # if any of the avg latency for a topic are > than max_allowed, must reassign
         pass
     
 # Executed when script is ran
