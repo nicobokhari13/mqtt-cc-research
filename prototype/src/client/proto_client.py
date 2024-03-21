@@ -35,6 +35,13 @@ def on_message(client, userdata, msg):
         will.updateDB(payload)
     if mqtt.topic_matches_sub(SUBS_NET_LAT_TOPIC):
         # clientutils.calculateChanges(client)
+        # message contains:
+            # {
+            #   "/topic": avgNetLat
+            #   "/topic2": avgNetlat
+            #   ...
+            #   }
+        # if any of the avg latency for a topic are > than max_allowed, must reassign
         pass
     
 # Executed when script is ran

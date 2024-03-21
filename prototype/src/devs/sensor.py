@@ -34,7 +34,7 @@ def main():
         USERNAME = "dev01"
         PASSWORD = "mqttccd1"
         battery = 100.0
-        sampleFrequency = 10
+        sampleFrequency = 10 # sample frequency is provided in cmd, on start up, must wait for cmd
         MacAddr = "b8:27:eb:4f:15:95"
         publishing_topics = ["sensor/airquality"]
     elif(len(sys.argv) != 7):
