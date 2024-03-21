@@ -16,7 +16,6 @@ class PublisherUtils:
     def __init__(self, ) -> None:
         # Other attributes/constants
         self._STATUS_TOPIC = "sensor/status" # where IoT device sends status
-        self._CMD_TOPIC = "sensor/cmd" # where IoT receives command on where to publish
         self._got_cmd = None # set to true and mqtt awaits self. to be set to False after msg is received
         self._end_round = None # 
 
@@ -29,3 +28,4 @@ class PublisherUtils:
         self._MAC_ADDR = Mac_addr # mac address of IoT device 
         self._SAMPLE_FREQ = sample_frequency # fixed sample_freq of IoT device
         self._battery = start_battery
+        self._CMD_TOPIC = "sensor/cmd" + self._MAC_ADDR # where IoT receives command on where to publish
