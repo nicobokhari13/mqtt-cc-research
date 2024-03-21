@@ -66,6 +66,44 @@ void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos){
     log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Subscriber: %s", context->mqtt_cc.incoming_sub_clientid);
 }
 
+void *messageClient(void *arg){
+    // Command to execute
+    const char *dir = "pwd";
+    int check = system(dir);
+
+    const char *command = "mosquitto_pub -u internal -P mqttcci -t subs/change -m 1";
+    
+
+    // Execute the bash script
+    int ret = system(command);
+
+    // Check if script execution was successful
+    if (ret == 0) {
+        printf("Script executed successfully.\n");
+    } else {
+        printf("Failed to execute the script.\n");
+    }
+    // Exit the thread
+    pthread_exit(NULL);
+
+
+    // // Execute the command
+    // int result = system(command);
+    
+    //     // Check the result
+    // if (result == -1) {
+    //     // Failed to execute the command
+    //     perror("Error executing the command");
+    // } else if (result != 0) {
+    //     // Command returned an error
+    //     printf("Command returned non-zero exit code: %d\n", result);
+    // }
+
+    // Command executed successfully
+    printf("Command executed successfully\n");
+
+}
+
 void prepare_DB(){
 	log__printf(NULL, MOSQ_LOG_INFO, "in prepare DB");
 
@@ -203,7 +241,6 @@ void insert_topic_in_DB(struct mosquitto *context){
 }
 
 int calc_new_max_latency(struct cJSON *latencies){
-
     int numLatencies = 0;
     cJSON *child = latencies->child;
     while(child != NULL){
@@ -219,17 +256,24 @@ int calc_new_max_latency(struct cJSON *latencies){
 
     int i = 0;
     cJSON_ArrayForEach(child, latencies){
-        log__printf(NULL, MOSQ_LOG_DEBUG, "Adding latency to int array %ds\n", child->valueint);
+        log__printf(NULL, MOSQ_LOG_DEBUG, "Adding latency to int array %ds\n in index %d", child->valueint, i);
         arr[i] = child->valueint;
         i++; 
     }
+    log__printf(NULL, MOSQ_LOG_DEBUG, "Outside array for each");
+
     int min = arr[0];
+    log__printf(NULL, MOSQ_LOG_DEBUG, "just set min");
+
     for(i = 1; i < numLatencies; i++){
+        log__printf(NULL, MOSQ_LOG_DEBUG, "entered for loop");
+
         if(arr[i] < min){
+            log__printf(NULL, MOSQ_LOG_DEBUG, "entered if");
+
             min = arr[i];
         }
     }
-
     return min;
 }
 
@@ -237,9 +281,14 @@ int calc_new_max_latency(struct cJSON *latencies){
 void update_lat_req_max_allowed(struct mosquitto *context){
     // at this point, the topic does exist in the DB, and the find_existing_topic stmt contains the row
     int rc;
+    pthread_t mess_client;
+    pthread_attr_t attr;
+    int ret;
     // get the old latency value from column 1 (latencyReq)
     
     char *oldLatencyValue = sqlite3_column_text(prototype_db.find_existing_topic, 1);
+
+    int oldMaxAllowed = sqlite3_column_int(prototype_db.find_existing_topic, 2);
     
     log__printf(NULL, MOSQ_LOG_DEBUG, "old Latency Value: %s\n", oldLatencyValue);
 
@@ -265,6 +314,16 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     cJSON_AddNumberToObject(db_Value, context->mqtt_cc.incoming_sub_clientid, context->mqtt_cc.incoming_lat_qos);
 
     int newMaxAllowed = calc_new_max_latency(db_Value);
+    log__printf(NULL, MOSQ_LOG_DEBUG, "just calculated new max");
+    log__printf(NULL, MOSQ_LOG_DEBUG, "old max allowed: %d\n", oldMaxAllowed);
+
+    if(newMaxAllowed != oldMaxAllowed){
+        // create thread to message client
+        pthread_attr_init(&attr);
+		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+		ret = pthread_create(&mess_client, &attr, messageClient, NULL);
+		pthread_attr_destroy(&attr);
+    }
 
     // convert new latency value back into string
     char *newLatencyValue = cJSON_Print(db_Value);

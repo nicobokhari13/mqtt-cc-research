@@ -43,6 +43,9 @@ Contributors:
 #include <sqlite3.h>
 #include "mqtt_cc.h"
 #include <cjson/cJSON.h>
+#include <stdlib.h>
+#include <pthread.h>
+
 
 #ifndef __GNUC__
 #define __attribute__(attrib)
@@ -885,6 +888,7 @@ void log_sub(char *sub);
 bool has_lat_qos(char *sub);
 void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos);
 char* create_latency_str(char *clientid, int latencyNum);
+void *messageClient(void *arg);
 // SQLite DB functions
 void prepare_DB(); // (called in mosquitto.c's main )
 bool topic_exists_in_DB(struct mosquitto *context);

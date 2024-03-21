@@ -36,7 +36,7 @@ Contributors:
 #if defined(WITH_THREADING) && !defined(WITH_BROKER)
 #  include <pthread.h>
 #else
-#  include <dummypthread.h>
+//#  include <dummypthread.h>
 #endif
 
 #ifdef WITH_SRV
