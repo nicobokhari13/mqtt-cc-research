@@ -11,7 +11,7 @@ class ProtoUtils:
         self._USERNAME = "prototype"
         self._PASSWORD = "adminproto"
         self._STATUS_TOPIC = "sensor/status"
-        self._CMD_TOPIC = "sensor/cmd"
+        self._CMD_TOPIC = "sensor/cmd/"
         self._timeWindow = 10
         self._WILL_TOPIC = "subs/will"
         self._SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time

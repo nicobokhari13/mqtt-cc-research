@@ -30,6 +30,8 @@ def on_message(client, userdata, msg):
     if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
         will.updateDB(payload)
     if mqtt.topic_matches_sub(NEW_SUBS_TOPIC, topic):
+        mapAssignments = algo.generateAssignments()
+        algo.sendCommands(mapAssignments, client)
         pass
 
     

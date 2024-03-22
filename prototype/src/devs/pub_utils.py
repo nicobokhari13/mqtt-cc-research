@@ -28,4 +28,4 @@ class PublisherUtils:
         self._MAC_ADDR = Mac_addr # mac address of IoT device 
         self._SAMPLE_FREQ = sample_frequency # fixed sample_freq of IoT device
         self._battery = start_battery
-        self._CMD_TOPIC = "sensor/cmd" + self._MAC_ADDR # where IoT receives command on where to publish
+        self._CMD_TOPIC = "sensor/cmd/" + self._MAC_ADDR # where IoT receives command on where to publish
