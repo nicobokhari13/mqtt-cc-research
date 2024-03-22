@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 import proto_db as db
 import status_handler as status
 import will_topic_handler as will
+import algo_handler as algo
 import sys
 
 USERNAME = "prototype"
@@ -28,7 +29,9 @@ def on_message(client, userdata, msg):
         status.handle_status_msg(client, msg)
     if mqtt.topic_matches_sub(SUBS_WILL_TOPIC, topic):
         will.updateDB(payload)
+    if mqtt.topic_matches_sub(NEW_SUBS_TOPIC, topic):
         pass
+
     
 # Executed when script is ran
 

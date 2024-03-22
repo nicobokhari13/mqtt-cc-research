@@ -281,14 +281,10 @@ int calc_new_max_latency(struct cJSON *latencies){
 void update_lat_req_max_allowed(struct mosquitto *context){
     // at this point, the topic does exist in the DB, and the find_existing_topic stmt contains the row
     int rc;
-    pthread_t mess_client;
-    pthread_attr_t attr;
     int ret;
     // get the old latency value from column 1 (latencyReq)
     
     char *oldLatencyValue = sqlite3_column_text(prototype_db.find_existing_topic, 1);
-
-    int oldMaxAllowed = sqlite3_column_int(prototype_db.find_existing_topic, 2);
     
     log__printf(NULL, MOSQ_LOG_DEBUG, "old Latency Value: %s\n", oldLatencyValue);
 
@@ -314,16 +310,7 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     cJSON_AddNumberToObject(db_Value, context->mqtt_cc.incoming_sub_clientid, context->mqtt_cc.incoming_lat_qos);
 
     int newMaxAllowed = calc_new_max_latency(db_Value);
-    log__printf(NULL, MOSQ_LOG_DEBUG, "just calculated new max");
-    log__printf(NULL, MOSQ_LOG_DEBUG, "old max allowed: %d\n", oldMaxAllowed);
 
-    if(newMaxAllowed != oldMaxAllowed){
-        // create thread to message client
-        pthread_attr_init(&attr);
-		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-		ret = pthread_create(&mess_client, &attr, messageClient, NULL);
-		pthread_attr_destroy(&attr);
-    }
 
     // convert new latency value back into string
     char *newLatencyValue = cJSON_Print(db_Value);
