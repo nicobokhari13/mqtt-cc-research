@@ -3,8 +3,6 @@ def countExecutions(macAddr, newTaskFrequency):
     # get frequencies device is already publishing on
     # make it a set to remove duplicates
 
-    # TODO: Track number of executions + execution changes. Make class that holds macAddr, execution #, set of frequencies publishing
-
     pass
 
 def energyIncrease(macAddr, newTaskFrequency):
@@ -12,6 +10,9 @@ def energyIncrease(macAddr, newTaskFrequency):
     energy = "constant"
     return energy * num
 
+# types of generation
+    # TODO: type 1: assigning topic that has a changed max_allowed or a new topic added to DB
+    # TODO: type 2: complete reconfig after no new subscribers for some time
 def generateAssignments():
     # variable to save best publisher's macAddr
     # get all topics from subscriptions table

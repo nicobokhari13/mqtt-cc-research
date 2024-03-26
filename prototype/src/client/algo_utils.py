@@ -1,17 +1,14 @@
 import math
 
 class Processing_Unit:
-    def __init__(self, macAddr:str, publishing_set:list, capacity:float):
+    def __init__(self, macAddr:str, publishing_set:list, capacity:float, executions):
         self._mac = macAddr
         self._freqs = publishing_set
         self._battery = capacity
         self._freq_min = min(self._freqs)
-        self._numExecutions = 0
+        self._numExecutions = executions 
         self._OBSERVATION_PERIOD = 60
         self._ENERGY_PER_EXECUTION = 10
-    
-    def changeInExecutions(self, newExecutions):
-        return newExecutions - self._numExecutions
     
     def calculateExecutions(self, newTask = None):
         if newTask: 
@@ -36,7 +33,8 @@ class Processing_Unit:
         for i in range(len(freqCopy)):
             numExecutions += math.ceil(self._OBSERVATION_PERIOD / freqCopy[i])
         return numExecutions
-        
+                
+
 class Devices:
     _instance = None
     
@@ -52,6 +50,12 @@ class Devices:
     def addProcessingUnit(self, newUnit:Processing_Unit):
         newUnit._numExecutions = newUnit.calculateExecutions()
         self._units[newUnit._mac] = newUnit
+
+    def resetUnits(self):
+        self._units.clear()
+    
+
+    
 
         
 
