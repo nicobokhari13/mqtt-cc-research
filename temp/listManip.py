@@ -1,32 +1,18 @@
 import math
-
-nums = [10, 12, 20, 37, 45]
-goods = []
+import time
+import random
+nums = [random.randint(1, 100) for i in range(10)]
 nums_min = min(nums)
-nums.remove(nums_min)
 threshold = math.ceil(nums_min / 2) - 1
 print(f"threshold = {threshold}")
-for i in range(len(nums)):
-    if i > len(nums):
-        print(f"at index {i}, breaking now")
-        break
-    print(f"index {i} value {nums[i]}")
-    # if the number is within the threshold 
-    # 12 % 10 = 2 < 4, removed 2 = -8 mod 10
-    # 20 % 10 = 0 < 4, removed 0 = -10 mod 10
-    # 37 % 10 = 7 > 4, 7 = -3 mod 10, 10 - 7 = 3
-    # 45 % 10 = 5 > 4 OR 5 = -5 mod 10
-    print(f"difference: {nums[i] % nums_min}, mod equiv {nums_min - nums[i] % nums_min}")
-    print(f"    {nums[i] % nums_min < threshold}")
-    print(f"    {(nums_min - nums[i] % nums_min) < threshold}")
-    if (nums[i] % nums_min < threshold) or ((nums_min - nums[i] % nums_min) < threshold):
-        # remove it from the list
-        goods.append(nums[i])
-    print(f"    goods: {goods}")
-    print(f"    nums: {nums}")
-diff = set(nums) - set(goods)
-diff = list(diff)
-print(f"diff = {diff}")
-
-
-    
+start = time.time()
+# Create a list of numbers to remove
+removes = [num for num in nums if (num % nums_min < threshold) or ((nums_min - num % nums_min) < threshold)]
+# Remove the numbers from the original list
+nums = [num for num in nums if num not in removes]
+stop = time.time()
+print(f"duration: {stop - start}")
+# Append the minimum number to the list
+nums.append(nums_min)
+print(nums_min)
+print(nums)
