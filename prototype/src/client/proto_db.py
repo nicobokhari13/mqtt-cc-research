@@ -44,7 +44,9 @@ class Database:
     def createDeviceTable(self) -> None:
         deviceTable = '''CREATE TABLE IF NOT EXISTS devices (
                                 deviceMAC TEXT PRIMARY KEY, 
-                                battery FLOAT)'''
+                                battery FLOAT, 
+                                executions INTEGER)'''
+        # TODO: query to update number of executions a device is making after cmd is created
         self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
     def createPublishSelectTable(self) -> None:
@@ -81,6 +83,7 @@ class Database:
     # TODO: Queries to update device table after status
         
     # TODO: Query to add device topic capability from device txt (DB can be prepared before simulation)
+        
 
 
 

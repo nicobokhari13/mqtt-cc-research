@@ -1,11 +1,9 @@
 
 def countExecutions(macAddr, newTaskFrequency):
     # get frequencies device is already publishing on
-    # calculate # executions for frequencies within time period = max Frequency 
-        # if within 1 minute of each other, remove
-        # use least common multiple??? TODO: use lcm math, try examples
-    # add newTaskFrequency  
+    # make it a set to remove duplicates
 
+    # TODO: Track number of executions + execution changes. Make class that holds macAddr, execution #, set of frequencies publishing
 
     pass
 
@@ -13,7 +11,6 @@ def energyIncrease(macAddr, newTaskFrequency):
     num = countExecutions(macAddr = "deviceMac", newTaskFrequency = "max_allowed")
     energy = "constant"
     return energy * num
-    pass
 
 def generateAssignments():
     # variable to save best publisher's macAddr
