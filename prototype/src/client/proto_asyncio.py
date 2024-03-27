@@ -5,7 +5,10 @@ import paho.mqtt.client as mqtt
 import proto_utils
 import psutil
 import json
-import time
+import proto_db as db
+import status_handler as status
+import will_topic_handler as will
+import algo_handler as algo
 
 class AsyncioHelper:
     def __init__(self, loop, client):
@@ -77,25 +80,46 @@ class AsyncMqtt:
     def __init__(self, loop):
         self.loop = loop
 
+
+    async def sendCommandToDevice(self, topic, msg):
+        self.client.publish(topic, msg)
+
+    async def sendCommands(self, mapAssignments:dict):
+        utils = proto_utils.ProtoUtils()
+        command_threads = [self.sendCommandToDevice(topic=utils._CMD_TOPIC+macAddress, msg=cmd) for macAddress, cmd in mapAssignments] 
+        await asyncio.gather(*command_threads)
+        # resolve ranAlgo object
+        utils._ranAlgo.set_result(True)
+
     def on_connect(self, client, userdata, flags, rc):
         if(rc == 5):
             sys.exit()
-        # TODO: After connect, subscribe to status, will, new sub, and sub change
-        # client.subscribe(topic)
+        utils = proto_utils.ProtoUtils()
+        self.client.subscribe((utils._STATUS_TOPIC, utils._SUBS_WILL_TOPIC, utils._NEW_SUBS_TOPIC, utils._LAT_CHANGE_TOPIC))
 
     def on_message(self, client, userdata, msg):
-        # TODO: put client on_message here
+        topic = msg.topic
+        payload = msg.payload.decode()
         utils = proto_utils.ProtoUtils()
-        # if the topic matches the cmd topic, resolve got_cmd with set_result
-        if mqtt.topic_matches_sub(msg.topic, utils._CMD_TOPIC):
-            utils._got_cmd.set_result(msg.payload.decode()) 
-        else:
-            # when await self.got_message is called, this function resolves that async
-            print("received msg, resolving await ")
-            utils._got_cmd.set_result(None)
+        # Print MQTT message to console
+        if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
+            status.handle_status_msg(msg)
+        if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
+            will.updateDB(payload)
+        if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
+            mapAssignments = algo.generateAssignments()
+            self.sendCommands(mapAssignments)
+        if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
+            # the message payload holds the topic with the changed max_allowed_latency
+            # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
+            mapAssignments = algo.generateAssignments(changedTopic=payload)
+            self.sendCommands(mapAssignments)
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
+    # TODO 2: convert client to asyncio
+
+
 
     async def main(self):
         # main execution        

@@ -94,25 +94,3 @@ def generateAssignments(changedTopic = None):
 
     return publishers._generated_cmd
 
-# TODO 2: convert client to asyncio
-
-def sendCommands(mapAssignments, client):
-    # mapAssignments is a hash map with the schema:
-
-    # macAddress: {"topic1/blah": 87, "topic2/ha": 85}
-    # macAddress2: {"topic3/meh": 35}
-    # ...
-    # for each key in mapAssignments
-
-
-    # commands are sent to the topic "sensor/cmd/" MAC_ADDR
-    # so, for each device in the devices table, publish a message to
-    # topic = "sensor/cmd/" + deviceMac
-    # with payload = mapAssignments[deviceMac].dumps() since the value is a json object
-    pass
-
-
-# TODO: Probably put this in proto_utils since it will save the client? 
-def sendCommandToDevice(client, macAddr, msg):
-    # client.publish(topic = protoUtils.cmdTopic + macAddr, payload = msg)
-    pass
