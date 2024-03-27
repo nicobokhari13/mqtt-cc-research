@@ -84,21 +84,24 @@ char *concat_strings(char *str1, char *str2) {
 }
 
 void *messageClient(void *arg){
-    struct mosquitto *context = (struct mosquitto*)arg;
+    struct mosquitto* context = (struct mosquitto*)arg;
     // Command to execute
     const char *dir = "pwd";
     int check = system(dir);
     char *latChangeCommand = "mosquitto_pub -u internal -P mqttcci -t subs/change -m ";
     char *newSubCommand = "mosquitto_pub -u internal -P mqttcci -t subs/add -m ";
     char *finalCommand;
-
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t In messageClient, topic = : %s", context->mqtt_cc.incoming_topic);
     if(context->mqtt_cc.latChange){// if client being messaged from a change in max_allowed_latency
+        printf("there was a lat change");
         finalCommand = concat_strings(latChangeCommand, context->mqtt_cc.incoming_topic);
     }
     else{
+        printf("there was NO lat change");
         finalCommand = concat_strings(newSubCommand, context->mqtt_cc.incoming_topic);
     }
-
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t Final Command: %s", finalCommand);
+    log__printf(NULL, MOSQ_LOG_DEBUG, "\t for topic: %s", context->mqtt_cc.incoming_topic);
     // Execute the bash script
     int ret = system(finalCommand);
 

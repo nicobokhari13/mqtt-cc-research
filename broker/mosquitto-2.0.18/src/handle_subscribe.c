@@ -205,10 +205,13 @@ int handle__subscribe(struct mosquitto *context)
 						insert_topic_in_DB(context); // while inserting, set max_allowed_latency = incoming_latency
 						context->mqtt_cc.latChange = false;
 						// create thread to message client
+						log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
 						pthread_attr_init(&mess_client_attr);
 						pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
+						log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
 						ret = pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
 						pthread_attr_destroy(&mess_client_attr);
+						sleep(1); // necessary so thread can finish before context is freed in later functions
 					}
 					else{ // since the topic already exists need to adjust max_allowed_latency
 						context->mqtt_cc.latChange = true;
@@ -220,7 +223,8 @@ int handle__subscribe(struct mosquitto *context)
 
 				}
 
-
+				log__printf(NULL, MOSQ_LOG_DEBUG, "\ After has lat qos, topic = %s \n", context->mqtt_cc.incoming_topic);
+				
 				// add the subscription with sub__add in subs.c
 				// the database (mosquitto_db in mosquitto_broker_internal.h) holds an array of mosquitto__subhiers
 				// subhiers are all the subscriptions defined by '/' levels, and have a parent hiearchy + children hierarchies
