@@ -91,6 +91,6 @@ def generateAssignments(changedTopic = None):
          if device._assignments is not None:
               assignmentString = json.dumps(device._assignments)
               publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
-
+    db.closeDB()
     return publishers._generated_cmd
 

@@ -46,7 +46,6 @@ class Database:
                                 deviceMac TEXT PRIMARY KEY, 
                                 battery FLOAT, 
                                 executions INTEGER)'''
-        # TODO 1: query to update number of executions a device is making after cmd is created
         self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
     def createPublishTable(self) -> None:
@@ -54,13 +53,11 @@ class Database:
                                 CREATE TABLE IF NOT EXISTS publish (
                                 deviceMac TEXT, 
                                 topic TEXT, 
-                                capability BOOLEAN,
-                                publish BOOLEAN,
+                                publishing BOOLEAN,
                                 FOREIGN KEY (deviceMac) REFERENCES devices(deviceMac),
-                                FOREIGN KEY (topic) REFERENCES subscriptions(topic) 
+                                FOREIGN KEY (topic) REFERENCES subscriptions(subscription) 
                                 PRIMARY KEY (deviceMac, topic)
                                 )'''
-        # capability: True = can publish, False = cannot publish
         # publish: True = is currently publishing to topic, False = is not currently publishing
         self.execute_query_with_retry(query=publishSelectTable, requires_commit=True)
 
@@ -110,12 +107,12 @@ class Database:
     
     def updateDeviceExecutions(self, MAC_ADDR, NEW_EXECUTIONS):
         updateQuery = '''UPDATE devices SET executions = ? WHERE deviceMac = ?'''
-        device_values = (MAC_ADDR, NEW_EXECUTIONS)
+        device_values = (NEW_EXECUTIONS,MAC_ADDR)
         self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
 
     def updateDeviceStatus(self, MAC_ADDR, NEW_BATTERY):
         updateQuery = '''UPDATE devices SET battery = ? WHERE deviceMac = ?'''
-        device_values = (MAC_ADDR, NEW_BATTERY)
+        device_values = (NEW_BATTERY,MAC_ADDR)
         self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
         
     # TODO: Query to add device topic capability from device txt (DB can be prepared before simulation)

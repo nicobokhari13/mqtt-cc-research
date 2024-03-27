@@ -151,7 +151,7 @@ void prepare_DB(){
     }
 
     // Create Tables
-    const char *create_table_sql = "CREATE TABLE IF NOT EXISTS subscriptions (topic TEXT PRIMARY KEY, latency_req TEXT, max_allowed_latency INTEGER);";
+    const char *create_table_sql = "CREATE TABLE IF NOT EXISTS subscriptions (subscription TEXT PRIMARY KEY, latency_req TEXT, max_allowed_latency INTEGER);";
     rc = sqlite3_exec(prototype_db.db, create_table_sql, 0, 0, &err_msg);
 	log__printf(NULL, MOSQ_LOG_INFO, "Created Tables");
 

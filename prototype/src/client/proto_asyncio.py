@@ -103,7 +103,7 @@ class AsyncMqtt:
         utils = proto_utils.ProtoUtils()
         # Print MQTT message to console
         if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
-            status.handle_status_msg(msg)
+            status.handle_status_msg(payload)
         if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
             will.updateDB(payload)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):

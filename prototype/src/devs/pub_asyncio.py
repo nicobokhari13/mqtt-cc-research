@@ -135,9 +135,8 @@ class AsyncMqtt:
                 print(f"battery: {utils._battery}")
 
             status_json = {
-                "MAC_ADDR": utils._MAC_ADDR,
-                "BATTERY": utils._battery,
-                "SAMPLE_FREQ": utils._SAMPLE_FREQ
+                "deviceMac": utils._MAC_ADDR,
+                "battery": utils._battery,
             }
 
             status_str = json.dumps(status_json)
