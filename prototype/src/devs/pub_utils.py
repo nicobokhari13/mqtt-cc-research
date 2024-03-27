@@ -12,7 +12,7 @@ class PublisherUtils:
         return cls._instance
     
     # on Pi, grab mac address with terminal, not programmatically
-    def __init__(self, ) -> None:
+    def __init__(self) -> None:
         # Other attributes/constants
         self._STATUS_TOPIC = "sensor/status" # where IoT device sends status
         self._got_cmd = None # set to true and mqtt awaits self. to be set to False after msg is received

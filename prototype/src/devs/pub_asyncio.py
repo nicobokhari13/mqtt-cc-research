@@ -74,8 +74,9 @@ class AsyncMqtt:
     def on_connect(self, client, userdata, flags, rc):
         if(rc == 5):
             sys.exit()
+        utils = pub_utils.PublisherUtils()
+        client.subscribe(utils._CMD_TOPIC)
         # After connect, subscribe to CMD topic
-        # client.subscribe(topic)
 
     def on_message(self, client, userdata, msg):
         utils = pub_utils.PublisherUtils()
@@ -96,7 +97,6 @@ class AsyncMqtt:
         # main execution        
         # get pub_utils singleton object
         utils = pub_utils.PublisherUtils()
-        
         self.disconnected = self.loop.create_future()
 
         self.client = mqtt.Client()
