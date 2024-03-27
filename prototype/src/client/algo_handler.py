@@ -4,7 +4,6 @@ from proto_utils import ProtoUtils
 from proto_db import Database
 
 # types of generation
-    # TODO: type 1: assigning topic that has a changed max_allowed or a new topic added to DB
     # TODO: type 2: complete reconfig after no new subscribers for some time
 def generateAssignments(changedTopic = None):
     if changedTopic:
@@ -92,7 +91,7 @@ def generateAssignments(changedTopic = None):
     # return Devices._instance._generated_cmd
     return publishers._generated_cmd
 
-# TODO 1: convert client to asyncio
+# TODO 2: convert client to asyncio
 
 def sendCommands(mapAssignments, client):
     # mapAssignments is a hash map with the schema:

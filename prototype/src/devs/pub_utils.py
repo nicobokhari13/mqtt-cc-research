@@ -29,3 +29,5 @@ class PublisherUtils:
         self._SAMPLE_FREQ = sample_frequency # fixed sample_freq of IoT device
         self._battery = start_battery
         self._CMD_TOPIC = "sensor/cmd/" + self._MAC_ADDR # where IoT receives command on where to publish
+    
+    # TODO: Read and save cmd topics + frequencies for each. Use concurrent tasks

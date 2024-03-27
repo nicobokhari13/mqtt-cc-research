@@ -111,7 +111,6 @@ class AsyncMqtt:
         self.client.on_disconnect = self.on_disconnect
         # set other necessary parameters for the client
 
-        # TODO: refactor with 
         self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
 
         aioh = AsyncioHelper(self.loop, self.client)

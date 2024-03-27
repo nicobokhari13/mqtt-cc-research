@@ -46,7 +46,7 @@ class Database:
                                 deviceMac TEXT PRIMARY KEY, 
                                 battery FLOAT, 
                                 executions INTEGER)'''
-        # TODO: query to update number of executions a device is making after cmd is created
+        # TODO 1: query to update number of executions a device is making after cmd is created
         self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
     def createPublishTable(self) -> None:
@@ -76,9 +76,6 @@ class Database:
         newSubQoS = (new_lat_qos, new_max_lat, topic)
         update_query = '''UPDATE subscriptions SET latency_req = ?, max_allowed_latency = ? WHERE topic = ?'''
         self.execute_query_with_retry(query=update_query, values=newSubQoS, requires_commit=True)
-
-    
-    # TODO: Queries for algorithm
         
     def topicsWithNoPublishers(self) -> list:
         selectQuery = '''SELECT DISTINCT topic, max_allowed_latency

@@ -125,7 +125,6 @@ class AsyncMqtt:
             print("ending window")
             # TODO: Refactor so status message is sent every minute? play aroung with time window constant
                 # status sent on start up + periodically sent
-            # TODO: Read and save cmd topics + frequencies for each. Use concurrent tasks
             # create lock object
             lock = asyncio.Lock()
 
