@@ -3,7 +3,7 @@ import proto_db as db
 import json
 import csv
 
-def handle_status_msg(msg:str, time):
+def handle_status_msg(msg:str):
     database = db.Database()
     database.openDB()
     # example status
@@ -11,9 +11,10 @@ def handle_status_msg(msg:str, time):
     #     "MAC_ADDR": utils._MAC_ADDR,
     #     "BATTERY": utils._battery,
     # }
+    status_json = json.loads(msg)
     mac = status_json["deviceMac"]
     battery = status_json["battery"]
-    status_json = json.loads(msg)
+    time = status_json["time"]
     logPublisherBattery(mac, battery, time)
     database.updateDeviceStatus(MAC_ADDR=mac, NEW_BATTERY=battery)
     database.closeDB()

@@ -3,13 +3,10 @@ import socket
 import sys 
 import paho.mqtt.client as mqtt
 import proto_utils
-import psutil
-import json
 import proto_db as db
 import status_handler as status
 import will_topic_handler as will
 import algo_handler as algo
-from datetime import datetime
 
 class AsyncioHelper:
     def __init__(self, loop, client):
@@ -82,8 +79,7 @@ class AsyncMqtt:
         utils = proto_utils.ProtoUtils()
         # Print MQTT message to console
         if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
-            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            status.handle_status_msg(payload, current_time)
+            status.handle_status_msg(payload)
         if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
             will.updateDB(payload)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):

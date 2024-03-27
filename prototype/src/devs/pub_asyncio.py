@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 import pub_utils
 import psutil
 import json
-import time
+from datetime import datetime
 
 class AsyncioHelper:
     def __init__(self, loop, client):
@@ -50,11 +50,6 @@ class AsyncioHelper:
         await asyncio.sleep(utils._SAMPLE_FREQ)
         print(f"publishing to topic {sense_topic}")
         self.client.publish(topic = sense_topic, payload = payload_str)
-
-    async def performCmd(self, cmd):
-
-        pass
-
 
     async def misc_loop(self):
         utils = pub_utils.PublisherUtils()
@@ -130,12 +125,14 @@ class AsyncMqtt:
                 # async with lock
                 # update pub_utils object with current battery
             async with lock:
+                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 utils._battery = psutil.sensors_battery().percent
                 print(f"battery: {utils._battery}")
 
             status_json = {
                 "deviceMac": utils._MAC_ADDR,
                 "battery": utils._battery,
+                "time": current_time
             }
 
             status_str = json.dumps(status_json)
@@ -149,11 +146,6 @@ class AsyncMqtt:
 
             # await got_cmd
             await utils._got_cmd 
-
-            # to test change in publishing topics``
-            # await asyncio.sleep(5)
-            # utils._got_cmd = '{"b8:27:eb:4f:15:95":["sensor/temperature", "sensor/humidity"]}'
-            
             
             # create lock object
             lock = asyncio.Lock()

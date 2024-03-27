@@ -23,13 +23,12 @@ def main():
         USERNAME = sys.argv[1]
         PASSWORD = sys.argv[2]
         battery = sys.argv[3]
-        sampleFrequency = sys.argv[4]
-        MacAddr = sys.argv[5]
-        publishing_topics = sys.argv[6].split(",") # list of strings 
+        MacAddr = sys.argv[4]
+        publishing_topics = sys.argv[5].split(",") # list of strings 
         # topic list delimited by commas, no spaces
     # create single instance of pub_utils with cmd line parameters
     utils = pub_utils.PublisherUtils()
-    utils.setParameters(username=USERNAME, password=PASSWORD, pub_topics=publishing_topics, sample_frequency=sampleFrequency, Mac_addr=MacAddr, start_battery=battery)
+    utils.setParameters(username=USERNAME, password=PASSWORD, pub_topics=publishing_topics, Mac_addr=MacAddr, start_battery=battery)
     # move execution to pub_asyncio
     run_async_publisher()
 
