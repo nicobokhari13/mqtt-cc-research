@@ -10,16 +10,18 @@ class ProtoUtils:
     def __init__(self) -> None:
         self._USERNAME = "prototype"
         self._PASSWORD = "adminproto"
+        # Device handling topics
         self._STATUS_TOPIC = "sensor/status"
         self._CMD_TOPIC = "sensor/cmd/"
-        self._timeWindow = 10
-        self._WILL_TOPIC = "subs/will"
-        self._SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
-        self._network_latency_dict = dict()
-        self._got_sub_net_lat = 0
-        self._got_dev_status = 0
-            # key = subbed_topic
-            # value = list with [net lat sum, total # msgs]
         
-        # TODO: Put Prototype client in here to use 
+        # Subscriber handling topics
+        self._SUBS_WILL_TOPIC = "subs/will"
+        self._NEW_SUBS_TOPIC = "subs/add" 
+        self._LAT_CHANGE_TOPIC = "subs/change"
+
+        # Other vars 
+        self._timeWindow = 3600
+        self._ranAlgo = None
+        self._gotStatus = None
+        self._gotWill = None
 

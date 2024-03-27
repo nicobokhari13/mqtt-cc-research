@@ -49,10 +49,7 @@ def main():
     database.createDeviceTable()
     database.createPublishSelectTable()
     database.closeDB()
-    
-    # Considering 3rd table be 
-        # Device | Topic | Capability | Publishing
-        # Devices are capable of publishing to many topics, and are publishing to at least 1
+
     
     # create MQTT Client
     client = mqtt.Client()
@@ -63,8 +60,6 @@ def main():
     client.username_pw_set(username=USERNAME, password=PASSWORD)
     # Connect client to the Broker
     client.connect("localhost", 1883)
-
-    
 
     # Run cliet forever
     while True:

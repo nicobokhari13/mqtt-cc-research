@@ -5,27 +5,6 @@ import time # for timestamp variable
 import pub_utils
 from pub_asyncio import run_async_publisher
 
-# The callback for when the client receives a CONNACK response from the broker.
-def on_connect(client, userdata, flags, rc):
-    #print("Connected with result code "+str(rc))
-    if(rc == 5):
-        print("Authentication Error on Broker")
-        exit()
-
-# The callback for when a message is published to the broker, and the backendreceives it
-def on_message(client, userdata, msg):
-    topic = msg.topic
-    payload = msg.payload.decode()
-    #print(f"Topic: {topic}")
-    #print(f"Message: {payload}")
-    #print()
-
-def subscribeToTopics(client, topicList:list):
-    for topic in topicList:
-        #print(f"Subscribing to {topic}")
-        client.subscribe(topic)
-# Executed when script is ran
-
 # python3 sensor.py <username> <password> <startBattery> <sampleFrequency> <MACAddress> <list of topics separated by comma>
 def main():
     # extract input parameters
