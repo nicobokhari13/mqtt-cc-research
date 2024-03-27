@@ -10,8 +10,8 @@ PASSWORD = "adminproto"
 STATUS_TOPIC = "status/#"
 PUBLISH_TOPIC = "sensor/"
 SUBS_WILL_TOPIC = "subs/will"
-NEW_SUBS_TOPIC = "subs/change" 
-# TODO: subscribe to NEW_SUBS_TOPIC, and when a message is received, start algorithm
+NEW_SUBS_TOPIC = "subs/add" 
+LAT_CHANGE_TOPIC = "subs/change"
 
 def on_connect(client, userdata, flags, rc):
 
@@ -31,6 +31,12 @@ def on_message(client, userdata, msg):
         will.updateDB(payload)
     if mqtt.topic_matches_sub(NEW_SUBS_TOPIC, topic):
         mapAssignments = algo.generateAssignments()
+        algo.sendCommands(mapAssignments, client)
+        pass
+    if mqtt.topic_matches_sub(LAT_CHANGE_TOPIC, topic):
+        # the message payload holds the topic with the changed max_allowed_latency
+        # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
+        mapAssignments = algo.generateAssignments(changedTopic=payload)
         algo.sendCommands(mapAssignments, client)
         pass
 

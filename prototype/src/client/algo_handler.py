@@ -6,7 +6,12 @@ from proto_db import Database
 # types of generation
     # TODO: type 1: assigning topic that has a changed max_allowed or a new topic added to DB
     # TODO: type 2: complete reconfig after no new subscribers for some time
-def generateAssignments():
+def generateAssignments(changedTopic = None):
+    if changedTopic:
+        # if there was a change in a topic's max_allowed_latency,
+        # find all the devices that currently publish to the topic and set publishing = 0
+        # then run algorithm exactly the same as it will be treated like it was just added to the DB
+        pass
     publishers = Devices()
     db = Database()
     db.openDB()
@@ -45,6 +50,10 @@ def generateAssignments():
             # add current device publishing info to assignments (topics that the device currently publishes to)
             publishers._units[mac].addPublishings(devicePublishings)
 
+            if changedTopic:
+                # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
+                publishers._units[mac].resetExecutions()
+
         # for each device in Devices singleton
         for macAddress, device in publishers._units.items:
             # Einc = device.energyIncrease(taskFrequency)
@@ -59,8 +68,6 @@ def generateAssignments():
 
             if (Enew <= device.battery and Eratio < Emin) or not Emin:
                 bestMac = macAddress
-
-
         
         # if bestMac != None:
             # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)

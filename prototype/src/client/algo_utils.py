@@ -10,7 +10,6 @@ class Processing_Unit:
         self._OBSERVATION_PERIOD = 60
         self._ENERGY_PER_EXECUTION = 10
         self._assignments = {}
-        # TODO: use json.dumps to turn assignments dictionary into json string
 
     def setFrequencies(self, publishing_list):
         self._freqs = set(publishing_list)
@@ -54,6 +53,9 @@ class Processing_Unit:
 
         return numExecutions
     
+    def resetExecutions(self):
+        self._numExecutions = self.calculateExecutions()
+    
     def energyIncrease(self, task):
         newExecutions = self.calculateExecutions(newTask = task)
         changeInExecutions = newExecutions - self._numExecutions
@@ -61,17 +63,16 @@ class Processing_Unit:
     
     def addPublishings(self, publishing_set:list):
         # publishing_set is a list of tuples (topic, max_allowed_latency)
-        frequencies = list()
         for publishing in publishing_set:
             self.addAssignment(topic = publishing[0], task = publishing[1])
-            frequencies.append(publishing[1])
-        self.setFrequencies(frequencies)
+        # after all frequencies added, reset frequency minimum 
+        self.resetMinimum()
 
 
     def addAssignment(self, topic:str, task):
         self._assignments[topic] = task
+        # add topic's frequency to device frequencies
         self._freqs.add(task)
-        self.resetMinimum()
         # example: 
         # "sensor/temperature": 10 -> publish to sensor/temperature every 10 seconds
 
