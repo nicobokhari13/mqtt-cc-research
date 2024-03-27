@@ -80,6 +80,20 @@ class Database:
     
     # TODO: Queries for algorithm
         
+    def topicsWithNoPublishers(self):
+        selectQuery = '''SELECT DISTINCT topic, max_allowed_latency
+                        FROM publish 
+                        LEFT JOIN subscriptions
+                        ON subscription = topic
+                        WHERE NOT EXISTS  (
+                            SELECT 1
+                            FROM publish
+                            WHERE topic = subscription
+                            AND publishing = 1
+                        )'''
+        self.execute_query_with_retry(query=selectQuery)
+
+    
     # TODO: Queries to update device table after status
         
     # TODO: Query to add device topic capability from device txt (DB can be prepared before simulation)
