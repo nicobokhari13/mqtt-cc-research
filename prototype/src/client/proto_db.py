@@ -43,16 +43,16 @@ class Database:
 
     def createDeviceTable(self) -> None:
         deviceTable = '''CREATE TABLE IF NOT EXISTS devices (
-                                deviceMAC TEXT PRIMARY KEY, 
+                                deviceMac TEXT PRIMARY KEY, 
                                 battery FLOAT, 
                                 executions INTEGER)'''
         # TODO: query to update number of executions a device is making after cmd is created
         self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
-    def createPublishSelectTable(self) -> None:
+    def createPublishTable(self) -> None:
         publishSelectTable = '''
-                                CREATE TABLE IF NOT EXISTS publish_select (
-                                deviceMAC TEXT, 
+                                CREATE TABLE IF NOT EXISTS publish (
+                                deviceMac TEXT, 
                                 topic TEXT, 
                                 capability BOOLEAN,
                                 publish BOOLEAN,
@@ -91,7 +91,16 @@ class Database:
                             WHERE topic = subscription
                             AND publishing = 1
                         )'''
-        self.execute_query_with_retry(query=selectQuery)
+        return self.execute_query_with_retry(query=selectQuery)
+
+    def devicesCapableToPublish(self, topicName):
+        selectQuery = '''SELECT devices.deviceMAC, battery, executions
+                        FROM devices
+                        LEFT JOIN publish
+                        ON devices.deviceMac = publish.deviceMac
+                        WHERE topic = ?'''
+        topicValue = (topicName,)
+        return self.execute_query_with_retry(query=selectQuery, values=topicValue)
 
     
     # TODO: Queries to update device table after status
