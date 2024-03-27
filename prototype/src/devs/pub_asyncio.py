@@ -39,17 +39,12 @@ class AsyncioHelper:
     def on_socket_unregister_write(self, client, userdata, sock):
         self.loop.remove_writer(sock)
 
-    async def publish_sensing(self, sense_topic):
-        utils = pub_utils.PublisherUtils()
-        payload_json = {
-            "data": 178, 
-        }
-        payload_str = json.dumps(payload_json) 
-        print("waiting for sample_freq")
-        # each topic has a specific sample frequency, client provides in cmd
-        await asyncio.sleep(utils._SAMPLE_FREQ)
+    async def publish_to_topic(self, sense_topic, freq):
+        msg = "data"
         print(f"publishing to topic {sense_topic}")
-        self.client.publish(topic = sense_topic, payload = payload_str)
+        self.client.publish(topic = sense_topic, payload = msg)
+        print("waiting for sample_freq")
+        await asyncio.sleep(freq)
 
     async def misc_loop(self):
         utils = pub_utils.PublisherUtils()
@@ -58,10 +53,10 @@ class AsyncioHelper:
             try:
                 if(self.start_up):
                     cmd = await utils._got_cmd
-                    self.performCmd(cmd)
-
-                publishes = [self.publish_sensing(topic) for topic in utils._pubtopics]
-                await asyncio.gather(*publishes)                    
+                    utils.setPublishing(json.loads(cmd))
+                    self.start_up = False
+                publish_to_topic = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
+                await asyncio.gather(*publish_to_topic)                    
             except asyncio.CancelledError:
                 break
 
@@ -82,10 +77,6 @@ class AsyncMqtt:
         # if the topic matches the cmd topic, resolve got_cmd with set_result
         if mqtt.topic_matches_sub(msg.topic, utils._CMD_TOPIC):
             utils._got_cmd.set_result(msg.payload.decode()) 
-        else:
-            # when await self.got_message is called, this function resolves that async
-            print("received msg, resolving await ")
-            utils._got_cmd.set_result(None)
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
@@ -96,7 +87,6 @@ class AsyncMqtt:
         utils = pub_utils.PublisherUtils()
         
         self.disconnected = self.loop.create_future()
-        self.got_message = None
 
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
@@ -116,14 +106,9 @@ class AsyncMqtt:
             # await asyncio.sleep(timewindow)
             print("starting window")
             await asyncio.sleep(utils._timeWindow)
-            print("ending window")
-            # TODO: Refactor so status message is sent every minute? play aroung with time window constant
-                # status sent on start up + periodically sent
+            
             # create lock object
             lock = asyncio.Lock()
-
-                # async with lock
-                # update pub_utils object with current battery
             async with lock:
                 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 utils._battery = psutil.sensors_battery().percent
