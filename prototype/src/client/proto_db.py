@@ -102,7 +102,7 @@ class Database:
         topicValue = (topicName,)
         return self.execute_query_with_retry(query=selectQuery, values=topicValue)
 
-    def deviceTopicCapability(self, MAC_ADDR):
+    def devicePublishing(self, MAC_ADDR):
         selectQuery = '''SELECT topic, max_allowed_latency
                         FROM publish
                         LEFT JOIN subscriptions

@@ -1,9 +1,9 @@
 import math
-
+from typing import Dict
 class Processing_Unit:
-    def __init__(self, macAddr:str, publishing_set:list, capacity:float, executions):
+    def __init__(self, macAddr:str, capacity:float, executions):
         self._mac = macAddr
-        self._freqs = publishing_set
+        self._freqs = ()
         self._battery = capacity
         self._freq_min = min(self._freqs)
         self._numExecutions = executions 
@@ -12,6 +12,10 @@ class Processing_Unit:
         self._assignments = {}
         # TODO: use json.dumps to turn assignments dictionary into json string
 
+    def setFrequencies(self, publishing_list):
+        self._freqs = set(publishing_list)
+        self.resetMinimum()
+    
     def currentEnergy(self):
         return self._numExecutions * self._ENERGY_PER_EXECUTION
 
@@ -55,8 +59,19 @@ class Processing_Unit:
         changeInExecutions = newExecutions - self._numExecutions
         return changeInExecutions * self._ENERGY_PER_EXECUTION
     
+    def addPublishings(self, publishing_set:list):
+        # publishing_set is a list of tuples (topic, max_allowed_latency)
+        frequencies = list()
+        for publishing in publishing_set:
+            self.addAssignment(topic = publishing[0], task = publishing[1])
+            frequencies.append(publishing[1])
+        self.setFrequencies(frequencies)
+
+
     def addAssignment(self, topic:str, task):
         self._assignments[topic] = task
+        self._freqs.add(task)
+        self.resetMinimum()
         # example: 
         # "sensor/temperature": 10 -> publish to sensor/temperature every 10 seconds
 
@@ -72,11 +87,10 @@ class Devices:
     
     def __init__(self) -> None:
         # key = macAddr, value = Processing_Unit
-        self._units = dict()
-        self._generated_cmd = dict()
+        self._units: Dict[str, Processing_Unit]
+        self._generated_cmd: Dict[str, str]
 
     def addProcessingUnit(self, newUnit:Processing_Unit):
-        newUnit._numExecutions = newUnit.calculateExecutions()
         self._units[newUnit._mac] = newUnit
 
     def resetUnits(self):

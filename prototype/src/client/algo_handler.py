@@ -20,39 +20,72 @@ def generateAssignments():
     # get all topics where publish = 0 for all capable devices
 
     # for each topic with none publishing
-    for task in topicsWithNoPublishers:
+    for task in topicsWithNoPublishers: 
+        topic = task[0]
+        freq = task[1]
+
         
         # get devices capable of publishing to the topic
-        capableDevices = db.devicesCapableToPublish(topicName=task[0]) # list of tuples with (deviceMac, battery, executions)
+        capableDevices = db.devicesCapableToPublish(topicName=topic) # list of tuples with (deviceMac, battery, executions)
 
         # for each device
-        for device in capableDevices:    
-            pass
-            # add device info as a Processing_Unit in Devices singleton
+        for device in capableDevices:
+            mac = device[0]
+            battery = device[1]
+            num_exec = device[2]
             # get device publishing info with query
+            devicePublishings = db.devicePublishing(MAC_ADDR=mac) # list of tuples with (topic, max_allowed_latency)
+
+            # create processing unit at key = mac
+            # add device info as a Processing_Unit in Devices singleton
+            
+            publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
+
+            # add publishings to the device with macAddr = mac, and set device frequencies
             # add current device publishing info to assignments (topics that the device currently publishes to)
-        
+            publishers._units[mac].addPublishings(devicePublishings)
+
         # for each device in Devices singleton
+        for macAddress, device in publishers._units.items:
             # Einc = device.energyIncrease(taskFrequency)
+
+            Einc = device.energyIncrease(freq)
             # Enew = device.currentEnergy() + Einc
+            Enew = device.currentEnergy() + Einc
             # Eratio = Enew / device.battery
+            Eratio = Enew / device._battery
             # if (Enew <= device.battery && Eratio < Emin) or not Emin
                 # bestMac = device._mac
+
+            if (Enew <= device.battery and Eratio < Emin) or not Emin:
+                bestMac = macAddress
+
+
         
         # if bestMac != None:
             # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)
             # Devices[bestMac]._num Executions = Emin / Devices[bestMac].ENERGY PER EXEC
-    
+
+        if bestMac != None:
+                # adding the assignment adds the task's frequency to the publishings variable
+                publishers._units[bestMac].addAssignment(topic, freq)
+                publishers._units[bestMac]._numExecutions = Emin / publishers._units[bestMac]._ENERGY_PER_EXECUTION
     # by this point, all the devices in Devices have their list of assignments
     
     # for each device in Devices
         # if the assignments is not None:
             # assignmentString = json.dumps(device._assignments)
             # Devices.addAssignmentsToCommand(deviceMac = device._mac, taskList = assignmentString)
-    
+    for macAddress, device in publishers._units.items:
+         if device._assignments is not None:
+              assignmentString = json.dumps(device._assignments)
+              publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
+
     # the commands to send are in Devices._generated_cmd
     # return Devices._instance._generated_cmd
-    pass 
+    return publishers._generated_cmd
+
+# TODO 1: convert client to asyncio
 
 def sendCommands(mapAssignments, client):
     # mapAssignments is a hash map with the schema:
