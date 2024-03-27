@@ -148,7 +148,8 @@ class AsyncMqtt:
             print("starting window")
             await asyncio.sleep(utils._timeWindow)
             print("ending window")
-
+            if utils._ranAlgo == False:
+                pass
             # TODO: Check if algoRun == False, if so, run algo handler to reset all Publish rows to publishing = 0 and executions = 0
                 # if algoRun = True, set to False, continue to restart window
 

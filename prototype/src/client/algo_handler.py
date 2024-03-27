@@ -3,6 +3,12 @@ import json
 from proto_utils import ProtoUtils
 from proto_db import Database
 
+def resetPublishingsAndDeviceExecutions():
+    db = Database.openDB()
+    # set all publish rows to publishing = 0
+    # set all device executions to 0
+    pass
+
 # types of generation
     # TODO: type 2: complete reconfig after no new subscribers for some time
 def generateAssignments(changedTopic = None):

@@ -119,15 +119,17 @@ class Database:
         insertQuery = '''INSERT INTO devices (deviceMac, battery, executions) VALUES (?,?,?)'''
         device_values = (MAC_ADDR, BATTERY, 0)
         self.execute_query_with_retry(query=insertQuery, values=device_values, requires_commit=True)
-    # TODO: Query to add device topic capability from device txt (DB can be prepared before simulation)
 
     def addDeviceTopicCapability(self, MAC_ADDR, TOPIC):
         insertQuery = '''INSERT INTO publish (deviceMac, topic, publishing) VALUES (?,?,?)'''
         row_values = (MAC_ADDR, TOPIC, 0)
         self.execute_query_with_retry(query=insertQuery, values=row_values, requires_commit=True)
 
+    def resetPublishings(self):
+        pass
 
-
+    def resetDeviceExecutions(self):
+        pass
 
     
         
