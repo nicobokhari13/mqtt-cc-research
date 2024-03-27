@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd mosquitto-2.0.18
+cd /home/devnico/repos/research/broker/mosquitto-2.0.18
 
 make
 
