@@ -89,14 +89,14 @@ void *messageClient(void *arg){
     const char *dir = "pwd";
     int check = system(dir);
     char *latChangeCommand = "mosquitto_pub -u internal -P mqttcci -t subs/change -m ";
-    char *newSubcommand = "mosquitto_pub -u internal -P mqttcci -t subs/add -m ";
+    char *newSubCommand = "mosquitto_pub -u internal -P mqttcci -t subs/add -m ";
     char *finalCommand;
 
     if(context->mqtt_cc.latChange){// if client being messaged from a change in max_allowed_latency
         finalCommand = concat_strings(latChangeCommand, context->mqtt_cc.incoming_topic);
     }
     else{
-        finalCommand = concat_strings(newSubcommand, context->mqtt_cc.incoming_topic);
+        finalCommand = concat_strings(newSubCommand, context->mqtt_cc.incoming_topic);
     }
 
     // Execute the bash script
