@@ -1,9 +1,9 @@
 import math
 # nums = [random.randint(1, 100) for i in range(10)]
-nums = [10, 12, 20, 37, 35, 45]
+nums = [10, 12, 20, 31, 39, 45]
 print(nums)
 nums_min = min(nums)
-threshold = math.ceil(nums_min / 2) - 1
+threshold = 3
 print(f"threshold = {threshold}")
 # Create a list of numbers to remove
 removes = [num for num in nums if (num % nums_min < threshold) or ((nums_min - num % nums_min) < threshold)]
