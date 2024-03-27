@@ -67,7 +67,6 @@ class AsyncioHelper:
 
                 publishes = [self.publish_sensing(topic) for topic in utils._pubtopics]
                 await asyncio.gather(*publishes)                    
-                # TODO: Use asyncio.gather to send command to all publishers at the same time
             except asyncio.CancelledError:
                 break
 
