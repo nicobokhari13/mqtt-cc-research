@@ -39,24 +39,27 @@ class AsyncioHelper:
     def on_socket_unregister_write(self, client, userdata, sock):
         self.loop.remove_writer(sock)
 
-    async def publish_to_topic(self, sense_topic, freq):
-        msg = "data"
-        print(f"publishing to topic {sense_topic}")
-        self.client.publish(topic = sense_topic, payload = msg)
-        print("waiting for sample_freq")
-        await asyncio.sleep(freq)
-
     async def misc_loop(self):
         utils = pub_utils.PublisherUtils()
-        utils._got_cmd = self.loop.create_future()
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
-                if(self.start_up):
-                    cmd = await utils._got_cmd
-                    utils.setPublishing(json.loads(cmd))
-                    self.start_up = False
-                publish_to_topic = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
-                await asyncio.gather(*publish_to_topic)                    
+                print("starting window")
+                await asyncio.sleep(utils._timeWindow)
+                # create lock object
+                lock = asyncio.Lock()
+                async with lock:
+                    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    utils._battery = psutil.sensors_battery().percent
+                    print(f"battery: {utils._battery}")
+
+                    status_json = {
+                        "deviceMac": utils._MAC_ADDR,
+                        "battery": utils._battery,
+                        "time": current_time
+                    }
+                    status_str = json.dumps(status_json)
+                    # publish status to status topic
+                    self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)            
             except asyncio.CancelledError:
                 break
 
@@ -76,10 +79,18 @@ class AsyncMqtt:
         utils = pub_utils.PublisherUtils()
         # if the topic matches the cmd topic, resolve got_cmd with set_result
         if mqtt.topic_matches_sub(msg.topic, utils._CMD_TOPIC):
-            utils._got_cmd.set_result(msg.payload.decode()) 
+            utils._got_cmd.set_result(msg.payload.decode())
+
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
+    
+    async def publish_to_topic(self, sense_topic, freq):
+        msg = "data"
+        print(f"publishing to topic {sense_topic}")
+        self.client.publish(topic = sense_topic, payload = msg)
+        print("waiting for sample_freq")
+        await asyncio.sleep(freq)
 
     async def main(self):
         # main execution        
@@ -100,52 +111,21 @@ class AsyncMqtt:
         self.client.connect("localhost", 1883)
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
-
-
+        if utils._publishes is None: 
+            cmd = await utils._got_cmd
+            utils.setPublishing(json.loads(cmd))
+            routines = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
+            utils._got_cmd = None
+            
         while True: #infinite loop
-            # await asyncio.sleep(timewindow)
-            print("starting window")
-            await asyncio.sleep(utils._timeWindow)
-            
-            # create lock object
-            lock = asyncio.Lock()
-            async with lock:
-                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                utils._battery = psutil.sensors_battery().percent
-                print(f"battery: {utils._battery}")
-
-            status_json = {
-                "deviceMac": utils._MAC_ADDR,
-                "battery": utils._battery,
-                "time": current_time
-            }
-
-            status_str = json.dumps(status_json)
-
-            # publish status to status topic
-
-            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)
-
-            # create future for got_cmd
-            utils._got_cmd = self.loop.create_future()
-
-            # await got_cmd
-            await utils._got_cmd 
-            
-            # create lock object
-            lock = asyncio.Lock()
-
-                # async with lock
-            async with lock:
-                if(utils._got_cmd):
-                    cmd_dict = json.loads(utils._got_cmd)
-                    # in cmd, get new pub topics with mac address
-                    # change pub_utils publishing topics
-                    utils._pubtopics = cmd_dict[utils._MAC_ADDR]
-                    print(utils._pubtopics)
-                    print(type(utils._pubtopics))
-                    # set got_cmd to None
-                    utils._got_cmd = None
+            try:
+                tasks = [asyncio.create_task(coro) for coro in routines]
+                done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+                if utils._got_cmd:
+                    utils.setPublishing(json.loads(cmd))
+                    routines = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
+            except asyncio.CancelledError:
+                print("asyncio cancelled")
 
 def run_async_publisher():
     print("Starting")
