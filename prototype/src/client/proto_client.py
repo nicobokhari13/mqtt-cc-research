@@ -4,6 +4,8 @@ import proto_utils
 import sys
 import csv
 from proto_asyncio import run_async_client
+import status_handler
+from datetime import datetime
 
 # USERNAME = "prototype"
 # PASSWORD = "adminproto"
@@ -44,6 +46,7 @@ from proto_asyncio import run_async_client
 # Executed when script is ran
 
 def main():
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     devicesFile = sys.argv[1]
     database = db.Database()
     database.openDB()
@@ -61,6 +64,7 @@ def main():
         startBattery = rows[i][2]
         mac = rows[i][3]
         database.addDevice(MAC_ADDR=mac, BATTERY=startBattery)
+        status_handler.logPublisherBattery(mac, startBattery, current_time)
         topicList = rows[i][4:len(rows[i])] # rest of rows are the topics
         for topic in topicList:
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)

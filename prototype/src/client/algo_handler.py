@@ -4,22 +4,24 @@ from proto_utils import ProtoUtils
 from proto_db import Database
 
 def resetPublishingsAndDeviceExecutions():
-    db = Database.openDB()
-    # set all publish rows to publishing = 0
-    # set all device executions to 0
-    pass
+    db = Database()
+    db.openDB()
+    db.resetPublishings()
+    db.resetDeviceExecutions()
+    db.closeDB()
 
 # types of generation
     # TODO: type 2: complete reconfig after no new subscribers for some time
 def generateAssignments(changedTopic = None):
+    db = Database()
+    db.openDB()
     if changedTopic:
+        db.resetDevicesPublishingToTopic(changedTopic)
         # if there was a change in a topic's max_allowed_latency,
         # find all the devices that currently publish to the topic and set publishing = 0
         # then run algorithm exactly the same as it will be treated like it was just added to the DB
-        pass
     publishers = Devices()
-    db = Database()
-    db.openDB()
+
     bestMac = None
     Emin = None
     Einc = None

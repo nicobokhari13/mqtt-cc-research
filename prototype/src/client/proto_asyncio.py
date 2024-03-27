@@ -9,6 +9,7 @@ import proto_db as db
 import status_handler as status
 import will_topic_handler as will
 import algo_handler as algo
+from datetime import datetime
 
 class AsyncioHelper:
     def __init__(self, loop, client):
@@ -88,7 +89,7 @@ class AsyncMqtt:
         command_threads = [self.sendCommandToDevice(topic=utils._CMD_TOPIC+macAddress, msg=cmd) for macAddress, cmd in mapAssignments] 
         await asyncio.gather(*command_threads)
         # resolve ranAlgo object
-        utils._ranAlgo.set_result(True)
+        utils._ranAlgo = True
 
     def on_connect(self, client, userdata, flags, rc):
         if(rc == 5):
@@ -102,7 +103,8 @@ class AsyncMqtt:
         utils = proto_utils.ProtoUtils()
         # Print MQTT message to console
         if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
-            status.handle_status_msg(payload)
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            status.handle_status_msg(payload, current_time)
         if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
             will.updateDB(payload)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
@@ -116,9 +118,6 @@ class AsyncMqtt:
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
-    # TODO 2: convert client to asyncio
-
-
 
     async def main(self):
         # main execution        
@@ -142,63 +141,17 @@ class AsyncMqtt:
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
 
-
         while True: #infinite loop
             # await asyncio.sleep(timewindow)
             print("starting window")
             await asyncio.sleep(utils._timeWindow)
             print("ending window")
             if utils._ranAlgo == False:
-                pass
-            # TODO: Check if algoRun == False, if so, run algo handler to reset all Publish rows to publishing = 0 and executions = 0
-                # if algoRun = True, set to False, continue to restart window
-
-            # create lock object
-            lock = asyncio.Lock()
-
-                # async with lock
-                # update pub_utils object with current battery
-            async with lock:
-                utils._battery = psutil.sensors_battery().percent
-                print(f"battery: {utils._battery}")
-
-            status_json = {
-                "MAC_ADDR": utils._MAC_ADDR,
-                "BATTERY": utils._battery,
-                "SAMPLE_FREQ": utils._SAMPLE_FREQ
-            }
-
-            status_str = json.dumps(status_json)
-
-            # publish status to status topic
-
-            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)
-
-            # create future for got_cmd
-            utils._got_cmd = self.loop.create_future()
-
-            # await got_cmd
-            await utils._got_cmd 
-
-            # to test change in publishing topics``
-            # await asyncio.sleep(5)
-            # utils._got_cmd = '{"b8:27:eb:4f:15:95":["sensor/temperature", "sensor/humidity"]}'
+                algo.resetPublishingsAndDeviceExecutions()
+                mapAssignments = algo.generateAssignments()
+                self.sendCommands(mapAssignments)
             
-            
-            # create lock object
-            lock = asyncio.Lock()
-
-                # async with lock
-            async with lock:
-                if(utils._got_cmd):
-                    cmd_dict = json.loads(utils._got_cmd)
-                    # in cmd, get new pub topics with mac address
-                    # change pub_utils publishing topics
-                    utils._pubtopics = cmd_dict[utils._MAC_ADDR]
-                    print(utils._pubtopics)
-                    print(type(utils._pubtopics))
-                    # set got_cmd to None
-                    utils._got_cmd = None
+            utils._ranAlgo = False
 
 def run_async_client():
     print("Starting")

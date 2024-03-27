@@ -126,10 +126,21 @@ class Database:
         self.execute_query_with_retry(query=insertQuery, values=row_values, requires_commit=True)
 
     def resetPublishings(self):
-        pass
+        updateQuery = '''UPDATE publish SET publishing = 0
+                            WHERE topic IN (
+                                SELECT subscription
+                                FROM subscriptions);
+                        '''
+        self.execute_query_with_retry(query=updateQuery, requires_commit=True)
 
     def resetDeviceExecutions(self):
-        pass
+        updateQuery = '''UPDATE devices SET executions = 0'''
+        self.execute_query_with_retry(query=updateQuery, requires_commit=True)
 
-    
+    def resetDevicesPublishingToTopic(self, changedTopic):
+        updateQuery = '''UPDATE pubilsh 
+                            SET publishing = 0 
+                            WHERE topic = ?'''
+        query_values = (changedTopic,)
+        self.execute_query_with_retry(query=updateQuery, values=query_values, requires_commit=True)
         
