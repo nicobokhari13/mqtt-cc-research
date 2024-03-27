@@ -43,34 +43,13 @@ class AsyncioHelper:
     def on_socket_unregister_write(self, client, userdata, sock):
         self.loop.remove_writer(sock)
 
-    async def publish_sensing(self, sense_topic):
-        utils = proto_utils.ProtoUtils()
-        payload_json = {
-            "data": 178, 
-        }
-        payload_str = json.dumps(payload_json) 
-        print("waiting for sample_freq")
-        # each topic has a specific sample frequency, client provides in cmd
-        await asyncio.sleep(utils._SAMPLE_FREQ)
-        print(f"publishing to topic {sense_topic}")
-        self.client.publish(topic = sense_topic, payload = payload_str)
-
-    async def performCmd(self, cmd):
-
-        pass
-
 
     async def misc_loop(self):
         utils = proto_utils.ProtoUtils()
         utils._got_cmd = self.loop.create_future()
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
-                if(self.start_up):
-                    cmd = await utils._got_cmd
-                    self.performCmd(cmd)
-
-                publishes = [self.publish_sensing(topic) for topic in utils._pubtopics]
-                await asyncio.gather(*publishes)                    
+                await asyncio.sleep(1)                 
             except asyncio.CancelledError:
                 break
 

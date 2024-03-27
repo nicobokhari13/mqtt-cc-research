@@ -10,8 +10,6 @@ def resetPublishingsAndDeviceExecutions():
     db.resetDeviceExecutions()
     db.closeDB()
 
-# types of generation
-    # TODO: type 2: complete reconfig after no new subscribers for some time
 def generateAssignments(changedTopic = None):
     db = Database()
     db.openDB()
