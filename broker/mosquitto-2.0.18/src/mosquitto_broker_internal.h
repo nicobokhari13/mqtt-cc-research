@@ -889,6 +889,7 @@ bool has_lat_qos(char *sub);
 void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos);
 char* create_latency_str(char *clientid, int latencyNum);
 void *messageClient(void *arg);
+char *concat_strings(char *str1, char *str2);
 // SQLite DB functions
 void prepare_DB(); // (called in mosquitto.c's main )
 bool topic_exists_in_DB(struct mosquitto *context);

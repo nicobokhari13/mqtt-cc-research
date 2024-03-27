@@ -11,6 +11,7 @@ struct mqttcc{
     char* incoming_topic; 
     int incoming_lat_qos;
     char* incoming_sub_clientid;
+    bool latChange;
 };
 
 struct mqttcc_db{

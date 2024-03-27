@@ -66,16 +66,41 @@ void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos){
     log__printf(NULL, MOSQ_LOG_DEBUG, "\t For Subscriber: %s", context->mqtt_cc.incoming_sub_clientid);
 }
 
+char *concat_strings(char *str1, char *str2) {
+    // Allocate memory for the concatenated string
+    size_t len1 = strlen(str1);
+    size_t len2 = strlen(str2);
+    char *result = malloc(len1 + len2 + 1); // +1 for the null terminator
+    if (result == NULL) {
+        perror("Memory allocation failed");
+        return NULL;
+    }
+
+    // Copy str1 and str2 into the result buffer
+    strcpy(result, str1);
+    strcat(result, str2);
+
+    return result;
+}
+
 void *messageClient(void *arg){
+    struct mosquitto *context = (struct mosquitto*)arg;
     // Command to execute
     const char *dir = "pwd";
     int check = system(dir);
+    char *latChangeCommand = "mosquitto_pub -u internal -P mqttcci -t subs/change -m ";
+    char *newSubcommand = "mosquitto_pub -u internal -P mqttcci -t subs/add -m ";
+    char *finalCommand;
 
-    const char *command = "mosquitto_pub -u internal -P mqttcci -t subs/change -m 1";
-    
+    if(context->mqtt_cc.latChange){// if client being messaged from a change in max_allowed_latency
+        finalCommand = concat_strings(latChangeCommand, context->mqtt_cc.incoming_topic);
+    }
+    else{
+        finalCommand = concat_strings(newSubcommand, context->mqtt_cc.incoming_topic);
+    }
 
     // Execute the bash script
-    int ret = system(command);
+    int ret = system(finalCommand);
 
     // Check if script execution was successful
     if (ret == 0) {
@@ -282,9 +307,12 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     // at this point, the topic does exist in the DB, and the find_existing_topic stmt contains the row
     int rc;
     int ret;
+    pthread_t mess_client;
+	pthread_attr_t mess_client_attr;
     // get the old latency value from column 1 (latencyReq)
     
     char *oldLatencyValue = sqlite3_column_text(prototype_db.find_existing_topic, 1);
+    int oldMaxAllowed = sqlite3_column_int(prototype_db.find_existing_topic, 2);
     
     log__printf(NULL, MOSQ_LOG_DEBUG, "old Latency Value: %s\n", oldLatencyValue);
 
@@ -311,6 +339,12 @@ void update_lat_req_max_allowed(struct mosquitto *context){
 
     int newMaxAllowed = calc_new_max_latency(db_Value);
 
+    if (oldMaxAllowed != newMaxAllowed){
+        pthread_attr_init(&mess_client_attr);
+		pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
+		ret = pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
+		pthread_attr_destroy(&mess_client_attr);
+    }
 
     // convert new latency value back into string
     char *newLatencyValue = cJSON_Print(db_Value);
