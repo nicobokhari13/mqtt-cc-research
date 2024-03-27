@@ -199,7 +199,7 @@ class AsyncMqtt:
                     # set got_cmd to None
                     utils._got_cmd = None
 
-def run_async_publisher():
+def run_async_client():
     print("Starting")
     loop = asyncio.get_event_loop()
     loop.run_until_complete(AsyncMqtt(loop).main())
@@ -207,5 +207,5 @@ def run_async_publisher():
     print("Finished")
 
 if __name__ == "__main__":
-    run_async_publisher()
+    run_async_client()
 

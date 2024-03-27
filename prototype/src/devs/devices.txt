@@ -1,4 +1,4 @@
-dev01,mqttccd1,startBattery,sampleFrequency,MACaddresss,sensor/humidity,sensor/temperature
-dev02,mqttccd2,startBattery,sampleFrequency,MACaddress,sensor/temperature,sensor/airquality
-dev03,mqttccd3,startBattery,sampleFrequency,MACaddress,sensor/humidity,sensor/airquality
-dev04,mqttccd4,startBattery,sampleFrequency,MACaddress,sensor/humidity,sensor/temperature,sensor/airquality
+dev01,mqttccd1,startBattery,MACaddresss,sensor/humidity,sensor/temperature
+dev02,mqttccd2,startBattery,MACaddress,sensor/temperature,sensor/airquality
+dev03,mqttccd3,startBattery,MACaddress,sensor/humidity,sensor/airquality
+dev04,mqttccd4,startBattery,MACaddress,sensor/humidity,sensor/temperature,sensor/airquality
