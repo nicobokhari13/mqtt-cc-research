@@ -56,9 +56,9 @@ class Database:
                                 topic TEXT, 
                                 capability BOOLEAN,
                                 publish BOOLEAN,
-                                FOREIGN KEY (deviceMAC) REFERENCES devices(deviceMAC),
+                                FOREIGN KEY (deviceMac) REFERENCES devices(deviceMac),
                                 FOREIGN KEY (topic) REFERENCES subscriptions(topic) 
-                                PRIMARY KEY (deviceMAC, topic)
+                                PRIMARY KEY (deviceMac, topic)
                                 )'''
         # capability: True = can publish, False = cannot publish
         # publish: True = is currently publishing to topic, False = is not currently publishing
@@ -80,7 +80,7 @@ class Database:
     
     # TODO: Queries for algorithm
         
-    def topicsWithNoPublishers(self):
+    def topicsWithNoPublishers(self) -> list:
         selectQuery = '''SELECT DISTINCT topic, max_allowed_latency
                         FROM publish 
                         LEFT JOIN subscriptions
@@ -94,7 +94,7 @@ class Database:
         return self.execute_query_with_retry(query=selectQuery)
 
     def devicesCapableToPublish(self, topicName):
-        selectQuery = '''SELECT devices.deviceMAC, battery, executions
+        selectQuery = '''SELECT devices.deviceMac, battery, executions
                         FROM devices
                         LEFT JOIN publish
                         ON devices.deviceMac = publish.deviceMac

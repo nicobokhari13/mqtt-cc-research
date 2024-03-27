@@ -1,25 +1,36 @@
 from algo_utils import Processing_Unit, Devices
 import json
 from proto_utils import ProtoUtils
+from proto_db import Database
 
 # types of generation
     # TODO: type 1: assigning topic that has a changed max_allowed or a new topic added to DB
     # TODO: type 2: complete reconfig after no new subscribers for some time
 def generateAssignments():
     publishers = Devices()
+    db = Database()
+    db.openDB()
     bestMac = None
     Emin = None
     Einc = None
     Enew = None
     Eratio = None
+    topicsWithNoPublishers = db.topicsWithNoPublishers() # list of tuples with (topic, max_allowed_latency)
+    
     # get all topics where publish = 0 for all capable devices
 
     # for each topic with none publishing
+    for task in topicsWithNoPublishers:
+        
         # get devices capable of publishing to the topic
-    
+        capableDevices = db.devicesCapableToPublish(topicName=task[0]) # list of tuples with (deviceMac, battery, executions)
+
         # for each device
+        for device in capableDevices:    
+            pass
             # add device info as a Processing_Unit in Devices singleton
             # get device publishing info with query
+            # add current device publishing info to assignments (topics that the device currently publishes to)
         
         # for each device in Devices singleton
             # Einc = device.energyIncrease(taskFrequency)
