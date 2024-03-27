@@ -59,6 +59,7 @@ class AsyncioHelper:
                     }
                     status_str = json.dumps(status_json)
                     # publish status to status topic
+                    print("publishing status")
                     self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)            
             except asyncio.CancelledError:
                 break
@@ -87,9 +88,7 @@ class AsyncMqtt:
     
     async def publish_to_topic(self, sense_topic, freq):
         msg = "data"
-        print(f"publishing to topic {sense_topic}")
         self.client.publish(topic = sense_topic, payload = msg)
-        print("waiting for sample_freq")
         await asyncio.sleep(freq)
 
     async def main(self):
@@ -112,16 +111,19 @@ class AsyncMqtt:
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
         if utils._publishes is None: 
+            print("waiting for publishe")
             cmd = await utils._got_cmd
             utils.setPublishing(json.loads(cmd))
             routines = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
             utils._got_cmd = None
-            
+
         while True: #infinite loop
             try:
+                print("running tasks")
                 tasks = [asyncio.create_task(coro) for coro in routines]
                 done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
                 if utils._got_cmd:
+                    print("changing tasks")
                     utils.setPublishing(json.loads(cmd))
                     routines = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
             except asyncio.CancelledError:
