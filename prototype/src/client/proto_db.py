@@ -102,6 +102,14 @@ class Database:
         topicValue = (topicName,)
         return self.execute_query_with_retry(query=selectQuery, values=topicValue)
 
+    def deviceTopicCapability(self, MAC_ADDR):
+        selectQuery = '''SELECT topic, max_allowed_latency
+                        FROM publish
+                        LEFT JOIN subscriptions
+                        ON subscription = topic
+                        WHERE publishing = 1 AND deviceMac = ?'''
+        deviceValue = (MAC_ADDR,)
+        return self.execute_query_with_retry(query=selectQuery, values=deviceValue)
     
     # TODO: Queries to update device table after status
         
