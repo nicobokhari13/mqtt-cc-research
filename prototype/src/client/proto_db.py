@@ -94,7 +94,7 @@ class Database:
         selectQuery = '''SELECT devices.deviceMac, battery, executions
                         FROM devices
                         LEFT JOIN publish
-                        ON devices.deviceMac = publish.deviceMac
+                        ON devices.deviceMac = publish.devic1eMac
                         WHERE topic = ?'''
         topicValue = (topicName,)
         return self.execute_query_with_retry(query=selectQuery, values=topicValue)
@@ -108,7 +108,15 @@ class Database:
         deviceValue = (MAC_ADDR,)
         return self.execute_query_with_retry(query=selectQuery, values=deviceValue)
     
-    # TODO: Queries to update device table after status
+    def updateDeviceExecutions(self, MAC_ADDR, NEW_EXECUTIONS):
+        updateQuery = '''UPDATE devices SET executions = ? WHERE deviceMac = ?'''
+        device_values = (MAC_ADDR, NEW_EXECUTIONS)
+        self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
+
+    def updateDeviceStatus(self, MAC_ADDR, NEW_BATTERY):
+        updateQuery = '''UPDATE devices SET battery = ? WHERE deviceMac = ?'''
+        device_values = (MAC_ADDR, NEW_BATTERY)
+        self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
         
     # TODO: Query to add device topic capability from device txt (DB can be prepared before simulation)
         

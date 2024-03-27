@@ -75,7 +75,12 @@ def generateAssignments(changedTopic = None):
         if bestMac != None:
                 # adding the assignment adds the task's frequency to the publishings variable
                 publishers._units[bestMac].addAssignment(topic, freq)
-                publishers._units[bestMac]._numExecutions = Emin / publishers._units[bestMac]._ENERGY_PER_EXECUTION
+                # num Executions with the task is saved in the device 
+                execs = Emin / publishers._units[bestMac]._ENERGY_PER_EXECUTION
+                publishers._units[bestMac]._numExecutions = execs
+                # update num executions in DB
+                db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=execs)
+
     # by this point, all the devices in Devices have their list of assignments
     
     # for each device in Devices
@@ -87,8 +92,6 @@ def generateAssignments(changedTopic = None):
               assignmentString = json.dumps(device._assignments)
               publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
 
-    # the commands to send are in Devices._generated_cmd
-    # return Devices._instance._generated_cmd
     return publishers._generated_cmd
 
 # TODO 2: convert client to asyncio
