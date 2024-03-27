@@ -160,9 +160,9 @@ void prepare_DB(){
         sqlite3_free(err_msg);
     }
     // Statement Commands
-    const char *find_existing_topic_cmd = "SELECT * FROM subscriptions WHERE topic = ?1";
-    const char *insert_new_topic_cmd = "INSERT INTO subscriptions (topic, latency_req, max_allowed_latency) VALUES (?1, ?2, ?3)";
-    const char *update_latency_req_max_allowed_cmd = "UPDATE subscriptions SET latency_req = ?1, max_allowed_latency = ?2 WHERE topic = ?3";
+    const char *find_existing_topic_cmd = "SELECT * FROM subscriptions WHERE subscription = ?1";
+    const char *insert_new_topic_cmd = "INSERT INTO subscriptions (subscription, latency_req, max_allowed_latency) VALUES (?1, ?2, ?3)";
+    const char *update_latency_req_max_allowed_cmd = "UPDATE subscriptions SET latency_req = ?1, max_allowed_latency = ?2 WHERE subscription = ?3";
 
     // Prepare Statements
 

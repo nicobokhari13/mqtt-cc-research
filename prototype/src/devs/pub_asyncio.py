@@ -49,7 +49,8 @@ class AsyncioHelper:
                 lock = asyncio.Lock()
                 async with lock:
                     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    utils._battery = psutil.sensors_battery().percent
+                    utils._battery = utils._battery - 2
+                    # utils._battery = psutil.sensors_battery().percent
                     print(f"battery: {utils._battery}")
 
                     status_json = {
@@ -110,12 +111,14 @@ class AsyncMqtt:
         self.client.connect("localhost", 1883)
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
+        utils._got_cmd = self.loop.create_future()
         if utils._publishes is None: 
             print("waiting for publishe")
             cmd = await utils._got_cmd
             utils.setPublishing(json.loads(cmd))
             routines = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
-            utils._got_cmd = None
+            utils._got_cmd = self.loop.create_future()
+            
 
         while True: #infinite loop
             try:

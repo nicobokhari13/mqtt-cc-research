@@ -71,7 +71,11 @@ class AsyncMqtt:
         if(rc == 5):
             sys.exit()
         utils = proto_utils.ProtoUtils()
-        self.client.subscribe((utils._STATUS_TOPIC, utils._SUBS_WILL_TOPIC, utils._NEW_SUBS_TOPIC, utils._LAT_CHANGE_TOPIC))
+        self.subscribeToTopics([utils._STATUS_TOPIC, utils._SUBS_WILL_TOPIC, utils._NEW_SUBS_TOPIC, utils._LAT_CHANGE_TOPIC])
+
+    def subscribeToTopics(self, topics):
+        for topic in topics:
+            self.client.subscribe(topic)
 
     def on_message(self, client, userdata, msg):
         topic = msg.topic

@@ -3,23 +3,23 @@ from typing import Dict
 class Processing_Unit:
     def __init__(self, macAddr:str, capacity:float, executions):
         self._mac = macAddr
-        self._freqs = ()
+        self._freqs = set()
         self._battery = capacity
-        self._freq_min = min(self._freqs)
         self._numExecutions = executions 
         self._OBSERVATION_PERIOD = 60
         self._ENERGY_PER_EXECUTION = 10
         self._assignments = {}
 
-    def setFrequencies(self, publishing_list):
-        self._freqs = set(publishing_list)
-        self.resetMinimum()
     
     def currentEnergy(self):
         return self._numExecutions * self._ENERGY_PER_EXECUTION
 
     def resetMinimum(self):
         self._freq_min = min(self._freqs)
+
+    def setFrequencies(self, publishing_list):
+        self._freqs = set(publishing_list)
+        self.resetMinimum()
     
     def calculateExecutions(self, newTask = None):
         numExecutions = 0
@@ -61,14 +61,6 @@ class Processing_Unit:
         changeInExecutions = newExecutions - self._numExecutions
         return changeInExecutions * self._ENERGY_PER_EXECUTION
     
-    def addPublishings(self, publishing_set:list):
-        # publishing_set is a list of tuples (topic, max_allowed_latency)
-        for publishing in publishing_set:
-            self.addAssignment(topic = publishing[0], task = publishing[1])
-        # after all frequencies added, reset frequency minimum 
-        self.resetMinimum()
-
-
     def addAssignment(self, topic:str, task):
         self._assignments[topic] = task
         # add topic's frequency to device frequencies
@@ -76,6 +68,13 @@ class Processing_Unit:
         # example: 
         # "sensor/temperature": 10 -> publish to sensor/temperature every 10 seconds
 
+    def addPublishings(self, publishing_set:list):
+        # publishing_set is a list of tuples (topic, max_allowed_latency)
+        for publishing in publishing_set:
+            print(publishing)
+            self.addAssignment(topic = publishing[0], task = publishing[1])
+        # after all frequencies added, reset frequency minimum 
+        self.resetMinimum()
                 
 
 class Devices:
@@ -88,8 +87,8 @@ class Devices:
     
     def __init__(self) -> None:
         # key = macAddr, value = Processing_Unit
-        self._units: Dict[str, Processing_Unit]
-        self._generated_cmd: Dict[str, str]
+        self._units: Dict[str, Processing_Unit] = {}
+        self._generated_cmd: Dict[str, str] = {}
 
     def addProcessingUnit(self, newUnit:Processing_Unit):
         self._units[newUnit._mac] = newUnit

@@ -34,9 +34,6 @@ def main():
         USERNAME = "sub01"
         PASSWORD = "mqttcc01"
         subbed_topics = ["sensor/temperature%latency%80", "sensor/airquality%latency%65"]
-    elif(len(sys.argv) < 4 or len(sys.argv) > 5):
-        print(f"Error: incorrect number of command line parameters. {len(sys.argv)} Expected username, password, and topics list")
-        sys.exit()
     else:
         USERNAME = sys.argv[1]
         PASSWORD = sys.argv[2]

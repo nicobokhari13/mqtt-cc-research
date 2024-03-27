@@ -48,16 +48,19 @@ def generateAssignments(changedTopic = None):
 
             # create processing unit at key = mac
             # add device info as a Processing_Unit in Devices singleton
+            print(f"{mac}, {battery}, {num_exec}")
             
             publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
 
             # add publishings to the device with macAddr = mac, and set device frequencies
             # add current device publishing info to assignments (topics that the device currently publishes to)
-            publishers._units[mac].addPublishings(devicePublishings)
+            print(f"publishings {devicePublishings}")
+            if devicePublishings:
+                publishers._units[mac].addPublishings(devicePublishings)
 
-            if changedTopic:
-                # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
-                publishers._units[mac].resetExecutions()
+                if changedTopic:
+                    # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
+                    publishers._units[mac].resetExecutions()
 
         # for each device in Devices singleton
         for macAddress, device in publishers._units.items:

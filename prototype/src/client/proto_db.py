@@ -91,7 +91,7 @@ class Database:
         selectQuery = '''SELECT devices.deviceMac, battery, executions
                         FROM devices
                         LEFT JOIN publish
-                        ON devices.deviceMac = publish.devic1eMac
+                        ON devices.deviceMac = publish.deviceMac
                         WHERE topic = ?'''
         topicValue = (topicName,)
         return self.execute_query_with_retry(query=selectQuery, values=topicValue)

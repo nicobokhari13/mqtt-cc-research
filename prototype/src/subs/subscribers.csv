@@ -1,3 +1,3 @@
-sub01,mqttcc01,sensor/temperature%latency%90,sensor/humidity%latency%75,sensor/airquality%latency%60
-sub02,mqttcc02,sensor/temperature%latency%75
-sub03,mqttcc03,sensor/humidity%latency%70,sensor/airquality%latency%70
+sub01,mqttcc01,sensor/temperature%latency%20,sensor/humidity%latency%37,sensor/airquality%latency%50
+sub02,mqttcc02,sensor/temperature%latency%45,sensor/humidity%latency%30
+sub03,mqttcc03,sensor/humidity%latency%15,sensor/airquality%latency%30

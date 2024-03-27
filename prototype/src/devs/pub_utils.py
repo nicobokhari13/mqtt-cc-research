@@ -17,7 +17,7 @@ class PublisherUtils:
         self._STATUS_TOPIC = "sensor/status" # where IoT device sends status
         self._got_cmd = None # set to true and mqtt awaits self. to be set to False after msg is received
         self._end_round = None # 
-        self._publishes = Dict[str, int] # topic: freq
+        self._publishes = None
         
 
     def setParameters(self, username, password, Mac_addr, start_battery):
@@ -27,7 +27,7 @@ class PublisherUtils:
         self._timeWindow = 60 # time window where dev sends status, waits for response on command
         self._deviceMac = Mac_addr # mac address of IoT device 
         self._battery = start_battery
-        self._CMD_TOPIC = "sensor/cmd/" + self._MAC_ADDR # where IoT receives command on where to publish
+        self._CMD_TOPIC = "sensor/cmd/" + self._deviceMac # where IoT receives command on where to publish
 
     def setPublishing(self, pub_cmd:dict):
         self._publishes = pub_cmd
