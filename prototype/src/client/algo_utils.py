@@ -6,10 +6,11 @@ class Processing_Unit:
 
     def __init__(self, macAddr:str, capacity:float, executions):
         self._mac = macAddr
-        self._freqs = {}
+        self._freqs = list()
         self._battery = capacity
         self._numExecutions = executions 
         self._assignments = {}
+        self._freq_min = None
 
     def currentEnergy(self):
         return self._numExecutions * Processing_Unit._ENERGY_PER_EXECUTION
@@ -29,13 +30,17 @@ class Processing_Unit:
         removes = list()
         # copy of freqs
         freqCopy = self._freqs
-
+        print(f"freqCopy = {freqCopy}")
+        print(f"newTask = {newTask}")
         # if there is a newTask, add it to the copy to simulate adding the task to the publisher
         if newTask: 
             # if there is a new task, add it to freqs, change the min
             freqCopy.append(newTask)
+            print("added new task to freqCopy")
             self._freq_min = min(freqCopy)
+            print("calculated new min")
 
+        print(f"removing {self._freq_min} from freqCopy")
         # remove the min from the following calculations
         freqCopy.remove(self._freq_min)
 

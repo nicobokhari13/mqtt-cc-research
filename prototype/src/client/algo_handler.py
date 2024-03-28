@@ -65,9 +65,11 @@ def generateAssignments(changedTopic = None):
                     # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
                     publishers._units[mac].resetExecutions()
 
+        # TODO: Adding more debugging print statements
         # for each device in Devices singleton
         for macAddress, device in publishers._units.items():
             # determine the energy incrase for adding the topic's frequency to the device
+            print(f"checking energy increase on {macAddress} from adding {freq}")
             Einc = device.energyIncrease(freq)
             # the device's new energy level after addition of the topic
             Enew = device.currentEnergy() + Einc
@@ -76,9 +78,14 @@ def generateAssignments(changedTopic = None):
 
             # if the new energy level is less than the battery, and 
             # the new energy level's ratio to the battery is smaller than the min 
-            if (Enew <= device.battery and Eratio < Emin) or not Emin:
+            if not Emin:
                 bestMac = macAddress
                 Emin = Eratio
+            elif (Enew <= device._battery and Eratio < Emin):
+                bestMac = macAddress
+                Emin = Eratio
+
+        
         
         # if bestMac != None:
             # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)
