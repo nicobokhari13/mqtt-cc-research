@@ -49,21 +49,21 @@ def generateAssignments(changedTopic = None):
             # create processing unit at key = mac
             # add device info as a Processing_Unit in Devices singleton
             print(f"{mac}, {battery}, {num_exec}")
-            
+                
             publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
 
             # add publishings to the device with macAddr = mac, and set device frequencies
             # add current device publishing info to assignments (topics that the device currently publishes to)
             print(f"publishings {devicePublishings}")
+            # if there are topics the device already publishes to
             if devicePublishings:
                 publishers._units[mac].addPublishings(devicePublishings)
 
                 if changedTopic:
                     # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
                     publishers._units[mac].resetExecutions()
-
         # for each device in Devices singleton
-        for macAddress, device in publishers._units.items:
+        for macAddress, device in publishers._units.items():
             # Einc = device.energyIncrease(taskFrequency)
 
             Einc = device.energyIncrease(freq)
@@ -76,6 +76,7 @@ def generateAssignments(changedTopic = None):
 
             if (Enew <= device.battery and Eratio < Emin) or not Emin:
                 bestMac = macAddress
+                Emin = Eratio
         
         # if bestMac != None:
             # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)
@@ -84,11 +85,13 @@ def generateAssignments(changedTopic = None):
         if bestMac != None:
                 # adding the assignment adds the task's frequency to the publishings variable
                 publishers._units[bestMac].addAssignment(topic, freq)
-                # num Executions with the task is saved in the device 
-                execs = Emin / publishers._units[bestMac]._ENERGY_PER_EXECUTION
-                publishers._units[bestMac]._numExecutions = execs
+                # we know bestMac uses Emin energy, so reverse operations to get Einc
+                Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
+                changeInExecutions = Einc / Processing_Unit._ENERGY_PER_EXECUTION
+                New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
+                publishers._units[bestMac]._numExecutions = New_Executions
                 # update num executions in DB
-                db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=execs)
+                db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=New_Executions)
 
     # by this point, all the devices in Devices have their list of assignments
     
@@ -96,10 +99,12 @@ def generateAssignments(changedTopic = None):
         # if the assignments is not None:
             # assignmentString = json.dumps(device._assignments)
             # Devices.addAssignmentsToCommand(deviceMac = device._mac, taskList = assignmentString)
-    for macAddress, device in publishers._units.items:
-         if device._assignments is not None:
-              assignmentString = json.dumps(device._assignments)
-              publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
+    for macAddress, device in publishers._units.items():
+        if device._assignments is not None:
+            assignmentString = json.dumps(device._assignments)
+            publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
     db.closeDB()
+    publishers.resetUnits()
+    # while the publishers' unit information is reset, the assignments are preserved in generated_cmd
     return publishers._generated_cmd
 
