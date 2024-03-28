@@ -55,25 +55,27 @@ def generateAssignments(changedTopic = None):
             # add publishings to the device with macAddr = mac, and set device frequencies
             # add current device publishing info to assignments (topics that the device currently publishes to)
             print(f"publishings {devicePublishings}")
+
             # if there are topics the device already publishes to
             if devicePublishings:
+                # add them to the unit
                 publishers._units[mac].addPublishings(devicePublishings)
 
-                if changedTopic:
+                if changedTopic and topic == changedTopic:
                     # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
                     publishers._units[mac].resetExecutions()
+
         # for each device in Devices singleton
         for macAddress, device in publishers._units.items():
-            # Einc = device.energyIncrease(taskFrequency)
-
+            # determine the energy incrase for adding the topic's frequency to the device
             Einc = device.energyIncrease(freq)
-            # Enew = device.currentEnergy() + Einc
+            # the device's new energy level after addition of the topic
             Enew = device.currentEnergy() + Einc
-            # Eratio = Enew / device.battery
+            # the device's new energy level divided by its available battery
             Eratio = Enew / device._battery
-            # if (Enew <= device.battery && Eratio < Emin) or not Emin
-                # bestMac = device._mac
 
+            # if the new energy level is less than the battery, and 
+            # the new energy level's ratio to the battery is smaller than the min 
             if (Enew <= device.battery and Eratio < Emin) or not Emin:
                 bestMac = macAddress
                 Emin = Eratio

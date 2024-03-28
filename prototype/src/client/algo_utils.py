@@ -19,11 +19,6 @@ class Processing_Unit:
             self._freq_min = min(self._freqs)
         else:
             self._freq_min = None
-
-    def setFrequencies(self, publishing_list):
-        self._freqs = set(publishing_list)
-        self._freqs = list(self._freqs)
-        self.resetMinimum()
     
     def calculateExecutions(self, newTask = None):
         numExecutions = 0
@@ -54,6 +49,7 @@ class Processing_Unit:
         
         # place minimum back in
         freqCopy.append(self._freq_min)
+        # the number of executions is the addition of all the times a frequency occurs in the OBSERVATION PERIOD
         for freq in freqCopy:
             numExecutions += math.ceil(self._OBSERVATION_PERIOD / freq)
 
@@ -73,16 +69,16 @@ class Processing_Unit:
     
     def addAssignment(self, topic:str, task):
         self._assignments[topic] = task
-        # add topic's frequency to device frequencies
-        self._freqs.append(task)
         # example: 
         # "sensor/temperature": 10 -> publish to sensor/temperature every 10 seconds
 
-    def addPublishings(self, publishing_set:list):
+    def addPublishings(self, publishing_list:list):
         # publishing_set is a list of tuples (topic, max_allowed_latency)
-        for publishing in publishing_set:
+        for publishing in publishing_list:
             print(publishing)
             self.addAssignment(topic = publishing[0], task = publishing[1])
+            # add topic's frequency to device frequencies
+            self._freqs.append(publishing[1])
         # after all frequencies added, reset frequency minimum 
         self.resetMinimum()
                 
