@@ -134,13 +134,15 @@ class AsyncMqtt:
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
 
         utils._gotCmdToSend = self.loop.create_future()
+        print(utils._gotCmdToSend)
 
         while True: #infinite loop
             print("starting window")
-            wait_for_cmd_routine = self.waitForCommand()
-            wait_for_window_routine = self.waitForTimeWindow()
+            wait_for_cmd_routine = asyncio.create_task(self.waitForCommand())
+            wait_for_window_routine = asyncio.create_task(self.waitForTimeWindow())
 
             done, pending = await asyncio.wait([wait_for_cmd_routine, wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
+            print("after await")
             # cancel what is still pending
             for task in pending:
                 task.cancel()

@@ -82,7 +82,7 @@ class Database:
         selectQuery = '''SELECT DISTINCT topic, max_allowed_latency
                         FROM publish 
                         LEFT JOIN subscriptions
-                        ON subscription = topic
+                        ON topic = subscription
                         WHERE NOT EXISTS  (
                             SELECT 1
                             FROM publish
