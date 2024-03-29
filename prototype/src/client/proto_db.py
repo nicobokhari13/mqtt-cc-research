@@ -67,11 +67,11 @@ class Database:
         return self.execute_query_with_retry(query=selectSub, values=(topic,))
 
     def updateSubscriptionWithLatency(self, topic, new_lat_qos, new_max_lat):
-        print(f"Topic: {topic}")
+        print(f"Subscription: {topic}")
         print(f"Latency Req: {new_lat_qos}")
         print(f"Max Allowed Latency: {new_max_lat}")
         newSubQoS = (new_lat_qos, new_max_lat, topic)
-        update_query = '''UPDATE subscriptions SET latency_req = ?, max_allowed_latency = ? WHERE topic = ?'''
+        update_query = '''UPDATE subscriptions SET latency_req = ?, max_allowed_latency = ? WHERE subscription = ?'''
         self.execute_query_with_retry(query=update_query, values=newSubQoS, requires_commit=True)
         
     def topicsWithNoPublishers(self) -> list:
@@ -114,6 +114,14 @@ class Database:
         updateQuery = '''UPDATE devices SET battery = ? WHERE deviceMac = ?'''
         device_values = (NEW_BATTERY,MAC_ADDR)
         self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
+
+    def updatePublishTableWithPublishingAssignments(self, MAC_ADDR, TOPICS):
+        updateQuery = '''UPDATE publish SET publishing = 1 WHERE deviceMac = ? AND topic = ?'''
+        update_values = []
+        for topic in TOPICS:
+            update_values.append((MAC_ADDR, topic))
+        self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True)
+
         
     def addDevice(self, MAC_ADDR, BATTERY):
         insertQuery = '''INSERT INTO devices (deviceMac, battery, executions) VALUES (?,?,?)'''
