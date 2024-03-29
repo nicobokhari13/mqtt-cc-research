@@ -43,7 +43,7 @@ class AsyncioHelper:
 
     async def misc_loop(self):
         utils = proto_utils.ProtoUtils()
-        utils._got_cmd = self.loop.create_future()
+        utils._gotCmdToSend = self.loop.create_future()
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
                 await asyncio.sleep(1)                 
@@ -59,13 +59,15 @@ class AsyncMqtt:
 
     async def sendCommandToDevice(self, topic, msg):
         self.client.publish(topic, msg)
+        print(f"sent to topic {topic}")
 
     async def sendCommands(self, mapAssignments:dict):
+        print("sending commands")
         utils = proto_utils.ProtoUtils()
         command_threads = [self.sendCommandToDevice(topic=utils._CMD_TOPIC+macAddress, msg=cmd) for macAddress, cmd in mapAssignments] 
         await asyncio.gather(*command_threads)
         # resolve ranAlgo object
-        utils._ranAlgo = True
+        print("finished sending commands")
 
     def on_connect(self, client, userdata, flags, rc):
         if(rc == 5):
@@ -88,7 +90,7 @@ class AsyncMqtt:
             will.updateDB(payload)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
             mapAssignments = algo.generateAssignments()
-            self.sendCommands(mapAssignments)
+            utils._gotCmdToSend.set_result(mapAssignments)
         if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
             # the message payload holds the topic with the changed max_allowed_latency
             # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
@@ -98,13 +100,17 @@ class AsyncMqtt:
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
 
+    async def waitForCommand(self):
+        utils = proto_utils.ProtoUtils()
+        mapAssignments = await utils._gotCmdToSend
+        self.sendCommands(mapAssignments)
+
     async def main(self):
         # main execution        
         # get pub_utils singleton object
         utils = proto_utils.ProtoUtils()
         
         self.disconnected = self.loop.create_future()
-        self.got_message = None
 
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
@@ -122,6 +128,9 @@ class AsyncMqtt:
 
         while True: #infinite loop
             # await asyncio.sleep(timewindow)
+            # TODO: await both utils._cmd and sleep(timeWindow) 
+                # if sleep comes back first, then the algorithm did not run -> re run it
+                # if cmd comes back first, then the algorithm ran, reset _gotCmdToSend 
             print("starting window")
             await asyncio.sleep(utils._timeWindow)
             print("ending window")

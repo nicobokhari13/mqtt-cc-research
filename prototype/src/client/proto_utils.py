@@ -21,7 +21,7 @@ class ProtoUtils:
 
         # Other vars 
         self._timeWindow = 3600
-        self._ranAlgo = None
+        # self._ranAlgo = None
         self._gotStatus = None
-        self._gotWill = None
+        self._gotCmdToSend = None
 

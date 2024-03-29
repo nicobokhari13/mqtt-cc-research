@@ -116,10 +116,10 @@ class AsyncMqtt:
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
         utils._got_cmd = self.loop.create_future()
         if utils._publishes is None: 
-            print("waiting for publishe")
+            print("waiting for publish")
             cmd = await utils._got_cmd
             utils.setPublishing(json.loads(cmd))
-            routines = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
+            routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes]
             utils._got_cmd = self.loop.create_future()
             
 
