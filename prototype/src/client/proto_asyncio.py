@@ -102,8 +102,8 @@ class AsyncMqtt:
 
     async def waitForCommand(self):
         utils = proto_utils.ProtoUtils()
-        mapAssignments = await utils._gotCmdToSend
-        self.sendCommands(mapAssignments)
+        # wait for gotCmdToSend to be set from on_message
+        await utils._gotCmdToSend
 
     async def waitForTimeWindow(self):
         utils = proto_utils.ProtoUtils()
