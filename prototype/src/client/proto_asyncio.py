@@ -16,7 +16,6 @@ class AsyncioHelper:
         self.client.on_socket_close = self.on_socket_close
         self.client.on_socket_register_write = self.on_socket_register_write
         self.client.on_socket_unregister_write = self.on_socket_unregister_write
-        self.start_up = True
 
     def on_socket_open(self, client, userdata, sock):
 
@@ -42,10 +41,9 @@ class AsyncioHelper:
 
 
     async def misc_loop(self):
-        utils = proto_utils.ProtoUtils()
-        utils._gotCmdToSend = self.loop.create_future()
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
+                print("in misc loop")
                 await asyncio.sleep(1)                 
             except asyncio.CancelledError:
                 break
@@ -89,13 +87,15 @@ class AsyncMqtt:
         if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
             will.updateDB(payload)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
+            # if there is a new topic, generate the new assignments
             mapAssignments = algo.generateAssignments()
+            # resolve gotCmdToSend with the assignments
             utils._gotCmdToSend.set_result(mapAssignments)
         if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
             # the message payload holds the topic with the changed max_allowed_latency
             # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
             mapAssignments = algo.generateAssignments(changedTopic=payload)
-            self.sendCommands(mapAssignments)
+            utils._gotCmdToSend.set_result(mapAssignments)
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
@@ -104,6 +104,13 @@ class AsyncMqtt:
         utils = proto_utils.ProtoUtils()
         mapAssignments = await utils._gotCmdToSend
         self.sendCommands(mapAssignments)
+
+    async def waitForTimeWindow(self):
+        utils = proto_utils.ProtoUtils()
+        await asyncio.sleep(utils._timeWindow)
+        # if time window is done first, resolve the got cmd to None
+        print("ending window")
+        utils._gotCmdToSend.set_result(None)
 
     async def main(self):
         # main execution        
@@ -126,21 +133,35 @@ class AsyncMqtt:
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
 
+        utils._gotCmdToSend = self.loop.create_future()
+
         while True: #infinite loop
-            # await asyncio.sleep(timewindow)
+            print("starting window")
+            wait_for_cmd_routine = self.waitForCommand()
+            wait_for_window_routine = self.waitForTimeWindow()
+
+            done, pending = await asyncio.wait([wait_for_cmd_routine, wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
+            # cancel what is still pending
+            for task in pending:
+                task.cancel()
+            # gotCmdToSend will be resolved to either mapAssignments OR None
+                
+            if utils._gotCmdToSend: # if there are mapAssignments in the command
+                # send command
+                await self.sendCommands(utils._gotCmdToSend)
+
+            else: # if _gotCmdToSend is None, then the time Window expired, must run algo again
+                # reset publishings to 0 and executions to 0 
+                algo.resetPublishingsAndDeviceExecutions()
+                # run algo again
+                mapAssignments = algo.generateAssignments()
+                # send command
+                await self.sendCommands(mapAssignments)
+
+            utils._gotCmdToSend = self.loop.create_future()
             # TODO: await both utils._cmd and sleep(timeWindow) 
                 # if sleep comes back first, then the algorithm did not run -> re run it
                 # if cmd comes back first, then the algorithm ran, reset _gotCmdToSend 
-            print("starting window")
-            await asyncio.sleep(utils._timeWindow)
-            print("ending window")
-            if utils._ranAlgo == False:
-                algo.resetPublishingsAndDeviceExecutions()
-                mapAssignments = algo.generateAssignments()
-                self.sendCommands(mapAssignments)
-            
-            utils._ranAlgo = False
-
 def run_async_client():
     print("Starting")
     loop = asyncio.get_event_loop()
