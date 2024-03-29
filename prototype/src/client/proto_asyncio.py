@@ -62,7 +62,7 @@ class AsyncMqtt:
     async def sendCommands(self, mapAssignments:dict):
         print("sending commands")
         utils = proto_utils.ProtoUtils()._instance
-        command_threads = [self.sendCommandToDevice(topic=utils._CMD_TOPIC+macAddress, msg=cmd) for macAddress, cmd in mapAssignments] 
+        command_threads = [self.sendCommandToDevice(topic=utils._CMD_TOPIC+macAddress, msg=cmd) for macAddress, cmd in mapAssignments.items()] 
         await asyncio.gather(*command_threads)
         # resolve ranAlgo object
         print("finished sending commands")
