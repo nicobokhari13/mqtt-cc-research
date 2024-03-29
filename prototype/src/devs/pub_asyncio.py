@@ -82,6 +82,7 @@ class AsyncMqtt:
         utils = pub_utils.PublisherUtils()
         # if the topic matches the cmd topic, resolve got_cmd with set_result
         if mqtt.topic_matches_sub(msg.topic, utils._CMD_TOPIC):
+            print(f"{utils._deviceMac} received command: {msg.payload.decode()}")
             utils._got_cmd.set_result(msg.payload.decode())
 
 
@@ -89,9 +90,11 @@ class AsyncMqtt:
         self.disconnected.set_result(rc)
     
     async def publish_to_topic(self, sense_topic, freq):
+        utils = pub_utils.PublisherUtils()
         msg = "data"
         self.client.publish(topic = sense_topic, payload = msg)
         await asyncio.sleep(freq)
+        print(f"device {utils._deviceMac} finished publish to {sense_topic} on frequency {freq}")
 
     async def main(self):
         # main execution        

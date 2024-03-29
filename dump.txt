@@ -1,0 +1,595 @@
+y
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
+sub01
+<class 'list'>
+Getting subs for sensor/temperature
+Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
+handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
+    will.updateDB(payload)
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
+    impacted_sub = getImpactedSubscription(topics_list[i])
+  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
+    results = database.selectSubscriptionsWithTopic(topic)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
+    return self.execute_query_with_retry(query=selectSub, values=(topic,))
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
+    cursor.execute(query, values)
+sqlite3.OperationalError: no such column: topic
+^CTraceback (most recent call last):
+  File "/home/devnico/repos/research/prototype/src/client/proto_client.py", line 76, in <module>
+    main()
+  File "/home/devnico/repos/research/prototype/src/client/proto_client.py", line 73, in main
+    run_async_client()
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 138, in run_async_client
+    loop.run_until_complete(AsyncMqtt(loop).main())
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1871, in _run_once
+    event_list = self._selector.select(timeout)
+  File "/usr/lib/python3.10/selectors.py", line 469, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+KeyboardInterrupt

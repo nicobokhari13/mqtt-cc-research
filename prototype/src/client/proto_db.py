@@ -138,7 +138,7 @@ class Database:
         self.execute_query_with_retry(query=updateQuery, requires_commit=True)
 
     def resetDevicesPublishingToTopic(self, changedTopic):
-        updateQuery = '''UPDATE pubilsh 
+        updateQuery = '''UPDATE publish 
                             SET publishing = 0 
                             WHERE topic = ?'''
         query_values = (changedTopic,)

@@ -33,8 +33,7 @@ def generateAssignments(changedTopic = None):
     for task in topicsWithNoPublishers: 
         topic = task[0]
         freq = task[1]
-
-        
+        print(f"Task: {task}")
         # get devices capable of publishing to the topic
         capableDevices = db.devicesCapableToPublish(topicName=topic) # list of tuples with (deviceMac, battery, executions)
 
@@ -71,11 +70,14 @@ def generateAssignments(changedTopic = None):
             # determine the energy incrase for adding the topic's frequency to the device
             print(f"checking energy increase on {macAddress} from adding {freq}")
             Einc = device.energyIncrease(freq)
+            print(f"Energy increased on {macAddress} {Einc}")
+
             # the device's new energy level after addition of the topic
             Enew = device.currentEnergy() + Einc
+            print(f"{macAddress}'s energy after increase = {Enew}")
             # the device's new energy level divided by its available battery
             Eratio = Enew / device._battery
-
+            print(f"ratio of new Energy / current Battery = {Eratio}")
             # if the new energy level is less than the battery, and 
             # the new energy level's ratio to the battery is smaller than the min 
             if not Emin:
@@ -84,6 +86,7 @@ def generateAssignments(changedTopic = None):
             elif (Enew <= device._battery and Eratio < Emin):
                 bestMac = macAddress
                 Emin = Eratio
+            print(f"best Mac = {bestMac}")
 
         
         
@@ -97,7 +100,9 @@ def generateAssignments(changedTopic = None):
                 # we know bestMac uses Emin energy, so reverse operations to get Einc
                 Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
                 changeInExecutions = Einc / Processing_Unit._ENERGY_PER_EXECUTION
+                print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
                 New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
+                print(f"{bestMac} now executes at {New_Executions}")
                 publishers._units[bestMac]._numExecutions = New_Executions
                 # update num executions in DB
                 db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=New_Executions)

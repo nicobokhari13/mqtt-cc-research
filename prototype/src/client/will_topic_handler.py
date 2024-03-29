@@ -1,9 +1,7 @@
 import proto_db as db
 import json
 
-# DEPRECATED: will msgs won't be used since the experiment is testing a "live" network 
-    # subscribers won't be disconnecting, new subscribers will be connected during experiment
-
+# TODO: Update the database queries with the corret schema/attributes (i.e topic vs. subscription in publish and subscription tables)
 def getImpactedSubscription(topic) -> list:
     # get database
     database = db.Database()
