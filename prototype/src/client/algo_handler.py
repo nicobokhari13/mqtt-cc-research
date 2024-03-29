@@ -114,10 +114,11 @@ def generateAssignments(changedTopic = None):
             # assignmentString = json.dumps(device._assignments)
             # Devices.addAssignmentsToCommand(deviceMac = device._mac, taskList = assignmentString)
     for macAddress, device in publishers._units.items():
-        if device._assignments is not None:
+        if device._assignments:
             assignmentString = json.dumps(device._assignments)
+            print(f"assignment string = {assignmentString}")
             publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
-            # TODO: Update database with which devices are executing onto what topics 
+            db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys()) 
     db.closeDB()
     publishers.resetUnits()
     # while the publishers' unit information is reset, the assignments are preserved in generated_cmd

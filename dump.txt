@@ -1,10 +1,52 @@
-y
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/temperature', 20)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 30
+a8:20:dc:2d:51:59's energy after increase = 30
+ratio of new Energy / current Battery = 0.3157894736842105
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 10
+b8:27:eb:4f:15:95's energy after increase = 30
+ratio of new Energy / current Battery = 0.3
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
 Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
 handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
 Traceback (most recent call last):
@@ -22,21 +64,96 @@ Traceback (most recent call last):
     self._handle_on_message(message)
   File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
     on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 95, in on_message
+    mapAssignments = algo.generateAssignments(changedTopic=payload)
+  File "/home/devnico/repos/research/prototype/src/client/algo_handler.py", line 120, in generateAssignments
+    db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys())
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 125, in updatePublishTableWithPublishingAssignments
+    self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 32, in execute_query_with_retry
+    cursor.execute(query)
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 2, and there are 0 supplied.
+Task: ('sensor/airquality', 50)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/humidity', 30)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/temperature', 20)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 30
+a8:20:dc:2d:51:59's energy after increase = 30
+ratio of new Energy / current Battery = 0.3157894736842105
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 10
+b8:27:eb:4f:15:95's energy after increase = 30
+ratio of new Energy / current Battery = 0.3
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
 Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
 handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
 Traceback (most recent call last):
@@ -54,21 +171,96 @@ Traceback (most recent call last):
     self._handle_on_message(message)
   File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
     on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 95, in on_message
+    mapAssignments = algo.generateAssignments(changedTopic=payload)
+  File "/home/devnico/repos/research/prototype/src/client/algo_handler.py", line 120, in generateAssignments
+    db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys())
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 125, in updatePublishTableWithPublishingAssignments
+    self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 32, in execute_query_with_retry
+    cursor.execute(query)
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 2, and there are 0 supplied.
+Task: ('sensor/airquality', 50)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/humidity', 30)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/temperature', 20)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 30
+a8:20:dc:2d:51:59's energy after increase = 30
+ratio of new Energy / current Battery = 0.3157894736842105
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 10
+b8:27:eb:4f:15:95's energy after increase = 30
+ratio of new Energy / current Battery = 0.3
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
 Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
 handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
 Traceback (most recent call last):
@@ -86,21 +278,96 @@ Traceback (most recent call last):
     self._handle_on_message(message)
   File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
     on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 95, in on_message
+    mapAssignments = algo.generateAssignments(changedTopic=payload)
+  File "/home/devnico/repos/research/prototype/src/client/algo_handler.py", line 120, in generateAssignments
+    db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys())
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 125, in updatePublishTableWithPublishingAssignments
+    self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 32, in execute_query_with_retry
+    cursor.execute(query)
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 2, and there are 0 supplied.
+Task: ('sensor/airquality', 50)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/humidity', 30)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/temperature', 20)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 30
+a8:20:dc:2d:51:59's energy after increase = 30
+ratio of new Energy / current Battery = 0.3157894736842105
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 10
+b8:27:eb:4f:15:95's energy after increase = 30
+ratio of new Energy / current Battery = 0.3
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
 Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
 handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
 Traceback (most recent call last):
@@ -118,21 +385,96 @@ Traceback (most recent call last):
     self._handle_on_message(message)
   File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
     on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 95, in on_message
+    mapAssignments = algo.generateAssignments(changedTopic=payload)
+  File "/home/devnico/repos/research/prototype/src/client/algo_handler.py", line 120, in generateAssignments
+    db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys())
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 125, in updatePublishTableWithPublishingAssignments
+    self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 32, in execute_query_with_retry
+    cursor.execute(query)
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 2, and there are 0 supplied.
+Task: ('sensor/airquality', 50)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/humidity', 30)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/temperature', 20)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 30
+a8:20:dc:2d:51:59's energy after increase = 30
+ratio of new Energy / current Battery = 0.3157894736842105
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 10
+b8:27:eb:4f:15:95's energy after increase = 30
+ratio of new Energy / current Battery = 0.3
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
 Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
 handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
 Traceback (most recent call last):
@@ -150,21 +492,96 @@ Traceback (most recent call last):
     self._handle_on_message(message)
   File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
     on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 95, in on_message
+    mapAssignments = algo.generateAssignments(changedTopic=payload)
+  File "/home/devnico/repos/research/prototype/src/client/algo_handler.py", line 120, in generateAssignments
+    db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys())
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 125, in updatePublishTableWithPublishingAssignments
+    self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 32, in execute_query_with_retry
+    cursor.execute(query)
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 2, and there are 0 supplied.
+Task: ('sensor/airquality', 50)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/humidity', 30)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/temperature', 20)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 30
+a8:20:dc:2d:51:59's energy after increase = 30
+ratio of new Energy / current Battery = 0.3157894736842105
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 10
+b8:27:eb:4f:15:95's energy after increase = 30
+ratio of new Energy / current Battery = 0.3
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
 Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
 handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
 Traceback (most recent call last):
@@ -182,21 +599,96 @@ Traceback (most recent call last):
     self._handle_on_message(message)
   File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
     on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 95, in on_message
+    mapAssignments = algo.generateAssignments(changedTopic=payload)
+  File "/home/devnico/repos/research/prototype/src/client/algo_handler.py", line 120, in generateAssignments
+    db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys())
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 125, in updatePublishTableWithPublishingAssignments
+    self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 32, in execute_query_with_retry
+    cursor.execute(query)
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 2, and there are 0 supplied.
+Task: ('sensor/airquality', 50)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/humidity', 30)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/temperature', 20)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 30
+a8:20:dc:2d:51:59's energy after increase = 30
+ratio of new Energy / current Battery = 0.3157894736842105
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 10
+b8:27:eb:4f:15:95's energy after increase = 30
+ratio of new Energy / current Battery = 0.3
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
 Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
 handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
 Traceback (most recent call last):
@@ -214,370 +706,94 @@ Traceback (most recent call last):
     self._handle_on_message(message)
   File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
     on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 95, in on_message
+    mapAssignments = algo.generateAssignments(changedTopic=payload)
+  File "/home/devnico/repos/research/prototype/src/client/algo_handler.py", line 120, in generateAssignments
+    db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys())
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 125, in updatePublishTableWithPublishingAssignments
+    self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
+  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 32, in execute_query_with_retry
+    cursor.execute(query)
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 2, and there are 0 supplied.
+Task: ('sensor/airquality', 50)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 50
+freqCopy = []
+newTask = 50
+added new task to freqCopy
+calculated new min
+removing 50 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/humidity', 30)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 0
+b8:27:eb:4f:15:95's energy after increase = 20
+ratio of new Energy / current Battery = 0.2
+best Mac = b8:27:eb:4f:15:95
+b8:27:eb:4f:15:95 used to execute at 2
+b8:27:eb:4f:15:95 now executes at 2.0
+Task: ('sensor/temperature', 20)
+a8:20:dc:2d:51:59, 95.0, 0
+publishings []
+b8:27:eb:4f:15:95, 100.0, 2
+publishings []
+checking energy increase on a8:20:dc:2d:51:59 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 30
+a8:20:dc:2d:51:59's energy after increase = 30
+ratio of new Energy / current Battery = 0.3157894736842105
+best Mac = b8:27:eb:4f:15:95
+checking energy increase on b8:27:eb:4f:15:95 from adding 20
+freqCopy = []
+newTask = 20
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+Energy increased on b8:27:eb:4f:15:95 10
+b8:27:eb:4f:15:95's energy after increase = 30
+^Cratio of new Energy / current Battery = 0.3
 Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 88, in on_message
-    will.updateDB(payload)
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 50, in updateDB
-    impacted_sub = getImpactedSubscription(topics_list[i])
-  File "/home/devnico/repos/research/prototype/src/client/will_topic_handler.py", line 12, in getImpactedSubscription
-    results = database.selectSubscriptionsWithTopic(topic)
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 67, in selectSubscriptionsWithTopic
-    return self.execute_query_with_retry(query=selectSub, values=(topic,))
-  File "/home/devnico/repos/research/prototype/src/client/proto_db.py", line 28, in execute_query_with_retry
-    cursor.execute(query, values)
-sqlite3.OperationalError: no such column: topic
-^CTraceback (most recent call last):
   File "/home/devnico/repos/research/prototype/src/client/proto_client.py", line 76, in <module>
     main()
   File "/home/devnico/repos/research/prototype/src/client/proto_client.py", line 73, in main
@@ -588,8 +804,24 @@ sqlite3.OperationalError: no such column: topic
     self.run_forever()
   File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
     self._run_once()
-  File "/usr/lib/python3.10/asyncio/base_events.py", line 1871, in _run_once
-    event_list = self._selector.select(timeout)
-  File "/usr/lib/python3.10/selectors.py", line 469, in select
-    fd_event_list = self._selector.poll(timeout, max_ev)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 24, in cb
+    client.loop_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
+    rc = self._packet_read()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
+    rc = self._packet_handle()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
+    return self._handle_publish()
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
+    self._handle_on_message(message)
+  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
+    on_message(self, self._userdata, message)
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 95, in on_message
+    mapAssignments = algo.generateAssignments(changedTopic=payload)
+  File "/home/devnico/repos/research/prototype/src/client/algo_handler.py", line 80, in generateAssignments
+    print(f"ratio of new Energy / current Battery = {Eratio}")
 KeyboardInterrupt

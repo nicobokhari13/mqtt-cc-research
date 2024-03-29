@@ -20,11 +20,15 @@ class Database:
         self._db_cursor.close()
         self._db_conn.close()
 
-    def execute_query_with_retry(self, query:str, values = None, requires_commit=False, max_retries=3, delay = 0.1 ):
+    def execute_query_with_retry(self, query:str, values = None, requires_commit=False, max_retries=3, delay = 0.1, executeMany = False ):
         for i in range(max_retries):
             try: 
                 cursor = self._db_conn.cursor()
-                if values:
+                print(f"values = {values}")
+                print(f"execute many = {executeMany}")
+                if values and executeMany:
+                    cursor.executemany(query, values)
+                elif values:
                     cursor.execute(query, values)
                 else:
                     cursor.execute(query)
@@ -118,9 +122,11 @@ class Database:
     def updatePublishTableWithPublishingAssignments(self, MAC_ADDR, TOPICS):
         updateQuery = '''UPDATE publish SET publishing = 1 WHERE deviceMac = ? AND topic = ?'''
         update_values = []
+        print(f"In update PUBLISH table: mac = {MAC_ADDR}")
         for topic in TOPICS:
             update_values.append((MAC_ADDR, topic))
-        self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True)
+            print(f"update_values: {update_values}")
+        self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
 
         
     def addDevice(self, MAC_ADDR, BATTERY):
