@@ -69,6 +69,7 @@ def main():
         for topic in topicList:
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)
     database.closeDB()
+    # create it once
     utils = proto_utils.ProtoUtils()
     run_async_client()
 

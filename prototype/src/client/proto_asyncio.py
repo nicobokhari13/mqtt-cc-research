@@ -61,7 +61,7 @@ class AsyncMqtt:
 
     async def sendCommands(self, mapAssignments:dict):
         print("sending commands")
-        utils = proto_utils.ProtoUtils()
+        utils = proto_utils.ProtoUtils()._instance
         command_threads = [self.sendCommandToDevice(topic=utils._CMD_TOPIC+macAddress, msg=cmd) for macAddress, cmd in mapAssignments] 
         await asyncio.gather(*command_threads)
         # resolve ranAlgo object
@@ -80,47 +80,67 @@ class AsyncMqtt:
     def on_message(self, client, userdata, msg):
         topic = msg.topic
         payload = msg.payload.decode()
-        utils = proto_utils.ProtoUtils()
+        utils = proto_utils.ProtoUtils()._instance
         print("in on_message")
+        #print(f"utils is {utils}")
+        #print(f"gotCmdToSend = {utils._gotCmdToSend}")
+        print(f"gotCmdToSend = {self.got_message}")
         # Print MQTT message to console
         if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
+            print("in status handler")
             status.handle_status_msg(payload)
         if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
+            print("in will handler")
             will.updateDB(payload)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
+            print("in new subs handler")
             # if there is a new topic, generate the new assignments
             mapAssignments = algo.generateAssignments()
-            print(f"cmd object = {utils._gotCmdToSend}")
+            #print(f"cmd object = {utils._gotCmdToSend}")
+            print(f"cmd object = {self.got_message}")
             # resolve gotCmdToSend with the assignments
-            if not utils._gotCmdToSend:
-                utils._gotCmdToSend = self.loop.create_future()
-            utils._gotCmdToSend.set_result(mapAssignments)
+            # if not utils._gotCmdToSend:
+            #     print("cmd object is none tf")
+            if not self.got_message:
+                print("cmd object is none tf")
+            print("before setting assignments")
+            #utils._gotCmdToSend.set_result(mapAssignments)
+            self.got_message.set_result(mapAssignments)
+            print("after setting assignments")
         if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
             # the message payload holds the topic with the changed max_allowed_latency
             # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
+            print("in lat change handler")
             mapAssignments = algo.generateAssignments(changedTopic=payload)
-            print(f"cmd object = {utils._gotCmdToSend}")
-            if not utils._gotCmdToSend:
-                print("creating future")
-                utils._gotCmdToSend = self.loop.create_future()
+            #print(f"cmd object = {utils._gotCmdToSend}")
+            print(f"cmd object = {self.got_message}")
+            # if not utils._gotCmdToSend:
+            #     print("cmd object is none tf")
+            if not self.got_message:
+                print("cmd object is none tf")
             print("before setting assignments")
-            utils._gotCmdToSend.set_result(mapAssignments)
+            #utils._gotCmdToSend.set_result(mapAssignments)
+            self.got_message.set_result(mapAssignments)
+            print("after setting assignments")
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
 
     async def waitForCommand(self):
-        utils = proto_utils.ProtoUtils()
+        #utils = proto_utils.ProtoUtils._instance
+        #print(f"utils is {utils}")
         print("waiting for command")
-        utils._gotCmdToSend = self.loop.create_future()
+        #print(f"gotCmdToSend = {utils._gotCmdToSend}")
+        print(f"gotCmdToSend = {self.got_message}")
         # wait for gotCmdToSend to be set from on_message
-        command = await utils._gotCmdToSend
+        #command = await utils._gotCmdToSend
+        command = await self.got_message
         print("got command")
         return command
 
 
     async def waitForTimeWindow(self):
-        utils = proto_utils.ProtoUtils()
+        utils = proto_utils.ProtoUtils()._instance
         print("waiting for time window")
         await asyncio.sleep(utils._timeWindow)
         # if time window is done first, resolve the got cmd to None
@@ -130,13 +150,14 @@ class AsyncMqtt:
     async def main(self):
         # main execution        
         # get pub_utils singleton object
-        utils = proto_utils.ProtoUtils()
+        utils = proto_utils.ProtoUtils()._instance
         
         self.disconnected = self.loop.create_future()
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
         self.client.on_disconnect = self.on_disconnect
+        self.got_message = None
         # set other necessary parameters for the client
 
         self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
@@ -147,11 +168,11 @@ class AsyncMqtt:
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
 
-        print(utils._gotCmdToSend)
-
         while True: #infinite loop
-            utils._gotCmdToSend = self.loop.create_future()
-            print(f"starting window and set gotCmdToSend = {utils._gotCmdToSend}")
+            #utils._gotCmdToSend = self.loop.create_future()
+            self.got_message = self.loop.create_future()
+            #print(f"starting window and set gotCmdToSend = {utils._gotCmdToSend}")
+            print(f"starting window and set gotCmdToSend = {self.got_message}")
             wait_for_cmd_routine = asyncio.create_task(self.waitForCommand())
             wait_for_window_routine = asyncio.create_task(self.waitForTimeWindow())
 
@@ -163,14 +184,18 @@ class AsyncMqtt:
                 for task in pending:
                     task.cancel()
                 await self.sendCommands(result)
-                utils._gotCmdToSend = None
+                # utils._gotCmdToSend = None
+                self.got_message = None
             else: # if result is None, then the time Window expired, must run algo again
                 # reset publishings to 0 and executions to 0 
+                for task in pending:
+                    task.cancel()
                 algo.resetPublishingsAndDeviceExecutions()
                 # run algo again
                 mapAssignments = algo.generateAssignments()
                 # send command
                 await self.sendCommands(mapAssignments)
+                self.got_message = None
 
             # TODO: await both utils._cmd and sleep(timeWindow) 
                 # if sleep comes back first, then the algorithm did not run -> re run it

@@ -4,6 +4,7 @@ class ProtoUtils:
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
+            print("instance is None, creating new one")
             cls._instance = super().__new__(cls, *args, **kwargs)
         return cls._instance
     
