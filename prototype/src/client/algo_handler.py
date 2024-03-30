@@ -121,6 +121,7 @@ def generateAssignments(changedTopic = None):
             db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys()) 
     db.closeDB()
     publishers.resetUnits()
+    print(f"generated final command = {publishers._generated_cmd}")
     # while the publishers' unit information is reset, the assignments are preserved in generated_cmd
     return publishers._generated_cmd
 

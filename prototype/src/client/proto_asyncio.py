@@ -84,7 +84,6 @@ class AsyncMqtt:
         print("in on_message")
         #print(f"utils is {utils}")
         #print(f"gotCmdToSend = {utils._gotCmdToSend}")
-        print(f"gotCmdToSend = {self.got_message}")
         # Print MQTT message to console
         if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
             print("in status handler")
@@ -97,13 +96,13 @@ class AsyncMqtt:
             # if there is a new topic, generate the new assignments
             mapAssignments = algo.generateAssignments()
             #print(f"cmd object = {utils._gotCmdToSend}")
-            print(f"cmd object = {self.got_message}")
             # resolve gotCmdToSend with the assignments
             # if not utils._gotCmdToSend:
             #     print("cmd object is none tf")
             if not self.got_message:
                 print("cmd object is none tf")
             print("before setting assignments")
+            print(f"self.got_message = {self.got_message}")
             #utils._gotCmdToSend.set_result(mapAssignments)
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
@@ -113,12 +112,12 @@ class AsyncMqtt:
             print("in lat change handler")
             mapAssignments = algo.generateAssignments(changedTopic=payload)
             #print(f"cmd object = {utils._gotCmdToSend}")
-            print(f"cmd object = {self.got_message}")
             # if not utils._gotCmdToSend:
             #     print("cmd object is none tf")
             if not self.got_message:
                 print("cmd object is none tf")
             print("before setting assignments")
+            print(f"self.got_message = {self.got_message}")
             #utils._gotCmdToSend.set_result(mapAssignments)
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
@@ -179,6 +178,7 @@ class AsyncMqtt:
             done, pending = await asyncio.wait([wait_for_cmd_routine, wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
             print("after await")
             result = done.pop().result()
+            print(f"the result of tasks is {result}")
             if result: # if result exists, then result holds the commad
                 # cancel what is still pending
                 for task in pending:
@@ -197,9 +197,6 @@ class AsyncMqtt:
                 await self.sendCommands(mapAssignments)
                 self.got_message = None
 
-            # TODO: await both utils._cmd and sleep(timeWindow) 
-                # if sleep comes back first, then the algorithm did not run -> re run it
-                # if cmd comes back first, then the algorithm ran, reset _gotCmdToSend 
 def run_async_client():
     print("Starting")
     loop = asyncio.get_event_loop()

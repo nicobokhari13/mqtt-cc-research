@@ -45,10 +45,12 @@ class AsyncioHelper:
             try:
                 print("starting window")
                 await asyncio.sleep(utils._timeWindow)
+                print("end window, sending status now")
                 # create lock object
                 lock = asyncio.Lock()
                 async with lock:
                     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    print(f"time {current_time}")
                     utils._battery = utils._battery - 2
                     # utils._battery = psutil.sensors_battery().percent
                     print(f"battery: {utils._battery}")
@@ -79,9 +81,10 @@ class AsyncMqtt:
         # After connect, subscribe to CMD topic
 
     async def waitForCmd(self):
-        utils = pub_utils.PublisherUtils()
-        await utils._got_cmd
-        return utils._got_cmd
+        #utils = pub_utils.PublisherUtils()
+        #await utils._got_cmd 
+        cmd = await self.got_message
+        return cmd
 
 
     def on_message(self, client, userdata, msg):
@@ -89,8 +92,8 @@ class AsyncMqtt:
         # if the topic matches the cmd topic, resolve got_cmd with set_result
         if mqtt.topic_matches_sub(msg.topic, utils._CMD_TOPIC):
             print(f"{utils._deviceMac} received command: {msg.payload.decode()}")
-            utils._got_cmd.set_result(msg.payload.decode())
-
+            # utils._got_cmd.set_result(msg.payload.decode())
+            self.got_message.set_result(msg.payload.decode())
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
@@ -111,7 +114,7 @@ class AsyncMqtt:
 
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
-        self.client.on_message = self.on_message
+        self.client.on_message = self.on_message 
         self.client.on_disconnect = self.on_disconnect
         # TODO: Use self.got_message instead of utils._got_cmd
         self.got_message = None
@@ -123,21 +126,27 @@ class AsyncMqtt:
         self.client.connect("localhost", 1883)
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
-        utils._got_cmd = self.loop.create_future()
+        #utils._got_cmd = self.loop.create_future()
+        
+        self.got_message = self.loop.create_future()
+        
         if not utils._publishes: 
             # if nothing to publish yet (at start up)
             print("waiting for publish")
-            cmd = await utils._got_cmd # wait for command to come
+            # cmd = await utils._got_cmd # wait for command to come
+            cmd = await self.got_message # wait for command to come
             # once we have command, set publishings
             utils.setPublishing(json.loads(cmd))
             # create sensing_task routines
-            routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes]
+            routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
             # reset command
-            utils._got_cmd = self.loop.create_future()
+            #utils._got_cmd = self.loop.create_future()
+            self.got_message = self.loop.create_future()
             # tasks are the publishing tasks assigned to the publisher
             tasks = [asyncio.create_task(coro) for coro in routines]
             # also add waiting for command from prototype
             tasks.append(asyncio.create_task(self.waitForCmd()))
+
         while True: #infinite loop
             try:
                 print("running tasks")
@@ -149,8 +158,12 @@ class AsyncMqtt:
                 # sensing tasks return None, waitForCmd returns the command
 
                 print(f"task result = {result}")
-                # if there is a string result, then we have a command msg
-                if result is str():
+                # if the result is a tuple, then a sensing task was done
+                if isinstance(result, tuple):
+                    print(f"sensing task {result} done, running it again")
+                    #tasks.append(asyncio.create_task(self.publish_to_topic(sense_topic=result[0], freq=result[1])))
+
+                else:
                     print("result is command")
                     print("canceling other tasks")
                     # cancel other sensing tasks
@@ -158,19 +171,14 @@ class AsyncMqtt:
                         unfinished_task.cancel()
                     print("changing tasks")
                     utils.setPublishing(json.loads(result))
-                    routines = [self.publish_sensing(topic, freq) for topic,freq in utils._publishes]
-                    # reset got cmd
-                    utils._got_cmd = self.loop.create_future()
-                    # tasks are the publishing tasks assigned to the publisher
+                    routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
                     tasks = [asyncio.create_task(coro) for coro in routines]
-                    # also add waiting for command from prototype
                     tasks.append(asyncio.create_task(self.waitForCmd()))
-                # if the result is a tuple, then we have returned from a sensing task
-                elif result is tuple():
-                    print("result is tuple")
-                    # still waiting for a command
-                    # add the done task back to the tasks
-                    tasks.append(asyncio.create_task(self.publish_to_topic(sense_topic=result[0], freq = result[1])))
+                    # reset got cmd
+                    #utils._got_cmd = self.loop.create_future()
+                self.got_message = self.loop.create_future()
+                    # tasks are the publishing tasks assigned to the publisher
+                    # also add waiting for command from prototype
             except asyncio.CancelledError:
                 print("asyncio cancelled")
 
