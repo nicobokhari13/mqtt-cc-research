@@ -222,6 +222,7 @@ int handle__subscribe(struct mosquitto *context)
 						// void add_to_existing_topic(struct mosquitto *context); this function will call update_lat_req() and calc_new_max_latency()
 						update_lat_req_max_allowed(context);
 						// client messaged if max_allowed changed in update
+        				sleep(1);
 					}
 
 				}

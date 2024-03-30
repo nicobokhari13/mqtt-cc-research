@@ -7,6 +7,9 @@ import proto_db as db
 import status_handler as status
 import will_topic_handler as will
 import algo_handler as algo
+import time
+
+# TODO: using sleep in on_message so self.got_message is resolved
 
 class AsyncioHelper:
     def __init__(self, loop, client):
@@ -93,6 +96,8 @@ class AsyncMqtt:
             will.updateDB(payload)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
             print("in new subs handler")
+            time.sleep(5)
+            print("after sleep")
             # if there is a new topic, generate the new assignments
             mapAssignments = algo.generateAssignments()
             #print(f"cmd object = {utils._gotCmdToSend}")
@@ -104,12 +109,15 @@ class AsyncMqtt:
             print("before setting assignments")
             print(f"self.got_message = {self.got_message}")
             #utils._gotCmdToSend.set_result(mapAssignments)
+            time.sleep(3)
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
         if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
             # the message payload holds the topic with the changed max_allowed_latency
             # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
             print("in lat change handler")
+            time.sleep(5)
+            print("after sleep")
             mapAssignments = algo.generateAssignments(changedTopic=payload)
             #print(f"cmd object = {utils._gotCmdToSend}")
             # if not utils._gotCmdToSend:
@@ -119,6 +127,7 @@ class AsyncMqtt:
             print("before setting assignments")
             print(f"self.got_message = {self.got_message}")
             #utils._gotCmdToSend.set_result(mapAssignments)
+            time.sleep(3)
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
 

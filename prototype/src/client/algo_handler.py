@@ -64,7 +64,6 @@ def generateAssignments(changedTopic = None):
                     # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
                     publishers._units[mac].resetExecutions()
 
-        # TODO: Adding more debugging print statements
         # for each device in Devices singleton
         for macAddress, device in publishers._units.items():
             # determine the energy incrase for adding the topic's frequency to the device

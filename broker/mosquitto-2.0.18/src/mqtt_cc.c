@@ -343,6 +343,9 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     int newMaxAllowed = calc_new_max_latency(db_Value);
 
     if (oldMaxAllowed != newMaxAllowed){
+        // if there is a change in the max_allowed_latency, notify client
+        // some time for the client to finish their operation
+        sleep(8);
         pthread_attr_init(&mess_client_attr);
 		pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
 		ret = pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);

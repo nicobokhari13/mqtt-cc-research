@@ -116,7 +116,6 @@ class AsyncMqtt:
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message 
         self.client.on_disconnect = self.on_disconnect
-        # TODO: Use self.got_message instead of utils._got_cmd
         self.got_message = None
         # set other necessary parameters for the client
         self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
