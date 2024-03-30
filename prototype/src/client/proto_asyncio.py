@@ -96,7 +96,7 @@ class AsyncMqtt:
             will.updateDB(payload)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
             print("in new subs handler")
-            time.sleep(5)
+            time.sleep(3)
             print("after sleep")
             # if there is a new topic, generate the new assignments
             mapAssignments = algo.generateAssignments()

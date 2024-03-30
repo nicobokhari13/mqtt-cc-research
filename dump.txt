@@ -53,25 +53,6 @@ in misc loop
 in misc loop
 in misc loop
 in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
 in on_message
 in new subs handler
 after sleep
@@ -112,7 +93,7 @@ b8:27:eb:4f:15:95 used to execute at 0
 b8:27:eb:4f:15:95 now executes at 2.0
 values = (2.0, 'b8:27:eb:4f:15:95')
 execute many = False
-Task: ('sensor/humidity', 30)
+Task: ('sensor/humidity', 37)
 values = ('sensor/humidity',)
 execute many = False
 values = ('a8:20:dc:2d:51:59',)
@@ -123,22 +104,22 @@ values = ('b8:27:eb:4f:15:95',)
 execute many = False
 b8:27:eb:4f:15:95, 100.0, 2
 publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding 30
+checking energy increase on a8:20:dc:2d:51:59 from adding 37
 freqCopy = []
-newTask = 30
+newTask = 37
 added new task to freqCopy
 calculated new min
-removing 30 from freqCopy
+removing 37 from freqCopy
 Energy increased on a8:20:dc:2d:51:59 20
 a8:20:dc:2d:51:59's energy after increase = 20
 ratio of new Energy / current Battery = 0.21052631578947367
 best Mac = b8:27:eb:4f:15:95
-checking energy increase on b8:27:eb:4f:15:95 from adding 30
+checking energy increase on b8:27:eb:4f:15:95 from adding 37
 freqCopy = []
-newTask = 30
+newTask = 37
 added new task to freqCopy
 calculated new min
-removing 30 from freqCopy
+removing 37 from freqCopy
 Energy increased on b8:27:eb:4f:15:95 0
 b8:27:eb:4f:15:95's energy after increase = 20
 ratio of new Energy / current Battery = 0.2
@@ -193,10 +174,8 @@ self.got_message = <Future pending cb=[Task.task_wakeup()]>
 after setting assignments
 got command
 in on_message
-in lat change handler
+in new subs handler
 after sleep
-values = ('sensor/humidity',)
-execute many = False
 values = None
 execute many = False
 Task: ('sensor/airquality', 50)
@@ -235,7 +214,7 @@ a8:20:dc:2d:51:59 used to execute at 0
 a8:20:dc:2d:51:59 now executes at 2.0
 values = (2.0, 'a8:20:dc:2d:51:59')
 execute many = False
-Task: ('sensor/humidity', 30)
+Task: ('sensor/humidity', 37)
 values = ('sensor/humidity',)
 execute many = False
 values = ('a8:20:dc:2d:51:59',)
@@ -247,26 +226,23 @@ execute many = False
 b8:27:eb:4f:15:95, 100.0, 2
 publishings [('sensor/temperature', 20)]
 ('sensor/temperature', 20)
-freqCopy = [20]
-newTask = None
-removing 20 from freqCopy
-checking energy increase on a8:20:dc:2d:51:59 from adding 30
+checking energy increase on a8:20:dc:2d:51:59 from adding 37
 freqCopy = []
-newTask = 30
+newTask = 37
 added new task to freqCopy
 calculated new min
-removing 30 from freqCopy
+removing 37 from freqCopy
 Energy increased on a8:20:dc:2d:51:59 0
 a8:20:dc:2d:51:59's energy after increase = 20
 ratio of new Energy / current Battery = 0.21052631578947367
 best Mac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 30
+checking energy increase on b8:27:eb:4f:15:95 from adding 37
 freqCopy = [20]
-newTask = 30
+newTask = 37
 added new task to freqCopy
 calculated new min
 removing 20 from freqCopy
-Energy increased on b8:27:eb:4f:15:95 20
+Energy increased on b8:27:eb:4f:15:95 30
 b8:27:eb:4f:15:95's energy after increase = 50
 ratio of new Energy / current Battery = 0.5
 best Mac = a8:20:dc:2d:51:59
@@ -274,7 +250,7 @@ a8:20:dc:2d:51:59 used to execute at 2
 a8:20:dc:2d:51:59 now executes at 2.0
 values = (2.0, 'a8:20:dc:2d:51:59')
 execute many = False
-assignment string = {"sensor/humidity": 30}
+assignment string = {"sensor/humidity": 37}
 In update PUBLISH table: mac = a8:20:dc:2d:51:59
 update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
 values = [('a8:20:dc:2d:51:59', 'sensor/humidity')]
@@ -284,7 +260,7 @@ In update PUBLISH table: mac = b8:27:eb:4f:15:95
 update_values: [('b8:27:eb:4f:15:95', 'sensor/temperature')]
 values = [('b8:27:eb:4f:15:95', 'sensor/temperature')]
 execute many = True
-generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/temperature": 20}'}
+generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37}', 'b8:27:eb:4f:15:95': '{"sensor/temperature": 20}'}
 before setting assignments
 self.got_message = <Future finished result={'b8:27:eb:4f:15:95': '{"sensor/temperature": 20}'}>
 Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:25
@@ -304,7 +280,7 @@ Traceback (most recent call last):
     self._handle_on_message(message)
   File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
     on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 131, in on_message
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 113, in on_message
     self.got_message.set_result(mapAssignments)
 asyncio.exceptions.InvalidStateError: invalid state
 in misc loop
@@ -314,11 +290,29 @@ sending commands
 sent to topic sensor/cmd/b8:27:eb:4f:15:95
 finished sending commands
 starting window and set gotCmdToSend = <Future pending>
+waiting for command
+gotCmdToSend = <Future pending>
+waiting for time window
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
 in on_message
-in lat change handler
+in new subs handler
 after sleep
-values = ('sensor/humidity',)
-execute many = False
 values = None
 execute many = False
 Task: ('sensor/airquality', 50)
@@ -327,21 +321,22 @@ execute many = False
 values = ('a8:20:dc:2d:51:59',)
 execute many = False
 a8:20:dc:2d:51:59, 95.0, 2
-publishings []
+publishings [('sensor/humidity', 37)]
+('sensor/humidity', 37)
 values = ('b8:27:eb:4f:15:95',)
 execute many = False
 b8:27:eb:4f:15:95, 100.0, 2
 publishings [('sensor/temperature', 20)]
 ('sensor/temperature', 20)
 checking energy increase on a8:20:dc:2d:51:59 from adding 50
-freqCopy = []
+freqCopy = [37]
 newTask = 50
 added new task to freqCopy
 calculated new min
-removing 50 from freqCopy
-Energy increased on a8:20:dc:2d:51:59 0
-a8:20:dc:2d:51:59's energy after increase = 20
-ratio of new Energy / current Battery = 0.21052631578947367
+removing 37 from freqCopy
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 40
+ratio of new Energy / current Battery = 0.42105263157894735
 best Mac = a8:20:dc:2d:51:59
 checking energy increase on b8:27:eb:4f:15:95 from adding 50
 freqCopy = [20]
@@ -354,69 +349,28 @@ b8:27:eb:4f:15:95's energy after increase = 50
 ratio of new Energy / current Battery = 0.5
 best Mac = a8:20:dc:2d:51:59
 a8:20:dc:2d:51:59 used to execute at 2
-a8:20:dc:2d:51:59 now executes at 2.0
-values = (2.0, 'a8:20:dc:2d:51:59')
+a8:20:dc:2d:51:59 now executes at 4.0
+values = (4.0, 'a8:20:dc:2d:51:59')
 execute many = False
-Task: ('sensor/humidity', 30)
-values = ('sensor/humidity',)
-execute many = False
-values = ('a8:20:dc:2d:51:59',)
-execute many = False
-a8:20:dc:2d:51:59, 95.0, 2
-publishings []
-values = ('b8:27:eb:4f:15:95',)
-execute many = False
-b8:27:eb:4f:15:95, 100.0, 2
-publishings [('sensor/temperature', 20)]
-('sensor/temperature', 20)
-freqCopy = [20]
-newTask = None
-removing 20 from freqCopy
-checking energy increase on a8:20:dc:2d:51:59 from adding 30
-freqCopy = []
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 30 from freqCopy
-Energy increased on a8:20:dc:2d:51:59 0
-a8:20:dc:2d:51:59's energy after increase = 20
-ratio of new Energy / current Battery = 0.21052631578947367
-best Mac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 30
-freqCopy = [20]
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 20 from freqCopy
-Energy increased on b8:27:eb:4f:15:95 20
-b8:27:eb:4f:15:95's energy after increase = 50
-ratio of new Energy / current Battery = 0.5
-best Mac = a8:20:dc:2d:51:59
-a8:20:dc:2d:51:59 used to execute at 2
-a8:20:dc:2d:51:59 now executes at 2.0
-values = (2.0, 'a8:20:dc:2d:51:59')
-execute many = False
-assignment string = {"sensor/humidity": 30}
+assignment string = {"sensor/humidity": 37, "sensor/airquality": 50}
 In update PUBLISH table: mac = a8:20:dc:2d:51:59
 update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-values = [('a8:20:dc:2d:51:59', 'sensor/humidity')]
+update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity'), ('a8:20:dc:2d:51:59', 'sensor/airquality')]
+values = [('a8:20:dc:2d:51:59', 'sensor/humidity'), ('a8:20:dc:2d:51:59', 'sensor/airquality')]
 execute many = True
 assignment string = {"sensor/temperature": 20}
 In update PUBLISH table: mac = b8:27:eb:4f:15:95
 update_values: [('b8:27:eb:4f:15:95', 'sensor/temperature')]
 values = [('b8:27:eb:4f:15:95', 'sensor/temperature')]
 execute many = True
-generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/temperature": 20}'}
+generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37, "sensor/airquality": 50}', 'b8:27:eb:4f:15:95': '{"sensor/temperature": 20}'}
 before setting assignments
-self.got_message = <Future pending>
+self.got_message = <Future pending cb=[Task.task_wakeup()]>
 after setting assignments
-waiting for command
-gotCmdToSend = <Future finished result={'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/temperature": 20}'}>
 got command
-waiting for time window
 in misc loop
 after await
-the result of tasks is {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/temperature": 20}'}
+the result of tasks is {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37, "sensor/airquality": 50}', 'b8:27:eb:4f:15:95': '{"sensor/temperature": 20}'}
 sending commands
 sent to topic sensor/cmd/a8:20:dc:2d:51:59
 sent to topic sensor/cmd/b8:27:eb:4f:15:95
@@ -425,8 +379,6 @@ starting window and set gotCmdToSend = <Future pending>
 waiting for command
 gotCmdToSend = <Future pending>
 waiting for time window
-in misc loop
-in misc loop
 in misc loop
 in misc loop
 in misc loop
@@ -486,4 +438,3 @@ in misc loop
   File "/usr/lib/python3.10/selectors.py", line 469, in select
     fd_event_list = self._selector.poll(timeout, max_ev)
 KeyboardInterrupt
-

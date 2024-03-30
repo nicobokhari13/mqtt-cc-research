@@ -72,6 +72,7 @@ class AsyncioHelper:
 class AsyncMqtt:
     def __init__(self, loop):
         self.loop = loop
+        self.tasks = set()
 
     def on_connect(self, client, userdata, flags, rc):
         if(rc == 5):
@@ -103,7 +104,8 @@ class AsyncMqtt:
         msg = "data"
         self.client.publish(topic = sense_topic, payload = msg)
         await asyncio.sleep(freq)
-        print(f"device {utils._deviceMac} finished publish to {sense_topic} on frequency {freq}")
+        print(f"finished publishing on {sense_topic} on freq {freq}")
+        #print(f"device {utils._deviceMac} finished publish to {sense_topic} on frequency {freq}")
         return (sense_topic, freq)
     
     async def main(self):
@@ -142,14 +144,14 @@ class AsyncMqtt:
             #utils._got_cmd = self.loop.create_future()
             self.got_message = self.loop.create_future()
             # tasks are the publishing tasks assigned to the publisher
-            tasks = [asyncio.create_task(coro) for coro in routines]
+            self.tasks = [asyncio.create_task(coro) for coro in routines]
             # also add waiting for command from prototype
-            tasks.append(asyncio.create_task(self.waitForCmd()))
+            self.tasks.append(asyncio.create_task(self.waitForCmd()))
 
         while True: #infinite loop
             try:
                 print("running tasks")
-                done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+                done, pending = await asyncio.wait(self.tasks, return_when=asyncio.FIRST_COMPLETED)
                 # run the tasks until 1 completes
 
                 # get the "returned" value from the done task
@@ -160,19 +162,19 @@ class AsyncMqtt:
                 # if the result is a tuple, then a sensing task was done
                 if isinstance(result, tuple):
                     print(f"sensing task {result} done, running it again")
-                    #tasks.append(asyncio.create_task(self.publish_to_topic(sense_topic=result[0], freq=result[1])))
-
+                    self.tasks.append(asyncio.create_task(self.publish_to_topic(sense_topic=result[0], freq=result[1])))
                 else:
                     print("result is command")
                     print("canceling other tasks")
                     # cancel other sensing tasks
                     for unfinished_task in pending:
                         unfinished_task.cancel()
+                        self.tasks = set()
                     print("changing tasks")
                     utils.setPublishing(json.loads(result))
                     routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
-                    tasks = [asyncio.create_task(coro) for coro in routines]
-                    tasks.append(asyncio.create_task(self.waitForCmd()))
+                    self.tasks = [asyncio.create_task(coro) for coro in routines]
+                    self.tasks.append(asyncio.create_task(self.waitForCmd()))
                     # reset got cmd
                     #utils._got_cmd = self.loop.create_future()
                 self.got_message = self.loop.create_future()
