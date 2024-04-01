@@ -213,8 +213,6 @@ int handle__subscribe(struct mosquitto *context)
 						ret = pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
 						pthread_attr_destroy(&mess_client_attr);
 						sleep(1); // necessary so thread can finish before context is freed in later functions
-						// TODO: Add a longer delay between inserting topics into the database and notifying client of changes
-							// if doesn't work, may need to refactor so the prototype continuously queries the DB for topics without publishers
 					}
 					else{ // since the topic already exists need to adjust max_allowed_latency
 						context->mqtt_cc.latChange = true;

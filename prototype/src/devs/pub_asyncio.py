@@ -100,13 +100,14 @@ class AsyncMqtt:
         self.disconnected.set_result(rc)
     
     async def publish_to_topic(self, sense_topic, freq):
-        utils = pub_utils.PublisherUtils()
+        #utils = pub_utils.PublisherUtils()
         msg = "data"
-        self.client.publish(topic = sense_topic, payload = msg)
-        await asyncio.sleep(freq)
-        print(f"finished publishing on {sense_topic} on freq {freq}")
-        #print(f"device {utils._deviceMac} finished publish to {sense_topic} on frequency {freq}")
-        return (sense_topic, freq)
+        while True:
+            self.client.publish(topic = sense_topic, payload = msg)
+            await asyncio.sleep(freq)
+            print(f"finished publishing on {sense_topic} on freq {freq}")
+            #print(f"device {utils._deviceMac} finished publish to {sense_topic} on frequency {freq}")
+        #return (sense_topic, freq)
     
     async def main(self):
         # main execution        
@@ -144,7 +145,9 @@ class AsyncMqtt:
             #utils._got_cmd = self.loop.create_future()
             self.got_message = self.loop.create_future()
             # tasks are the publishing tasks assigned to the publisher
-            self.tasks = [asyncio.create_task(coro) for coro in routines]
+            for coro in routines: 
+                self.tasks.append(asyncio.create_task(coro))
+            #self.tasks = [asyncio.create_task(coro) for coro in routines]
             # also add waiting for command from prototype
             self.tasks.append(asyncio.create_task(self.waitForCmd()))
 
@@ -159,24 +162,25 @@ class AsyncMqtt:
                 # sensing tasks return None, waitForCmd returns the command
 
                 print(f"task result = {result}")
-                # if the result is a tuple, then a sensing task was done
-                if isinstance(result, tuple):
-                    print(f"sensing task {result} done, running it again")
-                    self.tasks.append(asyncio.create_task(self.publish_to_topic(sense_topic=result[0], freq=result[1])))
-                else:
-                    print("result is command")
-                    print("canceling other tasks")
-                    # cancel other sensing tasks
-                    for unfinished_task in pending:
-                        unfinished_task.cancel()
-                        self.tasks = set()
-                    print("changing tasks")
-                    utils.setPublishing(json.loads(result))
-                    routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
-                    self.tasks = [asyncio.create_task(coro) for coro in routines]
-                    self.tasks.append(asyncio.create_task(self.waitForCmd()))
-                    # reset got cmd
-                    #utils._got_cmd = self.loop.create_future()
+                # # if the result is a tuple, then a sensing task was done
+                # if isinstance(result, tuple):
+                #     print(f"sensing task {result} done, running it again")
+                #     self.tasks.append(asyncio.create_task(self.publish_to_topic(sense_topic=result[0], freq=result[1])))
+                print("result is command")
+                print("canceling other tasks")
+                # cancel other sensing tasks
+                for unfinished_task in pending:
+                    unfinished_task.cancel()
+                    self.tasks = set()
+                print("changing tasks")
+                utils.setPublishing(json.loads(result))
+                routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
+                #self.tasks = [asyncio.create_task(coro) for coro in routines]
+                for coro in routines: 
+                    self.tasks.append(asyncio.create_task(coro))
+                self.tasks.append(asyncio.create_task(self.waitForCmd()))
+                # reset got cmd
+                #utils._got_cmd = self.loop.create_future()
                 self.got_message = self.loop.create_future()
                     # tasks are the publishing tasks assigned to the publisher
                     # also add waiting for command from prototype

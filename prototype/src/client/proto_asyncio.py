@@ -8,9 +8,7 @@ import status_handler as status
 import will_topic_handler as will
 import algo_handler as algo
 import time
-
-# TODO: using sleep in on_message so self.got_message is resolved
-
+ 
 class AsyncioHelper:
     def __init__(self, loop, client):
         self.loop = loop
