@@ -73,7 +73,10 @@ class Processing_Unit:
         return changeInExecutions * self._ENERGY_PER_EXECUTION
     
     def addAssignment(self, topic:str, task):
+        print(f"adding topic {topic} and frequency {task}")
         self._assignments[topic] = task
+        # add assignment to publisher
+        print(self._assignments)
         # example: 
         # "sensor/temperature": 10 -> publish to sensor/temperature every 10 seconds
 

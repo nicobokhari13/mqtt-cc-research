@@ -40,30 +40,10 @@ class AsyncioHelper:
         self.loop.remove_writer(sock)
 
     async def misc_loop(self):
-        utils = pub_utils.PublisherUtils()
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
-                print("starting window")
-                await asyncio.sleep(utils._timeWindow)
-                print("end window, sending status now")
-                # create lock object
-                lock = asyncio.Lock()
-                async with lock:
-                    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    print(f"time {current_time}")
-                    utils._battery = utils._battery - 2
-                    # utils._battery = psutil.sensors_battery().percent
-                    print(f"battery: {utils._battery}")
-
-                    status_json = {
-                        "deviceMac": utils._MAC_ADDR,
-                        "battery": utils._battery,
-                        "time": current_time
-                    }
-                    status_str = json.dumps(status_json)
-                    # publish status to status topic
-                    print("publishing status")
-                    self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)            
+                print("in misc loop")
+                await asyncio.sleep(5)   
             except asyncio.CancelledError:
                 break
 
@@ -98,7 +78,28 @@ class AsyncMqtt:
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
-    
+
+    async def waitForStatus(self):
+        utils = pub_utils.PublisherUtils()
+        while True:
+            print("starting window")
+            await asyncio.sleep(utils._timeWindow)
+            print("end window, sending status now")
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(f"time {current_time}")
+            utils._battery = utils._battery - 2
+            # utils._battery = psutil.sensors_battery().percent
+            print(f"battery: {utils._battery}")
+            status_json = {
+                "deviceMac": utils._deviceMac,
+                "battery": utils._battery,
+                "time": current_time
+            }
+            status_str = json.dumps(status_json)
+            # publish status to status topic
+            print("publishing status")
+            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)
+
     async def publish_to_topic(self, sense_topic, freq):
         #utils = pub_utils.PublisherUtils()
         msg = "data"
@@ -146,10 +147,11 @@ class AsyncMqtt:
             self.got_message = self.loop.create_future()
             # tasks are the publishing tasks assigned to the publisher
             for coro in routines: 
-                self.tasks.append(asyncio.create_task(coro))
+                self.tasks.add(asyncio.create_task(coro))
             #self.tasks = [asyncio.create_task(coro) for coro in routines]
             # also add waiting for command from prototype
-            self.tasks.append(asyncio.create_task(self.waitForCmd()))
+            self.tasks.add(asyncio.create_task(self.waitForCmd()))
+            self.tasks.add(asyncio.create_task(self.waitForStatus()))
 
         while True: #infinite loop
             try:
@@ -177,8 +179,9 @@ class AsyncMqtt:
                 routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
                 #self.tasks = [asyncio.create_task(coro) for coro in routines]
                 for coro in routines: 
-                    self.tasks.append(asyncio.create_task(coro))
-                self.tasks.append(asyncio.create_task(self.waitForCmd()))
+                    self.tasks.add(asyncio.create_task(coro))
+                self.tasks.add(asyncio.create_task(self.waitForCmd()))
+                self.tasks.add(asyncio.create_task(self.waitForStatus()))
                 # reset got cmd
                 #utils._got_cmd = self.loop.create_future()
                 self.got_message = self.loop.create_future()

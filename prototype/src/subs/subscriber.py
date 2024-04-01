@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import sys # command line parameters
 import json # structure will & network latency msg
+import time
 
 SUBS_NET_LAT_TOPIC = "subs/netlat" # receive network lat from subs for some window of time
 WILL_TOPIC = "subs/will"
@@ -16,14 +17,15 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload.decode()
-    #print(f"Topic: {topic}")
-    #print(f"Message: {payload}")
-    #print()
+    print(f"Topic: {topic}")
+    print(f"Message: {payload}")
+    print()
 
 def subscribeToTopics(client, topicList:list):
     for topic in topicList:
         #print(f"Subscribing to {topic}")
         client.subscribe(topic)
+        time.sleep(8)
 # Executed when script is ran
 
 # python3 subscriber.py <username> <password>

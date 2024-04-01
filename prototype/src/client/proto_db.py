@@ -66,7 +66,7 @@ class Database:
         self.execute_query_with_retry(query=publishSelectTable, requires_commit=True)
 
     def selectSubscriptionsWithTopic(self, topic):
-        selectSub = '''SELECT * FROM subscriptions WHERE topic = ?'''
+        selectSub = '''SELECT * FROM subscriptions WHERE subscription = ?'''
         # return the rows from the selection
         return self.execute_query_with_retry(query=selectSub, values=(topic,))
 
@@ -158,3 +158,7 @@ class Database:
         query_values = (changedTopic,)
         self.execute_query_with_retry(query=updateQuery, values=query_values, requires_commit=True)
         
+    def resetAllDevicesPublishing(self):
+        updateQuery = '''UPDATE publish
+                            SET publishing = 0'''
+        self.execute_query_with_retry(query=updateQuery, requires_commit=True)

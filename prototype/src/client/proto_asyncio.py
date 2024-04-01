@@ -21,6 +21,7 @@ class AsyncioHelper:
     def on_socket_open(self, client, userdata, sock):
 
         def cb():
+            time.sleep(5)
             client.loop_read()
 
         self.loop.add_reader(sock, cb) 
@@ -45,7 +46,7 @@ class AsyncioHelper:
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
                 print("in misc loop")
-                await asyncio.sleep(1)                 
+                await asyncio.sleep(5)                 
             except asyncio.CancelledError:
                 break
 
@@ -83,6 +84,7 @@ class AsyncMqtt:
         payload = msg.payload.decode()
         utils = proto_utils.ProtoUtils()._instance
         print("in on_message")
+        time.sleep(10)
         #print(f"utils is {utils}")
         #print(f"gotCmdToSend = {utils._gotCmdToSend}")
         # Print MQTT message to console
@@ -92,9 +94,10 @@ class AsyncMqtt:
         if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
             print("in will handler")
             will.updateDB(payload)
+            mapAssignments = algo.generateAssignments()
+            self.got_message.set_result(mapAssignments)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
             print("in new subs handler")
-            time.sleep(3)
             print("after sleep")
             # if there is a new topic, generate the new assignments
             mapAssignments = algo.generateAssignments()
@@ -107,14 +110,12 @@ class AsyncMqtt:
             print("before setting assignments")
             print(f"self.got_message = {self.got_message}")
             #utils._gotCmdToSend.set_result(mapAssignments)
-            time.sleep(3)
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
         if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
             # the message payload holds the topic with the changed max_allowed_latency
             # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
             print("in lat change handler")
-            time.sleep(5)
             print("after sleep")
             mapAssignments = algo.generateAssignments(changedTopic=payload)
             #print(f"cmd object = {utils._gotCmdToSend}")
@@ -125,7 +126,6 @@ class AsyncMqtt:
             print("before setting assignments")
             print(f"self.got_message = {self.got_message}")
             #utils._gotCmdToSend.set_result(mapAssignments)
-            time.sleep(3)
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
 

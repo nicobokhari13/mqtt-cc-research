@@ -204,7 +204,7 @@ int handle__subscribe(struct mosquitto *context)
 						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic does not exist in DB. Adding now");
 						insert_topic_in_DB(context); // while inserting, set max_allowed_latency = incoming_latency
 						context->mqtt_cc.latChange = false;
-						sleep(5);
+						sleep(8);
 						// create thread to message client
 						log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
 						pthread_attr_init(&mess_client_attr);

@@ -10,7 +10,7 @@ def resetPublishingsAndDeviceExecutions():
     db.resetDeviceExecutions()
     db.closeDB()
 
-def generateAssignments(changedTopic = None):
+def generateAssignments(changedTopic = None, subLeft = None):
     db = Database()
     db.openDB()
     if changedTopic:
@@ -18,6 +18,8 @@ def generateAssignments(changedTopic = None):
         # if there was a change in a topic's max_allowed_latency,
         # find all the devices that currently publish to the topic and set publishing = 0
         # then run algorithm exactly the same as it will be treated like it was just added to the DB
+    elif subLeft:
+        db.resetAllDevicesPublishing()
     publishers = Devices()
 
     bestMac = None
@@ -31,6 +33,9 @@ def generateAssignments(changedTopic = None):
 
     # for each topic with none publishing
     for task in topicsWithNoPublishers: 
+        for mac, device in publishers._units.items():
+            print(f"mac: {mac}, device {device._assignments}")
+            print("------")
         topic = task[0]
         freq = task[1]
         print(f"Task: {task}")
@@ -48,8 +53,8 @@ def generateAssignments(changedTopic = None):
             # create processing unit at key = mac
             # add device info as a Processing_Unit in Devices singleton
             print(f"{mac}, {battery}, {num_exec}")
-                
-            publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
+            if mac not in publishers._units.keys():
+                publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
 
             # add publishings to the device with macAddr = mac, and set device frequencies
             # add current device publishing info to assignments (topics that the device currently publishes to)
@@ -85,16 +90,16 @@ def generateAssignments(changedTopic = None):
             elif (Enew <= device._battery and Eratio < Emin):
                 bestMac = macAddress
                 Emin = Eratio
-            print(f"best Mac = {bestMac}")
-
-        
-        
         # if bestMac != None:
             # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)
             # Devices[bestMac]._num Executions = Emin / Devices[bestMac].ENERGY PER EXEC
 
         if bestMac != None:
                 # adding the assignment adds the task's frequency to the publishings variable
+                print(f"best Mac = {bestMac}")
+                print(publishers._units[bestMac]._mac)
+                print(publishers._units)
+                print(publishers._units[bestMac]._assignments)
                 publishers._units[bestMac].addAssignment(topic, freq)
                 # we know bestMac uses Emin energy, so reverse operations to get Einc
                 Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
