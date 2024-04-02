@@ -99,7 +99,7 @@ class AsyncMqtt:
         if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
             print("in will handler")
             will.updateDB(payload)
-            mapAssignments = algo.generateAssignments()
+            mapAssignments = algo.generateAssignments(subLeft=True)
             self.got_message.set_result(mapAssignments)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
             print("in new subs handler")

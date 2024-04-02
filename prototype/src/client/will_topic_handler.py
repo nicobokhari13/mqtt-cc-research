@@ -15,7 +15,12 @@ def updateSubscription(topic, new_latency_req, new_max_allowed):
     database.openDB()
     # call DB update 
     database.updateSubscriptionWithLatency(topic, new_latency_req, new_max_allowed)
-    print("closing DB")
+    database.closeDB()
+
+def deleteSubscription(topic):
+    database = db.Database()
+    database.openDB()
+    database.deleteSubscription(topic)
     database.closeDB()
 
 
@@ -58,8 +63,11 @@ def updateDB(willMsg):
         new_latency_req_str = json.dumps(latency_req_json)
 
         # Print new values to console
-
-        updateSubscription(topic=topics_list[i], new_latency_req=new_latency_req_str, new_max_allowed=new_max_allowed)
+        if new_max_allowed:
+            updateSubscription(topic=topics_list[i], new_latency_req=new_latency_req_str, new_max_allowed=new_max_allowed)
+        else:
+            deleteSubscription(topics_list[i])
+            
 
 
 #Hash Map (topic: latency_req)

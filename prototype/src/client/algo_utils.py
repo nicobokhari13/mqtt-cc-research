@@ -53,15 +53,13 @@ class Processing_Unit:
         freqCopy.append(self._freq_min)
         # the number of executions is the addition of all the times a frequency occurs in the OBSERVATION PERIOD
         for freq in freqCopy:
-            numExecutions += math.ceil(self._OBSERVATION_PERIOD / freq)
+            numExecutions += self._OBSERVATION_PERIOD / freq
 
         # reset self._freqs_min to actual min if the min was changed for the newTask
         if newTask:
             self.resetMinimum()
-        if not numExecutions:
-            return numExecutions
-        else:
-            return numExecutions - 1 # since they all start at 0
+
+        return numExecutions
     
     def resetExecutions(self):
         self._numExecutions = self.calculateExecutions()

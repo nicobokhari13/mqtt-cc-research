@@ -57,7 +57,7 @@ class Database:
                                 topic TEXT, 
                                 publishing BOOLEAN,
                                 FOREIGN KEY (deviceMac) REFERENCES devices(deviceMac),
-                                FOREIGN KEY (topic) REFERENCES subscriptions(subscription) 
+                                FOREIGN KEY (topic) REFERENCES subscriptions(subscription) ON DELETE CASCADE
                                 PRIMARY KEY (deviceMac, topic)
                                 )'''
         # publish: True = is currently publishing to topic, False = is not currently publishing
@@ -70,18 +70,19 @@ class Database:
 
     def updateSubscriptionWithLatency(self, topic, new_lat_qos, new_max_lat):
         newSubQoS = (new_lat_qos, new_max_lat, topic)
+        print(newSubQoS)
         update_query = '''UPDATE subscriptions SET latency_req = ?, max_allowed_latency = ? WHERE subscription = ?'''
         self.execute_query_with_retry(query=update_query, values=newSubQoS, requires_commit=True)
         
     def topicsWithNoPublishers(self) -> list:
-        selectQuery = '''SELECT DISTINCT topic, max_allowed_latency
+        selectQuery = '''SELECT DISTINCT subscription, max_allowed_latency
                         FROM publish 
                         LEFT JOIN subscriptions
-                        ON topic = subscription
+                        ON subscription = topic
                         WHERE NOT EXISTS  (
                             SELECT 1
                             FROM publish
-                            WHERE topic = subscription
+                            WHERE subscription = topic
                             AND publishing = 1
                         )'''
         return self.execute_query_with_retry(query=selectQuery)
@@ -157,3 +158,9 @@ class Database:
         updateQuery = '''UPDATE publish
                             SET publishing = 0'''
         self.execute_query_with_retry(query=updateQuery, requires_commit=True)
+
+    def deleteSubscription(self, topic):
+        deleteQuery = '''DELETE FROM subscriptions 
+                            WHERE subscription = ?'''
+        query_values = (topic,)
+        self.execute_query_with_retry(query=deleteQuery, values=query_values, requires_commit=True)
