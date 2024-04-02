@@ -1,5 +1,6 @@
 import math
 from typing import Dict
+import copy
 class Processing_Unit:
     _OBSERVATION_PERIOD = 60
     _ENERGY_PER_EXECUTION = 10
@@ -29,7 +30,8 @@ class Processing_Unit:
         # list that will hold removals
         removes = list()
         # copy of freqs
-        freqCopy = self._freqs
+        freqCopy = copy.deepcopy(self._freqs)
+
         print(f"freqCopy = {freqCopy}")
         print(f"newTask = {newTask}")
         # if there is a newTask, add it to the copy to simulate adding the task to the publisher
@@ -61,8 +63,11 @@ class Processing_Unit:
         # reset self._freqs_min to actual min if the min was changed for the newTask
         if newTask:
             self.resetMinimum()
-
-        return numExecutions
+        print(f"unit {self._mac} frequencies = {self._freqs}")
+        if not numExecutions:
+            return numExecutions
+        else:
+            return numExecutions - 1 # since they all start at 0
     
     def resetExecutions(self):
         self._numExecutions = self.calculateExecutions()
@@ -70,11 +75,14 @@ class Processing_Unit:
     def energyIncrease(self, task):
         newExecutions = self.calculateExecutions(newTask = task)
         changeInExecutions = newExecutions - self._numExecutions
+        print(f"change in executions: {changeInExecutions}")
         return changeInExecutions * self._ENERGY_PER_EXECUTION
     
     def addAssignment(self, topic:str, task):
         print(f"adding topic {topic} and frequency {task}")
         self._assignments[topic] = task
+        self._freqs.append(task)
+        self.resetMinimum()
         # add assignment to publisher
         print(self._assignments)
         # example: 

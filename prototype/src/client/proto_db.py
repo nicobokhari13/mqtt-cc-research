@@ -24,8 +24,6 @@ class Database:
         for i in range(max_retries):
             try: 
                 cursor = self._db_conn.cursor()
-                print(f"values = {values}")
-                print(f"execute many = {executeMany}")
                 if values and executeMany:
                     cursor.executemany(query, values)
                 elif values:
@@ -71,9 +69,6 @@ class Database:
         return self.execute_query_with_retry(query=selectSub, values=(topic,))
 
     def updateSubscriptionWithLatency(self, topic, new_lat_qos, new_max_lat):
-        print(f"Subscription: {topic}")
-        print(f"Latency Req: {new_lat_qos}")
-        print(f"Max Allowed Latency: {new_max_lat}")
         newSubQoS = (new_lat_qos, new_max_lat, topic)
         update_query = '''UPDATE subscriptions SET latency_req = ?, max_allowed_latency = ? WHERE subscription = ?'''
         self.execute_query_with_retry(query=update_query, values=newSubQoS, requires_commit=True)
@@ -125,7 +120,7 @@ class Database:
         print(f"In update PUBLISH table: mac = {MAC_ADDR}")
         for topic in TOPICS:
             update_values.append((MAC_ADDR, topic))
-            print(f"update_values: {update_values}")
+        print(f"update_values: {update_values}")
         self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
 
         

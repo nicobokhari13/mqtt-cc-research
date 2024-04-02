@@ -21,7 +21,7 @@ class AsyncioHelper:
     def on_socket_open(self, client, userdata, sock):
 
         def cb():
-            time.sleep(5)
+            #time.sleep(5)
             client.loop_read()
 
         self.loop.add_reader(sock, cb) 
@@ -84,7 +84,10 @@ class AsyncMqtt:
         payload = msg.payload.decode()
         utils = proto_utils.ProtoUtils()._instance
         print("in on_message")
-        time.sleep(10)
+        print("waiting for event")
+        print("-------------")
+        self.continue_next_msg.wait()
+        #time.sleep(10)
         #print(f"utils is {utils}")
         #print(f"gotCmdToSend = {utils._gotCmdToSend}")
         # Print MQTT message to console
@@ -98,49 +101,35 @@ class AsyncMqtt:
             self.got_message.set_result(mapAssignments)
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
             print("in new subs handler")
-            print("after sleep")
+            print(f"payload = {payload}")
             # if there is a new topic, generate the new assignments
             mapAssignments = algo.generateAssignments()
-            #print(f"cmd object = {utils._gotCmdToSend}")
             # resolve gotCmdToSend with the assignments
-            # if not utils._gotCmdToSend:
-            #     print("cmd object is none tf")
-            if not self.got_message:
-                print("cmd object is none tf")
             print("before setting assignments")
-            print(f"self.got_message = {self.got_message}")
-            #utils._gotCmdToSend.set_result(mapAssignments)
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
         if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
             # the message payload holds the topic with the changed max_allowed_latency
             # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
             print("in lat change handler")
-            print("after sleep")
+            print(f"payload = {payload}")
             mapAssignments = algo.generateAssignments(changedTopic=payload)
-            #print(f"cmd object = {utils._gotCmdToSend}")
-            # if not utils._gotCmdToSend:
-            #     print("cmd object is none tf")
-            if not self.got_message:
-                print("cmd object is none tf")
             print("before setting assignments")
-            print(f"self.got_message = {self.got_message}")
-            #utils._gotCmdToSend.set_result(mapAssignments)
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
+        self.continue_next_msg.set()
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
 
     async def waitForCommand(self):
-        #utils = proto_utils.ProtoUtils._instance
-        #print(f"utils is {utils}")
         print("waiting for command")
-        #print(f"gotCmdToSend = {utils._gotCmdToSend}")
-        print(f"gotCmdToSend = {self.got_message}")
+        print(f"got_message = {self.got_message}")
+        self.continue_next_msg.set()
+        print("set continue")
         # wait for gotCmdToSend to be set from on_message
-        #command = await utils._gotCmdToSend
         command = await self.got_message
+        self.continue_next_msg.clear()
         print("got command")
         return command
 
@@ -148,7 +137,10 @@ class AsyncMqtt:
     async def waitForTimeWindow(self):
         utils = proto_utils.ProtoUtils()._instance
         print("waiting for time window")
+        self.continue_next_msg.set()
+        print("set continue")
         await asyncio.sleep(utils._timeWindow)
+        self.continue_next_msg.clear()
         # if time window is done first, resolve the got cmd to None
         print("ending window")
         return None
@@ -164,6 +156,7 @@ class AsyncMqtt:
         self.client.on_message = self.on_message
         self.client.on_disconnect = self.on_disconnect
         self.got_message = None
+        self.continue_next_msg = asyncio.Event()
         # set other necessary parameters for the client
 
         self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
@@ -175,16 +168,15 @@ class AsyncMqtt:
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
 
         while True: #infinite loop
-            #utils._gotCmdToSend = self.loop.create_future()
             self.got_message = self.loop.create_future()
-            #print(f"starting window and set gotCmdToSend = {utils._gotCmdToSend}")
-            print(f"starting window and set gotCmdToSend = {self.got_message}")
-            wait_for_cmd_routine = asyncio.create_task(self.waitForCommand())
+            wait_for_cmd_routine = asyncio.ensure_future(self.waitForCommand())
             wait_for_window_routine = asyncio.create_task(self.waitForTimeWindow())
 
             done, pending = await asyncio.wait([wait_for_cmd_routine, wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
-            print("after await")
-            result = done.pop().result()
+            if wait_for_cmd_routine in done:
+                result = wait_for_cmd_routine.result()
+            elif wait_for_window_routine in done:
+                result = wait_for_window_routine.result()
             print(f"the result of tasks is {result}")
             if result: # if result exists, then result holds the commad
                 # cancel what is still pending
@@ -203,6 +195,9 @@ class AsyncMqtt:
                 # send command
                 await self.sendCommands(mapAssignments)
                 self.got_message = None
+            self.continue_next_msg.set()
+            self.continue_next_msg.clear()
+            print("end of loop")
 
 def run_async_client():
     print("Starting")

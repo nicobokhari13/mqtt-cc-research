@@ -87,16 +87,20 @@ def generateAssignments(changedTopic = None, subLeft = None):
             if not Emin:
                 bestMac = macAddress
                 Emin = Eratio
+                print(f"Emin was None, now Emin = {Emin}")
             elif (Enew <= device._battery and Eratio < Emin):
                 bestMac = macAddress
+                print(f"Emin was {Emin}")
                 Emin = Eratio
+                print(f"Now Emin = {Emin}")
+            print(f"bestMac = {bestMac}")
+            
         # if bestMac != None:
             # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)
             # Devices[bestMac]._num Executions = Emin / Devices[bestMac].ENERGY PER EXEC
 
         if bestMac != None:
                 # adding the assignment adds the task's frequency to the publishings variable
-                print(f"best Mac = {bestMac}")
                 print(publishers._units[bestMac]._mac)
                 print(publishers._units)
                 print(publishers._units[bestMac]._assignments)
@@ -110,6 +114,13 @@ def generateAssignments(changedTopic = None, subLeft = None):
                 publishers._units[bestMac]._numExecutions = New_Executions
                 # update num executions in DB
                 db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=New_Executions)
+
+        bestMac = None
+        Emin = None
+        Einc = None
+        Enew = None
+        Eratio = None
+        
 
     # by this point, all the devices in Devices have their list of assignments
     

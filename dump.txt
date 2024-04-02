@@ -1,4 +1,4 @@
-dev) devnico@carbon:~/repos/research$ bash run_prototype.sh
+(dev) devnico@carbon:~/repos/research$ bash run_prototype.sh
 values = None
 execute many = False
 values = None
@@ -21,10 +21,9 @@ values = ('a8:20:dc:2d:51:59', 'sensor/humidity', 0)
 execute many = False
 instance is None, creating new one
 Starting
-starting window and set gotCmdToSend = <Future pending>
 in misc loop
 waiting for command
-gotCmdToSend = <Future pending>
+got_message = <Future pending>
 waiting for time window
 in misc loop
 in misc loop
@@ -33,20 +32,14 @@ in misc loop
 in misc loop
 in misc loop
 in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
 in on_message
+waiting for event
+-------------
+/home/devnico/repos/research/prototype/src/client/proto_asyncio.py:89: RuntimeWarning: coroutine 'Event.wait' was never awaited
+  self.continue_next_msg.wait()
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
 in new subs handler
-after sleep
+payload = sensor/airquality
 values = None
 execute many = False
 Task: ('sensor/airquality', 50)
@@ -66,21 +59,29 @@ newTask = 50
 added new task to freqCopy
 calculated new min
 removing 50 from freqCopy
+unit a8:20:dc:2d:51:59 frequencies = []
+change in executions: 2
 Energy increased on a8:20:dc:2d:51:59 20
 a8:20:dc:2d:51:59's energy after increase = 20
 ratio of new Energy / current Battery = 0.21052631578947367
+Emin was None, now Emin = 0.21052631578947367
+bestMac = a8:20:dc:2d:51:59
 checking energy increase on b8:27:eb:4f:15:95 from adding 50
 freqCopy = []
 newTask = 50
 added new task to freqCopy
 calculated new min
 removing 50 from freqCopy
+unit b8:27:eb:4f:15:95 frequencies = []
+change in executions: 2
 Energy increased on b8:27:eb:4f:15:95 20
 b8:27:eb:4f:15:95's energy after increase = 20
 ratio of new Energy / current Battery = 0.2
-best Mac = b8:27:eb:4f:15:95
+Emin was 0.21052631578947367
+Now Emin = 0.2
+bestMac = b8:27:eb:4f:15:95
 b8:27:eb:4f:15:95
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x73beaf933970>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x73beaf933940>}
+{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7be8e4eab8b0>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7be8e4f0c0d0>}
 {}
 adding topic sensor/airquality and frequency 50
 {'sensor/airquality': 50}
@@ -92,7 +93,7 @@ mac: a8:20:dc:2d:51:59, device {}
 ------
 mac: b8:27:eb:4f:15:95, device {'sensor/airquality': 50}
 ------
-Task: ('sensor/humidity', 30)
+Task: ('sensor/humidity', 37)
 values = ('sensor/humidity',)
 execute many = False
 values = ('a8:20:dc:2d:51:59',)
@@ -103,359 +104,114 @@ values = ('b8:27:eb:4f:15:95',)
 execute many = False
 b8:27:eb:4f:15:95, 100.0, 2
 publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding 30
-freqCopy = [50]
-newTask = 30
+checking energy increase on a8:20:dc:2d:51:59 from adding 37
+freqCopy = []
+newTask = 37
 added new task to freqCopy
 calculated new min
-removing 30 from freqCopy
-Energy increased on a8:20:dc:2d:51:59 40
-a8:20:dc:2d:51:59's energy after increase = 40
-ratio of new Energy / current Battery = 0.42105263157894735
-checking energy increase on b8:27:eb:4f:15:95 from adding 30
+removing 37 from freqCopy
+unit a8:20:dc:2d:51:59 frequencies = []
+change in executions: 2
+Energy increased on a8:20:dc:2d:51:59 20
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21052631578947367
+Emin was None, now Emin = 0.21052631578947367
+bestMac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 37
 freqCopy = [50]
-newTask = 30
+newTask = 37
 added new task to freqCopy
 calculated new min
-removing 30 from freqCopy
+removing 37 from freqCopy
+unit b8:27:eb:4f:15:95 frequencies = [50]
+change in executions: 2.0
 Energy increased on b8:27:eb:4f:15:95 20.0
 b8:27:eb:4f:15:95's energy after increase = 40.0
 ratio of new Energy / current Battery = 0.4
-best Mac = b8:27:eb:4f:15:95
-b8:27:eb:4f:15:95
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x73beaf933970>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x73beaf933940>}
-{'sensor/airquality': 50}
-adding topic sensor/humidity and frequency 30
-{'sensor/airquality': 50, 'sensor/humidity': 30}
-b8:27:eb:4f:15:95 used to execute at 2.0
-b8:27:eb:4f:15:95 now executes at 2.0
-values = (2.0, 'b8:27:eb:4f:15:95')
+bestMac = a8:20:dc:2d:51:59
+a8:20:dc:2d:51:59
+{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7be8e4eab8b0>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7be8e4f0c0d0>}
+{}
+adding topic sensor/humidity and frequency 37
+{'sensor/humidity': 37}
+a8:20:dc:2d:51:59 used to execute at 0
+a8:20:dc:2d:51:59 now executes at 2.0
+values = (2.0, 'a8:20:dc:2d:51:59')
 execute many = False
-mac: a8:20:dc:2d:51:59, device {}
+mac: a8:20:dc:2d:51:59, device {'sensor/humidity': 37}
 ------
-mac: b8:27:eb:4f:15:95, device {'sensor/airquality': 50, 'sensor/humidity': 30}
+mac: b8:27:eb:4f:15:95, device {'sensor/airquality': 50}
 ------
 Task: ('sensor/temperature', 20)
 values = ('sensor/temperature',)
 execute many = False
 values = ('a8:20:dc:2d:51:59',)
 execute many = False
-a8:20:dc:2d:51:59, 95.0, 0
+a8:20:dc:2d:51:59, 95.0, 2
 publishings []
 values = ('b8:27:eb:4f:15:95',)
 execute many = False
 b8:27:eb:4f:15:95, 100.0, 2
 publishings []
 checking energy increase on a8:20:dc:2d:51:59 from adding 20
-freqCopy = [50]
+freqCopy = [37]
 newTask = 20
 added new task to freqCopy
 calculated new min
 removing 20 from freqCopy
-Energy increased on a8:20:dc:2d:51:59 50
-a8:20:dc:2d:51:59's energy after increase = 50
+unit a8:20:dc:2d:51:59 frequencies = [37]
+change in executions: 3.0
+Energy increased on a8:20:dc:2d:51:59 30.0
+a8:20:dc:2d:51:59's energy after increase = 50.0
 ratio of new Energy / current Battery = 0.5263157894736842
+Emin was None, now Emin = 0.5263157894736842
+bestMac = a8:20:dc:2d:51:59
 checking energy increase on b8:27:eb:4f:15:95 from adding 20
 freqCopy = [50]
 newTask = 20
 added new task to freqCopy
 calculated new min
 removing 20 from freqCopy
+unit b8:27:eb:4f:15:95 frequencies = [50]
+change in executions: 3.0
 Energy increased on b8:27:eb:4f:15:95 30.0
 b8:27:eb:4f:15:95's energy after increase = 50.0
 ratio of new Energy / current Battery = 0.5
-best Mac = b8:27:eb:4f:15:95
+Emin was 0.5263157894736842
+Now Emin = 0.5
+bestMac = b8:27:eb:4f:15:95
 b8:27:eb:4f:15:95
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x73beaf933970>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x73beaf933940>}
-{'sensor/airquality': 50, 'sensor/humidity': 30}
+{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7be8e4eab8b0>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7be8e4f0c0d0>}
+{'sensor/airquality': 50}
 adding topic sensor/temperature and frequency 20
-{'sensor/airquality': 50, 'sensor/humidity': 30, 'sensor/temperature': 20}
+{'sensor/airquality': 50, 'sensor/temperature': 20}
 b8:27:eb:4f:15:95 used to execute at 2.0
-b8:27:eb:4f:15:95 now executes at 2.0
-values = (2.0, 'b8:27:eb:4f:15:95')
+b8:27:eb:4f:15:95 now executes at 5.0
+values = (5.0, 'b8:27:eb:4f:15:95')
 execute many = False
-assignment string = {"sensor/airquality": 50, "sensor/humidity": 30, "sensor/temperature": 20}
+assignment string = {"sensor/humidity": 37}
+In update PUBLISH table: mac = a8:20:dc:2d:51:59
+update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
+values = [('a8:20:dc:2d:51:59', 'sensor/humidity')]
+execute many = True
+assignment string = {"sensor/airquality": 50, "sensor/temperature": 20}
 In update PUBLISH table: mac = b8:27:eb:4f:15:95
 update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality')]
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/humidity')]
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/humidity'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-values = [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/humidity'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
+update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
+values = [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
 execute many = True
-generated final command = {'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/humidity": 30, "sensor/temperature": 20}'}
+generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
 before setting assignments
-self.got_message = <Future pending cb=[Task.task_wakeup()]>
 after setting assignments
 got command
-in on_message
-in lat change handler
-after sleep
-values = ('sensor/humidity',)
-execute many = False
-values = None
-execute many = False
-Task: ('sensor/humidity', 30)
-values = ('sensor/humidity',)
-execute many = False
-values = ('a8:20:dc:2d:51:59',)
-execute many = False
-a8:20:dc:2d:51:59, 95.0, 0
-publishings []
-values = ('b8:27:eb:4f:15:95',)
-execute many = False
-b8:27:eb:4f:15:95, 100.0, 2
-publishings [('sensor/airquality', 50), ('sensor/temperature', 20)]
-('sensor/airquality', 50)
-adding topic sensor/airquality and frequency 50
-{'sensor/airquality': 50}
-('sensor/temperature', 20)
-adding topic sensor/temperature and frequency 20
-{'sensor/airquality': 50, 'sensor/temperature': 20}
-freqCopy = [50, 20]
-newTask = None
-removing 20 from freqCopy
-checking energy increase on a8:20:dc:2d:51:59 from adding 30
-freqCopy = []
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 30 from freqCopy
-Energy increased on a8:20:dc:2d:51:59 20
-a8:20:dc:2d:51:59's energy after increase = 20
-ratio of new Energy / current Battery = 0.21052631578947367
-checking energy increase on b8:27:eb:4f:15:95 from adding 30
-freqCopy = [50]
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 30 from freqCopy
-Energy increased on b8:27:eb:4f:15:95 -10
-b8:27:eb:4f:15:95's energy after increase = 40
-ratio of new Energy / current Battery = 0.4
-best Mac = a8:20:dc:2d:51:59
-a8:20:dc:2d:51:59
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x73beaf933670>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x73beaf9335e0>}
-{}
-adding topic sensor/humidity and frequency 30
-{'sensor/humidity': 30}
-a8:20:dc:2d:51:59 used to execute at 0
-a8:20:dc:2d:51:59 now executes at 2.0
-values = (2.0, 'a8:20:dc:2d:51:59')
-execute many = False
-assignment string = {"sensor/humidity": 30}
-In update PUBLISH table: mac = a8:20:dc:2d:51:59
-update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-values = [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-execute many = True
-assignment string = {"sensor/airquality": 50, "sensor/temperature": 20}
-In update PUBLISH table: mac = b8:27:eb:4f:15:95
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality')]
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-values = [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-execute many = True
-generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-before setting assignments
-self.got_message = <Future finished result={'b8:27:eb:4f:15:95': '{"sensor/air...erature": 20}'}>
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 25, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 129, in on_message
-    self.got_message.set_result(mapAssignments)
-asyncio.exceptions.InvalidStateError: invalid state
-in misc loop
-after await
-the result of tasks is {'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/humidity": 30, "sensor/temperature": 20}'}
+the result of tasks is {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
 sending commands
-sent to topic sensor/cmd/b8:27:eb:4f:15:95
-in on_message
-in lat change handler
-after sleep
-values = ('sensor/humidity',)
-execute many = False
-values = None
-execute many = False
-Task: ('sensor/humidity', 30)
-values = ('sensor/humidity',)
-execute many = False
-values = ('a8:20:dc:2d:51:59',)
-execute many = False
-a8:20:dc:2d:51:59, 95.0, 2
-publishings []
-values = ('b8:27:eb:4f:15:95',)
-execute many = False
-b8:27:eb:4f:15:95, 100.0, 2
-publishings [('sensor/airquality', 50), ('sensor/temperature', 20)]
-('sensor/airquality', 50)
-adding topic sensor/airquality and frequency 50
-{'sensor/airquality': 50}
-('sensor/temperature', 20)
-adding topic sensor/temperature and frequency 20
-{'sensor/airquality': 50, 'sensor/temperature': 20}
-freqCopy = [50, 20]
-newTask = None
-removing 20 from freqCopy
-checking energy increase on a8:20:dc:2d:51:59 from adding 30
-freqCopy = []
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 30 from freqCopy
-Energy increased on a8:20:dc:2d:51:59 0
-a8:20:dc:2d:51:59's energy after increase = 20
-ratio of new Energy / current Battery = 0.21052631578947367
-checking energy increase on b8:27:eb:4f:15:95 from adding 30
-freqCopy = [50]
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 30 from freqCopy
-Energy increased on b8:27:eb:4f:15:95 -10
-b8:27:eb:4f:15:95's energy after increase = 40
-ratio of new Energy / current Battery = 0.4
-best Mac = a8:20:dc:2d:51:59
-a8:20:dc:2d:51:59
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x73beaf931c90>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x73beaf931c00>}
-{}
-adding topic sensor/humidity and frequency 30
-{'sensor/humidity': 30}
-a8:20:dc:2d:51:59 used to execute at 2
-a8:20:dc:2d:51:59 now executes at 2.0
-values = (2.0, 'a8:20:dc:2d:51:59')
-execute many = False
-assignment string = {"sensor/humidity": 30}
-In update PUBLISH table: mac = a8:20:dc:2d:51:59
-update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-values = [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-execute many = True
-assignment string = {"sensor/airquality": 50, "sensor/temperature": 20}
-In update PUBLISH table: mac = b8:27:eb:4f:15:95
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality')]
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-values = [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-execute many = True
-generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-before setting assignments
-self.got_message = <Future finished result={'b8:27:eb:4f:15:95': '{"sensor/air...erature": 20}'}>
-Exception in callback AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23
-handle: <Handle AsyncioHelper.on_socket_open.<locals>.cb() at /home/devnico/repos/research/prototype/src/client/proto_asyncio.py:23>
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
-    self._context.run(self._callback, *self._args)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 25, in cb
-    client.loop_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 1556, in loop_read
-    rc = self._packet_read()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 2439, in _packet_read
-    rc = self._packet_handle()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3033, in _packet_handle
-    return self._handle_publish()
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3327, in _handle_publish
-    self._handle_on_message(message)
-  File "/home/devnico/repos/research/prototype/dev/lib/python3.10/site-packages/paho/mqtt/client.py", line 3570, in _handle_on_message
-    on_message(self, self._userdata, message)
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 129, in on_message
-    self.got_message.set_result(mapAssignments)
-asyncio.exceptions.InvalidStateError: invalid state
-finished sending commands
-starting window and set gotCmdToSend = <Future pending>
-in on_message
-in lat change handler
-after sleep
-values = ('sensor/humidity',)
-execute many = False
-values = None
-execute many = False
-Task: ('sensor/humidity', 30)
-values = ('sensor/humidity',)
-execute many = False
-values = ('a8:20:dc:2d:51:59',)
-execute many = False
-a8:20:dc:2d:51:59, 95.0, 2
-publishings []
-values = ('b8:27:eb:4f:15:95',)
-execute many = False
-b8:27:eb:4f:15:95, 100.0, 2
-publishings [('sensor/airquality', 50), ('sensor/temperature', 20)]
-('sensor/airquality', 50)
-adding topic sensor/airquality and frequency 50
-{'sensor/airquality': 50}
-('sensor/temperature', 20)
-adding topic sensor/temperature and frequency 20
-{'sensor/airquality': 50, 'sensor/temperature': 20}
-freqCopy = [50, 20]
-newTask = None
-removing 20 from freqCopy
-checking energy increase on a8:20:dc:2d:51:59 from adding 30
-freqCopy = []
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 30 from freqCopy
-Energy increased on a8:20:dc:2d:51:59 0
-a8:20:dc:2d:51:59's energy after increase = 20
-ratio of new Energy / current Battery = 0.21052631578947367
-checking energy increase on b8:27:eb:4f:15:95 from adding 30
-freqCopy = [50]
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 30 from freqCopy
-Energy increased on b8:27:eb:4f:15:95 -10
-b8:27:eb:4f:15:95's energy after increase = 40
-ratio of new Energy / current Battery = 0.4
-best Mac = a8:20:dc:2d:51:59
-a8:20:dc:2d:51:59
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x73beaf9318d0>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x73beaf931840>}
-{}
-adding topic sensor/humidity and frequency 30
-{'sensor/humidity': 30}
-a8:20:dc:2d:51:59 used to execute at 2
-a8:20:dc:2d:51:59 now executes at 2.0
-values = (2.0, 'a8:20:dc:2d:51:59')
-execute many = False
-assignment string = {"sensor/humidity": 30}
-In update PUBLISH table: mac = a8:20:dc:2d:51:59
-update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-values = [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-execute many = True
-assignment string = {"sensor/airquality": 50, "sensor/temperature": 20}
-In update PUBLISH table: mac = b8:27:eb:4f:15:95
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality')]
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-values = [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-execute many = True
-generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-before setting assignments
-self.got_message = <Future pending>
-after setting assignments
-waiting for command
-gotCmdToSend = <Future finished result={'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/air...erature": 20}'}>
-got command
-waiting for time window
-in misc loop
-after await
-the result of tasks is {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-sending commands
-in misc loop
 sent to topic sensor/cmd/a8:20:dc:2d:51:59
 sent to topic sensor/cmd/b8:27:eb:4f:15:95
 finished sending commands
-starting window and set gotCmdToSend = <Future pending>
+end of loop
 waiting for command
-gotCmdToSend = <Future pending>
+got_message = <Future pending>
 waiting for time window
 in misc loop
 in misc loop
@@ -468,11 +224,16 @@ in misc loop
 in misc loop
 in misc loop
 in misc loop
+in misc loop
 in on_message
+waiting for event
+-------------
 in status handler
 values = (93.0, 'a8:20:dc:2d:51:59')
 execute many = False
 in on_message
+waiting for event
+-------------
 in status handler
 values = (98.0, 'b8:27:eb:4f:15:95')
 execute many = False
@@ -482,21 +243,253 @@ in misc loop
 in misc loop
 in misc loop
 in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
 in on_message
+waiting for event
+-------------
+in lat change handler
+payload = sensor/humidity
+values = ('sensor/humidity',)
+execute many = False
+values = None
+execute many = False
+Task: ('sensor/humidity', 30)
+values = ('sensor/humidity',)
+execute many = False
+values = ('a8:20:dc:2d:51:59',)
+execute many = False
+a8:20:dc:2d:51:59, 93.0, 2
+publishings []
+values = ('b8:27:eb:4f:15:95',)
+execute many = False
+b8:27:eb:4f:15:95, 98.0, 5
+publishings [('sensor/airquality', 50), ('sensor/temperature', 20)]
+('sensor/airquality', 50)
+adding topic sensor/airquality and frequency 50
+{'sensor/airquality': 50}
+('sensor/temperature', 20)
+adding topic sensor/temperature and frequency 20
+{'sensor/airquality': 50, 'sensor/temperature': 20}
+freqCopy = [50, 50, 20, 20]
+newTask = None
+removing 20 from freqCopy
+unit b8:27:eb:4f:15:95 frequencies = [50, 50, 20, 20]
+checking energy increase on a8:20:dc:2d:51:59 from adding 30
+freqCopy = []
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 30 from freqCopy
+unit a8:20:dc:2d:51:59 frequencies = []
+change in executions: 0
+Energy increased on a8:20:dc:2d:51:59 0
+a8:20:dc:2d:51:59's energy after increase = 20
+ratio of new Energy / current Battery = 0.21505376344086022
+Emin was None, now Emin = 0.21505376344086022
+bestMac = a8:20:dc:2d:51:59
+checking energy increase on b8:27:eb:4f:15:95 from adding 30
+freqCopy = [50, 50, 20, 20]
+newTask = 30
+added new task to freqCopy
+calculated new min
+removing 20 from freqCopy
+unit b8:27:eb:4f:15:95 frequencies = [50, 50, 20, 20]
+change in executions: 2
+Energy increased on b8:27:eb:4f:15:95 20
+b8:27:eb:4f:15:95's energy after increase = 120
+ratio of new Energy / current Battery = 1.2244897959183674
+bestMac = a8:20:dc:2d:51:59
+a8:20:dc:2d:51:59
+{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7be8e4f0ca60>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7be8e4f0caf0>}
+{}
+adding topic sensor/humidity and frequency 30
+{'sensor/humidity': 30}
+a8:20:dc:2d:51:59 used to execute at 2
+a8:20:dc:2d:51:59 now executes at 2.0
+values = (2.0, 'a8:20:dc:2d:51:59')
+execute many = False
+assignment string = {"sensor/humidity": 30}
+In update PUBLISH table: mac = a8:20:dc:2d:51:59
+update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
+values = [('a8:20:dc:2d:51:59', 'sensor/humidity')]
+execute many = True
+assignment string = {"sensor/airquality": 50, "sensor/temperature": 20}
+In update PUBLISH table: mac = b8:27:eb:4f:15:95
+update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality')]
+update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
+values = [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
+execute many = True
+generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
+before setting assignments
+after setting assignments
+got command
+the result of tasks is {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
+sending commands
+sent to topic sensor/cmd/a8:20:dc:2d:51:59
+sent to topic sensor/cmd/b8:27:eb:4f:15:95
+finished sending commands
+end of loop
+waiting for command
+got_message = <Future pending>
+waiting for time window
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in on_message
+waiting for event
+-------------
 in status handler
 values = (91.0, 'a8:20:dc:2d:51:59')
 execute many = False
 in on_message
+waiting for event
+-------------
 in status handler
 values = (96.0, 'b8:27:eb:4f:15:95')
 execute many = False
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in on_message
+waiting for event
+-------------
+in status handler
+values = (89.0, 'a8:20:dc:2d:51:59')
+execute many = False
+in on_message
+waiting for event
+-------------
+in status handler
+values = (94.0, 'b8:27:eb:4f:15:95')
+execute many = False
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in on_message
+waiting for event
+-------------
+in status handler
+values = (87.0, 'a8:20:dc:2d:51:59')
+execute many = False
+in on_message
+waiting for event
+-------------
+in status handler
+values = (92.0, 'b8:27:eb:4f:15:95')
+execute many = False
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in on_message
+waiting for event
+-------------
+in status handler
+values = (85.0, 'a8:20:dc:2d:51:59')
+execute many = False
+in on_message
+waiting for event
+-------------
+in status handler
+values = (90.0, 'b8:27:eb:4f:15:95')
+execute many = False
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in on_message
+waiting for event
+-------------
+in status handler
+values = (83.0, 'a8:20:dc:2d:51:59')
+execute many = False
+in on_message
+waiting for event
+-------------
+in status handler
+values = (88.0, 'b8:27:eb:4f:15:95')
+execute many = False
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+ in misc loop
+in on_message
+waiting for event
+-------------
+in status handler
+values = (81.0, 'a8:20:dc:2d:51:59')
+execute many = False
+in on_message
+waiting for event
+-------------
+in status handler
+values = (86.0, 'b8:27:eb:4f:15:95')
+execute many = False
+in misc loop
+in misc loop
+in misc loop
+in misc loop
 in misc loop
 ^CTraceback (most recent call last):
   File "/home/devnico/repos/research/prototype/src/client/proto_client.py", line 77, in <module>
     main()
   File "/home/devnico/repos/research/prototype/src/client/proto_client.py", line 74, in main
     run_async_client()
-  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 210, in run_async_client
+  File "/home/devnico/repos/research/prototype/src/client/proto_asyncio.py", line 202, in run_async_client
     loop.run_until_complete(AsyncMqtt(loop).main())
   File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
     self.run_forever()

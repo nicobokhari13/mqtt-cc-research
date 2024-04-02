@@ -26,7 +26,7 @@ class blah:
                 break
             print(result)
             await asyncio.sleep(delay)  # Wait before checking again
-            # self._answer.set_result(42)
+            self._answer.set_result(42)
 
     async def blah(self):
         command = await self._answer
@@ -46,8 +46,8 @@ async def main():
     done, pending = await asyncio.wait(neat._tasks, return_when=asyncio.FIRST_COMPLETED)
     #await asyncio.gather(*neat._tasks)
     if waiting_for_cmd in done:
-        reuslt = waiting_for_cmd.result()
-        print(f"result from waiting cmd = {waiting_for_cmd}")
+        result = waiting_for_cmd.result()
+        print(f"result from waiting cmd = {result}")
     else:
         print("done routine is not waiting for command")
 asyncio.run(main())
