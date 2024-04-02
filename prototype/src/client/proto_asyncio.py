@@ -86,7 +86,9 @@ class AsyncMqtt:
         print("in on_message")
         print("waiting for event")
         print("-------------")
-        self.continue_next_msg.wait()
+        print(self.continue_next_msg)
+        while not self.continue_next_msg.is_set():
+            self.continue_next_msg.wait()
         #time.sleep(10)
         #print(f"utils is {utils}")
         #print(f"gotCmdToSend = {utils._gotCmdToSend}")
@@ -130,7 +132,7 @@ class AsyncMqtt:
         # wait for gotCmdToSend to be set from on_message
         command = await self.got_message
         self.continue_next_msg.clear()
-        print("got command")
+        print(f"cleared continue, got command {command}")
         return command
 
 

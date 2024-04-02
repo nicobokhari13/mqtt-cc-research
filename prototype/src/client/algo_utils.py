@@ -32,17 +32,12 @@ class Processing_Unit:
         # copy of freqs
         freqCopy = copy.deepcopy(self._freqs)
 
-        print(f"freqCopy = {freqCopy}")
-        print(f"newTask = {newTask}")
         # if there is a newTask, add it to the copy to simulate adding the task to the publisher
         if newTask: 
             # if there is a new task, add it to freqs, change the min
             freqCopy.append(newTask)
-            print("added new task to freqCopy")
             self._freq_min = min(freqCopy)
-            print("calculated new min")
 
-        print(f"removing {self._freq_min} from freqCopy")
         # remove the min from the following calculations
         freqCopy.remove(self._freq_min)
 
@@ -63,7 +58,6 @@ class Processing_Unit:
         # reset self._freqs_min to actual min if the min was changed for the newTask
         if newTask:
             self.resetMinimum()
-        print(f"unit {self._mac} frequencies = {self._freqs}")
         if not numExecutions:
             return numExecutions
         else:
@@ -78,7 +72,7 @@ class Processing_Unit:
         print(f"change in executions: {changeInExecutions}")
         return changeInExecutions * self._ENERGY_PER_EXECUTION
     
-    def addAssignment(self, topic:str, task):
+    def addAssignment(self, topic:str, task, isNew = None):
         print(f"adding topic {topic} and frequency {task}")
         self._assignments[topic] = task
         self._freqs.append(task)
@@ -94,7 +88,6 @@ class Processing_Unit:
             print(publishing)
             self.addAssignment(topic = publishing[0], task = publishing[1])
             # add topic's frequency to device frequencies
-            self._freqs.append(publishing[1])
         # after all frequencies added, reset frequency minimum 
         self.resetMinimum()
                 

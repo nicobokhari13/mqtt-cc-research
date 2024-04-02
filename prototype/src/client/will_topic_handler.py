@@ -30,19 +30,15 @@ def calculateNewMaxLatency(latency_req_json:dict):
 # A subscriber can subscribe to many topics with different latency qos
 def updateDB(willMsg):
     update_values = list()
-    print(f"Payload: {willMsg}")
     willMsg_json = json.loads(willMsg)
     # Extract Values
     clientid = willMsg_json["clientid"]
-    print(clientid)
     topics_list = willMsg_json["topics"]
-    print(type(topics_list))
     # For each topic in the topic list
     for i in range(len(topics_list)):
         # Remove %latency%
         latStringIndex = topics_list[i].rindex("%latency%")
         topics_list[i] = topics_list[i][:latStringIndex]
-        print(f"Getting subs for {topics_list[i]}")
         # Get row from DB (array of 1 tuple since 1 row per topic)
         impacted_sub = getImpactedSubscription(topics_list[i])
         impacted_sub = impacted_sub[0] # only 1 row, convert from array to single tuple 
@@ -50,11 +46,9 @@ def updateDB(willMsg):
         # Convert latency_req to json dictionary
         latency_req_json = json.loads(impacted_sub[1])
 
-        print(f"Old Latency Req: {latency_req_json}")
 
         # Remove item with clientid key
         if(clientid in latency_req_json):
-            print(f"Deleting client sub {clientid}")
             del latency_req_json[clientid]
 
         # Recalculate max_allowed_latency from json dictionary
@@ -64,11 +58,8 @@ def updateDB(willMsg):
         new_latency_req_str = json.dumps(latency_req_json)
 
         # Print new values to console
-        print(f"New Latency Req: {new_latency_req_str}")
-        print(f"New max_allowed: {new_max_allowed}")
 
         updateSubscription(topic=topics_list[i], new_latency_req=new_latency_req_str, new_max_allowed=new_max_allowed)
-        print("Finished update")
 
 
 #Hash Map (topic: latency_req)

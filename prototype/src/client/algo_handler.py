@@ -60,14 +60,14 @@ def generateAssignments(changedTopic = None, subLeft = None):
             # add current device publishing info to assignments (topics that the device currently publishes to)
             print(f"publishings {devicePublishings}")
 
-            # if there are topics the device already publishes to
+            # if there are topi cs the device already publishes to
             if devicePublishings:
                 # add them to the unit
                 publishers._units[mac].addPublishings(devicePublishings)
-
                 if changedTopic and topic == changedTopic:
                     # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
                     publishers._units[mac].resetExecutions()
+                
 
         # for each device in Devices singleton
         for macAddress, device in publishers._units.items():
