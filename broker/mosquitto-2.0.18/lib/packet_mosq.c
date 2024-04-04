@@ -47,6 +47,8 @@ Contributors:
 #  define G_PUB_MSGS_SENT_INC(A)
 #endif
 
+#include "dummypthread.h"
+
 int packet__alloc(struct mosquitto__packet *packet)
 {
 	uint8_t remaining_bytes[5], byte;
