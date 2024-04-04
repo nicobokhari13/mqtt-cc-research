@@ -47,3 +47,4 @@ prototype/dev/
 ToDo.md
 temp/test
 sqlite/mqttcc.db-journal
+broker/mosquitto-2.0.18/lib/libmosquitto.so.1
