@@ -57,6 +57,7 @@ Contributors:
 #include "util_mosq.h"
 
 struct mosquitto_db db;
+struct mqttcc_db prototype_db;
 
 static struct mosquitto__listener_sock *listensock = NULL;
 static int listensock_count = 0;
@@ -573,6 +574,13 @@ int main(int argc, char *argv[])
 #endif
 
 	run = 1;
+	// Call MQTT_CC function here to prepare sqlite statements
+	log__printf(NULL, MOSQ_LOG_INFO, "Setting memory to prototype_db");
+
+	memset(&prototype_db, 0, sizeof(struct mqttcc_db));
+	log__printf(NULL, MOSQ_LOG_INFO, "before DB prepare");
+	prepare_DB();
+
 	rc = mosquitto_main_loop(listensock, listensock_count);
 
 	log__printf(NULL, MOSQ_LOG_INFO, "mosquitto version %s terminating", VERSION);

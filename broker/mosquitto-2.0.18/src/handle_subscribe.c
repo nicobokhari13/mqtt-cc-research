@@ -45,6 +45,11 @@ int handle__subscribe(struct mosquitto *context)
 	char *sub_mount; // if subscriptions were mounted to a specific port 
 	mosquitto_property *properties = NULL;
 	bool allowed;
+	memset(&context->mqtt_cc, 0, sizeof(struct mqttcc));
+	pthread_t mess_client;
+	pthread_attr_t mess_client_attr;
+	int ret;
+
 
 	if(!context) return MOSQ_ERR_INVAL;
 
@@ -192,13 +197,36 @@ int handle__subscribe(struct mosquitto *context)
 					mosquitto__free(sub);
 					return rc2;
 			}
-			// TODO: Add function that parses % out
-			// TODO: Update mosquitto.conf file, save Blaze conf separately
 			if(allowed){// since the subscription topic is allowed
-        		log_sub(sub); //before removal
-				if(check_sub_lat_param(sub)){
-        		 	log_sub(sub); //after removal
+				if(has_lat_qos(sub)){ //check if it has %latency%*
+					store_lat_qos(context, sub); // remove the lat qos from the sub
+					if(!topic_exists_in_DB(context)){
+						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic does not exist in DB. Adding now");
+						insert_topic_in_DB(context); // while inserting, set max_allowed_latency = incoming_latency
+						context->mqtt_cc.latChange = false;
+						sleep(8);
+						// create thread to message client
+						log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
+						pthread_attr_init(&mess_client_attr);
+						pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
+						log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
+						ret = pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
+						pthread_attr_destroy(&mess_client_attr);
+						sleep(1); // necessary so thread can finish before context is freed in later functions
+					}
+					else{ // since the topic already exists need to adjust max_allowed_latency
+						context->mqtt_cc.latChange = true;
+						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic already exists in DB. Updating latency QoS: \n");
+						// void add_to_existing_topic(struct mosquitto *context); this function will call update_lat_req() and calc_new_max_latency()
+						update_lat_req_max_allowed(context);
+						// client messaged if max_allowed changed in update
+        				sleep(1);
+					}
+
 				}
+
+				log__printf(NULL, MOSQ_LOG_DEBUG, "\ After has lat qos, topic = %s \n", context->mqtt_cc.incoming_topic);
+				
 				// add the subscription with sub__add in subs.c
 				// the database (mosquitto_db in mosquitto_broker_internal.h) holds an array of mosquitto__subhiers
 				// subhiers are all the subscriptions defined by '/' levels, and have a parent hiearchy + children hierarchies
@@ -208,7 +236,6 @@ int handle__subscribe(struct mosquitto *context)
 					mosquitto__free(sub);
 					return rc2;
 				}
-				log__printf(NULL, MOSQ_LOG_DEBUG, "Still processing");
 				if(context->protocol == mosq_p_mqtt311 || context->protocol == mosq_p_mqtt31){
 					if(rc2 == MOSQ_ERR_SUCCESS || rc2 == MOSQ_ERR_SUB_EXISTS){
 						if(retain__queue(context, sub, qos, 0)) rc = 1;

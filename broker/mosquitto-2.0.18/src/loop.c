@@ -187,6 +187,12 @@ int mosquitto_main_loop(struct mosquitto__listener_sock *listensock, int listens
 	if(rc) return rc;
 #endif
 	// this is the while loop that Mosquitto continuously executes after setting up all configs
+	// probably set MQTT_CC vars here, may need to use calloc like
+	/*
+		struct mosquitto_msg_store *stored;
+		stored = mosquitto__calloc(1, sizeof(struct mosquitto_msg_store));
+	
+	*/
 	while(run){
 		queue_plugin_msgs();
 		context__free_disused();
@@ -267,7 +273,7 @@ int mosquitto_main_loop(struct mosquitto__listener_sock *listensock, int listens
 		}
 #endif
 		plugin__handle_tick();
-	}
+	} // End of while(run)
 
 	mux__cleanup();
 

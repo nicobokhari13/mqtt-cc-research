@@ -587,7 +587,6 @@ int sub__add(struct mosquitto *context, const char *sub, uint8_t qos, uint32_t i
 	assert(root);
 	assert(*root);
 	assert(sub);
-	// TODO: back here
 	rc = sub__topic_tokenise(sub, &local_sub, 	&topics, &sharename);
 	if(rc) return rc;
 
