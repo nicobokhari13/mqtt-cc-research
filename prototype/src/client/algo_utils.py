@@ -33,7 +33,7 @@ class Processing_Unit:
         freqCopy = copy.deepcopy(self._freqs)
 
         # if there is a newTask, add it to the copy to simulate adding the task to the publisher
-        if newTask: 
+        if newTask:  
             # if there is a new task, add it to freqs, change the min
             freqCopy.append(newTask)
             self._freq_min = min(freqCopy)
