@@ -565,6 +565,7 @@ int packet__read(struct mosquitto *mosq)
 #endif
 	// once the packet's data has been copied to mosquitto's in_packet field, 
 	// the Broker handles reading the packet for valid information
+	
 	rc = handle__packet(mosq);
 
 	/* Free data and reset values */
