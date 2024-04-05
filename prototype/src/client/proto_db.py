@@ -10,7 +10,7 @@ class Database:
         return cls._instance
     
     def __init__(self) -> None:
-        self._db_path = "/home/devnico/repos/research/sqlite/mqttcc.db"
+        self._db_path = "/home/devnico/repos/research/mqtt_cc_research/sqlite/mqttcc.db"
 
     def openDB(self) -> None:
         self._db_conn = sqlite3.connect(self._db_path)
