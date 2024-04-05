@@ -74,6 +74,8 @@ typedef int mosq_sock_t;
 
 #define SAFE_PRINT(A) (A)?(A):"null"
 
+#include "mqtt_cc.h"
+
 enum mosquitto_msg_direction {
 	mosq_md_in = 0,
 	mosq_md_out = 1
@@ -359,6 +361,9 @@ struct mosquitto {
 	uint16_t remote_port;
 #endif
 	uint32_t events;
+	// MQTT CC Objects
+	struct mqttcc mqtt_cc;
+
 };
 
 #define STREMPTY(str) (str[0] == '\0')

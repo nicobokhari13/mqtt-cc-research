@@ -31,6 +31,7 @@ OBJS=	mosquitto.o \
 		loop.o \
 		memory_mosq.o \
 		memory_public.o \
+		mqtt_cc.o \
 		misc_mosq.o \
 		mux.o \
 		mux_epoll.o \
@@ -166,6 +167,9 @@ memory_public.o : memory_public.c mosquitto_broker_internal.h
 	${CROSS_COMPILE}${CC} $(BROKER_CPPFLAGS) $(BROKER_CFLAGS) -c $< -o $@
 
 misc_mosq.o : ../lib/misc_mosq.c ../lib/misc_mosq.h
+	${CROSS_COMPILE}${CC} $(BROKER_CPPFLAGS) $(BROKER_CFLAGS) -c $< -o $@
+
+mqtt_cc.o : mqtt_cc.c mosquitto_broker_internal.h
 	${CROSS_COMPILE}${CC} $(BROKER_CPPFLAGS) $(BROKER_CFLAGS) -c $< -o $@
 
 mux.o : mux.c mosquitto_broker_internal.h

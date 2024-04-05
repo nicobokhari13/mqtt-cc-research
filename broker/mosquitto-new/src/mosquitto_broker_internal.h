@@ -39,6 +39,12 @@ Contributors:
 #include "tls_mosq.h"
 #include "uthash.h"
 
+// MQTT CC headers
+#include <sqlite3.h>
+#include "mqtt_cc.h"
+#include <cjson/cJSON.h>
+#include <stdlib.h>
+
 #ifndef __GNUC__
 #define __attribute__(attrib)
 #endif
@@ -576,6 +582,9 @@ struct libws_mqtt_data {
 
 extern struct mosquitto_db db;
 
+// Add MQTTCC Database Here (extern)
+extern struct mqttcc_db prototype_db;
+
 /* ============================================================
  * Main functions
  * ============================================================ */
@@ -869,5 +878,24 @@ void will_delay__remove(struct mosquitto *mosq);
 #ifdef WITH_XTREPORT
 void xtreport(void);
 #endif
+
+
+/* ============================================================
+ * MQTT-CC functions
+ * ============================================================ */
+void log_sub(char *sub);
+bool has_lat_qos(char *sub);
+void store_lat_qos(struct mosquitto *context, char* sub_with_lat_qos);
+char* create_latency_str(char *clientid, int latencyNum);
+void *messageClient(void *arg);
+char *concat_strings(char *str1, char *str2);
+// SQLite DB functions
+void prepare_DB(); // (called in mosquitto.c's main )
+bool topic_exists_in_DB(struct mosquitto *context);
+void update_lat_req_max_allowed(struct mosquitto *context);
+void insert_topic_in_DB(struct mosquitto *context);
+int calc_new_max_latency(struct cJSON *latencies);
+void update_max_allowed_lat(struct mosquitto *context);
+void printStmtResults(sqlite3_stmt *stmt);
 
 #endif

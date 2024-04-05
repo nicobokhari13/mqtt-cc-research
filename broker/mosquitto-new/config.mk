@@ -108,7 +108,7 @@ WITH_COVERAGE:=no
 WITH_UNIX_SOCKETS:=yes
 
 # Build mosquitto_sub with cJSON support
-WITH_CJSON:=yes
+WITH_CJSON:=no
 
 # Build mosquitto with support for the $CONTROL topics.
 WITH_CONTROL:=yes
@@ -198,10 +198,10 @@ else
 	SEDINPLACE:=-i
 endif
 
-ifeq ($(UNAME),Linux)
-	BROKER_LDADD:=$(BROKER_LDADD) -lrt
+ifeq ($(UNAME),Linux) # Add MQTT_CC libraries here
+	BROKER_LDADD:=$(BROKER_LDADD) -lrt -lsqlite3 -lcjson -lpthread
 	BROKER_LDFLAGS:=$(BROKER_LDFLAGS) -Wl,--dynamic-list=linker.syms
-	LIB_LIBADD:=$(LIB_LIBADD) -lrt
+	LIB_LIBADD:=$(LIB_LIBADD) -lrt -lsqlite3 -lcjson -lpthread
 endif
 
 ifeq ($(WITH_SHARED_LIBRARIES),yes)
