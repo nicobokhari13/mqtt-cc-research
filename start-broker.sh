@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd /home/devnico/repos/research/mqtt_cc_research/broker/mosquitto-2.0.18
+cd /home/devnico/repos/research/mqtt_cc_research/broker/mosquitto
 
-make
+make binary
 
 # Check if make command was successful
 if [ $? -eq 0 ]; then
