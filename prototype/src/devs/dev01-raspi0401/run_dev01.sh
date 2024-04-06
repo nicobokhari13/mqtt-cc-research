@@ -1,1 +1,1 @@
-python sensor.py dev01 mqttccd1 d8:3a:dd:90:ee:62
+python sensor.py sim dev01 mqttccd1 100 d8:3a:dd:90:ee:62

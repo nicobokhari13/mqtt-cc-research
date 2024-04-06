@@ -71,6 +71,10 @@ def main():
     database.closeDB()
     # create it once
     utils = proto_utils.ProtoUtils()
+    # TODO: Add an input parameter in protoutils that says if this is a simulation or experiment
+        # Save boolean value
+        # use boolean value to determine whether to append number of executions to the command message
+        # publishers that are running sim would be able to read the command + num executions, store the executions, and use executions in their calculation
     run_async_client()
 
 if __name__ == "__main__":

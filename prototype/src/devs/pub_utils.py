@@ -31,3 +31,7 @@ class PublisherUtils:
 
     def setPublishing(self, pub_cmd:dict):
         self._publishes = pub_cmd
+
+    # TODO: Need to store variable that tracks whether we are in simulation or experiment
+    # TODO: Variable to track number of executions currently running
+    # TODO: Function to decrease battery by some constant per execution (same constant userd by prototype to generate assignments)
