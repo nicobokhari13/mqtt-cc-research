@@ -144,3 +144,11 @@ def generateAssignments(changedTopic = None, subLeft = None):
     # while the publishers' unit information is reset, the assignments are preserved in generated_cmd
     return publishers._generated_cmd
 
+def getPublisherExecutions():
+    db = Database()
+    db.openDB()
+    rows = db.getAllDeviceExecutions() # list of tuples (deviceMac, executions)
+    db.closeDB()       
+    return rows 
+
+

@@ -49,8 +49,6 @@ class AsyncioHelper:
             except asyncio.CancelledError:
                 break
 
-
-
 class AsyncMqtt:
     def __init__(self, loop):
         self.loop = loop
@@ -60,20 +58,14 @@ class AsyncMqtt:
         if(rc == 5):
             sys.exit()
         client.subscribe(utils._CMD_TOPIC)
-        # After connect, subscribe to CMD topic
 
     async def waitForCmd(self):
-        #utils = pub_utils.PublisherUtils()
-        #await utils._got_cmd 
         cmd = await self.got_message
         return cmd
 
-
     def on_message(self, client, userdata, msg):
-        # if the topic matches the cmd topic, resolve got_cmd with set_result
         if mqtt.topic_matches_sub(msg.topic, utils._CMD_TOPIC):
             print(f"{utils._deviceMac} received command: {msg.payload.decode()}")
-            # utils._got_cmd.set_result(msg.payload.decode())
             self.got_message.set_result(msg.payload.decode())
 
     def on_disconnect(self, client, userdata, rc):

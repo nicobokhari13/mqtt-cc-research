@@ -1,4 +1,4 @@
-
+from datetime import datetime
 class ProtoUtils:
     _instance = None
 
@@ -25,4 +25,8 @@ class ProtoUtils:
         # self._ranAlgo = None
         self._gotStatus = None
         self._gotCmdToSend = None
+
+        self._logFile = "metrics-" + str(datetime.now()) + ".csv"
+        
+        self._in_sim = False
 

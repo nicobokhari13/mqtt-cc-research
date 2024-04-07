@@ -2,13 +2,15 @@ import asyncio
 import socket
 import sys 
 import paho.mqtt.client as mqtt
-import proto_utils
+from proto_utils import ProtoUtils
 import proto_db as db
 import status_handler as status
 import will_topic_handler as will
 import algo_handler as algo
 import time
  
+utils = ProtoUtils()
+
 class AsyncioHelper:
     def __init__(self, loop, client):
         self.loop = loop
@@ -63,7 +65,6 @@ class AsyncMqtt:
 
     async def sendCommands(self, mapAssignments:dict):
         print("sending commands")
-        utils = proto_utils.ProtoUtils()._instance
         command_threads = [self.sendCommandToDevice(topic=utils._CMD_TOPIC+macAddress, msg=cmd) for macAddress, cmd in mapAssignments.items()] 
         await asyncio.gather(*command_threads)
         # resolve ranAlgo object
@@ -72,7 +73,6 @@ class AsyncMqtt:
     def on_connect(self, client, userdata, flags, rc):
         if(rc == 5):
             sys.exit()
-        utils = proto_utils.ProtoUtils()
         self.subscribeToTopics([utils._STATUS_TOPIC, utils._SUBS_WILL_TOPIC, utils._NEW_SUBS_TOPIC, utils._LAT_CHANGE_TOPIC])
 
     def subscribeToTopics(self, topics):
@@ -82,25 +82,24 @@ class AsyncMqtt:
     def on_message(self, client, userdata, msg):
         topic = msg.topic
         payload = msg.payload.decode()
-        utils = proto_utils.ProtoUtils()._instance
         print("in on_message")
         print("waiting for event")
         print("-------------")
         print(self.continue_next_msg)
+
         while not self.continue_next_msg.is_set():
             self.continue_next_msg.wait()
-        #time.sleep(10)
-        #print(f"utils is {utils}")
-        #print(f"gotCmdToSend = {utils._gotCmdToSend}")
-        # Print MQTT message to console
+
         if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
             print("in status handler")
             status.handle_status_msg(payload)
+
         if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
             print("in will handler")
             will.updateDB(payload)
             mapAssignments = algo.generateAssignments()
             self.got_message.set_result(mapAssignments)
+
         if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
             print("in new subs handler")
             print(f"payload = {payload}")
@@ -110,6 +109,7 @@ class AsyncMqtt:
             print("before setting assignments")
             self.got_message.set_result(mapAssignments)
             print("after setting assignments")
+
         if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
             # the message payload holds the topic with the changed max_allowed_latency
             # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
@@ -137,7 +137,6 @@ class AsyncMqtt:
 
 
     async def waitForTimeWindow(self):
-        utils = proto_utils.ProtoUtils()._instance
         print("waiting for time window")
         self.continue_next_msg.set()
         print("set continue")
@@ -146,11 +145,16 @@ class AsyncMqtt:
         # if time window is done first, resolve the got cmd to None
         print("ending window")
         return None
+    
+    async def appendExecutions(command:dict):
+        deviceExecutions = algo.getPublisherExecutions()
+        for device in deviceExecutions:
+            if device[0] in command.keys():
+                command[device[0]] = f"{command[device[0]]},{device[1]}" 
+        return command
 
     async def main(self):
         # main execution        
-        # get pub_utils singleton object
-        utils = proto_utils.ProtoUtils()._instance
         
         self.disconnected = self.loop.create_future()
         self.client = mqtt.Client()
@@ -180,10 +184,15 @@ class AsyncMqtt:
             elif wait_for_window_routine in done:
                 result = wait_for_window_routine.result()
             print(f"the result of tasks is {result}")
-            if result: # if result exists, then result holds the commad
+            if result: # if result exists, then result holds the command
                 # cancel what is still pending
                 for task in pending:
                     task.cancel()
+
+                if utils._in_sim:
+                # if this is the simulation, we must append the number of executions for each publisher
+                    result = await self.appendExecutions(result)
+
                 await self.sendCommands(result)
                 # utils._gotCmdToSend = None
                 self.got_message = None

@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import proto_db as db
-import proto_utils
+from proto_utils import ProtoUtils
 import sys
 import csv
 from proto_asyncio import run_async_client
@@ -48,6 +48,11 @@ from datetime import datetime
 def main():
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     devicesFile = sys.argv[1]
+    in_sim = sys.argv[2]
+    
+    print(f"Device File = {devicesFile}")
+    print(f"Sim Value = {in_sim}")
+    
     database = db.Database()
     database.openDB()
     database.createDeviceTable()
@@ -70,11 +75,18 @@ def main():
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)
     database.closeDB()
     # create it once
-    utils = proto_utils.ProtoUtils()
+    utils = ProtoUtils()
     # TODO: Add an input parameter in protoutils that says if this is a simulation or experiment
         # Save boolean value
         # use boolean value to determine whether to append number of executions to the command message
         # publishers that are running sim would be able to read the command + num executions, store the executions, and use executions in their calculation
+    if in_sim == "sim":
+        utils._in_sim = True
+    elif in_sim == "exp": 
+        utils._in_sim = False
+    else: 
+        print("Error with determining experiment type, exiting now")
+        sys.exit()
     run_async_client()
 
 if __name__ == "__main__":

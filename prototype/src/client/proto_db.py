@@ -157,3 +157,7 @@ class Database:
         updateQuery = '''UPDATE publish
                             SET publishing = 0'''
         self.execute_query_with_retry(query=updateQuery, requires_commit=True)
+
+    def getAllDeviceExecutions(self):
+        selectQuery = '''SELECT deviceMac, executions FROM devices'''
+        return self.execute_query_with_retry(query=selectQuery)
