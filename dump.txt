@@ -1,556 +1,612 @@
-(dev) devnico@carbon:~/repos/research$ bash run_prototype.sh
-instance is None, creating new one
-Starting
-in misc loop
-waiting for command
-got_message = <Future pending>
-set continue
-waiting for time window
-set continue
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in new subs handler
-payload = sensor/airquality
-Task: ('sensor/airquality', 50)
-a8:20:dc:2d:51:59, 95.0, 0
-publishings []
-b8:27:eb:4f:15:95, 100.0, 0
-publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding 50
-freqCopy = []
-newTask = 50
-added new task to freqCopy
-calculated new min
-removing 50 from freqCopy
-unit a8:20:dc:2d:51:59 frequencies = []
-change in executions: 1
-Energy increased on a8:20:dc:2d:51:59 10
-a8:20:dc:2d:51:59's energy after increase = 10
-ratio of new Energy / current Battery = 0.10526315789473684
-Emin was None, now Emin = 0.10526315789473684
-bestMac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 50
-freqCopy = []
-newTask = 50
-added new task to freqCopy
-calculated new min
-removing 50 from freqCopy
-unit b8:27:eb:4f:15:95 frequencies = []
-change in executions: 1
-Energy increased on b8:27:eb:4f:15:95 10
-b8:27:eb:4f:15:95's energy after increase = 10
-ratio of new Energy / current Battery = 0.1
-Emin was 0.10526315789473684
-Now Emin = 0.1
-bestMac = b8:27:eb:4f:15:95
-b8:27:eb:4f:15:95
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7fb44e394a30>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7fb44e394a60>}
-{}
-adding topic sensor/airquality and frequency 50
-{'sensor/airquality': 50}
-b8:27:eb:4f:15:95 used to execute at 0
-b8:27:eb:4f:15:95 now executes at 1.0
-mac: a8:20:dc:2d:51:59, device {}
-------
-mac: b8:27:eb:4f:15:95, device {'sensor/airquality': 50}
-------
-Task: ('sensor/humidity', 37)
-a8:20:dc:2d:51:59, 95.0, 0
-publishings []
-b8:27:eb:4f:15:95, 100.0, 1
-publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding 37
-freqCopy = []
-newTask = 37
-added new task to freqCopy
-calculated new min
-removing 37 from freqCopy
-unit a8:20:dc:2d:51:59 frequencies = []
-change in executions: 1
-Energy increased on a8:20:dc:2d:51:59 10
-a8:20:dc:2d:51:59's energy after increase = 10
-ratio of new Energy / current Battery = 0.10526315789473684
-Emin was None, now Emin = 0.10526315789473684
-bestMac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 37
-freqCopy = [50]
-newTask = 37
-added new task to freqCopy
-calculated new min
-removing 37 from freqCopy
-unit b8:27:eb:4f:15:95 frequencies = [50]
-change in executions: 2.0
-Energy increased on b8:27:eb:4f:15:95 20.0
-b8:27:eb:4f:15:95's energy after increase = 30.0
-ratio of new Energy / current Battery = 0.3
-bestMac = a8:20:dc:2d:51:59
-a8:20:dc:2d:51:59
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7fb44e394a30>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7fb44e394a60>}
-{}
-adding topic sensor/humidity and frequency 37
-{'sensor/humidity': 37}
-a8:20:dc:2d:51:59 used to execute at 0
-a8:20:dc:2d:51:59 now executes at 1.0
-mac: a8:20:dc:2d:51:59, device {'sensor/humidity': 37}
-------
-mac: b8:27:eb:4f:15:95, device {'sensor/airquality': 50}
-------
-Task: ('sensor/temperature', 20)
-a8:20:dc:2d:51:59, 95.0, 1
-publishings []
-b8:27:eb:4f:15:95, 100.0, 1
-publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding 20
-freqCopy = [37]
-newTask = 20
-added new task to freqCopy
-calculated new min
-removing 20 from freqCopy
-unit a8:20:dc:2d:51:59 frequencies = [37]
-change in executions: 3.0
-Energy increased on a8:20:dc:2d:51:59 30.0
-a8:20:dc:2d:51:59's energy after increase = 40.0
-ratio of new Energy / current Battery = 0.42105263157894735
-Emin was None, now Emin = 0.42105263157894735
-bestMac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 20
-freqCopy = [50]
-newTask = 20
-added new task to freqCopy
-calculated new min
-removing 20 from freqCopy
-unit b8:27:eb:4f:15:95 frequencies = [50]
-change in executions: 3.0
-Energy increased on b8:27:eb:4f:15:95 30.0
-b8:27:eb:4f:15:95's energy after increase = 40.0
-ratio of new Energy / current Battery = 0.4
-Emin was 0.42105263157894735
-Now Emin = 0.4
-bestMac = b8:27:eb:4f:15:95
-b8:27:eb:4f:15:95
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7fb44e394a30>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7fb44e394a60>}
-{'sensor/airquality': 50}
-adding topic sensor/temperature and frequency 20
-{'sensor/airquality': 50, 'sensor/temperature': 20}
-b8:27:eb:4f:15:95 used to execute at 1.0
-b8:27:eb:4f:15:95 now executes at 4.0
-assignment string = {"sensor/humidity": 37}
-In update PUBLISH table: mac = a8:20:dc:2d:51:59
-update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-assignment string = {"sensor/airquality": 50, "sensor/temperature": 20}
-In update PUBLISH table: mac = b8:27:eb:4f:15:95
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-before setting assignments
-after setting assignments
-cleared continue, got command {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-the result of tasks is {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-sending commands
-sent to topic sensor/cmd/a8:20:dc:2d:51:59
-sent to topic sensor/cmd/b8:27:eb:4f:15:95
-finished sending commands
-end of loop
-waiting for command
-got_message = <Future pending>
-set continue
-waiting for time window
-set continue
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in status handler
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in status handler
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in lat change handler
-payload = sensor/humidity
-Task: ('sensor/humidity', 30)
-a8:20:dc:2d:51:59, 93.0, 1
-publishings []
-b8:27:eb:4f:15:95, 98.0, 4
-publishings [('sensor/airquality', 50), ('sensor/temperature', 20)]
-mac's freq before: []
-('sensor/airquality', 50)
-adding topic sensor/airquality and frequency 50
-{'sensor/airquality': 50}
-('sensor/temperature', 20)
-adding topic sensor/temperature and frequency 20
-{'sensor/airquality': 50, 'sensor/temperature': 20}
-mac's freq after: [50, 20]
-freqCopy = [50, 20]
-newTask = None
-removing 20 from freqCopy
-unit b8:27:eb:4f:15:95 frequencies = [50, 20]
-mac's freq after after: [50, 20]
-checking energy increase on a8:20:dc:2d:51:59 from adding 30
-freqCopy = []
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 30 from freqCopy
-unit a8:20:dc:2d:51:59 frequencies = []
-change in executions: 0
-Energy increased on a8:20:dc:2d:51:59 0
-a8:20:dc:2d:51:59's energy after increase = 10
-ratio of new Energy / current Battery = 0.10752688172043011
-Emin was None, now Emin = 0.10752688172043011
-bestMac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 30
-freqCopy = [50, 20]
-newTask = 30
-added new task to freqCopy
-calculated new min
-removing 20 from freqCopy
-unit b8:27:eb:4f:15:95 frequencies = [50, 20]
-change in executions: 2
-Energy increased on b8:27:eb:4f:15:95 20
-b8:27:eb:4f:15:95's energy after increase = 60
-ratio of new Energy / current Battery = 0.6122448979591837
-bestMac = a8:20:dc:2d:51:59
-a8:20:dc:2d:51:59
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7fb44e395390>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7fb44e395420>}
-{}
-adding topic sensor/humidity and frequency 30
-{'sensor/humidity': 30}
-a8:20:dc:2d:51:59 used to execute at 1
-a8:20:dc:2d:51:59 now executes at 1.0
-assignment string = {"sensor/humidity": 30}
-In update PUBLISH table: mac = a8:20:dc:2d:51:59
-update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-assignment string = {"sensor/airquality": 50, "sensor/temperature": 20}
-In update PUBLISH table: mac = b8:27:eb:4f:15:95
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-before setting assignments
-after setting assignments
-cleared continue, got command {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-the result of tasks is {'a8:20:dc:2d:51:59': '{"sensor/humidity": 30}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-sending commands
-sent to topic sensor/cmd/a8:20:dc:2d:51:59
-sent to topic sensor/cmd/b8:27:eb:4f:15:95
-finished sending commands
-end of loop
-waiting for command
-got_message = <Future pending>
-set continue
-waiting for time window
-set continue
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in status handler
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in status handler
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in will handler
-Payload: {"clientid": "sub02", "topics": ["sensor/temperature%latency%45", "sensor/humidity%latency%30"]}
-sub02
-<class 'list'>
-Getting subs for sensor/temperature
-Old Latency Req: {'sub01': 20, 'sub02': 45}
-Deleting client sub sub02
-New Latency Req: {"sub01": 20}
-New max_allowed: 20
-closing DB
-Finished update
-Getting subs for sensor/humidity
-Old Latency Req: {'sub01': 37, 'sub02': 30}
-Deleting client sub sub02
-New Latency Req: {"sub01": 37}
-New max_allowed: 37
-closing DB
-Finished update
-generated final command = {}
-cleared continue, got command {}
-the result of tasks is {}
-Task: ('sensor/airquality', 50)
-a8:20:dc:2d:51:59, 91.0, 0
-publishings []
-b8:27:eb:4f:15:95, 96.0, 0
-publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding 50
-freqCopy = []
-newTask = 50
-added new task to freqCopy
-calculated new min
-removing 50 from freqCopy
-unit a8:20:dc:2d:51:59 frequencies = []
-change in executions: 1
-Energy increased on a8:20:dc:2d:51:59 10
-a8:20:dc:2d:51:59's energy after increase = 10
-ratio of new Energy / current Battery = 0.10989010989010989
-Emin was None, now Emin = 0.10989010989010989
-bestMac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 50
-freqCopy = []
-newTask = 50
-added new task to freqCopy
-calculated new min
-removing 50 from freqCopy
-unit b8:27:eb:4f:15:95 frequencies = []
-change in executions: 1
-Energy increased on b8:27:eb:4f:15:95 10
-b8:27:eb:4f:15:95's energy after increase = 10
-ratio of new Energy / current Battery = 0.10416666666666667
-Emin was 0.10989010989010989
-Now Emin = 0.10416666666666667
-bestMac = b8:27:eb:4f:15:95
-b8:27:eb:4f:15:95
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7fb44e394d60>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7fb44e394520>}
-{}
-adding topic sensor/airquality and frequency 50
-{'sensor/airquality': 50}
-b8:27:eb:4f:15:95 used to execute at 0
-b8:27:eb:4f:15:95 now executes at 1.0
-mac: a8:20:dc:2d:51:59, device {}
-------
-mac: b8:27:eb:4f:15:95, device {'sensor/airquality': 50}
-------
-Task: ('sensor/humidity', 37)
-a8:20:dc:2d:51:59, 91.0, 0
-publishings []
-b8:27:eb:4f:15:95, 96.0, 1
-publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding 37
-freqCopy = []
-newTask = 37
-added new task to freqCopy
-calculated new min
-removing 37 from freqCopy
-unit a8:20:dc:2d:51:59 frequencies = []
-change in executions: 1
-Energy increased on a8:20:dc:2d:51:59 10
-a8:20:dc:2d:51:59's energy after increase = 10
-ratio of new Energy / current Battery = 0.10989010989010989
-Emin was None, now Emin = 0.10989010989010989
-bestMac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 37
-freqCopy = [50]
-newTask = 37
-added new task to freqCopy
-calculated new min
-removing 37 from freqCopy
-unit b8:27:eb:4f:15:95 frequencies = [50]
-change in executions: 2.0
-Energy increased on b8:27:eb:4f:15:95 20.0
-b8:27:eb:4f:15:95's energy after increase = 30.0
-ratio of new Energy / current Battery = 0.3125
-bestMac = a8:20:dc:2d:51:59
-a8:20:dc:2d:51:59
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7fb44e394d60>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7fb44e394520>}
-{}
-adding topic sensor/humidity and frequency 37
-{'sensor/humidity': 37}
-a8:20:dc:2d:51:59 used to execute at 0
-a8:20:dc:2d:51:59 now executes at 1.0
-mac: a8:20:dc:2d:51:59, device {'sensor/humidity': 37}
-------
-mac: b8:27:eb:4f:15:95, device {'sensor/airquality': 50}
-------
-Task: ('sensor/temperature', 20)
-a8:20:dc:2d:51:59, 91.0, 1
-publishings []
-b8:27:eb:4f:15:95, 96.0, 1
-publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding 20
-freqCopy = [37]
-newTask = 20
-added new task to freqCopy
-calculated new min
-removing 20 from freqCopy
-unit a8:20:dc:2d:51:59 frequencies = [37]
-change in executions: 3.0
-Energy increased on a8:20:dc:2d:51:59 30.0
-a8:20:dc:2d:51:59's energy after increase = 40.0
-ratio of new Energy / current Battery = 0.43956043956043955
-Emin was None, now Emin = 0.43956043956043955
-bestMac = a8:20:dc:2d:51:59
-checking energy increase on b8:27:eb:4f:15:95 from adding 20
-freqCopy = [50]
-newTask = 20
-added new task to freqCopy
-calculated new min
-removing 20 from freqCopy
-unit b8:27:eb:4f:15:95 frequencies = [50]
-change in executions: 3.0
-Energy increased on b8:27:eb:4f:15:95 30.0
-b8:27:eb:4f:15:95's energy after increase = 40.0
-ratio of new Energy / current Battery = 0.4166666666666667
-Emin was 0.43956043956043955
-Now Emin = 0.4166666666666667
-bestMac = b8:27:eb:4f:15:95
-b8:27:eb:4f:15:95
-{'a8:20:dc:2d:51:59': <algo_utils.Processing_Unit object at 0x7fb44e394d60>, 'b8:27:eb:4f:15:95': <algo_utils.Processing_Unit object at 0x7fb44e394520>}
-{'sensor/airquality': 50}
-adding topic sensor/temperature and frequency 20
-{'sensor/airquality': 50, 'sensor/temperature': 20}
-b8:27:eb:4f:15:95 used to execute at 1.0
-b8:27:eb:4f:15:95 now executes at 4.0
-assignment string = {"sensor/humidity": 37}
-In update PUBLISH table: mac = a8:20:dc:2d:51:59
-update_values: [('a8:20:dc:2d:51:59', 'sensor/humidity')]
-assignment string = {"sensor/airquality": 50, "sensor/temperature": 20}
-In update PUBLISH table: mac = b8:27:eb:4f:15:95
-update_values: [('b8:27:eb:4f:15:95', 'sensor/airquality'), ('b8:27:eb:4f:15:95', 'sensor/temperature')]
-generated final command = {'a8:20:dc:2d:51:59': '{"sensor/humidity": 37}', 'b8:27:eb:4f:15:95': '{"sensor/airquality": 50, "sensor/temperature": 20}'}
-sending commands
-sent to topic sensor/cmd/a8:20:dc:2d:51:59
-sent to topic sensor/cmd/b8:27:eb:4f:15:95
-finished sending commands
-end of loop
-waiting for command
-got_message = <Future pending>
-set continue
-waiting for time window
-set continue
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in status handler
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in status handler
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in status handler
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in status handler
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in misc loop
-in on_message
-waiting for event
--------------
-<asyncio.locks.Event object at 0x7fb44e54b940 [set]>
-in will handler
-Payload: {"clientid": "sub01", "topics": ["sensor/temperature%latency%20", "sensor/humidity%latency%37", "sensor/airquality%latency%50"]}
-sub01
-<class 'list'>
-Getting subs for sensor/temperature
-Old Latency Req: {'sub01': 20}
-Deleting client sub sub01
-New Latency Req: {}
-New max_allowed: None
-closing DB
-Finished update
-Getting subs for sensor/humidity
-Old Latency Req: {'sub01': 37}
-Deleting client sub sub01
-New Latency Req: {}
-New max_allowed: None
-closing DB
-Finished update
-Getting subs for sensor/airquality
-Old Latency Req: {'sub01': 50}
-Deleting client sub sub01
-New Latency Req: {}
-New max_allowed: None
-closing DB
-Finished update
-generated final command = {}
-cleared continue, got command {}
-the result of tasks is {}
-Task: ('sensor/airquality', None)
-a8:20:dc:2d:51:59, 87.0, 0
-publishings []
-b8:27:eb:4f:15:95, 92.0, 0
-publishings []
-checking energy increase on a8:20:dc:2d:51:59 from adding None
-freqCopy = []
-newTask = None
-removing None from freqCopy
+set -e; for d in lib apps client plugins src; do make -C ${d}; done
+make[1]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/lib'
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c mosquitto.c -o mosquitto.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c actions.c -o actions.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c callbacks.c -o callbacks.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c connect.c -o connect.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_auth.c -o handle_auth.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_connack.c -o handle_connack.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_disconnect.c -o handle_disconnect.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_ping.c -o handle_ping.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_pubackcomp.c -o handle_pubackcomp.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_publish.c -o handle_publish.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_pubrec.c -o handle_pubrec.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_pubrel.c -o handle_pubrel.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_suback.c -o handle_suback.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c handle_unsuback.c -o handle_unsuback.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c helpers.c -o helpers.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c logging_mosq.c -o logging_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c loop.c -o loop.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c memory_mosq.c -o memory_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c messages_mosq.c -o messages_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c misc_mosq.c -o misc_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c net_mosq_ocsp.c -o net_mosq_ocsp.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c net_mosq.c -o net_mosq.o
+net_mosq.c: In function ‘net__init_tls’:
+net_mosq.c:190:9: warning: ‘ENGINE_load_builtin_engines’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  190 |         ENGINE_load_builtin_engines();
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:358:28: note: declared here
+  358 | OSSL_DEPRECATEDIN_3_0 void ENGINE_load_builtin_engines(void);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+net_mosq.c: In function ‘net__socket_connect_tls’:
+net_mosq.c:553:18: warning: unused variable ‘err’ [-Wunused-variable]
+  553 |         int ret, err;
+      |                  ^~~
+net_mosq.c:553:13: warning: unused variable ‘ret’ [-Wunused-variable]
+  553 |         int ret, err;
+      |             ^~~
+net_mosq.c: In function ‘net__init_ssl_ctx’:
+net_mosq.c:723:25: warning: ‘ENGINE_by_id’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  723 |                         engine = ENGINE_by_id(mosq->tls_engine);
+      |                         ^~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:336:31: note: declared here
+  336 | OSSL_DEPRECATEDIN_3_0 ENGINE *ENGINE_by_id(const char *id);
+      |                               ^~~~~~~~~~~~
+net_mosq.c:728:25: warning: ‘ENGINE_init’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  728 |                         if(!ENGINE_init(engine)){
+      |                         ^~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:620:27: note: declared here
+  620 | OSSL_DEPRECATEDIN_3_0 int ENGINE_init(ENGINE *e);
+      |                           ^~~~~~~~~~~
+net_mosq.c:730:33: warning: ‘ENGINE_free’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  730 |                                 ENGINE_free(engine);
+      |                                 ^~~~~~~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:493:27: note: declared here
+  493 | OSSL_DEPRECATEDIN_3_0 int ENGINE_free(ENGINE *e);
+      |                           ^~~~~~~~~~~
+net_mosq.c:733:25: warning: ‘ENGINE_set_default’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  733 |                         ENGINE_set_default(engine, ENGINE_METHOD_ALL);
+      |                         ^~~~~~~~~~~~~~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:708:27: note: declared here
+  708 | OSSL_DEPRECATEDIN_3_0 int ENGINE_set_default(ENGINE *e, unsigned int flags);
+      |                           ^~~~~~~~~~~~~~~~~~
+net_mosq.c:734:25: warning: ‘ENGINE_free’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  734 |                         ENGINE_free(engine); /* release the structural reference from ENGINE_by_id() */
+      |                         ^~~~~~~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:493:27: note: declared here
+  493 | OSSL_DEPRECATEDIN_3_0 int ENGINE_free(ENGINE *e);
+      |                           ^~~~~~~~~~~
+net_mosq.c:743:33: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  743 |                                 ENGINE_FINISH(engine);
+      |                                 ^~~~~~~~~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+net_mosq.c:753:33: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  753 |                                 ENGINE_FINISH(engine);
+      |                                 ^~~~~~~~~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+net_mosq.c:778:41: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  778 |                                         ENGINE_FINISH(engine);
+      |                                         ^~~~~~~~~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+net_mosq.c:789:49: warning: ‘ENGINE_ctrl_cmd’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  789 |                                           if(!ENGINE_ctrl_cmd(engine, ENGINE_SECRET_MODE, ENGINE_SECRET_MODE_SHA, NULL, NULL, 0)){
+      |                                           ^~
+
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:450:27: note: declared here
+  450 | OSSL_DEPRECATEDIN_3_0 int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
+      |                           ^~~~~~~~~~~~~~~
+net_mosq.c:791:57: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  791 |                                           ENGINE_FINISH(engine);
+      |                                           ^~~~~~~~~~~~~
+
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+net_mosq.c:795:49: warning: ‘ENGINE_ctrl_cmd’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  795 |                                           if(!ENGINE_ctrl_cmd(engine, ENGINE_PIN, 0, mosq->tls_engine_kpass_sha1, NULL, 0)){
+      |                                           ^~
+
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:450:27: note: declared here
+  450 | OSSL_DEPRECATEDIN_3_0 int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
+      |                           ^~~~~~~~~~~~~~~
+net_mosq.c:797:57: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  797 |                                           ENGINE_FINISH(engine);
+      |                                           ^~~~~~~~~~~~~
+
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+net_mosq.c:803:41: warning: ‘ENGINE_load_private_key’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  803 |                                         pkey = ENGINE_load_private_key(engine, mosq->tls_keyfile, ui_method, NULL);
+      |                                         ^~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:638:11: note: declared here
+  638 | EVP_PKEY *ENGINE_load_private_key(ENGINE *e, const char *key_id,
+      |           ^~~~~~~~~~~~~~~~~~~~~~~
+net_mosq.c:806:49: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  806 |                                           ENGINE_FINISH(engine);
+      |                                           ^~~~~~~~~~~~~
+
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+net_mosq.c:812:49: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  812 |                                           ENGINE_FINISH(engine);
+      |                                           ^~~~~~~~~~~~~
+
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+net_mosq.c:826:49: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  826 |                                           ENGINE_FINISH(engine);
+      |                                           ^~~~~~~~~~~~~
+
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+net_mosq.c:836:41: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  836 |                                         ENGINE_FINISH(engine);
+      |                                         ^~~~~~~~~~~~~
+In file included from net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c options.c -o options.o
+options.c: In function ‘mosquitto_string_option’:
+options.c:300:33: warning: ‘ENGINE_by_id’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  300 |                                 eng = ENGINE_by_id(value);
+      |                                 ^~~
+In file included from options.c:31:
+/usr/include/openssl/engine.h:336:31: note: declared here
+  336 | OSSL_DEPRECATEDIN_3_0 ENGINE *ENGINE_by_id(const char *id);
+      |                               ^~~~~~~~~~~~
+options.c:304:33: warning: ‘ENGINE_free’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  304 |                                 ENGINE_free(eng); /* release the structural reference from ENGINE_by_id() */
+      |                                 ^~~~~~~~~~~
+In file included from options.c:31:
+/usr/include/openssl/engine.h:493:27: note: declared here
+  493 | OSSL_DEPRECATEDIN_3_0 int ENGINE_free(ENGINE *e);
+      |                           ^~~~~~~~~~~
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c packet_datatypes.c -o packet_datatypes.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c packet_mosq.c -o packet_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c property_mosq.c -o property_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c read_handle.c -o read_handle.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c send_connect.c -o send_connect.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c send_disconnect.c -o send_disconnect.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c send_mosq.c -o send_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c send_publish.c -o send_publish.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c send_subscribe.c -o send_subscribe.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c send_unsubscribe.c -o send_unsubscribe.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c socks_mosq.c -o socks_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c srv_mosq.c -o srv_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c strings_mosq.c -o strings_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c thread_mosq.c -o thread_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c time_mosq.c -o time_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c tls_mosq.c -o tls_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c utf8_mosq.c -o utf8_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c util_mosq.c -o util_mosq.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c util_topic.c -o util_topic.o
+cc  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -fPIC -c will_mosq.c -o will_mosq.o
+cc -shared  -Wl,--version-script=linker.version -Wl,-soname,libmosquitto.so.1 mosquitto.o actions.o callbacks.o connect.o handle_auth.o handle_connack.o handle_disconnect.o handle_ping.o handle_pubackcomp.o handle_publish.o handle_pubrec.o handle_pubrel.o handle_suback.o handle_unsuback.o helpers.o logging_mosq.o loop.o memory_mosq.o messages_mosq.o misc_mosq.o net_mosq_ocsp.o net_mosq.o options.o packet_datatypes.o packet_mosq.o property_mosq.o read_handle.o send_connect.o send_disconnect.o send_mosq.o send_publish.o send_subscribe.o send_unsubscribe.o socks_mosq.o srv_mosq.o strings_mosq.o thread_mosq.o time_mosq.o tls_mosq.o utf8_mosq.o util_mosq.o util_topic.o will_mosq.o -o libmosquitto.so.1  -lrt -lsqlite3 -lcjson -lpthread -lssl -lcrypto
+make -C cpp
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/lib/cpp'
+g++  -I. -I.. -I../include -I../../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -I../deps  -fPIC -c mosquittopp.cpp -o mosquittopp.o
+g++ -shared  -Wl,-soname,libmosquittopp.so.1 mosquittopp.o -o libmosquittopp.so.1 ../libmosquitto.so.1 
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/lib/cpp'
+make[1]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/lib'
+make[1]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/apps'
+set -e; for d in db_dump mosquitto_ctrl mosquitto_passwd; do make -C ${d}; done
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/apps/db_dump'
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c db_dump.c -o db_dump.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c print.c -o print.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../lib/memory_mosq.c -o memory_mosq.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../src/memory_public.c -o memory_public.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../lib/packet_datatypes.c -o packet_datatypes.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../lib/packet_mosq.c -o packet_mosq.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../src/persist_read.c -o persist_read.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../src/persist_read_v234.c -o persist_read_v234.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../src/persist_read_v5.c -o persist_read_v5.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../lib/property_mosq.c -o property_mosq.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../lib/send_disconnect.c -o send_disconnect.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c stubs.c -o stubs.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../lib/time_mosq.c -o time_mosq.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../src/topic_tok.c -o topic_tok.o
+cc -Wall -ggdb -O2 -Wconversion -Wextra -I../../include -I../../ -I../../lib -I../../src -I../../deps -DWITH_BROKER -DWITH_PERSISTENCE -c ../../lib/utf8_mosq.c -o utf8_mosq.o
+cc db_dump.o print.o memory_mosq.o memory_public.o packet_datatypes.o packet_mosq.o persist_read.o persist_read_v234.o persist_read_v5.o property_mosq.o send_disconnect.o stubs.o time_mosq.o topic_tok.o utf8_mosq.o -o mosquitto_db_dump  
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/apps/db_dump'
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/apps/mosquitto_ctrl'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/apps/mosquitto_ctrl'
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/apps/mosquitto_passwd'
+cc  -I. -I../../ -I../../include -I../../src -I../../lib -DWITH_TLS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION=\""2.0.18\"" -c mosquitto_passwd.c -o mosquitto_passwd.o
+cc  -I. -I../../ -I../../include -I../../src -I../../lib -DWITH_TLS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION=\""2.0.18\"" -c get_password.c -o get_password.o
+cc  -I. -I../../ -I../../include -I../../src -I../../lib -DWITH_TLS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION=\""2.0.18\"" -c ../../lib/memory_mosq.c -o memory_mosq.o
+cc  -I. -I../../ -I../../include -I../../src -I../../lib -DWITH_TLS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION=\""2.0.18\"" -c ../../src/memory_public.c -o memory_public.o
+cc  -I. -I../../ -I../../include -I../../src -I../../lib -DWITH_TLS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION=\""2.0.18\"" -c ../../lib/misc_mosq.c -o misc_mosq.o
+cc  -I. -I../../ -I../../include -I../../src -I../../lib -DWITH_TLS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION=\""2.0.18\"" -c ../../src/password_mosq.c -o password_mosq.o
+cc  mosquitto_passwd.o get_password.o memory_mosq.o memory_public.o misc_mosq.o password_mosq.o -o mosquitto_passwd  -lcrypto 
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/apps/mosquitto_passwd'
+make[1]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/apps'
+make[1]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/client'
+cc  -I.. -I../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -c pub_client.c -o pub_client.o
+cc  -I.. -I../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -c pub_shared.c -o pub_shared.o
+cc  -I.. -I../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -c client_shared.c -o client_shared.o
+cc  -I.. -I../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -c client_props.c -o client_props.o
+cc  -L../lib pub_client.o pub_shared.o client_shared.o client_props.o -o mosquitto_pub  ../lib/libmosquitto.so.1 
+cc  -I.. -I../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -c sub_client.c -o sub_client.o
+cc  -I.. -I../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -c sub_client_output.c -o sub_client_output.o
+cc  -L../lib sub_client.o sub_client_output.o client_shared.o client_props.o -o mosquitto_sub  ../lib/libmosquitto.so.1 
+cc  -I.. -I../include -DWITH_TLS -DWITH_TLS_PSK -DWITH_SOCKS -DWITH_UNIX_SOCKETS -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -c rr_client.c -o rr_client.o
+cc  -L../lib rr_client.o client_shared.o client_props.o pub_shared.o sub_client_output.o -o mosquitto_rr  ../lib/libmosquitto.so.1 
+make[1]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/client'
+make[1]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins'
+set -e; for d in auth-by-ip deny-protocol-version dynamic-security message-timestamp payload-modification; do make -C ${d}; done
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/auth-by-ip'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/auth-by-ip'
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/deny-protocol-version'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/deny-protocol-version'
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/dynamic-security'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/dynamic-security'
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/message-timestamp'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/message-timestamp'
+make[2]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/payload-modification'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins/payload-modification'
+make[1]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/plugins'
+make[1]: Entering directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/src'
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c mosquitto.c -o mosquitto.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/alias_mosq.c -o alias_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c bridge.c -o bridge.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c bridge_topic.c -o bridge_topic.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c conf.c -o conf.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c conf_includedir.c -o conf_includedir.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c context.c -o context.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c control.c -o control.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c database.c -o database.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c handle_auth.c -o handle_auth.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c handle_connack.c -o handle_connack.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c handle_connect.c -o handle_connect.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c handle_disconnect.c -o handle_disconnect.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/handle_ping.c -o handle_ping.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/handle_pubackcomp.c -o handle_pubackcomp.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c handle_publish.c -o handle_publish.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/handle_pubrec.c -o handle_pubrec.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/handle_pubrel.c -o handle_pubrel.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/handle_suback.c -o handle_suback.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c handle_subscribe.c -o handle_subscribe.o
+handle_subscribe.c: In function ‘handle__subscribe’:
+handle_subscribe.c:199:125: warning: unknown escape sequence: '\040'
+  199 |                      log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic does not exist in DB. Adding now");
+      |                                                                                                  ^
+
+handle_subscribe.c:207:139: warning: unknown escape sequence: '\040'
+  207 |        log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic already exists in DB. Updating latency QoS: \n");
+      |                                                                                                  ^
+
+handle_subscribe.c:52:13: warning: unused variable ‘ret’ [-Wunused-variable]
+   52 |         int ret;
+      |             ^~~
+handle_subscribe.c:51:24: warning: unused variable ‘mess_client_attr’ [-Wunused-variable]
+   51 |         pthread_attr_t mess_client_attr;
+      |                        ^~~~~~~~~~~~~~~~
+handle_subscribe.c:50:19: warning: unused variable ‘mess_client’ [-Wunused-variable]
+   50 |         pthread_t mess_client;
+      |                   ^~~~~~~~~~~
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/handle_unsuback.c -o handle_unsuback.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c handle_unsubscribe.c -o handle_unsubscribe.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c keepalive.c -o keepalive.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c logging.c -o logging.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c loop.c -o loop.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/memory_mosq.c -o memory_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c memory_public.c -o memory_public.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c mqtt_cc.c -o mqtt_cc.o
+mqtt_cc.c: In function ‘messageClient’:
+mqtt_cc.c:89:9: warning: unused variable ‘check’ [-Wunused-variable]
+   89 |     int check = system(dir);
+      |         ^~~~~
+mqtt_cc.c: In function ‘insert_topic_in_DB’:
+mqtt_cc.c:270:69: warning: unknown escape sequence: '\040'
+  270 |     log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
+      |                                                                     ^
+mqtt_cc.c:274:73: warning: unknown escape sequence: '\040'
+  274 |         log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
+      |                                                                         ^
+mqtt_cc.c:241:15: warning: unused variable ‘mess_client’ [-Wunused-variable]
+  241 |     pthread_t mess_client;
+      |               ^~~~~~~~~~~
+mqtt_cc.c: In function ‘calc_new_max_latency’:
+mqtt_cc.c:286:43: warning: conversion to ‘long unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  286 |     int *arr = (int *)malloc(numLatencies *sizeof(int));
+      |                                           ^
+mqtt_cc.c: In function ‘update_lat_req_max_allowed’:
+mqtt_cc.c:325:29: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  325 |     char *oldLatencyValue = sqlite3_column_text(prototype_db.find_existing_topic, 1);
+      |                             ^~~~~~~~~~~~~~~~~~~
+mqtt_cc.c:321:15: warning: unused variable ‘mess_client’ [-Wunused-variable]
+  321 |     pthread_t mess_client;
+      |               ^~~~~~~~~~~
+mqtt_cc.c:320:9: warning: unused variable ‘ret’ [-Wunused-variable]
+  320 |     int ret;
+      |         ^~~
+mqtt_cc.c: In function ‘calc_new_max_latency’:
+mqtt_cc.c:301:9: warning: ‘*arr’ may be used uninitialized [-Wmaybe-uninitialized]
+  301 |     int min = arr[0];
+      |         ^~~
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/misc_mosq.c -o misc_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c mux.c -o mux.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c mux_epoll.c -o mux_epoll.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c mux_poll.c -o mux_poll.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c net.c -o net.o
+net.c: In function ‘net__tls_server_ctx’:
+net.c:429:17: warning: ‘PEM_read_DHparams’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  429 |                 dhparam = PEM_read_DHparams(dhparamfile, NULL, NULL, NULL);
+      |                 ^~~~~~~
+In file included from /usr/include/openssl/ssl.h:36,
+                 from ../lib/mosquitto_internal.h:30,
+                 from mosquitto_broker_internal.h:33,
+                 from net.c:56:
+/usr/include/openssl/pem.h:469:1: note: declared here
+  469 | DECLARE_PEM_rw_attr(OSSL_DEPRECATEDIN_3_0, DHparams, DH)
+      | ^~~~~~~~~~~~~~~~~~~
+net.c: In function ‘net__load_engine’:
+net.c:526:9: warning: ‘ENGINE_by_id’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  526 |         engine = ENGINE_by_id(listener->tls_engine);
+      |         ^~~~~~
+In file included from ../lib/tls_mosq.h:31,
+                 from mosquitto_broker_internal.h:39,
+                 from net.c:56:
+/usr/include/openssl/engine.h:336:31: note: declared here
+  336 | OSSL_DEPRECATEDIN_3_0 ENGINE *ENGINE_by_id(const char *id);
+      |                               ^~~~~~~~~~~~
+net.c:532:9: warning: ‘ENGINE_init’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  532 |         if(!ENGINE_init(engine)){
+      |         ^~
+In file included from ../lib/tls_mosq.h:31,
+                 from mosquitto_broker_internal.h:39,
+                 from net.c:56:
+/usr/include/openssl/engine.h:620:27: note: declared here
+  620 | OSSL_DEPRECATEDIN_3_0 int ENGINE_init(ENGINE *e);
+      |                           ^~~~~~~~~~~
+net.c:537:9: warning: ‘ENGINE_set_default’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  537 |         ENGINE_set_default(engine, ENGINE_METHOD_ALL);
+      |         ^~~~~~~~~~~~~~~~~~
+In file included from ../lib/tls_mosq.h:31,
+                 from mosquitto_broker_internal.h:39,
+                 from net.c:56:
+/usr/include/openssl/engine.h:708:27: note: declared here
+  708 | OSSL_DEPRECATEDIN_3_0 int ENGINE_set_default(ENGINE *e, unsigned int flags);
+      |                           ^~~~~~~~~~~~~~~~~~
+net.c:542:25: warning: ‘ENGINE_ctrl_cmd’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  542 |                         if(!ENGINE_ctrl_cmd(engine, ENGINE_SECRET_MODE, ENGINE_SECRET_MODE_SHA, NULL, NULL, 0)){
+      |                         ^~
+In file included from ../lib/tls_mosq.h:31,
+                 from mosquitto_broker_internal.h:39,
+                 from net.c:56:
+/usr/include/openssl/engine.h:450:27: note: declared here
+  450 | OSSL_DEPRECATEDIN_3_0 int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
+      |                           ^~~~~~~~~~~~~~~
+net.c:547:25: warning: ‘ENGINE_ctrl_cmd’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  547 |                         if(!ENGINE_ctrl_cmd(engine, ENGINE_PIN, 0, listener->tls_engine_kpass_sha1, NULL, 0)){
+      |                         ^~
+In file included from ../lib/tls_mosq.h:31,
+                 from mosquitto_broker_internal.h:39,
+                 from net.c:56:
+/usr/include/openssl/engine.h:450:27: note: declared here
+  450 | OSSL_DEPRECATEDIN_3_0 int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
+      |                           ^~~~~~~~~~~~~~~
+net.c:554:17: warning: ‘ENGINE_load_private_key’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  554 |                 pkey = ENGINE_load_private_key(engine, listener->keyfile, ui_method, NULL);
+      |                 ^~~~
+In file included from ../lib/tls_mosq.h:31,
+                 from mosquitto_broker_internal.h:39,
+                 from net.c:56:
+/usr/include/openssl/engine.h:638:11: note: declared here
+  638 | EVP_PKEY *ENGINE_load_private_key(ENGINE *e, const char *key_id,
+      |           ^~~~~~~~~~~~~~~~~~~~~~~
+net.c:566:9: warning: ‘ENGINE_free’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  566 |         ENGINE_free(engine); /* release the structural reference from ENGINE_by_id() */
+      |         ^~~~~~~~~~~
+In file included from ../lib/tls_mosq.h:31,
+                 from mosquitto_broker_internal.h:39,
+                 from net.c:56:
+/usr/include/openssl/engine.h:493:27: note: declared here
+  493 | OSSL_DEPRECATEDIN_3_0 int ENGINE_free(ENGINE *e);
+      |                           ^~~~~~~~~~~
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/net_mosq.c -o net_mosq.o
+../lib/net_mosq.c: In function ‘net__init_tls’:
+../lib/net_mosq.c:190:9: warning: ‘ENGINE_load_builtin_engines’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  190 |         ENGINE_load_builtin_engines();
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:358:28: note: declared here
+  358 | OSSL_DEPRECATEDIN_3_0 void ENGINE_load_builtin_engines(void);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../lib/net_mosq.c: In function ‘net__socket_connect_tls’:
+../lib/net_mosq.c:553:18: warning: unused variable ‘err’ [-Wunused-variable]
+  553 |         int ret, err;
+      |                  ^~~
+../lib/net_mosq.c:553:13: warning: unused variable ‘ret’ [-Wunused-variable]
+  553 |         int ret, err;
+      |             ^~~
+../lib/net_mosq.c: In function ‘net__init_ssl_ctx’:
+../lib/net_mosq.c:723:25: warning: ‘ENGINE_by_id’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  723 |                         engine = ENGINE_by_id(mosq->tls_engine);
+      |                         ^~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:336:31: note: declared here
+  336 | OSSL_DEPRECATEDIN_3_0 ENGINE *ENGINE_by_id(const char *id);
+      |                               ^~~~~~~~~~~~
+../lib/net_mosq.c:728:25: warning: ‘ENGINE_init’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  728 |                         if(!ENGINE_init(engine)){
+      |                         ^~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:620:27: note: declared here
+  620 | OSSL_DEPRECATEDIN_3_0 int ENGINE_init(ENGINE *e);
+      |                           ^~~~~~~~~~~
+../lib/net_mosq.c:730:33: warning: ‘ENGINE_free’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  730 |                                 ENGINE_free(engine);
+      |                                 ^~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:493:27: note: declared here
+  493 | OSSL_DEPRECATEDIN_3_0 int ENGINE_free(ENGINE *e);
+      |                           ^~~~~~~~~~~
+../lib/net_mosq.c:733:25: warning: ‘ENGINE_set_default’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  733 |                         ENGINE_set_default(engine, ENGINE_METHOD_ALL);
+      |                         ^~~~~~~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:708:27: note: declared here
+  708 | OSSL_DEPRECATEDIN_3_0 int ENGINE_set_default(ENGINE *e, unsigned int flags);
+      |                           ^~~~~~~~~~~~~~~~~~
+../lib/net_mosq.c:734:25: warning: ‘ENGINE_free’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  734 |                         ENGINE_free(engine); /* release the structural reference from ENGINE_by_id() */
+      |                         ^~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:493:27: note: declared here
+  493 | OSSL_DEPRECATEDIN_3_0 int ENGINE_free(ENGINE *e);
+      |                           ^~~~~~~~~~~
+../lib/net_mosq.c:743:33: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  743 |                                 ENGINE_FINISH(engine);
+      |                                 ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+../lib/net_mosq.c:753:33: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  753 |                                 ENGINE_FINISH(engine);
+      |                                 ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+../lib/net_mosq.c:778:41: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  778 |                                         ENGINE_FINISH(engine);
+      |                                         ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+../lib/net_mosq.c:789:49: warning: ‘ENGINE_ctrl_cmd’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  789 |                                                 if(!ENGINE_ctrl_cmd(engine, ENGINE_SECRET_MODE, ENGINE_SECRET_MODE_SHA, NULL, NULL, 0)){
+      |                                                 ^~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:450:27: note: declared here
+  450 | OSSL_DEPRECATEDIN_3_0 int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
+      |                           ^~~~~~~~~~~~~~~
+../lib/net_mosq.c:791:57: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  791 |                                                         ENGINE_FINISH(engine);
+      |                                                         ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+../lib/net_mosq.c:795:49: warning: ‘ENGINE_ctrl_cmd’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  795 |                                                 if(!ENGINE_ctrl_cmd(engine, ENGINE_PIN, 0, mosq->tls_engine_kpass_sha1, NULL, 0)){
+      |                                                 ^~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:450:27: note: declared here
+  450 | OSSL_DEPRECATEDIN_3_0 int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
+      |                           ^~~~~~~~~~~~~~~
+../lib/net_mosq.c:797:57: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  797 |                                                         ENGINE_FINISH(engine);
+      |                                                         ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+../lib/net_mosq.c:803:41: warning: ‘ENGINE_load_private_key’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  803 |                                         pkey = ENGINE_load_private_key(engine, mosq->tls_keyfile, ui_method, NULL);
+      |                                         ^~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:638:11: note: declared here
+  638 | EVP_PKEY *ENGINE_load_private_key(ENGINE *e, const char *key_id,
+      |           ^~~~~~~~~~~~~~~~~~~~~~~
+../lib/net_mosq.c:806:49: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  806 |                                                 ENGINE_FINISH(engine);
+      |                                                 ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+../lib/net_mosq.c:812:49: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  812 |                                                 ENGINE_FINISH(engine);
+      |                                                 ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+../lib/net_mosq.c:826:49: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  826 |                                                 ENGINE_FINISH(engine);
+      |                                                 ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+../lib/net_mosq.c:836:41: warning: ‘ENGINE_finish’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  836 |                                         ENGINE_FINISH(engine);
+      |                                         ^~~~~~~~~~~~~
+In file included from ../lib/net_mosq.c:58:
+/usr/include/openssl/engine.h:628:27: note: declared here
+  628 | OSSL_DEPRECATEDIN_3_0 int ENGINE_finish(ENGINE *e);
+      |                           ^~~~~~~~~~~~~
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/net_mosq_ocsp.c -o net_mosq_ocsp.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/packet_datatypes.c -o packet_datatypes.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/packet_mosq.c -o packet_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c password_mosq.c -o password_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c property_broker.c -o property_broker.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/property_mosq.c -o property_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c persist_read.c -o persist_read.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c persist_read_v234.c -o persist_read_v234.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c persist_read_v5.c -o persist_read_v5.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c persist_write.c -o persist_write.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c persist_write_v5.c -o persist_write_v5.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c plugin.c -o plugin.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c plugin_public.c -o plugin_public.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c read_handle.c -o read_handle.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c retain.c -o retain.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c security.c -o security.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c security_default.c -o security_default.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c send_auth.c -o send_auth.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c send_connack.c -o send_connack.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/send_connect.c -o send_connect.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/send_disconnect.c -o send_disconnect.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/send_mosq.c -o send_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/send_publish.c -o send_publish.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c send_suback.c -o send_suback.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/send_subscribe.c -o send_subscribe.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c send_unsuback.c -o send_unsuback.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/send_unsubscribe.c -o send_unsubscribe.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c service.c -o service.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c session_expiry.c -o session_expiry.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c signals.c -o signals.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/strings_mosq.c -o strings_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c subs.c -o subs.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c sys_tree.c -o sys_tree.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/time_mosq.c -o time_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c topic_tok.c -o topic_tok.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/tls_mosq.c -o tls_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/utf8_mosq.c -o utf8_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/util_mosq.c -o util_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/util_topic.c -o util_topic.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c websockets.c -o websockets.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c will_delay.c -o will_delay.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c ../lib/will_mosq.c -o will_mosq.o
+cc  -I. -I.. -I../include -I../../include -I../lib -DWITH_TLS -DWITH_TLS_PSK -DWITH_BRIDGE -DWITH_PERSISTENCE -DWITH_MEMORY_TRACKING -DWITH_SYS_TREE -DWITH_EC -DWITH_CONTROL -DWITH_UNIX_SOCKETS -DWITH_EPOLL -I../deps -Wall -ggdb -O2 -Wconversion -Wextra -DVERSION="\"2.0.18\"" -DWITH_BROKER -c xtreport.c -o xtreport.o
+cc  -Wl,--dynamic-list=linker.syms mosquitto.o alias_mosq.o bridge.o bridge_topic.o conf.o conf_includedir.o context.o control.o database.o handle_auth.o handle_connack.o handle_connect.o handle_disconnect.o handle_ping.o handle_pubackcomp.o handle_publish.o handle_pubrec.o handle_pubrel.o handle_suback.o handle_subscribe.o handle_unsuback.o handle_unsubscribe.o keepalive.o logging.o loop.o memory_mosq.o memory_public.o mqtt_cc.o misc_mosq.o mux.o mux_epoll.o mux_poll.o net.o net_mosq.o net_mosq_ocsp.o packet_datatypes.o packet_mosq.o password_mosq.o property_broker.o property_mosq.o persist_read.o persist_read_v234.o persist_read_v5.o persist_write.o persist_write_v5.o plugin.o plugin_public.o read_handle.o retain.o security.o security_default.o send_auth.o send_connack.o send_connect.o send_disconnect.o send_mosq.o send_publish.o send_suback.o send_subscribe.o send_unsuback.o send_unsubscribe.o service.o session_expiry.o signals.o strings_mosq.o subs.o sys_tree.o time_mosq.o topic_tok.o tls_mosq.o utf8_mosq.o util_mosq.o util_topic.o websockets.o will_delay.o will_mosq.o xtreport.o -o mosquitto  -ldl -lm -lrt -lsqlite3 -lcjson -lpthread -lssl -lcrypto 
+make[1]: Leaving directory '/home/devnico/repos/research/mqtt_cc_research/broker/mosquitto/src'

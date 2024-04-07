@@ -44,6 +44,7 @@ Contributors:
 #include "mqtt_cc.h"
 #include <cjson/cJSON.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 #ifndef __GNUC__
 #define __attribute__(attrib)

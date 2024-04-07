@@ -154,11 +154,14 @@ int mosquitto_publish_v5(struct mosquitto *mosq, int *mid, const char *topic, in
 		message->msg.retain = retain;
 		message->dup = false;
 		message->properties = properties_copy;
-
+#ifdef WITH_THREADING
 		pthread_mutex_lock(&mosq->msgs_out.mutex);
+#endif
 		message->state = mosq_ms_invalid;
 		rc = message__queue(mosq, message, mosq_md_out);
+#ifdef WITH_THREADING
 		pthread_mutex_unlock(&mosq->msgs_out.mutex);
+#endif
 		return rc;
 	}
 }

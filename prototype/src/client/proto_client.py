@@ -69,7 +69,7 @@ def main():
         startBattery = rows[i][2]
         mac = rows[i][3]
         database.addDevice(MAC_ADDR=mac, BATTERY=startBattery)
-        status_handler.logPublisherBattery(mac, startBattery, current_time)
+        #status_handler.logPublisherBattery(mac, startBattery, current_time)
         topicList = rows[i][4:len(rows[i])] # rest of rows are the topics
         for topic in topicList:
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)

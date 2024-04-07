@@ -56,10 +56,13 @@ int handle__pubackcomp(struct mosquitto *mosq, const char *type)
 			return MOSQ_ERR_MALFORMED_PACKET;
 		}
 	}
-
+#ifdef WITH_THREADING
 	pthread_mutex_lock(&mosq->msgs_out.mutex);
+#endif
 	util__increment_send_quota(mosq);
+#ifdef WITH_THREADING
 	pthread_mutex_unlock(&mosq->msgs_out.mutex);
+#endif
 
 	rc = packet__read_uint16(&mosq->in_packet, &mid);
 	if(rc) return rc;
@@ -137,7 +140,9 @@ int handle__pubackcomp(struct mosquitto *mosq, const char *type)
 	rc = message__delete(mosq, mid, mosq_md_out, qos);
 	if(rc == MOSQ_ERR_SUCCESS){
 		/* Only inform the client the message has been sent once. */
+#ifdef WITH_THREADING
 		pthread_mutex_lock(&mosq->callback_mutex);
+#endif
 		if(mosq->on_publish){
 			mosq->in_callback = true;
 			mosq->on_publish(mosq, mosq->userdata, mid);
@@ -148,14 +153,20 @@ int handle__pubackcomp(struct mosquitto *mosq, const char *type)
 			mosq->on_publish_v5(mosq, mosq->userdata, mid, reason_code, properties);
 			mosq->in_callback = false;
 		}
+#ifdef WITH_THREADING
 		pthread_mutex_unlock(&mosq->callback_mutex);
+#endif		
 		mosquitto_property_free_all(&properties);
 	}else if(rc != MOSQ_ERR_NOT_FOUND){
 		return rc;
 	}
+#ifdef WITH_THREADING
 	pthread_mutex_lock(&mosq->msgs_out.mutex);
+#endif	
 	message__release_to_inflight(mosq, mosq_md_out);
+#ifdef WITH_THREADING
 	pthread_mutex_unlock(&mosq->msgs_out.mutex);
+#endif	
 
 	return MOSQ_ERR_SUCCESS;
 #endif

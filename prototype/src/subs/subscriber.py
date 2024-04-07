@@ -23,9 +23,10 @@ def on_message(client, userdata, msg):
 
 def subscribeToTopics(client, topicList:list):
     for topic in topicList:
-        #print(f"Subscribing to {topic}")
+        print(f"Subscribing to {topic}")
         client.subscribe(topic)
-        time.sleep(16)
+        #print("sleeping now")
+        #time.sleep(16)
 # Executed when script is ran
 
 # python3 subscriber.py <username> <password>

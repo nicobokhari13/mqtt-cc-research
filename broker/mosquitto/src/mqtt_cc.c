@@ -4,7 +4,6 @@
 #include <string.h>
 
 #include "mosquitto_broker_internal.h"
-#include <pthread.h>
 
 void log_sub(char *sub){
     log__printf(NULL, MOSQ_LOG_DEBUG, "\t %s", sub);
@@ -268,7 +267,7 @@ void insert_topic_in_DB(struct mosquitto *context){
     log__printf(NULL, MOSQ_LOG_DEBUG, "Success: Added topic, latency_req, and max_allowed_latency to DB\n");
 
     log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
-	
+	sleep(8);
     pthread_attr_init(&mess_client_attr);
 	pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
 	log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
@@ -351,6 +350,7 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     int newMaxAllowed = calc_new_max_latency(db_Value);
 
     if (oldMaxAllowed != newMaxAllowed){
+        sleep(8);
         // if there is a change in the max_allowed_latency, notify client
         // some time for the client to finish their operation
         pthread_attr_init(&mess_client_attr);
