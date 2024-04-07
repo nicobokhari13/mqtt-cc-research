@@ -117,6 +117,17 @@ class AsyncMqtt:
             await asyncio.sleep(freq)
             print(f"finished publishing on {sense_topic} on freq {freq}")
     
+    async def separateExecutionsAndAssignments(self, command:str):
+        index = len(command) - 1
+        while index >= 0:
+            if command[index] == "}":
+                break
+            index -= 1
+        assignments = command[:index + 1]
+        executions = command[index + 1:]
+        utils.saveNewExecutions(int(executions))
+        return assignments
+
     async def main(self):
         # main execution        
         self.disconnected = self.loop.create_future()
@@ -143,6 +154,9 @@ class AsyncMqtt:
             # cmd = await utils._got_cmd # wait for command to come
             cmd = await self.got_message # wait for command to come
 
+            # if in the sim, get separate the executions 
+            if utils._IN_SIM:
+                cmd = await self.separateExecutionsAndAssignments(cmd)
             # once we have command, set publishings
             utils.setPublishing(json.loads(cmd))
 
@@ -169,7 +183,7 @@ class AsyncMqtt:
                 # get the "returned" value from the done task
                 result = done.pop().result()
                 # sensing tasks return None, waitForCmd returns the command
-
+                print(f"message says {result}")
                 print(f"task result = {result}")
                 print("result is command")
                 print("canceling other tasks")
@@ -178,7 +192,12 @@ class AsyncMqtt:
                 for unfinished_task in pending:
                     unfinished_task.cancel()
                     self.tasks = set()
-            
+
+                # check if simulation, if so, get the num executions out of the command
+                if utils._IN_SIM:
+                    result = self.separateExecutionsAndAssignments(result)
+                print(f"command is {result}")
+                    # save executions in utils
                 print("changing tasks")
                 utils.setPublishing(json.loads(result))
                 routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
