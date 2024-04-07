@@ -197,7 +197,6 @@ int handle__subscribe(struct mosquitto *context)
 					store_lat_qos(context, sub); // remove the lat qos from the sub
 					if(!topic_exists_in_DB(context)){
 						log__printf(NULL, MOSQ_LOG_DEBUG, "\ Topic does not exist in DB. Adding now");
-						sleep(8);
 						insert_topic_in_DB(context); // while inserting, set max_allowed_latency = incoming_latency
 						context->mqtt_cc.latChange = false;
 						// create thread to message client

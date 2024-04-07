@@ -268,7 +268,8 @@ void insert_topic_in_DB(struct mosquitto *context){
     log__printf(NULL, MOSQ_LOG_DEBUG, "Success: Added topic, latency_req, and max_allowed_latency to DB\n");
 
     log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
-	pthread_attr_init(&mess_client_attr);
+	
+    pthread_attr_init(&mess_client_attr);
 	pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
 	log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
 	pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
@@ -352,7 +353,6 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     if (oldMaxAllowed != newMaxAllowed){
         // if there is a change in the max_allowed_latency, notify client
         // some time for the client to finish their operation
-        sleep(8);
         pthread_attr_init(&mess_client_attr);
 		pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
 		pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);

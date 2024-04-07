@@ -3,7 +3,8 @@ from typing import Dict
 import copy
 class Processing_Unit:
     _OBSERVATION_PERIOD = 60
-    _ENERGY_PER_EXECUTION = 10
+    # same as publisher simulation start scripts (run_devXX.sh) 
+    _ENERGY_PER_EXECUTION = 0.1
 
     def __init__(self, macAddr:str, capacity:float, executions):
         self._mac = macAddr
