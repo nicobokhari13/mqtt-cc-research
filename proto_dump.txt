@@ -1,0 +1,130 @@
+(dev) devnico@carbon:~/repos/research/mqtt_cc_research$ bash run_prototype.sh
+instance is None, creating new one
+Device File = /home/devnico/repos/research/mqtt_cc_research/prototype/src/devs/devices.csv
+Sim Value = sim
+Starting
+in misc loop
+waiting for command
+got_message = <Future pending>
+set continue
+waiting for time window
+set continue
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in misc loop
+in on_message
+waiting for event
+-------------
+<asyncio.locks.Event object at 0x75d0ebc6bdc0 [set]>
+in new subs handler
+payload = sensor/humidity
+Task: ('sensor/airquality', 50)
+d8:3a:dd:90:ee:38, 95.0, 0
+publishings []
+d8:3a:dd:90:ee:62, 100.0, 0
+publishings []
+checking energy increase on d8:3a:dd:90:ee:38 from adding 50
+change in executions: 1
+Energy increased on d8:3a:dd:90:ee:38 0.1
+d8:3a:dd:90:ee:38's energy after increase = 0.1
+ratio of new Energy / current Battery = 0.0010526315789473684
+Emin was None, now Emin = 0.0010526315789473684
+bestMac = d8:3a:dd:90:ee:38
+checking energy increase on d8:3a:dd:90:ee:62 from adding 50
+change in executions: 1
+Energy increased on d8:3a:dd:90:ee:62 0.1
+d8:3a:dd:90:ee:62's energy after increase = 0.1
+ratio of new Energy / current Battery = 0.001
+Emin was 0.0010526315789473684
+Now Emin = 0.001
+bestMac = d8:3a:dd:90:ee:62
+d8:3a:dd:90:ee:62
+{'d8:3a:dd:90:ee:38': <algo_utils.Processing_Unit object at 0x75d0ebab8ee0>, 'd8:3a:dd:90:ee:62': <algo_utils.Processing_Unit object at 0x75d0ebab8f10>}
+{}
+adding topic sensor/airquality and frequency 50
+{'sensor/airquality': 50}
+d8:3a:dd:90:ee:62 used to execute at 0
+d8:3a:dd:90:ee:62 now executes at 1.0
+mac: d8:3a:dd:90:ee:38, device {}
+------
+mac: d8:3a:dd:90:ee:62, device {'sensor/airquality': 50}
+------
+Task: ('sensor/humidity', 30)
+d8:3a:dd:90:ee:38, 95.0, 0
+publishings []
+d8:3a:dd:90:ee:62, 100.0, 1
+publishings []
+checking energy increase on d8:3a:dd:90:ee:38 from adding 30
+change in executions: 1
+Energy increased on d8:3a:dd:90:ee:38 0.1
+d8:3a:dd:90:ee:38's energy after increase = 0.1
+ratio of new Energy / current Battery = 0.0010526315789473684
+Emin was None, now Emin = 0.0010526315789473684
+bestMac = d8:3a:dd:90:ee:38
+checking energy increase on d8:3a:dd:90:ee:62 from adding 30
+change in executions: 2.0
+Energy increased on d8:3a:dd:90:ee:62 0.2
+d8:3a:dd:90:ee:62's energy after increase = 0.30000000000000004
+ratio of new Energy / current Battery = 0.0030000000000000005
+bestMac = d8:3a:dd:90:ee:38
+d8:3a:dd:90:ee:38
+{'d8:3a:dd:90:ee:38': <algo_utils.Processing_Unit object at 0x75d0ebab8ee0>, 'd8:3a:dd:90:ee:62': <algo_utils.Processing_Unit object at 0x75d0ebab8f10>}
+{}
+adding topic sensor/humidity and frequency 30
+{'sensor/humidity': 30}
+d8:3a:dd:90:ee:38 used to execute at 0
+d8:3a:dd:90:ee:38 now executes at 0.9999999999999999
+mac: d8:3a:dd:90:ee:38, device {'sensor/humidity': 30}
+------
+mac: d8:3a:dd:90:ee:62, device {'sensor/airquality': 50}
+------
+Task: ('sensor/temperature', 10)
+d8:3a:dd:90:ee:38, 95.0, 0.9999999999999999
+publishings []
+d8:3a:dd:90:ee:62, 100.0, 1
+publishings []
+checking energy increase on d8:3a:dd:90:ee:38 from adding 10
+change in executions: 6.0
+Energy increased on d8:3a:dd:90:ee:38 0.6000000000000001
+d8:3a:dd:90:ee:38's energy after increase = 0.7000000000000001
+ratio of new Energy / current Battery = 0.00736842105263158
+Emin was None, now Emin = 0.00736842105263158
+bestMac = d8:3a:dd:90:ee:38
+checking energy increase on d8:3a:dd:90:ee:62 from adding 10
+change in executions: 6.0
+Energy increased on d8:3a:dd:90:ee:62 0.6000000000000001
+d8:3a:dd:90:ee:62's energy after increase = 0.7000000000000001
+ratio of new Energy / current Battery = 0.007000000000000001
+Emin was 0.00736842105263158
+Now Emin = 0.007000000000000001
+bestMac = d8:3a:dd:90:ee:62
+d8:3a:dd:90:ee:62
+{'d8:3a:dd:90:ee:38': <algo_utils.Processing_Unit object at 0x75d0ebab8ee0>, 'd8:3a:dd:90:ee:62': <algo_utils.Processing_Unit object at 0x75d0ebab8f10>}
+{'sensor/airquality': 50}
+adding topic sensor/temperature and frequency 10
+{'sensor/airquality': 50, 'sensor/temperature': 10}
+d8:3a:dd:90:ee:62 used to execute at 1.0
+d8:3a:dd:90:ee:62 now executes at 7.000000000000001
+assignment string = {"sensor/humidity": 30}
+In update PUBLISH table: mac = d8:3a:dd:90:ee:38
+update_values: [('d8:3a:dd:90:ee:38', 'sensor/humidity')]
+assignment string = {"sensor/airquality": 50, "sensor/temperature": 10}
+In update PUBLISH table: mac = d8:3a:dd:90:ee:62
+update_values: [('d8:3a:dd:90:ee:62', 'sensor/airquality'), ('d8:3a:dd:90:ee:62', 'sensor/temperature')]
+generated final command = {'d8:3a:dd:90:ee:38': '{"sensor/humidity": 30}', 'd8:3a:dd:90:ee:62': '{"sensor/airquality": 50, "sensor/temperature": 10}'}
+before setting assignments
+after setting assignments
+cleared continue, got command {'d8:3a:dd:90:ee:38': '{"sensor/humidity": 30}', 'd8:3a:dd:90:ee:62': '{"sensor/airquality": 50, "sensor/temperature": 10}'}
+in on_message
+waiting for event
+-------------
+<asyncio.locks.Event object at 0x75d0ebc6bdc0 [unset]>
+/home/devnico/repos/research/mqtt_cc_research/prototype/src/client/proto_asyncio.py:91: RuntimeWarning: coroutine 'Event.wait' was never awaited
+  self.continue_next_msg.wait()
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback

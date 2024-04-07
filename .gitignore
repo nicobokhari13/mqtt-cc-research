@@ -44,6 +44,5 @@ prototype/dev/
 # IDE Ignores
 .vscode/
 .vscode/settings.json
-ToDo.md
 temp/test
 sqlite/mqttcc.db-journal
