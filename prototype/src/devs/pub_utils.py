@@ -1,7 +1,7 @@
-import time
 import paho.mqtt.client as mqtt
-import json
 from typing import Dict
+import psutil
+import subprocess
 
 class PublisherUtils:
     _instance = None
@@ -19,7 +19,6 @@ class PublisherUtils:
         self._end_round = None # 
         self._publishes = None
         self._current_executions = 0
-        
 
     def setParameters(self, username, password, Mac_addr, start_battery, in_sim, energy_per_execution):
         # Set Attributes to Parameters
@@ -37,12 +36,26 @@ class PublisherUtils:
 
     def decreaseSimEnergy(self):
         energyUsed = self._current_executions * self._ENERGY_PER_EXECUTION
-        if self._battery > 0 and self._battery > energyUsed: 
+        if self._battery != 0 and self._battery > energyUsed: 
             self._battery = self._battery - energyUsed
             return True
         else: 
             self._battery = 0
             return False
+        
+    def getExperimentEnergy(self):
+        self._battery = psutil.sensors_battery().percent
 
     def saveNewExecutions(self, newExecutions):
         self._current_executions = newExecutions
+    
+    def get_cpu_utilization(self):
+        return psutil.cpu_percent(interval=5)
+    
+    def get_memory_utilization(self):
+        return psutil.virtual_memory().percent
+    
+    def get_cpu_temperature(self):
+        result = subprocess.run(["vcgencmd", "measure_temp"], capture_output=True, text=True)
+        temperature = result.stdout.strip().split("=")[1]
+        return temperature
