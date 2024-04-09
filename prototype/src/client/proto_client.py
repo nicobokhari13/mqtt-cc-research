@@ -4,7 +4,7 @@ from proto_utils import ProtoUtils
 import sys
 import csv
 from proto_asyncio import run_async_client
-import status_handler
+from algo_utils import Devices
 from datetime import datetime
 
 # USERNAME = "prototype"
@@ -50,6 +50,8 @@ def main():
     devicesFile = sys.argv[1]
     in_sim = sys.argv[2]
     restart_window = sys.argv[3]
+    energy_per_execution = sys.argv[4]
+    threshold = sys.argv[5]
     
     print(f"Device File = {devicesFile}")
     print(f"Sim Value = {in_sim}")
@@ -77,6 +79,9 @@ def main():
     database.closeDB()
     # create it once
     utils = ProtoUtils()
+    devices = Devices()
+    devices.addEnergyPerExecution(energy_per_execution)
+    devices.addConcurrencyThreshold(threshold)
     utils._timeWindow = int(restart_window)
     if in_sim == "sim":
         utils._in_sim = True
@@ -85,6 +90,7 @@ def main():
     else: 
         print("Error with determining experiment type, exiting now")
         sys.exit()
+    print(f"in_sim {utils._in_sim}")
     run_async_client()
 
 if __name__ == "__main__":

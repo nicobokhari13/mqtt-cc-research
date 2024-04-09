@@ -4,7 +4,6 @@ import copy
 class Processing_Unit:
     _OBSERVATION_PERIOD = 60
     # same as publisher simulation start scripts (run_devXX.sh) 
-    _ENERGY_PER_EXECUTION = 0.1
 
     def __init__(self, macAddr:str, capacity:float, executions):
         self._mac = macAddr
@@ -15,7 +14,7 @@ class Processing_Unit:
         self._freq_min = None
 
     def currentEnergy(self):
-        return self._numExecutions * Processing_Unit._ENERGY_PER_EXECUTION
+        return self._numExecutions * Devices._instance._ENERGY_PER_EXECUTION
 
     def resetMinimum(self):
         if self._freqs:
@@ -27,7 +26,7 @@ class Processing_Unit:
         numExecutions = 0
         # threshold for execution interval MAY CHANGE
         # example: 28 <-> 30 <-> 32
-        threshold = 3
+        threshold = Devices._instance._CONCURRENCY_THRESHOLD
         # list that will hold removals
         removes = list()
         # copy of freqs
@@ -71,7 +70,7 @@ class Processing_Unit:
         newExecutions = self.calculateExecutions(newTask = task)
         changeInExecutions = newExecutions - self._numExecutions
         print(f"change in executions: {changeInExecutions}")
-        return changeInExecutions * self._ENERGY_PER_EXECUTION
+        return changeInExecutions * Devices._instance._ENERGY_PER_EXECUTION
     
     def addAssignment(self, topic:str, task, isNew = None):
         self._assignments[topic] = task
@@ -110,6 +109,13 @@ class Devices:
 
     def resetUnits(self):
         self._units.clear()
+    
+    def addEnergyPerExecution(self, energy):
+        self._ENERGY_PER_EXECUTION = float(energy)
+
+    def addConcurrencyThreshold(self, threshold):
+        self._CONCURRENCY_THRESHOLD = int(threshold)
+        
 
     def addAssignmentsToCommand(self, deviceMac:str, taskList:str):
         self._generated_cmd[deviceMac] = taskList

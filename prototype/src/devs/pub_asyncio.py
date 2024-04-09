@@ -120,6 +120,7 @@ class AsyncMqtt:
     
     async def separateExecutionsAndAssignments(self, command:str):
         # find the comma
+        print(command)
         index = len(command) - 1
         while index >= 0:
             if command[index] == ",":

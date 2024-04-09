@@ -129,9 +129,16 @@ class AsyncMqtt:
     
     async def appendExecutions(self, command):
         deviceExecutions = algo.getPublisherExecutions()
+        print(deviceExecutions)
         for device in deviceExecutions:
+            print(f"mac {device[0]} and executions = {device[1]}")
+            print(type(device[0]))
+            print(type(device[1]))
             if device[0] in command.keys():
-                command[device[0]] = f"{command[device[0]]},{device[1]}" # append the device executions to the string with comma
+                print("appending execution")
+                command[device[0]] = str(command[device[0]]) + "," + str(device[1]) 
+                # append the device executions to the string with comma
+        print(command)
         return command 
     
 
@@ -151,7 +158,7 @@ class AsyncMqtt:
                 mapAssignments = algo.generateAssignments(changedTopic=changedLatTopic[0])
             database.openDB()
             newTopics = database.findAddedTopics()
-            if newTopics:
+            if len(newTopics) > 0:
                 print(newTopics)
                 database.resetAddedAndChangedLatencyTopics(newTopics)
                 print("regen assignments bc new topics")
@@ -213,6 +220,8 @@ class AsyncMqtt:
                 algo.resetPublishingsAndDeviceExecutions()
                 # run algo again
                 mapAssignments = algo.generateAssignments()
+                if utils._in_sim: 
+                    mapAssignments = await self.appendExecutions(mapAssignments)
                 # send command
                 await self.sendCommands(mapAssignments)
             self.got_message = None
