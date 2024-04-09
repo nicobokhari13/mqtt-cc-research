@@ -49,6 +49,7 @@ def main():
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     devicesFile = sys.argv[1]
     in_sim = sys.argv[2]
+    restart_window = sys.argv[3]
     
     print(f"Device File = {devicesFile}")
     print(f"Sim Value = {in_sim}")
@@ -76,10 +77,7 @@ def main():
     database.closeDB()
     # create it once
     utils = ProtoUtils()
-    # TODO: Add an input parameter in protoutils that says if this is a simulation or experiment
-        # Save boolean value
-        # use boolean value to determine whether to append number of executions to the command message
-        # publishers that are running sim would be able to read the command + num executions, store the executions, and use executions in their calculation
+    utils._timeWindow = int(restart_window)
     if in_sim == "sim":
         utils._in_sim = True
     elif in_sim == "exp": 

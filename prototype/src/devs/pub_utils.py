@@ -24,7 +24,7 @@ class PublisherUtils:
         # Set Attributes to Parameters
         self._USERNAME = username
         self._PASSWORD = password
-        self._timeWindow = 60 # time window where dev sends status, waits for response on command
+        self._timeWindow = 60 # 1 minute = time window where dev sends status, waits for response on command 
         self._deviceMac = Mac_addr # mac address of IoT device 
         self._battery = float(start_battery)
         self._CMD_TOPIC = "sensor/cmd/" + self._deviceMac # where IoT receives command on where to publish

@@ -21,7 +21,7 @@ class ProtoUtils:
         self._LAT_CHANGE_TOPIC = "subs/change" # subscribe
 
         # Other vars 
-        self._timeWindow = 3600 # probably decrease to 15 minutes
+        self._timeWindow = 0 # set in proto_client.py through input argument
         # self._ranAlgo = None
         self._gotStatus = None
         self._gotCmdToSend = None
