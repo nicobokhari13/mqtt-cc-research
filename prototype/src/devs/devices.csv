@@ -1,2 +1,2 @@
 dev01,mqttccd1,100,d8:3a:dd:90:ee:62,sensor/humidity,sensor/temperature,sensor/airquality
-dev02,mqttccd2,95,d8:3a:dd:90:ee:38,sensor/temperature,sensor/airquality,sensor/humidity
+dev02,mqttccd2,100,d8:3a:dd:90:ee:38,sensor/temperature,sensor/airquality,sensor/humidity

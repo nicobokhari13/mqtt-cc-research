@@ -197,7 +197,7 @@ class AsyncMqtt:
 
                 # check if simulation, if so, get the num executions out of the command
                 if utils._IN_SIM:
-                    result = self.separateExecutionsAndAssignments(result)
+                    result = await self.separateExecutionsAndAssignments(result)
                 print(f"command is {result}")
                     # save executions in utils
                 print("changing tasks")
