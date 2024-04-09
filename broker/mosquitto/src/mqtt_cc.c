@@ -149,7 +149,7 @@ void prepare_DB(){
     }
 
     // Create Tables
-    const char *create_table_sql = "CREATE TABLE IF NOT EXISTS subscriptions (subscription TEXT PRIMARY KEY, latency_req TEXT, max_allowed_latency INTEGER);";
+    const char *create_table_sql = "CREATE TABLE IF NOT EXISTS subscriptions (subscription TEXT PRIMARY KEY, latency_req TEXT, max_allowed_latency INTEGER, added INTEGER, lat_change INTEGER);";
     rc = sqlite3_exec(prototype_db.db, create_table_sql, 0, 0, &err_msg);
 	log__printf(NULL, MOSQ_LOG_INFO, "Created Tables");
 
@@ -159,8 +159,8 @@ void prepare_DB(){
     }
     // Statement Commands
     const char *find_existing_topic_cmd = "SELECT * FROM subscriptions WHERE subscription = ?1";
-    const char *insert_new_topic_cmd = "INSERT INTO subscriptions (subscription, latency_req, max_allowed_latency) VALUES (?1, ?2, ?3)";
-    const char *update_latency_req_max_allowed_cmd = "UPDATE subscriptions SET latency_req = ?1, max_allowed_latency = ?2 WHERE subscription = ?3";
+    const char *insert_new_topic_cmd = "INSERT INTO subscriptions (subscription, latency_req, max_allowed_latency, added, lat_change) VALUES (?1, ?2, ?3, ?4, ?5)";
+    const char *update_latency_req_max_allowed_cmd = "UPDATE subscriptions SET latency_req = ?1, max_allowed_latency = ?2, added = ?3, lat_change = ?4 WHERE subscription = ?5";
 
     // Prepare Statements
 
@@ -241,14 +241,16 @@ void insert_topic_in_DB(struct mosquitto *context){
 	pthread_attr_t mess_client_attr;
     // create latency column value
     char *latencyJsonString = create_latency_str(context->mqtt_cc.incoming_sub_clientid, context->mqtt_cc.incoming_lat_qos);
-
+    //(subscription TEXT PRIMARY KEY, latency_req TEXT, max_allowed_latency INTEGER, added INTEGER, lat_change INTEGER)
     //bind topic and latency to prepared statement 
     sqlite3_bind_text(prototype_db.insert_new_topic, 1, context->mqtt_cc.incoming_topic, -1, SQLITE_STATIC);
     sqlite3_bind_text(prototype_db.insert_new_topic, 2, latencyJsonString, -1, SQLITE_STATIC);
     sqlite3_bind_int(prototype_db.insert_new_topic, 3, context->mqtt_cc.incoming_lat_qos);
+    sqlite3_bind_int(prototype_db.insert_new_topic, 4, 1);
+    sqlite3_bind_int(prototype_db.insert_new_topic, 5, 0);
     //execute statement
     rc = sqlite3_step(prototype_db.insert_new_topic);
-
+	sleep(2);
     //check for error 
     if (rc != SQLITE_DONE) {
         log__printf(NULL, MOSQ_LOG_ERR, "Failed to execute statement: %s\n", sqlite3_errmsg(prototype_db.db));
@@ -267,12 +269,11 @@ void insert_topic_in_DB(struct mosquitto *context){
     log__printf(NULL, MOSQ_LOG_DEBUG, "Success: Added topic, latency_req, and max_allowed_latency to DB\n");
 
     log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
-	sleep(8);
-    pthread_attr_init(&mess_client_attr);
-	pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
-	log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
-	pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
-	pthread_attr_destroy(&mess_client_attr);
+    // pthread_attr_init(&mess_client_attr);
+	// pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
+	// log__printf(NULL, MOSQ_LOG_DEBUG, "\ In has_lat_qos, topic = %s", context->mqtt_cc.incoming_topic);
+	// pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
+	// pthread_attr_destroy(&mess_client_attr);
 }
 
 int calc_new_max_latency(struct cJSON *latencies){
@@ -348,15 +349,16 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     cJSON_AddNumberToObject(db_Value, context->mqtt_cc.incoming_sub_clientid, context->mqtt_cc.incoming_lat_qos);
 
     int newMaxAllowed = calc_new_max_latency(db_Value);
-
+    int lat_changed = 0;
     if (oldMaxAllowed != newMaxAllowed){
         sleep(8);
+        lat_changed = 1;
         // if there is a change in the max_allowed_latency, notify client
         // some time for the client to finish their operation
-        pthread_attr_init(&mess_client_attr);
-		pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
-		pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
-		pthread_attr_destroy(&mess_client_attr);
+        // pthread_attr_init(&mess_client_attr);
+		// pthread_attr_setdetachstate(&mess_client_attr, PTHREAD_CREATE_DETACHED);
+		// pthread_create(&mess_client, &mess_client_attr, messageClient, (void*)context);
+		// pthread_attr_destroy(&mess_client_attr);
     }
 
     // convert new latency value back into string
@@ -366,14 +368,16 @@ void update_lat_req_max_allowed(struct mosquitto *context){
     log__printf(NULL, MOSQ_LOG_DEBUG, "new max allowed latency: %d\n", newMaxAllowed);
 
     // bind topic and new latency value to update statement
-
+    //(subscription TEXT PRIMARY KEY, latency_req TEXT, max_allowed_latency INTEGER, added INTEGER, lat_change INTEGER)
     sqlite3_bind_text(prototype_db.update_latency_req_max_allowed, 1, newLatencyValue, -1, SQLITE_STATIC);
     sqlite3_bind_int(prototype_db.update_latency_req_max_allowed, 2, newMaxAllowed);
-    sqlite3_bind_text(prototype_db.update_latency_req_max_allowed, 3, context->mqtt_cc.incoming_topic, -1, SQLITE_STATIC);
+    sqlite3_bind_text(prototype_db.update_latency_req_max_allowed, 5, context->mqtt_cc.incoming_topic, -1, SQLITE_STATIC);
+    sqlite3_bind_int(prototype_db.update_latency_req_max_allowed, 3, 0);
+    sqlite3_bind_int(prototype_db.update_latency_req_max_allowed, 4, lat_changed);
     
     // step update statement    
     rc = sqlite3_step(prototype_db.update_latency_req_max_allowed);
-
+    sleep(2);
     // check if statement is DONE
     if (rc != SQLITE_DONE) {
         log__printf(NULL, MOSQ_LOG_ERR, "Failed to execute statement: %s\n", sqlite3_errmsg(prototype_db.db));

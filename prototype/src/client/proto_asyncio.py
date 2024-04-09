@@ -1,4 +1,5 @@
 import asyncio
+import threading
 import socket
 import sys 
 import paho.mqtt.client as mqtt
@@ -48,7 +49,7 @@ class AsyncioHelper:
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
                 print("in misc loop")
-                await asyncio.sleep(5)                 
+                await asyncio.sleep(15)                 
             except asyncio.CancelledError:
                 break
 
@@ -83,75 +84,87 @@ class AsyncMqtt:
         topic = msg.topic
         payload = msg.payload.decode()
         print("in on_message")
-        print("waiting for event")
         print("-------------")
-        print(self.continue_next_msg)
 
-        while not self.continue_next_msg.is_set():
-            self.continue_next_msg.wait()
-
+        # use thread instead
         if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
             print("in status handler")
             status.handle_status_msg(payload)
 
-        if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
-            print("in will handler")
-            will.updateDB(payload)
-            mapAssignments = algo.generateAssignments()
-            self.got_message.set_result(mapAssignments)
+        # if mqtt.topic_matches_sub(utils._SUBS_WILL_TOPIC, topic):
+        #     print("in will handler")
+        #     will.updateDB(payload)
+        #     mapAssignments = algo.generateAssignments()
+        #     self.got_message.set_result(mapAssignments)
 
-        if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
-            print("in new subs handler")
-            print(f"payload = {payload}")
-            # if there is a new topic, generate the new assignments
-            mapAssignments = algo.generateAssignments()
-            # resolve gotCmdToSend with the assignments
-            print("before setting assignments")
-            self.got_message.set_result(mapAssignments)
-            print("after setting assignments")
+        # if mqtt.topic_matches_sub(utils._NEW_SUBS_TOPIC, topic):
+        #     print("in new subs handler")
+        #     print(f"payload = {payload}")
+        #     # if there is a new topic, generate the new assignments
+        #     mapAssignments = algo.generateAssignments()
+        #     # resolve gotCmdToSend with the assignments
+        #     print("before setting assignments")
+        #     self.got_message.set_result(mapAssignments)
+        #     print("after setting assignments")
 
-        if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
-            # the message payload holds the topic with the changed max_allowed_latency
-            # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
-            print("in lat change handler")
-            print(f"payload = {payload}")
-            mapAssignments = algo.generateAssignments(changedTopic=payload)
-            print("before setting assignments")
-            self.got_message.set_result(mapAssignments)
-            print("after setting assignments")
-        self.continue_next_msg.set()
+        # if mqtt.topic_matches_sub(utils._LAT_CHANGE_TOPIC, topic):
+        #     # the message payload holds the topic with the changed max_allowed_latency
+        #     # algo handler should still generateAssignemnts, must handle case where max allowed latency of topic changed
+        #     print("in lat change handler")
+        #     print(f"payload = {payload}")
+        #     mapAssignments = algo.generateAssignments(changedTopic=payload)
+        #     print("before setting assignments")
+        #     self.got_message.set_result(mapAssignments)
+        #     print("after setting assignments")
 
     def on_disconnect(self, client, userdata, rc):
         self.disconnected.set_result(rc)
 
-    async def waitForCommand(self):
-        print("waiting for command")
-        print(f"got_message = {self.got_message}")
-        self.continue_next_msg.set()
-        print("set continue")
-        # wait for gotCmdToSend to be set from on_message
-        command = await self.got_message
-        self.continue_next_msg.clear()
-        print(f"cleared continue, got command {command}")
-        return command
-
-
     async def waitForTimeWindow(self):
         print("waiting for time window")
-        self.continue_next_msg.set()
-        print("set continue")
         await asyncio.sleep(utils._timeWindow)
-        self.continue_next_msg.clear()
         # if time window is done first, resolve the got cmd to None
         print("ending window")
         return None
     
-    async def appendExecutions(command:dict):
+    async def appendExecutions(self, command):
         deviceExecutions = algo.getPublisherExecutions()
         for device in deviceExecutions:
             if device[0] in command.keys():
-                command[device[0]] = f"{command[device[0]]},{device[1]}" 
-        return command
+                command[device[0]] = f"{command[device[0]]},{device[1]}" # append the device executions to the string with comma
+        return command 
+    
+
+    # Assumption, subscribers don't leave the simulation, only are added
+    async def lookForChange(self):
+        database = db.Database()
+        while True:
+            print("opening database")
+            database.openDB()
+            mapAssignments = None
+            print(self.got_message)
+            changedLatencyTopics = database.findChangedLatencyTopics()
+            for changedLatTopic in changedLatencyTopics:
+                print(changedLatencyTopics)
+                print("topic changed latency, regen assignments")
+                database.resetAddedAndChangedLatencyTopics(changedLatencyTopics)
+                mapAssignments = algo.generateAssignments(changedTopic=changedLatTopic[0])
+            database.openDB()
+            newTopics = database.findAddedTopics()
+            if newTopics:
+                print(newTopics)
+                database.resetAddedAndChangedLatencyTopics(newTopics)
+                print("regen assignments bc new topics")
+                mapAssignments = algo.generateAssignments()
+            if mapAssignments:
+                print("got assignments")
+                print(mapAssignments)
+                print("closing database")
+                return mapAssignments
+            print("closing database")
+            print("going to sleep")
+            await asyncio.sleep(60)    
+
 
     async def main(self):
         # main execution        
@@ -162,7 +175,7 @@ class AsyncMqtt:
         self.client.on_message = self.on_message
         self.client.on_disconnect = self.on_disconnect
         self.got_message = None
-        self.continue_next_msg = asyncio.Event()
+        self.continue_next_msg = threading.Event()
         # set other necessary parameters for the client
 
         self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
@@ -175,27 +188,24 @@ class AsyncMqtt:
 
         while True: #infinite loop
             self.got_message = self.loop.create_future()
-            wait_for_cmd_routine = asyncio.ensure_future(self.waitForCommand())
+            wait_for_cmd_routine = asyncio.ensure_future(self.lookForChange())
             wait_for_window_routine = asyncio.create_task(self.waitForTimeWindow())
-
             done, pending = await asyncio.wait([wait_for_cmd_routine, wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
             if wait_for_cmd_routine in done:
                 result = wait_for_cmd_routine.result()
             elif wait_for_window_routine in done:
                 result = wait_for_window_routine.result()
             print(f"the result of tasks is {result}")
+            print(type(result))
             if result: # if result exists, then result holds the command
                 # cancel what is still pending
                 for task in pending:
                     task.cancel()
-
                 if utils._in_sim:
                 # if this is the simulation, we must append the number of executions for each publisher
                     result = await self.appendExecutions(result)
-
                 await self.sendCommands(result)
                 # utils._gotCmdToSend = None
-                self.got_message = None
             else: # if result is None, then the time Window expired, must run algo again
                 # reset publishings to 0 and executions to 0 
                 for task in pending:
@@ -205,9 +215,7 @@ class AsyncMqtt:
                 mapAssignments = algo.generateAssignments()
                 # send command
                 await self.sendCommands(mapAssignments)
-                self.got_message = None
-            self.continue_next_msg.set()
-            self.continue_next_msg.clear()
+            self.got_message = None
             print("end of loop")
 
 def run_async_client():

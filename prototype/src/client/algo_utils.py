@@ -74,7 +74,6 @@ class Processing_Unit:
         return changeInExecutions * self._ENERGY_PER_EXECUTION
     
     def addAssignment(self, topic:str, task, isNew = None):
-        print(f"adding topic {topic} and frequency {task}")
         self._assignments[topic] = task
         self._freqs.append(task)
         self.resetMinimum()

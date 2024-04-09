@@ -21,7 +21,7 @@ class ProtoUtils:
         self._LAT_CHANGE_TOPIC = "subs/change" # subscribe
 
         # Other vars 
-        self._timeWindow = 3600
+        self._timeWindow = 3600 # probably decrease to 15 minutes
         # self._ranAlgo = None
         self._gotStatus = None
         self._gotCmdToSend = None

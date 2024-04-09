@@ -97,7 +97,8 @@ class AsyncMqtt:
                 "time": current_time,
                 "deviceMac": utils._deviceMac,
                 "battery": utils._battery,
-                "cpu_temperature": utils.get_cpu_temperature(),
+                #"cpu_temperature": utils.get_cpu_temperature(),
+                "cpu_temperature": "None",
                 "cpu_utilization_percentage": utils.get_cpu_utilization(),
                 "memory_utilization_percentage": utils.get_memory_utilization()
             }
@@ -111,21 +112,24 @@ class AsyncMqtt:
             self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)
 
     async def publish_to_topic(self, sense_topic, freq):
-        msg = "data"
+        msg = "1"
         while True:
             self.client.publish(topic = sense_topic, payload = msg)
             await asyncio.sleep(freq)
             print(f"finished publishing on {sense_topic} on freq {freq}")
     
     async def separateExecutionsAndAssignments(self, command:str):
+        # find the comma
         index = len(command) - 1
         while index >= 0:
-            if command[index] == "}":
+            if command[index] == ",":
                 break
             index -= 1
-        assignments = command[:index + 1]
+        assignments = command[:index]
         executions = command[index + 1:]
-        utils.saveNewExecutions(int(executions))
+        print(f"assignments {assignments}")
+        print(f"executing {executions} every minute")
+        utils.saveNewExecutions(executions)
         return assignments
 
     async def main(self):
@@ -150,10 +154,8 @@ class AsyncMqtt:
 
             # if nothing to publish yet (at start up)
             print("waiting for publish")
-
             # cmd = await utils._got_cmd # wait for command to come
             cmd = await self.got_message # wait for command to come
-
             # if in the sim, get separate the executions 
             if utils._IN_SIM:
                 cmd = await self.separateExecutionsAndAssignments(cmd)

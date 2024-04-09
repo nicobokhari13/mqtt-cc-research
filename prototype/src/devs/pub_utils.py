@@ -29,7 +29,7 @@ class PublisherUtils:
         self._battery = float(start_battery)
         self._CMD_TOPIC = "sensor/cmd/" + self._deviceMac # where IoT receives command on where to publish
         self._IN_SIM = in_sim
-        self._ENERGY_PER_EXECUTION = energy_per_execution
+        self._ENERGY_PER_EXECUTION = float(energy_per_execution)
 
     def setPublishing(self, pub_cmd:dict):
         self._publishes = pub_cmd
@@ -47,7 +47,7 @@ class PublisherUtils:
         self._battery = psutil.sensors_battery().percent
 
     def saveNewExecutions(self, newExecutions):
-        self._current_executions = newExecutions
+        self._current_executions = float(newExecutions)
     
     def get_cpu_utilization(self):
         return psutil.cpu_percent(interval=5)

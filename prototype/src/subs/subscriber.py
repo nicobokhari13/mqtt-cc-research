@@ -26,7 +26,7 @@ def subscribeToTopics(client, topicList:list):
         print(f"Subscribing to {topic}")
         client.subscribe(topic)
         #print("sleeping now")
-        #time.sleep(16)
+        #time.sleep(8)
 # Executed when script is ran
 
 # python3 subscriber.py <username> <password>
