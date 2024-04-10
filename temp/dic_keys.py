@@ -1,5 +1,9 @@
 assignments = {"topic":43, "another/topic":34}
 print(type(assignments))
 print(assignments)
-print(type(assignments.keys))
-print(assignments.keys())
+keys = list(assignments.keys())
+for i in range(len(keys)):
+    print(i)
+    print(keys[i])
+anotherVar = list(assignments.keys())
+print(anotherVar)

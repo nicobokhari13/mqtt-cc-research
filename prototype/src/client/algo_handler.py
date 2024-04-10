@@ -28,7 +28,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
     Enew = None
     Eratio = None
     topicsWithNoPublishers = db.topicsWithNoPublishers() # list of tuples with (topic, max_allowed_latency)
-    
+    print(topicsWithNoPublishers)
     # get all topics where publish = 0 for all capable devices
 
     # for each topic with none publishing
@@ -52,13 +52,11 @@ def generateAssignments(changedTopic = None, subLeft = None):
 
             # create processing unit at key = mac
             # add device info as a Processing_Unit in Devices singleton
-            print(f"{mac}, {battery}, {num_exec}")
             if mac not in publishers._units.keys():
                 publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
 
             # add publishings to the device with macAddr = mac, and set device frequencies
             # add current device publishing info to assignments (topics that the device currently publishes to)
-            print(f"publishings {devicePublishings}")
 
             # if there are topi cs the device already publishes to
             if devicePublishings:
@@ -72,28 +70,20 @@ def generateAssignments(changedTopic = None, subLeft = None):
         # for each device in Devices singleton
         for macAddress, device in publishers._units.items():
             # determine the energy incrase for adding the topic's frequency to the device
-            print(f"checking energy increase on {macAddress} from adding {freq}")
             Einc = device.energyIncrease(freq)
-            print(f"Energy increased on {macAddress} {Einc}")
 
             # the device's new energy level after addition of the topic
             Enew = device.currentEnergy() + Einc
-            print(f"{macAddress}'s energy after increase = {Enew}")
             # the device's new energy level divided by its available battery
             Eratio = Enew / device._battery
-            print(f"ratio of new Energy / current Battery = {Eratio}")
             # if the new energy level is less than the battery, and 
             # the new energy level's ratio to the battery is smaller than the min 
             if not Emin:
                 bestMac = macAddress
                 Emin = Eratio
-                print(f"Emin was None, now Emin = {Emin}")
             elif (Enew <= device._battery and Eratio < Emin):
                 bestMac = macAddress
-                print(f"Emin was {Emin}")
                 Emin = Eratio
-                print(f"Now Emin = {Emin}")
-            print(f"bestMac = {bestMac}")
             
         # if bestMac != None:
             # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)
@@ -102,9 +92,9 @@ def generateAssignments(changedTopic = None, subLeft = None):
         if bestMac != None:
                 # adding the assignment adds the task's frequency to the publishings variable
                 print(publishers._units[bestMac]._mac)
-                print(publishers._units)
                 print(publishers._units[bestMac]._assignments)
                 publishers._units[bestMac].addAssignment(topic, freq)
+                print(publishers._units[bestMac]._assignments)
                 # we know bestMac uses Emin energy, so reverse operations to get Einc
                 Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
                 changeInExecutions = Einc / Processing_Unit._ENERGY_PER_EXECUTION
@@ -139,4 +129,12 @@ def generateAssignments(changedTopic = None, subLeft = None):
     print(f"generated final command = {publishers._generated_cmd}")
     # while the publishers' unit information is reset, the assignments are preserved in generated_cmd
     return publishers._generated_cmd
+
+def getPublisherExecutions():
+    db = Database()
+    db.openDB()
+    rows = db.getAllDeviceExecutions() # list of tuples (deviceMac, executions)
+    db.closeDB()       
+    return rows 
+
 

@@ -1,10 +1,10 @@
 import paho.mqtt.client as mqtt
 import proto_db as db
-import proto_utils
+from proto_utils import ProtoUtils
 import sys
 import csv
 from proto_asyncio import run_async_client
-import status_handler
+from algo_utils import Devices
 from datetime import datetime
 
 # USERNAME = "prototype"
@@ -48,6 +48,14 @@ from datetime import datetime
 def main():
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     devicesFile = sys.argv[1]
+    in_sim = sys.argv[2]
+    restart_window = sys.argv[3]
+    energy_per_execution = sys.argv[4]
+    threshold = sys.argv[5]
+    
+    print(f"Device File = {devicesFile}")
+    print(f"Sim Value = {in_sim}")
+    
     database = db.Database()
     database.openDB()
     database.createDeviceTable()
@@ -64,13 +72,25 @@ def main():
         startBattery = rows[i][2]
         mac = rows[i][3]
         database.addDevice(MAC_ADDR=mac, BATTERY=startBattery)
-        status_handler.logPublisherBattery(mac, startBattery, current_time)
+        #status_handler.logPublisherBattery(mac, startBattery, current_time)
         topicList = rows[i][4:len(rows[i])] # rest of rows are the topics
         for topic in topicList:
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)
     database.closeDB()
     # create it once
-    utils = proto_utils.ProtoUtils()
+    utils = ProtoUtils()
+    devices = Devices()
+    devices.addEnergyPerExecution(energy_per_execution)
+    devices.addConcurrencyThreshold(threshold)
+    utils._timeWindow = int(restart_window)
+    if in_sim == "sim":
+        utils._in_sim = True
+    elif in_sim == "exp": 
+        utils._in_sim = False
+    else: 
+        print("Error with determining experiment type, exiting now")
+        sys.exit()
+    print(f"in_sim {utils._in_sim}")
     run_async_client()
 
 if __name__ == "__main__":
