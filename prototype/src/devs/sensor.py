@@ -24,7 +24,7 @@ def main():
         # topic list delimited by commas, no spaces
     # create single instance of pub_utils with cmd line parameters
     utils = pub_utils.PublisherUtils()
-    utils.setParameters(username=USERNAME, password=PASSWORD,Mac_addr=MacAddr, start_battery=battery, in_sim=simValue, energy_per_execution=energy)
+    utils.setParameters(Mac_addr=MacAddr, start_battery=battery, in_sim=simValue, energy_per_execution=energy)
     # move execution to pub_asyncio
     run_async_publisher()
 
