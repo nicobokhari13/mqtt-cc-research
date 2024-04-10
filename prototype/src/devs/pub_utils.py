@@ -20,10 +20,10 @@ class PublisherUtils:
         self._publishes = None
         self._current_executions = 0
 
-    def setParameters(self, username, password, Mac_addr, start_battery, in_sim, energy_per_execution):
+    def setParameters(self,Mac_addr, start_battery, in_sim, energy_per_execution):
         # Set Attributes to Parameters
-        self._USERNAME = username
-        self._PASSWORD = password
+        #self._USERNAME = username
+        #self._PASSWORD = password
         self._timeWindow = 60 # 1 minute = time window where dev sends status, waits for response on command 
         self._deviceMac = Mac_addr # mac address of IoT device 
         self._battery = float(start_battery)
