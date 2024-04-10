@@ -1,0 +1,5 @@
+- publishers must publish on all topics in their capability
+- they receive a command with the max allowed latency for their topic
+- must send new command if new update to lat qos
+- publishers still send status
+- if there's an added subscription, send command to all publishers capable of publishing to it (algorithm)

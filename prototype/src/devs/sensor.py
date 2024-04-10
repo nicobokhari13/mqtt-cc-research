@@ -9,17 +9,17 @@ def main():
     # extract input parameters
     if(sys.argv[1] == "sim"):
         #print("Using default credentials and topics for subscriber")
-        USERNAME = sys.argv[2]
-        PASSWORD = sys.argv[3]
-        battery = sys.argv[4]
-        MacAddr = sys.argv[5]
-        energy = sys.argv[6]
+        #USERNAME = sys.argv[2]
+        #PASSWORD = sys.argv[3]
+        MacAddr = sys.argv[2]
+        battery = sys.argv[3]
+        energy = sys.argv[4]
         simValue = True
     else:
-        USERNAME = sys.argv[1]
-        PASSWORD = sys.argv[2]
+        #USERNAME = sys.argv[1]
+        #PASSWORD = sys.argv[2]
         battery = psutil.sensors_battery().percent
-        MacAddr = sys.argv[3]
+        MacAddr = sys.argv[2]
         simValue = False
         # topic list delimited by commas, no spaces
     # create single instance of pub_utils with cmd line parameters
