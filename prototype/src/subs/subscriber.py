@@ -32,23 +32,18 @@ def subscribeToTopics(client, topicList:list):
 # python3 subscriber.py <username> <password>
 def main():
     subbed_topics = []
-    if(sys.argv[1] == "default"):
-        #print("Using default credentials and topics for subscriber")
-        USERNAME = "sub01"
-        PASSWORD = "mqttcc01"
-        subbed_topics = ["sensor/temperature%latency%80", "sensor/airquality%latency%65"]
-    else:
-        USERNAME = sys.argv[1]
-        PASSWORD = sys.argv[2]
+
+        #USERNAME = sys.argv[1]
+        #PASSWORD = sys.argv[2]
         # topic list delimited by commas, no spaces
-        subbed_topics = sys.argv[3].split(",") # list of strings 
+    subbed_topics = sys.argv[1].split(",") # list of strings 
     # create MQTT Client
     client = mqtt.Client()
     # Set Paho API functions to our defined functions
     client.on_connect = on_connect
     client.on_message = on_message
     # Set username and password 
-    client.username_pw_set(username=USERNAME, password=PASSWORD)
+    #client.username_pw_set(username=USERNAME, password=PASSWORD)
     will_data = {
         "clientid":USERNAME, 
         "topics": subbed_topics

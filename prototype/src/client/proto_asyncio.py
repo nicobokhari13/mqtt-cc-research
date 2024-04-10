@@ -185,7 +185,7 @@ class AsyncMqtt:
         self.continue_next_msg = threading.Event()
         # set other necessary parameters for the client
 
-        self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
+        #self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
 
         aioh = AsyncioHelper(self.loop, self.client)
 
