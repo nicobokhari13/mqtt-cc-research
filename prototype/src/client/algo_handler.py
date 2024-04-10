@@ -120,10 +120,6 @@ def generateAssignments(changedTopic = None, subLeft = None):
             # Devices.addAssignmentsToCommand(deviceMac = device._mac, taskList = assignmentString)
     for macAddress, device in publishers._units.items():
         if device._assignments:
-            # TODO: Append the number of executions to the end of the command 
-                # so the publisher knows how much energy to decrease by if running the sim 
-                # we are assuming the energy of one execution is constant
-                # thus, more executions = more energy used
             assignmentString = json.dumps(device._assignments)
             print(f"assignment string = {assignmentString}")
             publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
