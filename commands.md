@@ -1,0 +1,12 @@
+# Frequently Ran Commands
+- To delete all *.o files
+  - `find . -type f -name '*.o' -delete`
+- Find mosquitto pid and kill process
+  - `ps aux | grep mosquitto`
+- Simulated Publishers
+  - `python3 sensor.py sim dev01 mqttccd1 100 d8:3a:dd:90:ee:62 0.1`
+  - `python3 sensor.py sim dev02 mqttccd2 100 d8:3a:dd:90:ee:38 0.1`
+- Simulated Subscribers
+  - `python3 subscriber.py sub01 mqttcc01 sensor/temperature%latency%10,sensor/humidity%latency%30,sensor/airquality%latency%50`
+  - `python3 subscriber.py sub02 mqttcc02 sensor/temperature%latency%28,sensor/humidity%latency%45`
+  - `python3 subscriber.py sub03,mqttcc03,sensor/humidity%latency%12,sensor/airquality%latency%20`

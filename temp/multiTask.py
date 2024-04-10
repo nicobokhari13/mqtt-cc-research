@@ -13,7 +13,6 @@ class blah:
         #print(f"counter = {self._num}")
         return "Variable resolved"
 
-    # TODO: Create a async function that runs infinitely, publishing to a sense_topic
         # will be cancelled only if a result returns from getting command
     async def task(self, delay):
         while True:

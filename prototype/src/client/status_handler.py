@@ -1,28 +1,32 @@
 import paho.mqtt.client as mqtt
 import proto_db as db
+from proto_utils import ProtoUtils
 import json
 import csv
+
+utils = ProtoUtils()
 
 def handle_status_msg(msg:str):
     database = db.Database()
     database.openDB()
-    # example status
-    # status_json = {
-    #     "MAC_ADDR": utils._MAC_ADDR,
-    #     "BATTERY": utils._battery,
-    # }
+
     status_json = json.loads(msg)
+
     mac = status_json["deviceMac"]
     battery = status_json["battery"]
     time = status_json["time"]
-    logPublisherBattery(mac, battery, time)
+    cpu_util_perc = status_json["cpu_utilization_percentage"]
+    cpu_temp = status_json["cpu_temperature"]
+    memory_util_perc= status_json["memory_utilization_percentage"]
+
+    logPublisherMetrics(time, mac, battery, memory_util_perc, cpu_util_perc, cpu_temp)
     database.updateDeviceStatus(MAC_ADDR=mac, NEW_BATTERY=battery)
     database.closeDB()
 
-def logPublisherBattery(mac, battery, time):
-    logFile = "batteries.csv" 
-    data = [time, mac, battery]
-    with open('batteries.csv', 'a', newline='') as file:
+def logPublisherMetrics(time, mac, battery, memory_util_perc, cpu_util_perc, cpu_temp):
+    logFile = utils._logFile 
+    data = [time, mac, battery, memory_util_perc, cpu_util_perc, cpu_temp]
+    with open(logFile, 'a', newline='') as file:
         writer = csv.writer(file)
         
         # Append the data to the CSV file

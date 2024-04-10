@@ -10,7 +10,7 @@ class Database:
         return cls._instance
     
     def __init__(self) -> None:
-        self._db_path = "/home/devnico/repos/research/sqlite/mqttcc.db"
+        self._db_path = "/home/devnico/repos/research/mqtt_cc_research/sqlite/mqttcc.db"
 
     def openDB(self) -> None:
         self._db_conn = sqlite3.connect(self._db_path)
@@ -20,19 +20,19 @@ class Database:
         self._db_cursor.close()
         self._db_conn.close()
 
-    def execute_query_with_retry(self, query:str, values = None, requires_commit=False, max_retries=3, delay = 0.1, executeMany = False ):
+    def execute_query_with_retry(self, query:str, values = None, requires_commit=False, max_retries=3, delay = 3, executeMany = False ):
+        self.openDB()
         for i in range(max_retries):
             try: 
-                cursor = self._db_conn.cursor()
                 if values and executeMany:
-                    cursor.executemany(query, values)
+                    self._db_cursor.executemany(query, values)
                 elif values:
-                    cursor.execute(query, values)
+                    self._db_cursor.execute(query, values)
                 else:
-                    cursor.execute(query)
+                    self._db_cursor.execute(query)
                 if requires_commit:
                     self._db_conn.commit()
-                return cursor.fetchall() # if the command does not return rows, then empty list is returned
+                return self._db_cursor.fetchall() # if the command does not return rows, then empty list is returned
             except sqlite3.OperationalError as err:
                 if "database is locked" in str(err):
                     print(f"Database is locked. Retrying in {delay} seconds...")
@@ -118,10 +118,9 @@ class Database:
     def updatePublishTableWithPublishingAssignments(self, MAC_ADDR, TOPICS):
         updateQuery = '''UPDATE publish SET publishing = 1 WHERE deviceMac = ? AND topic = ?'''
         update_values = []
-        print(f"In update PUBLISH table: mac = {MAC_ADDR}")
         for topic in TOPICS:
             update_values.append((MAC_ADDR, topic))
-        print(f"update_values: {update_values}")
+        print(f"Updating publisher {MAC_ADDR} with assignments {update_values}")
         self.execute_query_with_retry(query=updateQuery, values=update_values, requires_commit=True, executeMany=True)
 
         
@@ -159,8 +158,19 @@ class Database:
                             SET publishing = 0'''
         self.execute_query_with_retry(query=updateQuery, requires_commit=True)
 
-    def deleteSubscription(self, topic):
-        deleteQuery = '''DELETE FROM subscriptions 
-                            WHERE subscription = ?'''
-        query_values = (topic,)
-        self.execute_query_with_retry(query=deleteQuery, values=query_values, requires_commit=True)
+    def getAllDeviceExecutions(self):
+        selectQuery = '''SELECT deviceMac, executions FROM devices'''
+        return self.execute_query_with_retry(query=selectQuery)
+    
+    def findAddedTopics(self):
+        selectQuery = '''SELECT subscription FROM subscriptions WHERE added = 1'''
+        return self.execute_query_with_retry(query=selectQuery)
+    
+    def resetAddedAndChangedLatencyTopics(self, topicsToChange):
+        updateQuery = '''UPDATE subscriptions SET added = 0 AND lat_change = 0 WHERE subscription = ?'''
+        update_value = topicsToChange
+        self.execute_query_with_retry(query=updateQuery, values=update_value, executeMany=True)
+    
+    def findChangedLatencyTopics(self):
+        selectQuery = '''SELECT subscription FROM subscriptions WHERE lat_change = 1'''
+        return self.execute_query_with_retry(query=selectQuery)
