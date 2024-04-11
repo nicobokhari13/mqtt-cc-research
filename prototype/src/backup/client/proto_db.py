@@ -167,10 +167,9 @@ class Database:
         return self.execute_query_with_retry(query=selectQuery)
     
     def resetAddedAndChangedLatencyTopics(self, topicsToChange):
-        updateQuery = '''UPDATE subscriptions SET added = 0, lat_change = 0 WHERE subscription = ?'''
+        updateQuery = '''UPDATE subscriptions SET added = 0 AND lat_change = 0 WHERE subscription = ?'''
         update_value = topicsToChange
-        print(update_value)
-        self.execute_query_with_retry(query=updateQuery, values=update_value, executeMany=True, requires_commit=True)
+        self.execute_query_with_retry(query=updateQuery, values=update_value, executeMany=True)
     
     def findChangedLatencyTopics(self):
         selectQuery = '''SELECT subscription FROM subscriptions WHERE lat_change = 1'''

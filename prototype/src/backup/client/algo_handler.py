@@ -97,7 +97,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
                 print(publishers._units[bestMac]._assignments)
                 # we know bestMac uses Emin energy, so reverse operations to get Einc
                 Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
-                changeInExecutions = Einc / Devices._instance._ENERGY_PER_EXECUTION
+                changeInExecutions = Einc / Processing_Unit._ENERGY_PER_EXECUTION
                 print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
                 New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
                 print(f"{bestMac} now executes at {New_Executions}")

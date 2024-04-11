@@ -2,7 +2,7 @@
 if [ $# -eq 0 ]; then
 exit 1
 fi
-file_path = $1
+file_path="$1"
 if [ ! -f "$file_path" ]; then
 exit 1
 fi
