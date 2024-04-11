@@ -104,7 +104,7 @@ class AsyncMqttExample:
             await asyncio.sleep(5)
             print("main: Publishing")
             self.got_message = self.loop.create_future()
-            self.client.publish(topic, b'Hello' * 40000, qos=1)
+            self.client.publish(topic, b'1' * 500000, qos=1)
             print("waiting for msg")
             msg = await self.got_message
             print("after await line")

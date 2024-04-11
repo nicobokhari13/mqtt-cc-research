@@ -42,22 +42,18 @@ class Processing_Unit:
         freqCopy.remove(self._freq_min)
 
         # if freqCopy has any items other than the minimum just removed,
-        index = 1
+
         if freqCopy:
-            # 
-            for freq in freqCopy:
-                multipleOfFreq = freq
-                while multipleOfFreq <= self._OBSERVATION_PERIOD:
-                    if not((multipleOfFreq % self._freq_min < threshold) or ((self._freq_min - multipleOfFreq % self._freq_min) < threshold)):
-                        numExecutions +=1
-                    index += 1
-                    multipleOfFreq = multipleOfFreq * index
-                        
+            # Remove the ones that are within a threshold of a multiple of the minimum frequency
+            removes = [freq for freq in freqCopy if (freq % self._freq_min < threshold) or ((self._freq_min - freq % self._freq_min) < threshold)]
+            # Remove the numbers from freqCopy
+            freqCopy = [freq for freq in freqCopy if freqCopy not in removes]
+        
         # place minimum back in
         freqCopy.append(self._freq_min)
-        
         # the number of executions is the addition of all the times a frequency occurs in the OBSERVATION PERIOD
-        numExecutions += self._OBSERVATION_PERIOD / self._freq_min
+        for freq in freqCopy:
+            numExecutions += self._OBSERVATION_PERIOD / freq
 
         # reset self._freqs_min to actual min if the min was changed for the newTask
         if newTask:

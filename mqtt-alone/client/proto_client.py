@@ -4,7 +4,7 @@ from proto_utils import ProtoUtils
 import sys
 import csv
 from proto_asyncio import run_async_client
-from algo_utils import Devices
+#from algo_utils import Devices
 from datetime import datetime
 import status_handler
 
@@ -48,13 +48,15 @@ import status_handler
     # exp_type, deviceMac, battery, energy_per_execution, freq_range, topic publishings
     # 1         2           3           4                   5           6  -> ...
 def main():
+    # to run proto_client.py 
+        # devicesFile sim 900 0.1 3
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     devicesFile = sys.argv[1]
     in_sim = sys.argv[2]
-    restart_window = sys.argv[3]
-    energy_per_execution = sys.argv[4]
+    restart_window = sys.argv[3] # in seconds
+    energy_per_execution = sys.argv[4] 
     threshold = sys.argv[5]
-    # devicePath sim 900 0.3 3
+    
     print(f"Device File = {devicesFile}")
     print(f"Sim Value = {in_sim}")
     
@@ -82,10 +84,10 @@ def main():
     database.closeDB()
     # create it once
     utils = ProtoUtils()
-    devices = Devices()
-    devices.addEnergyPerExecution(energy_per_execution)
-    devices.addConcurrencyThreshold(threshold)
-    utils._timeWindow = int(restart_window)
+#    devices = Devices()
+#    devices.addEnergyPerExecution(energy_per_execution)
+#    devices.addConcurrencyThreshold(threshold)
+#    utils._timeWindow = int(restart_window)
     if in_sim == "sim" or in_sim == "MQTT":
         utils._in_sim = True
     elif in_sim == "testbed": 
