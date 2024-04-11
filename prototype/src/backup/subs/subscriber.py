@@ -21,7 +21,7 @@ def on_message(client, userdata, msg):
     print("===============")
     print(userdata)
     print(f"Topic: {topic}")
-    print(f"Message: {len(payload)}")
+    print(f"Message: {payload}")
     print("===============")
     print()
 
@@ -56,7 +56,7 @@ def main():
     #will_payload = json.dumps(will_data)
     #client.will_set(topic=WILL_TOPIC, payload=will_payload, qos=1)
     # Connect client to the Broker
-    client.connect("localhost", 1883, keepalive=1000)
+    client.connect("localhost", 1883)
     client.user_data_set(sub_name)
     subscribeToTopics(client, topicList = subbed_topics)
 

@@ -1,2 +1,0 @@
-{'d8:3a:dd:90:ee:38': '{"sensor/humidity": 30}', 
-'d8:3a:dd:90:ee:62': '{"sensor/airquality": 50, "sensor/temperature": 10}'}

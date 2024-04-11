@@ -43,6 +43,7 @@ int mosquitto_loop_start(struct mosquitto *mosq)
 
 	mosq->threaded = mosq_ts_self;
 	if(!pthread_create(&mosq->thread_id, NULL, mosquitto__thread_main, mosq)){
+		
 #if defined(__linux__)
 		pthread_setname_np(mosq->thread_id, "mosquitto loop");
 #elif defined(__NetBSD__)

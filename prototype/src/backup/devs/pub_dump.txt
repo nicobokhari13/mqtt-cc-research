@@ -1,0 +1,586 @@
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+device b8:27:eb:4f:15:95 finished publish to sensor/temperature on frequency 20
+task result = ('sensor/temperature', 20)
+sensing task ('sensor/temperature', 20) done, running it again
+running tasks
+^CTraceback (most recent call last):
+  File "/home/devnico/repos/research/prototype/src/devs/sensor.py", line 29, in <module>
+    main()
+  File "/home/devnico/repos/research/prototype/src/devs/sensor.py", line 26, in main
+    run_async_publisher()
+  File "/home/devnico/repos/research/prototype/src/devs/pub_asyncio.py", line 188, in run_async_publisher
+    loop.run_until_complete(AsyncMqtt(loop).main())
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/devnico/repos/research/prototype/src/devs/pub_asyncio.py", line 153, in main
+    done, pending = await asyncio.wait(self.tasks, return_when=asyncio.FIRST_COMPLETED)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 384, in wait
+    return await _wait(fs, timeout, return_when, loop)
+  File "/usr/lib/python3.10/asyncio/tasks.py", line 488, in _wait
+    f.add_done_callback(_on_completion)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 757, in call_soon
+    handle = self._call_soon(callback, args, context)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 773, in _call_soon
+    handle = events.Handle(callback, args, self, context)
+  File "/usr/lib/python3.10/asyncio/events.py", line 31, in __init__
+    def __init__(self, callback, args, loop, context=None):
+KeyboardInterrupt

@@ -151,17 +151,17 @@ class AsyncMqtt:
             mapAssignments = None
             print(self.got_message)
             changedLatencyTopics = database.findChangedLatencyTopics()
-            newTopics = database.findAddedTopics()
-            if len(changedLatencyTopics) > 0 or len(newTopics) > 0:
+            for changedLatTopic in changedLatencyTopics:
                 print(changedLatencyTopics)
+                print("topic changed latency, regen assignments")
+                database.resetAddedAndChangedLatencyTopics(changedLatencyTopics)
+                mapAssignments = algo.generateAssignments(changedTopic=changedLatTopic[0])
+            database.openDB()
+            newTopics = database.findAddedTopics()
+            if len(newTopics) > 0:
                 print(newTopics)
-                update_list = []
-                if changedLatencyTopics:
-                    update_list += changedLatencyTopics
-                if newTopics: 
-                    update_list += newTopics
-                print(update_list)
-                database.resetAddedAndChangedLatencyTopics(update_list)
+                database.resetAddedAndChangedLatencyTopics(newTopics)
+                print("regen assignments bc new topics")
                 mapAssignments = algo.generateAssignments()
             if mapAssignments:
                 print("got assignments")
@@ -189,7 +189,7 @@ class AsyncMqtt:
 
         aioh = AsyncioHelper(self.loop, self.client)
 
-        self.client.connect("localhost", 1883, keepalive=1000)
+        self.client.connect("localhost", 1883)
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
 

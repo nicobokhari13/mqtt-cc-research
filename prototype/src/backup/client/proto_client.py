@@ -75,7 +75,7 @@ def main():
         mac = rows[i][1]
         startBattery = rows[i][2]
         database.addDevice(MAC_ADDR=mac, BATTERY=startBattery)
-        #status_handler.logPublisherMetrics(time=current_time, mac=mac, battery=startBattery, memory_util_perc="None", cpu_util_perc="None", cpu_temp="None")
+        status_handler.logPublisherBattery(mac, startBattery, current_time)
         topicList = rows[i][5:len(rows[i])] # rest of rows are the topics
         for topic in topicList:
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)
@@ -86,7 +86,6 @@ def main():
     devices.addEnergyPerExecution(energy_per_execution)
     devices.addConcurrencyThreshold(threshold)
     utils._timeWindow = int(restart_window)
-    print(utils._timeWindow)
     if in_sim == "sim" or in_sim == "MQTT":
         utils._in_sim = True
     elif in_sim == "testbed": 
