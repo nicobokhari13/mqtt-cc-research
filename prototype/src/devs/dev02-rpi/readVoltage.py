@@ -6,23 +6,23 @@ from time import sleep
 
 # Create an MCP3008 object, specifying the SPI port and device
 adcChannelZero = MCP3008(channel=0)
-adcChannelOne = MCP3008(channel=1)
+adcChannelSeven = MCP3008(channel=7)
 
 try:
     while True:
         # Read the analog value from the ADC
         cZeroAnalog = adcChannelZero.value
-        cOneAnalog = adcChannelOne.value
+        cSevenAnalog = adcChannelSeven.value
         print("Channel 0 analog:", cZeroAnalog)
-        print("Channel 1 analog:", cOneAnalog)
+        print("Channel 7 analog:", cSevenAnalog)
 
         
         # Optional: Convert the analog value to voltage (assuming 3.3V reference)
         cZeroVoltage = cZeroAnalog  * 5 
-        cOneVoltage = cOneAnalog * 5
-        print("Battery Current: ", cZeroVoltage)
-        print(f"1/2 Battery Voltage: {cOneVoltage}")
-        print(f"Full Battery Voltage: {2 * cOneVoltage }")
+        cSevenVoltage = cSevenAnalog * 5
+        print("Battery Current: ", cSevenVoltage)
+        print(f"1/2 Battery Voltage: {cZeroVoltage}")
+        print(f"Full Battery Voltage: {2 * cZeroVoltage }")
 
         print("============")
         
