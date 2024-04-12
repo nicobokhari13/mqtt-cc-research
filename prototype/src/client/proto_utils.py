@@ -27,6 +27,16 @@ class ProtoUtils:
         self._gotCmdToSend = None
 
         self._logFile = "metrics-" + str(datetime.now()) + ".csv"
+        self._logFile_testbed = "testbed-" + str(datetime.now()) + ".csv"
         
         self._in_sim = False
+        self._remaining_batteries = {}
+
+    def setCapacities(self, mac1, mac2):
+        self._remaining_batteries[mac1] = 37 # Watt-Hours
+        self._remaining_batteries[mac2] = 37 # Watt-Hours
+
+    def updateCapacities(self, mac, power_instant):
+        self._remaining_batteries[mac] -= power_instant
+
 
