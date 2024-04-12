@@ -2,6 +2,7 @@ from algo_utils import Processing_Unit, Devices
 import json
 from proto_utils import ProtoUtils
 from proto_db import Database
+import random
 
 def resetPublishingsAndDeviceExecutions():
     db = Database()
@@ -96,13 +97,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
                 publishers._units[bestMac].addAssignment(topic, freq)
                 publishers._units[bestMac].resetExecutions()
                 print(publishers._units[bestMac]._assignments)
-                # we know bestMac uses Emin energy, so reverse operations to get Einc
-                # Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
-                # changeInExecutions = Einc / Devices._instance._ENERGY_PER_EXECUTION
-                # print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
-                # New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
-                # print(f"{bestMac} now executes at {New_Executions}")
-                # publishers._units[bestMac]._numExecutions = New_Executions
+
                 # update num executions in DB
                 db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=publishers._units[bestMac]._numExecutions)
 
@@ -137,5 +132,51 @@ def getPublisherExecutions():
     rows = db.getAllDeviceExecutions() # list of tuples (deviceMac, executions)
     db.closeDB()       
     return rows 
+
+def randomGenerateAssignments():
+    # set all the publishings to 0
+    db = Database()
+    publishers = Devices()
+    db.openDB()
+    db.resetAllDevicesPublishing()
+    # get all topics 
+    allTopics = db.topicsWithNoPublishers()
+
+    for task in allTopics:
+        topic = task[0]
+        freq = task[1]
+        capableDevices = db.devicesCapableToPublish(topicName=topic) # list of tuples with (deviceMac, battery, executions)
+        for device in capableDevices:
+            mac = device[0]
+            battery = device[1]
+            num_exec = device[2]
+            publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
+
+        # random device from capable Devices
+        index = random.randrange(0, len(capableDevices))
+        # get the mac
+        bestMac = capableDevices[index][0]
+        # add topic and frequency to device
+        publishers._units[bestMac].addAssignment(topic, freq)
+
+    # after each topic is assigned, every device must calculate their new executions
+    for mac, device in publishers._units.items():
+        publishers._units[mac].resetExecutions()
+        # update db's executions
+        db.updateDeviceExecutions(MAC_ADDR=mac, NEW_EXECUTIONS=device._numExecutions)
+        # if there are no assignments given, give it the default value
+        if not device._assignments:
+            device._assignments = {"None","None"}
+
+        assignmentString = json.dumps(device._assignments)
+        print(f"assignment string = {assignmentString}")
+        publishers.addAssignmentsToCommand(deviceMac=mac, taskList=assignmentString)
+        db.updatePublishTableWithPublishingAssignments(MAC_ADDR=mac, TOPICS=device._assignments.keys())
+    
+    db.closeDB()
+    publishers.resetUnits()
+    print(f"generated final command = {publishers._generated_cmd}")
+    # while the publishers' unit information is reset, the assignments are preserved in generated_cmd
+    return publishers._generated_cmd
 
 
