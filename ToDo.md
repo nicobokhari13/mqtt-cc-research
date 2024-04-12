@@ -1,11 +1,13 @@
 # To Do
-- remove password need
-- use username as a means to debug and identify subscribers + publishers
-- copy over scripts for prototype
-- script to generate publishers, subscribers, and topics lists files from input #s
-- script reads files, puts data into lists, randomly pairs publishers/subs with topics
-- based on type of simulation, perform different database actions
-
+- create randomAssignmnetGeneration in proto_client
+- create RRAssignmentGeneration in proto_client
+- create RRBatteryAssignmentGeneration in proto_client
+- create NoAlgoAssignmentGeneration in proto_client
+- create testbedAssignmentGeneration 
+  - Change pub_utils to calculate power consumption (V * I) = W
+  - If exp_type is testbed, proto_utils should keep track of remaining battery capacities. Status Handler handles the battery metric differently by substracting battery value from remaining capacity, record power_instant AND remaining_battery
+- include generation types in env setup script
+- 
 - Approaches (Vary # topics, Vary # publishers, Vary randomness of subscriber latencies)
   - No algorithm (no lat Qos and no selection, all publishers publish where they are capable)
   - RR (yes lat Qos selection = ordered)
