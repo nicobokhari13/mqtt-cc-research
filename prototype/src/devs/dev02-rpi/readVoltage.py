@@ -17,17 +17,17 @@ try:
         print("Channel 7 analog:", cSevenAnalog)
 
         
-        # Optional: Convert the analog value to voltage (assuming 3.3V reference)
-        cZeroVoltage = cZeroAnalog  * 5 
-        cSevenVoltage = cSevenAnalog * 5
-        print("Battery Current: ", cSevenVoltage)
+        # Optional: Convert the analog alue to voltage (assuming 3.3V reference)
+        cZeroVoltage = cZeroAnalog  * 5 + 0.6 
+        cSevenVoltage = cSevenAnalog * 5 / 1000 
+        print(f"Battery Current is between: {cSevenVoltage / 1.0526} and {cSevenVoltage / 0.9524}")
         print(f"1/2 Battery Voltage: {cZeroVoltage}")
-        print(f"Full Battery Voltage: {2 * cZeroVoltage }")
+        print(f"Full Battery Voltage is between: {cZeroVoltage / 0.5526} and {cZeroVoltage / 0.4524}")
 
         print("============")
         
         # Add a small delay before reading again
-        sleep(5)
+        sleep(1)
 
 except KeyboardInterrupt:
     print("Exiting...")
