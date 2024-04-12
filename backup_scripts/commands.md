@@ -10,3 +10,7 @@
   - `python3 subscriber.py sensor/temperature%latency%10,sensor/humidity%latency%30,sensor/airquality%latency%50`
   - `python3 subscriber.py sensor/temperature%latency%28,sensor/humidity%latency%45`
   - `python3 subscriber.py sensor/humidity%latency%12,sensor/airquality%latency%20`
+- Raspberry Pi
+  - `cd repos/research/mqtt_cc_research/prototype`
+  - `source dev/bin/activate`
+  - `cd src/devs/dev02*` 
