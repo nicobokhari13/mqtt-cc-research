@@ -75,7 +75,7 @@ class Processing_Unit:
     def energyIncrease(self, task):
         newExecutions = self.calculateExecutions(newTask = task)
         changeInExecutions = newExecutions - self._numExecutions
-        print(f"change in executions: {changeInExecutions}")
+        #print(f"change in executions: {changeInExecutions}")
         return changeInExecutions * Devices._instance._ENERGY_PER_EXECUTION
     
     def addAssignment(self, topic:str, task, isNew = None):
@@ -83,14 +83,14 @@ class Processing_Unit:
         self._freqs.append(task)
         self.resetMinimum()
         # add assignment to publisher
-        print(self._assignments)
+        #print(self._assignments)
         # example: 
         # "sensor/temperature": 10 -> publish to sensor/temperature every 10 seconds
 
     def addPublishings(self, publishing_list:list):
         # publishing_set is a list of tuples (topic, max_allowed_latency)
         for publishing in publishing_list:
-            print(publishing)
+            #print(publishing)
             self.addAssignment(topic = publishing[0], task = publishing[1])
             # add topic's frequency to device frequencies
         # after all frequencies added, reset frequency minimum 

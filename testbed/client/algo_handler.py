@@ -92,7 +92,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
                 print(publishers._units[bestMac]._assignments)
                 publishers._units[bestMac].addAssignment(topic, freq)
                 publishers._units[bestMac].resetExecutions()
-                print(publishers._units[bestMac]._assignments)
+                #print(publishers._units[bestMac]._assignments)
                 # we know bestMac uses Emin energy, so reverse operations to get Einc
                 # Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
                 # changeInExecutions = Einc / Devices._instance._ENERGY_PER_EXECUTION
@@ -120,7 +120,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
         if not device._assignments:
             device._assignments = {"None":"None"}
         assignmentString = json.dumps(device._assignments)
-        print(f"assignment string = {assignmentString}")
+        #print(f"assignment string = {assignmentString}")
         publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
         db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys()) 
     db.closeDB()

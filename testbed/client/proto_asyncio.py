@@ -83,8 +83,8 @@ class AsyncMqtt:
     def on_message(self, client, userdata, msg):
         topic = msg.topic
         payload = msg.payload.decode()
-        print("in on_message")
-        print("-------------")
+        #print("in on_message")
+        #print("-------------")
 
         # use thread instead
         if mqtt.topic_matches_sub(utils._STATUS_TOPIC, topic):
@@ -131,11 +131,11 @@ class AsyncMqtt:
         deviceExecutions = algo.getPublisherExecutions()
         print(deviceExecutions)
         for device in deviceExecutions:
-            print(f"mac {device[0]} and executions = {device[1]}")
-            print(type(device[0]))
-            print(type(device[1]))
+            #print(f"mac {device[0]} and executions = {device[1]}")
+            #print(type(device[0]))
+            #print(type(device[1]))
             if device[0] in command.keys():
-                print("appending execution")
+                #print("appending execution")
                 command[device[0]] = str(command[device[0]]) + "," + str(device[1]) 
                 # append the device executions to the string with comma
         print(command)
@@ -149,18 +149,18 @@ class AsyncMqtt:
             print("opening database")
             database.openDB()
             mapAssignments = None
-            print(self.got_message)
+            #print(self.got_message)
             changedLatencyTopics = database.findChangedLatencyTopics()
             newTopics = database.findAddedTopics()
             if len(changedLatencyTopics) > 0 or len(newTopics) > 0:
-                print(changedLatencyTopics)
-                print(newTopics)
+                #print(changedLatencyTopics)
+                #print(newTopics)
                 update_list = []
                 if changedLatencyTopics:
                     update_list += changedLatencyTopics
                 if newTopics: 
                     update_list += newTopics
-                print(update_list)
+                #print(update_list)
                 database.resetAddedAndChangedLatencyTopics(update_list)
                 mapAssignments = algo.generateAssignments()
             if mapAssignments:
