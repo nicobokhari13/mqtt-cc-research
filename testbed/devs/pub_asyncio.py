@@ -140,7 +140,7 @@ class AsyncMqtt:
         self.got_message = None
 
         # set other necessary parameters for the client
-        #self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
+        self.client.username_pw_set(username=utils._deviceMac)
         aioh = AsyncioHelper(self.loop, self.client)
         self.client.connect("10.0.0.37", 1883, keepalive=900)
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)

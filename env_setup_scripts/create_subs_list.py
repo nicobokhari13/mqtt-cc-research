@@ -10,12 +10,12 @@ def generateSubscriberNames(numSubs):
     print(sub_names)
     return sub_names
 
-def createSubscriberScript(sub_rows):
-    filePath = "./run_subs.sh"
-    lines = ["#!/bin/bash"]
+def createSubscriberCSV(sub_rows):
+    filePath = "./subscribers.csv"
+    lines = []
     with open(filePath, 'w', newline='') as file:
         for row in sub_rows: 
-            line = f"python3 subscriber.py {row} &"
+            line = f"{row}"
             lines.append(line)
         for row in lines:
             file.write(row + "\n")
@@ -62,7 +62,7 @@ def generateSubscriptions(sub_name, topic_list, latency_range):
     if subscription_string[len(subscription_string) - 1] == ",":
         subscription_string = subscription_string[:-1]
 
-    sub_row = f"{sub_name} {subscription_string}"
+    sub_row = f"{sub_name},{subscription_string}"
     print(sub_row)
     return sub_row
         
