@@ -5,6 +5,7 @@ from time import sleep
 # Create an MCP3008 object, specifying the SPI port and device
 adcChannelZero = MCP3008(channel=0)
 adcChannelSeven = MCP3008(channel=7)
+
 ADD_CONSTANT  = 0.6
 CH_7_DIVISION_CONSTANT = (1.0526 + 0.9524)/2
 CH_0_DIVISION_CONSTANT = (0.4524 + 0.5526)/2
