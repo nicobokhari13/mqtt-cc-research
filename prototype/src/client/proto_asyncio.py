@@ -170,7 +170,7 @@ class AsyncMqtt:
                 return mapAssignments
             print("closing database")
             print("going to sleep")
-            await asyncio.sleep(60)    
+            await asyncio.sleep(300)    
 
 
     async def main(self):

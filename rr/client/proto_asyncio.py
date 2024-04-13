@@ -141,6 +141,14 @@ class AsyncMqtt:
         print(command)
         return command 
     
+    async def runAlgo(self):
+        while True:
+            await asyncio.sleep(300)
+            mapAssignments = algo.roundRobinGeneration()
+            if mapAssignments:
+                print("ran algo after 5 minutes")
+                return mapAssignments
+            print("no assignments, checking back in 5 minutes")
 
     # Assumption, subscribers don't leave the simulation, only are added
     async def lookForChange(self):
@@ -149,7 +157,6 @@ class AsyncMqtt:
             print("opening database")
             database.openDB()
             mapAssignments = None
-            print(self.got_message)
             changedLatencyTopics = database.findChangedLatencyTopics()
             newTopics = database.findAddedTopics()
             if len(changedLatencyTopics) > 0 or len(newTopics) > 0:
@@ -162,7 +169,7 @@ class AsyncMqtt:
                     update_list += newTopics
                 print(update_list)
                 database.resetAddedAndChangedLatencyTopics(update_list)
-                mapAssignments = algo.randomGenerateAssignments()
+                mapAssignments = algo.roundRobinGeneration()
             if mapAssignments:
                 print("got assignments")
                 print(mapAssignments)
@@ -170,7 +177,8 @@ class AsyncMqtt:
                 return mapAssignments
             print("closing database")
             print("going to sleep")
-            await asyncio.sleep(300)    
+            await asyncio.sleep(60)    
+
 
     async def main(self):
         # main execution        
@@ -191,22 +199,19 @@ class AsyncMqtt:
         self.client.connect("localhost", 1883, keepalive=1000)
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
-        # run the algorithm once before sleeping for the time window
-        #randomAssignments = algo.randomGenerateAssignments()
-        #if utils._in_sim: 
-        #    mapAssignments = await self.appendExecutions(mapAssignments)
-
-        #await self.sendCommands(randomAssignments)
 
         while True: #infinite loop
-            #self.got_message = self.loop.create_future()
+            self.got_message = self.loop.create_future()
+            wait_round_robin_routine = asyncio.ensure_future(self.runAlgo())
             wait_for_cmd_routine = asyncio.ensure_future(self.lookForChange())
             wait_for_window_routine = asyncio.create_task(self.waitForTimeWindow())
-            done, pending = await asyncio.wait([wait_for_cmd_routine,wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
+            done, pending = await asyncio.wait([wait_round_robin_routine,wait_for_cmd_routine, wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
             if wait_for_cmd_routine in done:
-                 result = wait_for_cmd_routine.result()
+                result = wait_for_cmd_routine.result()
             elif wait_for_window_routine in done:
                 result = wait_for_window_routine.result()
+            elif wait_round_robin_routine in done:
+                result = wait_round_robin_routine.result()
             print(f"the result of tasks is {result}")
             print(type(result))
             if result: # if result exists, then result holds the command
@@ -224,12 +229,12 @@ class AsyncMqtt:
                     task.cancel()
                 algo.resetPublishingsAndDeviceExecutions()
                 # run algo again
-                # mapAssignments = algo.generateAssignments()
-                mapAssignments = algo.randomGenerateAssignments()
+                mapAssignments = algo.roundRobinGeneration()
                 if utils._in_sim: 
                     mapAssignments = await self.appendExecutions(mapAssignments)
                 # send command
                 await self.sendCommands(mapAssignments)
+            self.got_message = None
             print("end of loop")
 
 def run_async_client():
@@ -241,3 +246,4 @@ def run_async_client():
 
 if __name__ == "__main__":
     run_async_client()
+
