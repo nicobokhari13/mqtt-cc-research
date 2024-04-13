@@ -41,6 +41,7 @@ def main():
         #PASSWORD = sys.argv[2]
         # topic list delimited by commas, no spaces
     sub_name = sys.argv[1]
+    print(sub_name)
     subbed_topics = sys.argv[2].split(",") # list of strings 
     # create MQTT Client
     client = mqtt.Client()
