@@ -1,8 +1,4 @@
 # To Do
-- create randomAssignmnetGeneration in proto_client
-- create RRAssignmentGeneration in proto_client
-- create RRBatteryAssignmentGeneration in proto_client
-- create NoAlgoAssignmentGeneration in proto_client
 - create testbedAssignmentGeneration 
   - Change pub_utils to calculate power consumption (V * I) = W
   - If exp_type is testbed, proto_utils should keep track of remaining battery capacities. Status Handler handles the battery metric differently by substracting battery value from remaining capacity, record power_instant AND remaining_battery
