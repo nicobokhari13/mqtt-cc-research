@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 from typing import Dict
 import psutil
 import subprocess
+import powerProcessing as pwr_reader
 
 class PublisherUtils:
     _instance = None
@@ -45,7 +46,7 @@ class PublisherUtils:
         
     def getExperimentEnergy(self):
         # TODO: Use function to get voltage * current
-        self._battery = psutil.sensors_battery().percent
+        self._battery = pwr_reader.readVoltage() * pwr_reader.readCurrent() 
 
     def saveNewExecutions(self, newExecutions):
         self._current_executions = float(newExecutions)
@@ -57,6 +58,8 @@ class PublisherUtils:
         return psutil.virtual_memory().percent
     
     def get_cpu_temperature(self):
+        # temps in celsius
         result = subprocess.run(["vcgencmd", "measure_temp"], capture_output=True, text=True)
         temperature = result.stdout.strip().split("=")[1]
+        temperature = float(temperature[:-2])
         return temperature

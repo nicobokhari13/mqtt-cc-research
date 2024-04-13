@@ -93,7 +93,7 @@ class AsyncMqtt:
                 "deviceMac": utils._deviceMac,
                 "battery": utils._battery,
                 #"cpu_temperature": utils.get_cpu_temperature(),
-                "cpu_temperature": "None", #TODO: Run cpu temp function to parse subprocess
+                "cpu_temperature": utils.get_cpu_temperature(), #TODO: Run cpu temp function to parse subprocess
                 "cpu_utilization_percentage": utils.get_cpu_utilization(),
                 "memory_utilization_percentage": utils.get_memory_utilization()
             }

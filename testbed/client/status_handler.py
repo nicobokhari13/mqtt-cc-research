@@ -18,6 +18,7 @@ def handle_status_msg(msg:str):
     cpu_util_perc = status_json["cpu_utilization_percentage"]
     cpu_temp = status_json["cpu_temperature"]
     memory_util_perc= status_json["memory_utilization_percentage"]
+    utils.updateCapacities(mac, battery)
     if utils._exp_type == "testbed":
         logTestBedMetrics(time, mac, battery, utils._remaining_batteries[mac], memory_util_perc, cpu_util_perc, cpu_temp)
     else:
