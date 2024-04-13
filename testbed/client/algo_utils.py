@@ -37,9 +37,12 @@ class Processing_Unit:
             # if there is a new task, add it to freqs, change the min
             freqCopy.append(newTask)
             self._freq_min = min(freqCopy)
-
+            
         # remove the min from the following calculations
-        freqCopy.remove(self._freq_min)
+        if self._freq_min:
+            freqCopy.remove(self._freq_min)
+        else:# if you don't have a minimum, then the list is empty, no executions -> 
+            return 0
 
         # if freqCopy has any items other than the minimum just removed,
         index = 1

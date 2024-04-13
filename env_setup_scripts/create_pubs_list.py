@@ -10,7 +10,7 @@ def generatePublisherMacs(numPubs):
     print(pub_macs)
     return pub_macs
 
-def createSimPublishersScript(deviceList: list):
+def createSimPublishersScript(deviceList: list, experiment_type):
     filePath = "./run_pubs.sh"
     lines = ["#!/bin/bash"]
     with open(filePath, 'w', newline='') as file:
@@ -24,6 +24,16 @@ def createSimPublishersScript(deviceList: list):
         for row in lines:
             file.write(row + "\n")
 
+        
+def createTestBedPublishersScript(deviceList: list):
+    for device in deviceList:
+        filePath = f"./{device[0].sh}"
+        lines = ["cd .."]
+        line = f"python3 sensor.py testbed {device[0]}"
+        lines.append(line)
+        with open(filePath, 'w', newline='') as file:
+            for row in lines:
+                file.write(row + "\n")
 
 def generateDevicesFile(rows:list):
     filePath = "./devices.csv"

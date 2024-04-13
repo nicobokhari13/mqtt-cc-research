@@ -142,7 +142,7 @@ class AsyncMqtt:
         # set other necessary parameters for the client
         #self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
         aioh = AsyncioHelper(self.loop, self.client)
-        self.client.connect("localhost", 1883)
+        self.client.connect("10.0.0.37", 1883, keepalive=900)
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
         
         self.got_message = self.loop.create_future()
@@ -158,10 +158,12 @@ class AsyncMqtt:
                 cmd = await self.separateExecutionsAndAssignments(cmd)
             # once we have command, set publishings
             utils.setPublishing(json.loads(cmd))
-
-            # create sensing_task routines
-            routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
-
+            if utils._publishes:
+                # create sensing_task routines
+                routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
+            else:
+                routines = []
+                
             # reset command
             self.got_message = self.loop.create_future()
             
@@ -194,7 +196,10 @@ class AsyncMqtt:
                     result = await self.separateExecutionsAndAssignments(result)
                     # save executions in utils
                 utils.setPublishing(json.loads(result))
-                routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
+                if utils._publishes:
+                    routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
+                else:
+                    routines = []
                 #self.tasks = [asyncio.create_task(coro) for coro in routines]
                 for coro in routines: 
                     self.tasks.add(asyncio.create_task(coro))

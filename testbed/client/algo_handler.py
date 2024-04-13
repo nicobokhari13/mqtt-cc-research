@@ -13,13 +13,13 @@ def resetPublishingsAndDeviceExecutions():
 def generateAssignments(changedTopic = None, subLeft = None):
     db = Database()
     db.openDB()
-    if changedTopic:
-        db.resetDevicesPublishingToTopic(changedTopic)
-        # if there was a change in a topic's max_allowed_latency,
-        # find all the devices that currently publish to the topic and set publishing = 0
-        # then run algorithm exactly the same as it will be treated like it was just added to the DB
-    elif subLeft:
-        db.resetAllDevicesPublishing()
+    # if changedTopic:
+    #     db.resetDevicesPublishingToTopic(changedTopic)
+    #     # if there was a change in a topic's max_allowed_latency,
+    #     # find all the devices that currently publish to the topic and set publishing = 0
+    #     # then run algorithm exactly the same as it will be treated like it was just added to the DB
+    # elif subLeft:
+    #     db.resetAllDevicesPublishing()
     publishers = Devices()
 
     bestMac = None
@@ -33,9 +33,6 @@ def generateAssignments(changedTopic = None, subLeft = None):
 
     # for each topic with none publishing
     for task in topicsWithNoPublishers: 
-        for mac, device in publishers._units.items():
-            print(f"mac: {mac}, device {device._assignments}")
-            print("------")
         topic = task[0]
         freq = task[1]
         print(f"Task: {task}")
@@ -62,9 +59,9 @@ def generateAssignments(changedTopic = None, subLeft = None):
             if devicePublishings:
                 # add them to the unit
                 publishers._units[mac].addPublishings(devicePublishings)
-                if changedTopic and topic == changedTopic:
-                    # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
-                    publishers._units[mac].resetExecutions()
+                # if changedTopic and topic == changedTopic:
+                #     # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
+                #     publishers._units[mac].resetExecutions()
                 
 
         # for each device in Devices singleton
@@ -120,11 +117,12 @@ def generateAssignments(changedTopic = None, subLeft = None):
             # assignmentString = json.dumps(device._assignments)
             # Devices.addAssignmentsToCommand(deviceMac = device._mac, taskList = assignmentString)
     for macAddress, device in publishers._units.items():
-        if device._assignments:
-            assignmentString = json.dumps(device._assignments)
-            print(f"assignment string = {assignmentString}")
-            publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
-            db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys()) 
+        if not device._assignments:
+            device._assignments = {"None":"None"}
+        assignmentString = json.dumps(device._assignments)
+        print(f"assignment string = {assignmentString}")
+        publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
+        db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys()) 
     db.closeDB()
     publishers.resetUnits()
     print(f"generated final command = {publishers._generated_cmd}")
