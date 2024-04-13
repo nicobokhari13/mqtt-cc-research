@@ -158,10 +158,11 @@ class AsyncMqtt:
                 cmd = await self.separateExecutionsAndAssignments(cmd)
             # once we have command, set publishings
             utils.setPublishing(json.loads(cmd))
-
+            if utils._publishes:    
             # create sensing_task routines
-            routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
-
+                routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
+            else: 
+                routines = []
             # reset command
             self.got_message = self.loop.create_future()
             
@@ -194,7 +195,10 @@ class AsyncMqtt:
                     result = await self.separateExecutionsAndAssignments(result)
                     # save executions in utils
                 utils.setPublishing(json.loads(result))
-                routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
+                if utils._publishes:    
+                    routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
+                else:
+                    routines = []
                 #self.tasks = [asyncio.create_task(coro) for coro in routines]
                 for coro in routines: 
                     self.tasks.add(asyncio.create_task(coro))

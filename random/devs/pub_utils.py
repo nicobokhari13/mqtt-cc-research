@@ -32,7 +32,10 @@ class PublisherUtils:
         self._ENERGY_PER_EXECUTION = float(energy_per_execution)
 
     def setPublishing(self, pub_cmd:dict):
-        self._publishes = pub_cmd
+        if "None" in pub_cmd.keys():
+            self._publishes = {}
+        else:
+            self._publishes = pub_cmd
 
     def decreaseSimEnergy(self):
         energyUsed = self._current_executions * self._ENERGY_PER_EXECUTION

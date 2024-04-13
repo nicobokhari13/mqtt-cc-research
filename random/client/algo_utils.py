@@ -108,7 +108,8 @@ class Devices:
         self._generated_cmd: Dict[str, str] = dict()
 
     def addProcessingUnit(self, newUnit:Processing_Unit):
-        self._units[newUnit._mac] = newUnit
+        if newUnit._mac not in self._units.keys():
+            self._units[newUnit._mac] = newUnit
 
     def resetUnits(self):
         self._units.clear()

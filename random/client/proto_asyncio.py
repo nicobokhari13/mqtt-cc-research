@@ -143,34 +143,34 @@ class AsyncMqtt:
     
 
     # Assumption, subscribers don't leave the simulation, only are added
-    # async def lookForChange(self):
-    #     database = db.Database()
-    #     while True:
-    #         print("opening database")
-    #         database.openDB()
-    #         mapAssignments = None
-    #         print(self.got_message)
-    #         changedLatencyTopics = database.findChangedLatencyTopics()
-    #         newTopics = database.findAddedTopics()
-    #         if len(changedLatencyTopics) > 0 or len(newTopics) > 0:
-    #             print(changedLatencyTopics)
-    #             print(newTopics)
-    #             update_list = []
-    #             if changedLatencyTopics:
-    #                 update_list += changedLatencyTopics
-    #             if newTopics: 
-    #                 update_list += newTopics
-    #             print(update_list)
-    #             database.resetAddedAndChangedLatencyTopics(update_list)
-    #             mapAssignments = algo.generateAssignments()
-    #         if mapAssignments:
-    #             print("got assignments")
-    #             print(mapAssignments)
-    #             print("closing database")
-    #             return mapAssignments
-    #         print("closing database")
-    #         print("going to sleep")
-    #         await asyncio.sleep(60)    
+    async def lookForChange(self):
+        database = db.Database()
+        while True:
+            print("opening database")
+            database.openDB()
+            mapAssignments = None
+            print(self.got_message)
+            changedLatencyTopics = database.findChangedLatencyTopics()
+            newTopics = database.findAddedTopics()
+            if len(changedLatencyTopics) > 0 or len(newTopics) > 0:
+                print(changedLatencyTopics)
+                print(newTopics)
+                update_list = []
+                if changedLatencyTopics:
+                    update_list += changedLatencyTopics
+                if newTopics: 
+                    update_list += newTopics
+                print(update_list)
+                database.resetAddedAndChangedLatencyTopics(update_list)
+                mapAssignments = algo.randomGenerateAssignments()
+            if mapAssignments:
+                print("got assignments")
+                print(mapAssignments)
+                print("closing database")
+                return mapAssignments
+            print("closing database")
+            print("going to sleep")
+            await asyncio.sleep(60)    
 
     async def main(self):
         # main execution        
@@ -192,21 +192,20 @@ class AsyncMqtt:
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
         # run the algorithm once before sleeping for the time window
-        randomAssignments = algo.randomGenerateAssignments()
-        if utils._in_sim: 
-            mapAssignments = await self.appendExecutions(mapAssignments)
+        #randomAssignments = algo.randomGenerateAssignments()
+        #if utils._in_sim: 
+        #    mapAssignments = await self.appendExecutions(mapAssignments)
 
-        await self.sendCommands(randomAssignments)
+        #await self.sendCommands(randomAssignments)
 
         while True: #infinite loop
             #self.got_message = self.loop.create_future()
-            #wait_for_cmd_routine = asyncio.ensure_future(self.lookForChange())
+            wait_for_cmd_routine = asyncio.ensure_future(self.lookForChange())
             wait_for_window_routine = asyncio.create_task(self.waitForTimeWindow())
-            done, pending = await asyncio.wait([wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
-            # if wait_for_cmd_routine in done:
-            #     result = wait_for_cmd_routine.result()
-            # elif 
-            if wait_for_window_routine in done:
+            done, pending = await asyncio.wait([wait_for_cmd_routine,wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
+            if wait_for_cmd_routine in done:
+                 result = wait_for_cmd_routine.result()
+            elif wait_for_window_routine in done:
                 result = wait_for_window_routine.result()
             print(f"the result of tasks is {result}")
             print(type(result))
