@@ -13,11 +13,15 @@ def main():
     threshold = int(sys.argv[4])
     energy_per_execution = float(sys.argv[5])  
     frequency_range = int(sys.argv[6])
-    num_pubs = 0
     if experiment_type != "MQTT":
         algo_window = sys.argv[7]
+    
     if experiment_type != "testbed":
         num_pubs = int(sys.argv[8])
+    else: 
+        num_pubs = 0
+
+
 
     print(f"{algo_window} {experiment_type} {num_subs} {num_topics} {threshold} {energy_per_execution} {frequency_range}")
     # Create topics

@@ -27,7 +27,7 @@ def createSimPublishersScript(deviceList: list, experiment_type):
         
 def createTestBedPublishersScript(deviceList: list):
     for device in deviceList:
-        filePath = f"./{device[0].sh}"
+        filePath = f"./{device[1]}.sh"
         lines = ["cd .."]
         line = f"python3 sensor.py testbed {device[0]}"
         lines.append(line)
