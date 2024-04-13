@@ -70,7 +70,7 @@ def main():
     # create Devices.csv
     cp.generateDevicesFile(deviceList)
     # create scripts
-    cs.createSubscriberScript(subscriber_command_rows)
+    cs.createSubscriberCSV(subscriber_command_rows)
     if experiment_type == "testbed":
         cp.createTestBedPublishersScript(deviceList)
     else:

@@ -48,7 +48,7 @@ def main():
     client.on_connect = on_connect
     client.on_message = on_message
     # Set username and password 
-    #client.username_pw_set(username=USERNAME, password=PASSWORD)
+    client.username_pw_set(username=sub_name)
     # will_data = {
     #     "clientid":USERNAME, 
     #     "topics": subbed_topics
@@ -56,7 +56,7 @@ def main():
     #will_payload = json.dumps(will_data)
     #client.will_set(topic=WILL_TOPIC, payload=will_payload, qos=1)
     # Connect client to the Broker
-    client.connect("localhost", 1883, keepalive=1000)
+    client.connect("10.0.0.37", 1883, keepalive=1000)
     client.user_data_set(sub_name)
     subscribeToTopics(client, topicList = subbed_topics)
 

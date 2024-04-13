@@ -170,7 +170,7 @@ class AsyncMqtt:
                 return mapAssignments
             print("closing database")
             print("going to sleep")
-            await asyncio.sleep(300)    
+            await asyncio.sleep(600)    
 
 
     async def main(self):
@@ -185,7 +185,7 @@ class AsyncMqtt:
         self.continue_next_msg = threading.Event()
         # set other necessary parameters for the client
 
-        #self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
+        self.client.username_pw_set(username=utils._USERNAME)
 
         aioh = AsyncioHelper(self.loop, self.client)
 

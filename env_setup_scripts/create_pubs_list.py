@@ -29,7 +29,7 @@ def createTestBedPublishersScript(deviceList: list):
     for device in deviceList:
         filePath = f"./{device[1]}.sh"
         lines = ["cd .."]
-        line = f"python3 sensor.py testbed {device[0]}"
+        line = f"python3 sensor.py testbed {device[1]}"
         lines.append(line)
         with open(filePath, 'w', newline='') as file:
             for row in lines:
