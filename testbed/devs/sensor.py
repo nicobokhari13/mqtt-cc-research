@@ -23,6 +23,7 @@ def main():
         battery = pwr_reader.readVoltage() * pwr_reader.readCurrent() 
             #TODO: Use another function to get voltage * current
         simValue = False
+        energy = None
         # topic list delimited by commas, no spaces
     # create single instance of pub_utils with cmd line parameters
     utils = pub_utils.PublisherUtils()

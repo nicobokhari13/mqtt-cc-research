@@ -21,7 +21,7 @@ class PublisherUtils:
         self._publishes = None
         self._current_executions = 0
 
-    def setParameters(self,Mac_addr, start_battery, in_sim, energy_per_execution):
+    def setParameters(self,Mac_addr, start_battery, in_sim, energy_per_execution = None):
         # Set Attributes to Parameters
         #self._USERNAME = username
         #self._PASSWORD = password
@@ -30,7 +30,10 @@ class PublisherUtils:
         self._battery = float(start_battery)
         self._CMD_TOPIC = "sensor/cmd/" + self._deviceMac # where IoT receives command on where to publish
         self._IN_SIM = in_sim
-        self._ENERGY_PER_EXECUTION = float(energy_per_execution)
+        if energy_per_execution:
+            self._ENERGY_PER_EXECUTION = float(energy_per_execution)
+        else:
+            self._ENERGY_PER_EXECUTION = 0
 
     def setPublishing(self, pub_cmd:dict):
         self._publishes = pub_cmd

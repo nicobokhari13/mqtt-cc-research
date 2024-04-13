@@ -67,7 +67,10 @@ def main():
     cp.generateDevicesFile(deviceList)
     # create scripts
     cs.createSubscriberScript(subscriber_command_rows)
-    cp.createSimPublishersScript(deviceList)
+    if experiment_type == "testbed":
+        cp.createTestBedPublishersScript(deviceList)
+    else:
+        cp.createSimPublishersScript(deviceList)
     ct.createClientScript(experiment_type, algo_window, energy_per_execution, threshold)
     
 
