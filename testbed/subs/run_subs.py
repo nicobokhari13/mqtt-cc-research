@@ -18,6 +18,7 @@ def main():
         topicList = rows[i][1:len(rows[i])] # rest of rows are the topics
         topicString = ','.join(topicList)
         # append subscriber's command to commands list
+        print(username)
         command.append(["python3", "subscriber.py", username, topicString, "&"])
     with open(pidfilename, "a") as file: 
         for sub in command: 
