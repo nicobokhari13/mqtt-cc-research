@@ -4,7 +4,7 @@ def createTopicList(num_topics):
     print(topic_list)
     return topic_list
 
-def createClientScript(exp_type, algo_window, energy, threshold):
+def createClientScript(exp_type,energy, threshold, algo_window = 0):
     # devicePath sim 900 0.3 3
     filePath = "./run_prototype.sh"
     lines = [

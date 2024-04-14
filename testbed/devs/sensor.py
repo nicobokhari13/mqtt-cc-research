@@ -21,7 +21,6 @@ def main():
         #PASSWORD = sys.argv[2]
         MacAddr = sys.argv[2]
         battery = pwr_reader.readVoltage() * pwr_reader.readCurrent() 
-            #TODO: Use another function to get voltage * current
         simValue = False
         energy = None
         # topic list delimited by commas, no spaces
