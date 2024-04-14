@@ -29,7 +29,10 @@ def main():
                 file.write(str(pid) + "\n")
             except subprocess.CalledProcessError as e:
                 print(f"Error with running {sub}: {e}")
-
+    
+    while True:
+        print("running subs")
+    
 
 
 if __name__ == "__main__":
