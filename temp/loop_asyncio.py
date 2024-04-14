@@ -71,7 +71,7 @@ class AsyncMqttExample:
 
     def on_connect(self, client, userdata, flags, rc):
         print("on_connect: Subscribing")
-        client.subscribe(topic)
+        client.subscribe(topic,qos=1)
 
     def on_message(self, client, userdata, msg):
         if not self.got_message:

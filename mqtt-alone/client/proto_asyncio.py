@@ -78,7 +78,7 @@ class AsyncMqtt:
 
     def subscribeToTopics(self, topics):
         for topic in topics:
-            self.client.subscribe(topic)
+            self.client.subscribe(topic,qos=1)
 
     def on_message(self, client, userdata, msg):
         topic = msg.topic
