@@ -56,7 +56,7 @@ class AsyncMqtt:
     def on_connect(self, client, userdata, flags, rc):
         if(rc == 5):
             sys.exit()
-        client.subscribe(utils._CMD_TOPIC)
+        client.subscribe(utils._CMD_TOPIC,qos=1)
 
     async def waitForCmd(self):
         cmd = await self.got_message
@@ -103,14 +103,14 @@ class AsyncMqtt:
             # publish status to status topic
 
 
-            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)
+            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str, qos=1)
             print(f"{utils._deviceMac} publishing status")
 
 
     async def publish_to_topic(self, sense_topic, freq):
         msg = "1" * 500000
         while True:
-            self.client.publish(topic = sense_topic, payload = msg)
+            self.client.publish(topic = sense_topic, payload = msg, qos=1)
             await asyncio.sleep(freq)
             print(f"{utils._deviceMac} publishing on {sense_topic}")
     

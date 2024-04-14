@@ -61,7 +61,7 @@ class AsyncMqtt:
 
 
     async def sendCommandToDevice(self, topic, msg):
-        self.client.publish(topic, msg)
+        self.client.publish(topic, msg,qos=1)
         print(f"sent to topic {topic}")
 
     async def sendCommands(self, mapAssignments:dict):
@@ -78,7 +78,7 @@ class AsyncMqtt:
 
     def subscribeToTopics(self, topics):
         for topic in topics:
-            self.client.subscribe(topic)
+            self.client.subscribe(topic,qos=1)
 
     def on_message(self, client, userdata, msg):
         topic = msg.topic

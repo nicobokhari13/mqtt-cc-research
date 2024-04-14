@@ -45,7 +45,7 @@ class AsyncioHelper:
         while self.client.loop_misc() == mqtt.MQTT_ERR_SUCCESS:
             try:
                 print("in misc loop")
-                await asyncio.sleep(5)   
+                await asyncio.sleep(30)   
             except asyncio.CancelledError:
                 break
 
@@ -109,12 +109,12 @@ class AsyncMqtt:
 
             print("publishing status")
 
-            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str)
+            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str, qos=1)
 
     async def publish_to_topic(self, sense_topic, freq):
         msg = "1" * 500000
         while True:
-            self.client.publish(topic = sense_topic, payload = msg)
+            self.client.publish(topic = sense_topic, payload = msg, qos=1)
             await asyncio.sleep(freq)
             print(f"finished publishing on {sense_topic} on freq {freq}")
 
@@ -138,6 +138,7 @@ class AsyncMqtt:
         
 
             # create sensing_task routines
+        print(utils._publishes.items())
         routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
         # reset command
         #self.got_message = self.loop.create_future()
@@ -153,7 +154,7 @@ class AsyncMqtt:
             try:
                 print("running tasks")
                 done, pending = await asyncio.wait(self.tasks, return_when=asyncio.FIRST_COMPLETED)
-
+                print(f"done = {done}")
                 routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
                 #self.tasks = [asyncio.create_task(coro) for coro in routines]
                 for coro in routines: 
