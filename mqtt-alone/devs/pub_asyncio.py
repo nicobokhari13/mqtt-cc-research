@@ -57,7 +57,7 @@ class AsyncMqtt:
     def on_connect(self, client, userdata, flags, rc):
         if(rc == 5):
             sys.exit()
-        client.subscribe(utils._CMD_TOPIC)
+        #client.subscribe(utils._CMD_TOPIC)
 
     # async def waitForCmd(self):
     #     cmd = await self.got_message
@@ -99,8 +99,8 @@ class AsyncMqtt:
                 "battery": utils._battery,
                 #"cpu_temperature": utils.get_cpu_temperature(),
                 "cpu_temperature": "None",
-                "cpu_utilization_percentage": utils.get_cpu_utilization(),
-                "memory_utilization_percentage": utils.get_memory_utilization()
+                "cpu_utilization_percentage": "None",
+                "memory_utilization_percentage": "None"
             }
 
             status_str = json.dumps(status_json)

@@ -19,7 +19,7 @@ class PublisherUtils:
         self._STATUS_TOPIC = "sensor/status" # where IoT device sends status
         self._got_cmd = None # set to true and mqtt awaits self. to be set to False after msg is received
         self._end_round = None # 
-        self._publishes = None
+        self._publishes = {}
         self._current_executions = 0
 
     def setParameters(self,Mac_addr, start_battery, in_sim, energy_per_execution):

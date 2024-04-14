@@ -1,9 +1,5 @@
 # To Do
-- create testbedAssignmentGeneration 
-  - Change pub_utils to calculate power consumption (V * I) = W
-  - If exp_type is testbed, proto_utils should keep track of remaining battery capacities. Status Handler handles the battery metric differently by substracting battery value from remaining capacity, record power_instant AND remaining_battery
-- include generation types in env setup script
-- 
+- Pulling another all nighter 
 - Approaches (Vary # topics, Vary # publishers, Vary randomness of subscriber latencies)
   - No algorithm (no lat Qos and no selection, all publishers publish where they are capable)
   - RR (yes lat Qos selection = ordered)

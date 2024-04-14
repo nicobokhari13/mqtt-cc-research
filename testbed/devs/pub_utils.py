@@ -48,7 +48,6 @@ class PublisherUtils:
             return False
         
     def getExperimentEnergy(self):
-        # TODO: Use function to get voltage * current
         self._battery = pwr_reader.readVoltage() * pwr_reader.readCurrent() 
 
     def saveNewExecutions(self, newExecutions):

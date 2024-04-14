@@ -21,7 +21,7 @@ def createSubscriberCSV(sub_rows):
             file.write(row + "\n")
 
 
-def generateSubscriptions(sub_name, topic_list, latency_range):
+def generateSubscriptions(sub_name, topic_list, latency_range = 0):
     row = [sub_name]
     subscriptions = []
     unique_random_indices = set()

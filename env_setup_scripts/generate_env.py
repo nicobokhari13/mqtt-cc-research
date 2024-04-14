@@ -15,15 +15,16 @@ def main():
     frequency_range = int(sys.argv[6])
     if experiment_type != "MQTT":
         algo_window = sys.argv[7]
-    
-    if experiment_type != "testbed":
         num_pubs = int(sys.argv[8])
-    else: 
+    if experiment_type == "MQTT":
+        num_pubs = int(sys.argv[7])
+        algo_window = 0
+    if experiment_type == "testbed":
         num_pubs = 0
 
 
 
-    print(f"{algo_window} {experiment_type} {num_subs} {num_topics} {threshold} {energy_per_execution} {frequency_range}")
+    #print(f"{algo_window} {experiment_type} {num_subs} {num_topics} {threshold} {energy_per_execution} {frequency_range}")
     # Create topics
     topics = ct.createTopicList(num_topics)
 
@@ -35,7 +36,7 @@ def main():
     for sub_name in subscribers:
         if experiment_type == "MQTT":
             # if base MQTT, then do not use publisher selection or latency QoS
-            subscriber_command_rows.append(cs.generateSubscriptions(sub_name, topics, frequency_range = 0))
+            subscriber_command_rows.append(cs.generateSubscriptions(sub_name, topics))
         else: 
             subscriber_command_rows.append(cs.generateSubscriptions(sub_name, topics, frequency_range))
     print(subscriber_command_rows)
@@ -74,7 +75,8 @@ def main():
     if experiment_type == "testbed":
         cp.createTestBedPublishersScript(deviceList)
     else:
-        cp.createSimPublishersScript(deviceList)
+        #cp.createSimPublishersScript(deviceList, experiment_type)
+        pass
     ct.createClientScript(experiment_type, algo_window, energy_per_execution, threshold)
     
 

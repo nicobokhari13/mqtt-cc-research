@@ -25,6 +25,7 @@ def main():
         energy = sys.argv[4]
         if sys.argv[1] == "MQTT":
             frequency_range = int(sys.argv[5])
+            print(frequency_range)
             topics = sys.argv[6].split(",") # list of topic strings
             # the example input params
                 # python3 sensor.py sim dev001 100 0.1 50 topic/1,topic/2,topic/3
@@ -43,8 +44,8 @@ def main():
     # create single instance of pub_utils with cmd line parameters
     utils.setParameters(Mac_addr=MacAddr, start_battery=battery, in_sim=simValue, energy_per_execution=energy)
     if sys.argv[1] == "MQTT":
-        utils.randomizePublishes(frequency_range, topics)
-         
+        utils.randomizePublishes(topics,frequency_range)
+        utils.getNumExecutions()
     # move execution to pub_asyncio
     run_async_publisher()
 
