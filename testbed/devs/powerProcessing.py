@@ -1,17 +1,17 @@
 from gpiozero import MCP3008
-import pigpio 
-pi = pigpio.pi()
+# import pigpio 
+# pi = pigpio.pi()
 
-handle = pi.spi_open(0, 1000000)  # Open SPI device 0 with a baud rate of 1 MHz
+# handle = pi.spi_open(0, 1000000)  # Open SPI device 0 with a baud rate of 1 MHz
 
-def read_adc(channel):
-    if channel < 0 or channel > 7:
-        return -1  # Invalid channel number
-    # SPI message format for MCP3008: [start bit, single-ended, channel number (3 bits), null bit (1 bit), data (10 bits)]
-    msg = [1, (8 + channel) << 4, 0]
-    data = pi.spi_xfer2(handle, msg)
-    adc_value = ((data[1] & 3) << 8) + data[2]  # Extract ADC value from received data
-    return adc_value
+# def read_adc(channel):
+#     if channel < 0 or channel > 7:
+#         return -1  # Invalid channel number
+#     # SPI message format for MCP3008: [start bit, single-ended, channel number (3 bits), null bit (1 bit), data (10 bits)]
+#     msg = [1, (8 + channel) << 4, 0]
+#     data = pi.spi_xfer2(handle, msg)
+#     adc_value = ((data[1] & 3) << 8) + data[2]  # Extract ADC value from received data
+#     return adc_value
 
 
 ADD_CONSTANT  = 0.6
