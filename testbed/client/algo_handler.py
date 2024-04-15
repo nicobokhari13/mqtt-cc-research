@@ -75,7 +75,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
             if not Emin:
                 bestMac = mac
                 Emin = Eratio
-            elif (Enew <= device._battery and Eratio < Emin):
+            elif (Enew <= publishers._units[mac]._battery and Eratio < Emin):
                 bestMac = mac
                 Emin = Eratio
         

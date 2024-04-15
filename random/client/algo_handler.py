@@ -158,10 +158,10 @@ def randomGenerateAssignments():
         bestMac = capableDevices[index][0]
         # add topic and frequency to device
         publishers._units[bestMac].addAssignment(topic, freq)
+        publishers._units[bestMac].resetExecutions()
 
     # after each topic is assigned, every device must calculate their new executions
     for mac, device in publishers._units.items():
-        publishers._units[mac].resetExecutions()
         # update db's executions
         db.updateDeviceExecutions(MAC_ADDR=mac, NEW_EXECUTIONS=device._numExecutions)
         # if there are no assignments given, give it the default value
