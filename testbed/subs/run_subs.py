@@ -3,7 +3,7 @@ import csv
 import subprocess
 
 def main():
-    subsfilename = sys.argv[1]
+    subsfilename = "subscribers.csv"
     pidfilename = "sub_pidfile.txt"
     try: 
         with open(subsfilename, 'r', newline='') as subfile:
