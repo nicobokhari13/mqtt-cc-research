@@ -67,46 +67,37 @@ def generateAssignments(changedTopic = None, subLeft = None):
                 if changedTopic and topic == changedTopic:
                     # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
                     publishers._units[mac].resetExecutions()
-                
-
-        # for each device in Devices singleton
-        for macAddress, device in publishers._units.items():
-            # determine the energy incrase for adding the topic's frequency to the device
-            Einc = device.energyIncrease(freq)
+            
+            Einc = publishers._units[mac].energyIncrease(freq)
 
             # the device's new energy level after addition of the topic
-            Enew = device.currentEnergy() + Einc
+            Enew = publishers._units[mac].currentEnergy() + Einc
             # the device's new energy level divided by its available battery
             Eratio = Enew / device._battery
             # if the new energy level is less than the battery, and 
             # the new energy level's ratio to the battery is smaller than the min 
             if not Emin:
-                bestMac = macAddress
+                bestMac = mac
                 Emin = Eratio
-            elif (Enew <= device._battery and Eratio < Emin):
-                bestMac = macAddress
+            elif (Enew <= publishers._units[mac]._battery and Eratio < Emin):
+                bestMac = mac
                 Emin = Eratio
             
-        # if bestMac != None:
-            # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)
-            # Devices[bestMac]._num Executions = Emin / Devices[bestMac].ENERGY PER EXEC
-
         if bestMac != None:
-                # adding the assignment adds the task's frequency to the publishings variable
-                print(publishers._units[bestMac]._mac)
-                print(publishers._units[bestMac]._assignments)
-                publishers._units[bestMac].addAssignment(topic, freq)
-                publishers._units[bestMac].resetExecutions()
-                print(publishers._units[bestMac]._assignments)
-                # we know bestMac uses Emin energy, so reverse operations to get Einc
-                # Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
-                # changeInExecutions = Einc / Devices._instance._ENERGY_PER_EXECUTION
-                # print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
-                # New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
-                # print(f"{bestMac} now executes at {New_Executions}")
-                # publishers._units[bestMac]._numExecutions = New_Executions
-                # update num executions in DB
-                db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=publishers._units[bestMac]._numExecutions)
+            # adding the assignment adds the task's frequency to the publishings variable
+            print(publishers._units[bestMac]._mac)
+            print(publishers._units[bestMac]._assignments)
+            publishers._units[bestMac].addAssignment(topic, freq)
+            print(publishers._units[bestMac]._assignments)
+            # we know bestMac uses Emin energy, so reverse operations to get Einc
+            Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
+            changeInExecutions = Einc / Processing_Unit._ENERGY_PER_EXECUTION
+            print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
+            New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
+            print(f"{bestMac} now executes at {New_Executions}")
+            publishers._units[bestMac]._numExecutions = New_Executions
+            # update num executions in DB
+            db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=New_Executions)
 
         bestMac = None
         Emin = None
@@ -168,9 +159,9 @@ def roundRobinGeneration():
             # get device publishing info with query
             if i == utils._topic_device_indices[topic]:
                 publishers._units[mac].addAssignment(topic, freq)
+            publishers._units[mac].resetExecutions()
 
     for mac, device in publishers._units.items():
-        publishers._units[mac].resetExecutions()
         # update db's executions
         db.updateDeviceExecutions(MAC_ADDR=mac, NEW_EXECUTIONS=device._numExecutions)
         # if there are no assignments given, give it the default value
