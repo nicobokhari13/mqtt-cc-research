@@ -95,7 +95,7 @@ class AsyncMqtt:
                 #"cpu_temperature": utils.get_cpu_temperature(),
                 "cpu_temperature": utils.get_cpu_temperature(), 
                 "cpu_utilization_percentage": utils.get_cpu_utilization(),
-                "memory_utilization_percentage": utils.get_memory_utilization()
+                "memory_utilization_percentage": utils.get_memory_utilization(),
             }
 
             status_str = json.dumps(status_json)
