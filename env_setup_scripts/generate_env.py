@@ -77,7 +77,7 @@ def main():
     else:
         #cp.createSimPublishersScript(deviceList, experiment_type)
         pass
-    ct.createClientScript(experiment_type, algo_window, energy_per_execution, threshold)
+    ct.createClientScript(experiment_type, energy_per_execution, threshold, algo_window)
     
 
 

@@ -108,7 +108,7 @@ class AsyncMqtt:
 
 
     async def publish_to_topic(self, sense_topic, freq):
-        msg = "1" * 500000
+        msg = "1" * 10000
         while True:
             self.client.publish(topic = sense_topic, payload = msg,qos=1)
             await asyncio.sleep(freq)
