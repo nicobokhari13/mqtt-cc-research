@@ -23,31 +23,26 @@ CH_7_DIVISION_CONSTANT = (1.0526 + 0.9524)/2
 CH_0_DIVISION_CONSTANT = (0.4524 + 0.5526)/2
 STUNT_RESISTOR_OHMS = 1000
 
-adc_value_channel0 = read_adc(0)
-adc_value_channel7 = read_adc(7)
-
-print(adc_value_channel0)
-print(adc_value_channel7)
-# try:
-#     while True:
-#         # Read the analog value from the ADC
-#         cZeroAnalog = adcChannelZero.value
-#         cSevenAnalog = adcChannelSeven.value
-#         print("Channel 0 analog:", cZeroAnalog)
-#         print("Channel 7 analog:", cSevenAnalog)
+try:
+    while True:
+        # Read the analog value from the ADC
+        cZeroAnalog = adcChannelZero.value
+        cSevenAnalog = adcChannelSeven.value
+        print("Channel 0 analog:", cZeroAnalog)
+        print("Channel 7 analog:", cSevenAnalog)
 
         
-#         # Optional: Convert the analog alue to voltage (assuming 3.3V reference)
-#         cZeroVoltage = cZeroAnalog  * 5 + ADD_CONSTANT
-#         cSevenVoltage = cSevenAnalog * 5 / STUNT_RESISTOR_OHMS 
-#         print(f"Battery Current is {cSevenVoltage / CH_7_DIVISION_CONSTANT}")
-#         print(f"1/2 Battery Voltage: {cZeroVoltage}")
-#         print(f"Full Battery Voltage is between: {cZeroVoltage / CH_0_DIVISION_CONSTANT}")
+        # Optional: Convert the analog alue to voltage (assuming 3.3V reference)
+        cZeroVoltage = cZeroAnalog  * 5 + ADD_CONSTANT
+        cSevenVoltage = cSevenAnalog * 5 / STUNT_RESISTOR_OHMS 
+        print(f"Battery Current is {cSevenVoltage / CH_7_DIVISION_CONSTANT}")
+        print(f"1/2 Battery Voltage: {cZeroVoltage}")
+        print(f"Full Battery Voltage is between: {cZeroVoltage / CH_0_DIVISION_CONSTANT}")
 
-#         print("============")
+        print("============")
         
-#         # Add a small delay before reading again
-#         sleep(10)
+        # Add a small delay before reading again
+        sleep(10)
 
-# except KeyboardInterrupt:
-#     print("Exiting...")
+except KeyboardInterrupt:
+    print("Exiting...")
