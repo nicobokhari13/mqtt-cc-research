@@ -40,7 +40,9 @@ class ProtoUtils:
     def updateCapacities(self, mac, power_instant):
         # example power_instant = 980J
         # divide by total WH in battery
+        print(f"on mac {mac}, energy used = {power_instant}")
         battery_percent_change = power_instant / 133200 # joules
-        self._remaining_batteries[mac] -= power_instant
+        print(f"percentage used = {battery_percent_change}")
+        self._remaining_batteries[mac] -= battery_percent_change
 
 
