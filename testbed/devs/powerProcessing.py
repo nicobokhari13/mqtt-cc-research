@@ -30,7 +30,7 @@ def readVoltage():
 def readCurrent():
     channel7 = MCP3008(channel=7)
     analogValue = float(channel7.value)
-    cSevenVoltage = analogValue * 5 / STUNT_RESISTOR_OHMS 
+    cSevenVoltage = analogValue * 5 
     current = cSevenVoltage / CH_7_DIVISION_CONSTANT
     print(f"current {current}")
     return current

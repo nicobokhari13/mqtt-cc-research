@@ -64,8 +64,9 @@ def generateAssignments(changedTopic = None, subLeft = None):
                 #     publishers._units[mac].resetExecutions()
             
                         # determine the energy incrase for adding the topic's frequency to the device
-            Einc = publishers._units[mac].energyIncrease(freq)
+            print(publishers._units[mac]._assignments)
 
+            Einc = publishers._units[mac].energyIncrease(freq)
             # the device's new energy level after addition of the topic
             Enew = publishers._units[mac].currentEnergy() + Einc
             # the device's new energy level divided by its available battery
@@ -78,6 +79,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
             elif (Enew <= publishers._units[mac]._battery and Eratio < Emin):
                 bestMac = mac
                 Emin = Eratio
+            print(f"bestMac = {bestMac}")
         
         if bestMac != None:
             # adding the assignment adds the task's frequency to the publishings variable

@@ -75,7 +75,7 @@ class Processing_Unit:
     def energyIncrease(self, task):
         newExecutions = self.calculateExecutions(newTask = task)
         changeInExecutions = newExecutions - self._numExecutions
-        #print(f"change in executions: {changeInExecutions}")
+        print(f"change in executions: {changeInExecutions}")
         return changeInExecutions * Devices._instance._ENERGY_PER_EXECUTION
     
     def addAssignment(self, topic:str, task, isNew = None):
