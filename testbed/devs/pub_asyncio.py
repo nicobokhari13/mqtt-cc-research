@@ -103,14 +103,14 @@ class AsyncMqtt:
             # publish status to status topic
 
 
-            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str,qos=1)
+            self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str, qos=1)
             print(f"{utils._deviceMac} publishing status")
 
 
     async def publish_to_topic(self, sense_topic, freq):
         msg = "1" * 10000
         while True:
-            self.client.publish(topic = sense_topic, payload = msg,qos=1)
+            self.client.publish(topic = sense_topic, payload = msg, qos=1)
             await asyncio.sleep(freq)
             print(f"{utils._deviceMac} publishing on {sense_topic}")
     
