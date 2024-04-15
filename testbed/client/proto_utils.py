@@ -41,7 +41,7 @@ class ProtoUtils:
         # example power_instant = 980J
         # divide by total WH in battery
         print(f"on mac {mac}, energy used = {power_instant}")
-        battery_percent_change = power_instant / 133200 # joules
+        battery_percent_change = (power_instant / 133200) * 100 
         print(f"percentage used = {battery_percent_change}")
         self._remaining_batteries[mac] -= battery_percent_change
 
