@@ -62,11 +62,8 @@ def generateAssignments(changedTopic = None, subLeft = None):
                 # if changedTopic and topic == changedTopic:
                 #     # if there was a latency change to changedTopic, then you must recalculate devices' number of executions
                 #     publishers._units[mac].resetExecutions()
-                
-
-        # for each device in Devices singleton
-        for macAddress, device in publishers._units.items():
-            # determine the energy incrase for adding the topic's frequency to the device
+            
+                        # determine the energy incrase for adding the topic's frequency to the device
             Einc = device.energyIncrease(freq)
 
             # the device's new energy level after addition of the topic
@@ -81,27 +78,23 @@ def generateAssignments(changedTopic = None, subLeft = None):
             elif (Enew <= device._battery and Eratio < Emin):
                 bestMac = macAddress
                 Emin = Eratio
-            
-        # if bestMac != None:
-            # Devices[bestMac].addAssignnment(topic = topicName, task = topicFrequency)
-            # Devices[bestMac]._num Executions = Emin / Devices[bestMac].ENERGY PER EXEC
-
+        
         if bestMac != None:
-                # adding the assignment adds the task's frequency to the publishings variable
-                print(publishers._units[bestMac]._mac)
-                print(publishers._units[bestMac]._assignments)
-                publishers._units[bestMac].addAssignment(topic, freq)
-                publishers._units[bestMac].resetExecutions()
-                #print(publishers._units[bestMac]._assignments)
-                # we know bestMac uses Emin energy, so reverse operations to get Einc
-                # Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
-                # changeInExecutions = Einc / Devices._instance._ENERGY_PER_EXECUTION
-                # print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
-                # New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
-                # print(f"{bestMac} now executes at {New_Executions}")
-                # publishers._units[bestMac]._numExecutions = New_Executions
-                # update num executions in DB
-                db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=publishers._units[bestMac]._numExecutions)
+            # adding the assignment adds the task's frequency to the publishings variable
+            print(publishers._units[bestMac]._mac)
+            print(publishers._units[bestMac]._assignments)
+            publishers._units[bestMac].addAssignment(topic, freq)
+            publishers._units[bestMac].resetExecutions()
+            #print(publishers._units[bestMac]._assignments)
+            # we know bestMac uses Emin energy, so reverse operations to get Einc
+            # Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
+            # changeInExecutions = Einc / Devices._instance._ENERGY_PER_EXECUTION
+            # print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
+            # New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
+            # print(f"{bestMac} now executes at {New_Executions}")
+            # publishers._units[bestMac]._numExecutions = New_Executions
+            # update num executions in DB
+            db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=publishers._units[bestMac]._numExecutions)
 
         bestMac = None
         Emin = None
