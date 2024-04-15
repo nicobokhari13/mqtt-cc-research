@@ -34,10 +34,13 @@ class ProtoUtils:
         self._remaining_batteries = {}
 
     def setCapacities(self, mac1, mac2):
-        self._remaining_batteries[mac1] = 133200 # Joules = 37 Watt-Hours
-        self._remaining_batteries[mac2] = 133200 # Joules = 37 Watt-Hours
+        self._remaining_batteries[mac1] = 100 # Joules = 37 Watt-Hours
+        self._remaining_batteries[mac2] = 100 # Joules = 37 Watt-Hours
 
     def updateCapacities(self, mac, power_instant):
+        # example power_instant = 980J
+        # divide by total WH in battery
+        battery_percent_change = power_instant / 133200 # joules
         self._remaining_batteries[mac] -= power_instant
 
 
