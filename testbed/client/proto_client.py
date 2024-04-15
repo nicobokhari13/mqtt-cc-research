@@ -48,12 +48,13 @@ import status_handler
     # exp_type, deviceMac, battery, energy_per_execution, freq_range, topic publishings
     # 1         2           3           4                   5           6  -> ...
 def main():
+    utils = ProtoUtils()
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    devicesFile = sys.argv[1]
-    in_sim = sys.argv[2]
-    restart_window = sys.argv[3]
-    energy_per_execution = sys.argv[4]
-    threshold = sys.argv[5]
+    devicesFile = sys.argv[1] #/devices.csv
+    in_sim = sys.argv[2] # testbed
+    restart_window = sys.argv[3] #900
+    energy_per_execution = sys.argv[4] #0.0
+    threshold = sys.argv[5] #2
     # devicePath sim 900 0.3 3
     print(f"Device File = {devicesFile}")
     print(f"Sim Value = {in_sim}")
@@ -75,13 +76,12 @@ def main():
         mac = rows[i][1]
         startBattery = rows[i][2]
         database.addDevice(MAC_ADDR=mac, BATTERY=startBattery)
-        #status_handler.logPublisherMetrics(time=current_time, mac=mac, battery=startBattery, memory_util_perc="None", cpu_util_perc="None", cpu_temp="None")
+        status_handler.logTestBedMetrics(time=current_time, mac=mac, executions=0, power_instant=0, remaining_power=startBattery, memory_util_perc="None", cpu_util_perc="None", cpu_temp="None")
         topicList = rows[i][5:len(rows[i])] # rest of rows are the topics
         for topic in topicList:
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)
     database.closeDB()
     # create it once
-    utils = ProtoUtils()
     devices = Devices()
     devices.addEnergyPerExecution(energy_per_execution)
     devices.addConcurrencyThreshold(threshold)
