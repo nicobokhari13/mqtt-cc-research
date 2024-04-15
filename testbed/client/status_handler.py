@@ -19,8 +19,9 @@ def handle_status_msg(msg:str):
     cpu_temp = status_json["cpu_temperature"]
     memory_util_perc= status_json["memory_utilization_percentage"]
     utils.updateCapacities(mac, battery)
+    num_executions = database.getNumExecutions(mac)
     if utils._exp_type == "testbed":
-        logTestBedMetrics(time, mac, battery, utils._remaining_batteries[mac], memory_util_perc, cpu_util_perc, cpu_temp)
+        logTestBedMetrics(time, mac, num_executions, battery, utils._remaining_batteries[mac], memory_util_perc, cpu_util_perc, cpu_temp)
     else:
         logPublisherMetrics(time, mac, battery, memory_util_perc, cpu_util_perc, cpu_temp)
     database.updateDeviceStatus(MAC_ADDR=mac, NEW_BATTERY=utils._remaining_batteries[mac])
@@ -34,9 +35,9 @@ def logPublisherMetrics(time, mac, battery, memory_util_perc, cpu_util_perc, cpu
         # Append the data to the CSV file
         writer.writerow(data)
 
-def logTestBedMetrics(time, mac, power_instant, remaining_power, memory_util_perc, cpu_util_perc, cpu_temp):
+def logTestBedMetrics(time, mac, executions, power_instant, remaining_power, memory_util_perc, cpu_util_perc, cpu_temp):
     logFile = utils._logFile_testbed
-    data = [time, mac, power_instant, remaining_power, memory_util_perc, cpu_util_perc, cpu_temp]
+    data = [time, mac, executions, power_instant, remaining_power, memory_util_perc, cpu_util_perc, cpu_temp]
     with open(logFile, 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(data)
