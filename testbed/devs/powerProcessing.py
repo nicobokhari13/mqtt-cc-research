@@ -33,6 +33,6 @@ def readCurrent():
     cSevenVoltage = analogValue * (5/1023) 
     voltage_drop = 3.3 - cSevenVoltage
     resistor = 220
-    current = (voltage_drop / 220) / CH_7_DIVISION_CONSTANT
+    current = (voltage_drop / resistor) / CH_7_DIVISION_CONSTANT
     print(f"current {current}")
     return current
