@@ -52,7 +52,8 @@ class PublisherUtils:
             return False
         
     def getExperimentEnergy(self):
-        self._battery = pwr_reader.readVoltage() * pwr_reader.readCurrent() * 60 # Joules = Watt-Seconds
+        #self._battery = pwr_reader.readVoltage() * pwr_reader.readCurrent() * 60 # Joules = Watt-Seconds
+        self._battery = pwr_reader.readCurrent() # Amps
 
     def saveNewExecutions(self, newExecutions):
         self._current_executions = float(newExecutions)
