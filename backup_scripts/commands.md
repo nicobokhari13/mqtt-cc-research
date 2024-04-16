@@ -14,3 +14,6 @@
   - `cd repos/research/mqtt_cc_research/prototype`
   - `source dev/bin/activate`
   - `cd src/devs/dev02*` 
+- TCP Dump
+  - `sudo tcpdump -i wlp0s20f3 port 1883 -w filname.pcap`
+  - `sudo tcpdump -i lo port 1883 -w filname.pcap`
