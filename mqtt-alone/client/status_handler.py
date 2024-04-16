@@ -19,13 +19,16 @@ def handle_status_msg(msg:str):
     cpu_temp = status_json["cpu_temperature"]
     memory_util_perc= status_json["memory_utilization_percentage"]
 
-    logPublisherMetrics(time, mac, battery, memory_util_perc, cpu_util_perc, cpu_temp)
+    num_executions = database.getNumExecutions(mac)
+    num_executions = num_executions[0][0]
+
+    logPublisherMetrics(time, mac, num_executions, battery, memory_util_perc, cpu_util_perc, cpu_temp)
     database.updateDeviceStatus(MAC_ADDR=mac, NEW_BATTERY=battery)
     database.closeDB()
 
-def logPublisherMetrics(time, mac, battery, memory_util_perc, cpu_util_perc, cpu_temp):
+def logPublisherMetrics(time, mac, num_executions, battery, memory_util_perc, cpu_util_perc, cpu_temp):
     logFile = utils._logFile 
-    data = [time, mac, battery, memory_util_perc, cpu_util_perc, cpu_temp]
+    data = [time, mac, num_executions, battery, memory_util_perc, cpu_util_perc, cpu_temp]
     with open(logFile, 'a', newline='') as file:
         writer = csv.writer(file)
         
