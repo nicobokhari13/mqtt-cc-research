@@ -174,3 +174,7 @@ class Database:
     def findChangedLatencyTopics(self):
         selectQuery = '''SELECT subscription FROM subscriptions WHERE lat_change = 1'''
         return self.execute_query_with_retry(query=selectQuery)
+    
+    def getNumExecutions(self, mac):
+        selectQuery = '''SELECT executions FROM devices WHERE deviceMac = ?'''
+        return self.execute_query_with_retry(query=selectQuery, values=(mac,))
