@@ -11,9 +11,11 @@
   - `python3 subscriber.py sensor/temperature%latency%28,sensor/humidity%latency%45`
   - `python3 subscriber.py sensor/humidity%latency%12,sensor/airquality%latency%20`
 - Raspberry Pi
-  - `cd repos/research/mqtt_cc_research/prototype`
-  - `source dev/bin/activate`
-  - `cd src/devs/dev02*` 
+  ```bash
+  cd repos/research/mqtt_cc_research
+  source prototype/dev/bin/activate
+  cd testbed/devs
+  ```
 - TCP Dump
   - `sudo tcpdump -i wlp0s20f3 port 1883 -w filname.pcap`
   - `sudo tcpdump -i lo port 1883 -w filname.pcap`
