@@ -3,6 +3,7 @@ import proto_db as db
 from proto_utils import ProtoUtils
 import json
 import csv
+import psutil
 
 utils = ProtoUtils()
 
@@ -15,9 +16,13 @@ def handle_status_msg(msg:str):
     mac = status_json["deviceMac"]
     battery = status_json["battery"]
     time = status_json["time"]
-    cpu_util_perc = status_json["cpu_utilization_percentage"]
-    cpu_temp = status_json["cpu_temperature"]
-    memory_util_perc= status_json["memory_utilization_percentage"]
+    cpu_util_perc = getBrokerCpuUtil()
+    cpu_temp = getBrokerCpuTemp()
+    memory_util_perc= getBrokerMemoryUtil()
+
+    # cpu_util_perc = status_json["cpu_utilization_percentage"]
+    # cpu_temp = status_json["cpu_temperature"]
+    # memory_util_perc= status_json["memory_utilization_percentage"]
 
     if utils._in_sim == "testbed":
         logTestBedMetrics(time, mac, battery)
@@ -38,3 +43,12 @@ def logTestBedMetrics(time, mac, power_instant, remaining_power, memory_util_per
     data = [time, mac, power_instant, remaining_power, memory_util_perc, cpu_util_perc, cpu_temp]
     with open(logFile, 'a', newline='') as file:
         writer = csv.writer(file)
+
+def getBrokerCpuUtil():
+    return psutil.cpu_percent(interval=20)
+
+def getBrokerCpuTemp():
+    return psutil.sensors_temperatures()
+
+def getBrokerMemoryUtil():
+    return psutil.virtual_memory().percent

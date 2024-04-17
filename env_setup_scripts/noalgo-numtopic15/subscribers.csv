@@ -1,0 +1,10 @@
+sub000,topic/0%latency%26,topic/1%latency%13,topic/4%latency%16,topic/6%latency%48,topic/7%latency%46,topic/10%latency%35,topic/12%latency%41
+sub001,topic/14%latency%50
+sub002,topic/0%latency%34,topic/2%latency%42,topic/3%latency%49,topic/4%latency%6,topic/5%latency%15,topic/9%latency%19,topic/10%latency%42,topic/12%latency%52,topic/13%latency%10,topic/14%latency%15
+sub003,topic/8%latency%20,topic/11%latency%48
+sub004,topic/1%latency%48,topic/2%latency%54,topic/3%latency%19,topic/4%latency%7,topic/7%latency%17,topic/8%latency%13,topic/9%latency%25,topic/11%latency%55,topic/13%latency%53
+sub005,topic/1%latency%53,topic/10%latency%8,topic/5%latency%17
+sub006,topic/12%latency%38,topic/4%latency%53
+sub007,topic/5%latency%44,topic/6%latency%30,topic/7%latency%44,topic/9%latency%24,topic/12%latency%24
+sub008,topic/9%latency%49,topic/11%latency%12,topic/6%latency%10
+sub009,topic/0%latency%40,topic/1%latency%8,topic/2%latency%8,topic/3%latency%23,topic/5%latency%25,topic/7%latency%43,topic/8%latency%25,topic/9%latency%11,topic/10%latency%36,topic/11%latency%37,topic/12%latency%22,topic/13%latency%49,topic/14%latency%7
