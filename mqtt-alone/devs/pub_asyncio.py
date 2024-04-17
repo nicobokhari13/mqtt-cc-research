@@ -97,6 +97,7 @@ class AsyncMqtt:
                 "time": current_time,
                 "deviceMac": utils._deviceMac,
                 "battery": utils._battery,
+                "executions": utils._current_executions,
                 #"cpu_temperature": utils.get_cpu_temperature(),
                 "cpu_temperature": "None",
                 "cpu_utilization_percentage": "None",
