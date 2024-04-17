@@ -33,7 +33,7 @@ def generateSubscriptions(sub_name, topic_list, latency_range = 0):
         unique_random_indices.add(random.randrange(0, len(topic_list))) # choose an index between 0 and len(topic_list) - 1 
     for index in unique_random_indices:
         subscriptions.append(topic_list[index]) # append the topic to the row
-    
+    print(latency_range)
     if latency_range: 
         if latency_range == 50:
             latency_min = 5
@@ -41,13 +41,13 @@ def generateSubscriptions(sub_name, topic_list, latency_range = 0):
         elif latency_range == 40:
             latency_min = 10
             latency_max = 50
-        elif latency_range == 35:
+        elif latency_range == 30:
             latency_min = 15
             latency_max = 45
-        elif latency_range == 30:
+        elif latency_range == 20:
             latency_min = 20
             latency_max = 40
-        elif latency_range == 20:
+        elif latency_range == 10:
             latency_min = 25
             latency_max = 35
 

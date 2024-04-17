@@ -143,7 +143,7 @@ class AsyncMqtt:
     
     async def runAlgo(self):
         while True:
-            await asyncio.sleep(300)
+            await asyncio.sleep(480)
             mapAssignments = algo.roundRobinGeneration()
             if mapAssignments:
                 print("ran algo after 5 minutes")
