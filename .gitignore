@@ -14,6 +14,7 @@ callgrind.out.*
 dhat.out.*
 massif.out.*
 vglog*
+*.pcap
 
 broker/mosquitto-2.0.18/apps/db_dump/mosquitto_db_dump
 broker/mosquitto-2.0.18/apps/mosquitto_ctrl/mosquitto_ctrl
