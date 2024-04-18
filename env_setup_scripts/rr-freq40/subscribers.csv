@@ -1,0 +1,10 @@
+sub000,topic/0%latency%22,topic/2%latency%13,topic/6%latency%15,topic/8%latency%20,topic/9%latency%14
+sub001,topic/8%latency%12,topic/2%latency%39
+sub002,topic/4%latency%29
+sub003,topic/2%latency%42,topic/5%latency%22,topic/6%latency%22
+sub004,topic/0%latency%18,topic/1%latency%38,topic/4%latency%15,topic/5%latency%25,topic/6%latency%36
+sub005,topic/1%latency%32
+sub006,topic/8%latency%31,topic/1%latency%23,topic/3%latency%40,topic/0%latency%42
+sub007,topic/3%latency%32,topic/4%latency%35
+sub008,topic/0%latency%17,topic/1%latency%40,topic/2%latency%22,topic/6%latency%50,topic/8%latency%44,topic/9%latency%33
+sub009,topic/0%latency%36,topic/1%latency%47,topic/2%latency%10,topic/3%latency%25,topic/4%latency%24,topic/5%latency%48,topic/6%latency%33,topic/7%latency%38,topic/8%latency%21
