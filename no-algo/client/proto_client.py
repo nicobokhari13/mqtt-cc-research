@@ -48,6 +48,7 @@ import status_handler
     # exp_type, deviceMac, battery, energy_per_execution, freq_range, topic publishings
     # 1         2           3           4                   5           6  -> ...
 def main():
+    utils = ProtoUtils()
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     devicesFile = sys.argv[1]
     in_sim = sys.argv[2]
@@ -81,7 +82,6 @@ def main():
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)
     database.closeDB()
     # create it once
-    utils = ProtoUtils()
     devices = Devices()
     devices.addEnergyPerExecution(energy_per_execution)
     devices.addConcurrencyThreshold(threshold)
