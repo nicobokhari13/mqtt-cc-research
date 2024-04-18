@@ -34,9 +34,6 @@ def main():
             except subprocess.CalledProcessError as e:
                 print(f"Error with running {sub}: {e}")
 
-    while True:
-        print("running pubs")
-
 if __name__ == "__main__":
     main()
 

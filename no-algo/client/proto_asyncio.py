@@ -221,7 +221,7 @@ class AsyncMqtt:
                     task.cancel()
                 algo.resetPublishingsAndDeviceExecutions()
                 # run algo again
-                mapAssignments = algo.noAlgoGenerateAssignments
+                mapAssignments = algo.noAlgoGenerateAssignments()
                 if utils._in_sim: 
                     mapAssignments = await self.appendExecutions(mapAssignments)
                 # send command
