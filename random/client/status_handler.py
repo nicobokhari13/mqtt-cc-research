@@ -46,10 +46,12 @@ def logTestBedMetrics(time, mac, power_instant, remaining_power, memory_util_per
         writer = csv.writer(file)
 
 def getBrokerCpuUtil():
-    return psutil.cpu_percent(interval=20)
+    return psutil.cpu_percent(interval=1)
 
 def getBrokerCpuTemp():
-    return psutil.sensors_temperatures()
+    return psutil.sensors_temperatures()['coretemp'][0].current
+    
+    #return psutil.sensors_temperatures()
 
 def getBrokerMemoryUtil():
     return psutil.virtual_memory().percent

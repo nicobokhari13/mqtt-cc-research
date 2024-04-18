@@ -142,7 +142,7 @@ class AsyncMqtt:
         # set other necessary parameters for the client
         #self.client.username_pw_set(username=utils._USERNAME, password=utils._PASSWORD)
         aioh = AsyncioHelper(self.loop, self.client)
-        self.client.connect("localhost", 1883)
+        self.client.connect("localhost", 1888, keepalive=1000)
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
         
         self.got_message = self.loop.create_future()
