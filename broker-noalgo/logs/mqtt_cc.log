@@ -24228,3 +24228,387 @@
 1713467500: Sending PUBACK to auto-19279E86-37A7-AB3B-F1FA-93ADEFD7A815 (m676, rc0)
 1713467500: Received PUBLISH from auto-19279E86-37A7-AB3B-F1FA-93ADEFD7A815 (d0, q1, r0, m677, 'topic/7', ... (500000 bytes))
 1713467500: Sending PUBACK to auto-19279E86-37A7-AB3B-F1FA-93ADEFD7A815 (m677, rc0)
+1713470643: mosquitto version 2.0.18 starting
+1713470643: Config loaded from mqtt_cc.conf.
+1713470643: Opening ipv4 listen socket on port 1884.
+1713470643: Opening ipv6 listen socket on port 1884.
+1713470643: Opening ipv4 listen socket on port 1883.
+1713470643: Error: Address already in use
+1713470909: mosquitto version 2.0.18 starting
+1713470909: Config loaded from mqtt_cc.conf.
+1713470909: Opening ipv4 listen socket on port 1884.
+1713470909: Opening ipv6 listen socket on port 1884.
+1713470909: Opening ipv4 listen socket on port 1883.
+1713470909: Error: Address already in use
+1713470969: mosquitto version 2.0.18 starting
+1713470969: Config loaded from mqtt_cc.conf.
+1713470969: Opening ipv4 listen socket on port 1884.
+1713470969: Opening ipv6 listen socket on port 1884.
+1713470969: Opening ipv4 listen socket on port 1883.
+1713470969: Error: Address already in use
+1713471016: mosquitto version 2.0.18 starting
+1713471016: Config loaded from mqtt_cc.conf.
+1713471016: Opening ipv4 listen socket on port 1884.
+1713471016: Opening ipv6 listen socket on port 1884.
+1713471016: mosquitto version 2.0.18 running
+1713471016: Setting memory to prototype_db
+1713471016: before DB prepare
+1713471016: in prepare DB
+1713471016: opened DB
+1713471016: Created Tables
+1713471016: Success: Prepared Statements
+
+1713471019: mosquitto version 2.0.18 terminating
+1713471019: Saving in-memory database to /home/devnico/repos/research/mqtt_cc_research/broker-noalgo/db//mosquitto.db.
+1713471092: mosquitto version 2.0.18 starting
+1713471092: Config loaded from mqtt_cc.conf.
+1713471092: Opening ipv4 listen socket on port 1884.
+1713471092: Opening ipv6 listen socket on port 1884.
+1713471092: mosquitto version 2.0.18 running
+1713471092: Setting memory to prototype_db
+1713471092: before DB prepare
+1713471092: in prepare DB
+1713471092: opened DB
+1713471092: Created Tables
+1713471092: Success: Prepared Statements
+
+1713471269: mosquitto version 2.0.18 terminating
+1713471269: Saving in-memory database to /home/devnico/repos/research/mqtt_cc_research/broker-noalgo/db//mosquitto.db.
+1713471274: mosquitto version 2.0.18 starting
+1713471274: Config loaded from mqtt_cc.conf.
+1713471274: Opening ipv4 listen socket on port 1884.
+1713471274: Opening ipv6 listen socket on port 1884.
+1713471274: mosquitto version 2.0.18 running
+1713471274: Setting memory to prototype_db
+1713471274: before DB prepare
+1713471274: in prepare DB
+1713471274: opened DB
+1713471274: Created Tables
+1713471274: Success: Prepared Statements
+
+1713471276: New connection from 127.0.0.1:41493 on port 1884.
+1713471276: New client connected from 127.0.0.1:41493 as auto-07F21BF6-ED35-8654-DF08-5818599CE6E4 (p2, c1, k1000).
+1713471276: No will message specified.
+1713471276: Sending CONNACK to auto-07F21BF6-ED35-8654-DF08-5818599CE6E4 (0, 0)
+1713471276: Received SUBSCRIBE from auto-07F21BF6-ED35-8654-DF08-5818599CE6E4
+1713471276: 	sensor/status (QoS 1)
+1713471276: auto-07F21BF6-ED35-8654-DF08-5818599CE6E4 1 sensor/status
+1713471276: Sending SUBACK to auto-07F21BF6-ED35-8654-DF08-5818599CE6E4
+1713471276: Received SUBSCRIBE from auto-07F21BF6-ED35-8654-DF08-5818599CE6E4
+1713471276: 	subs/will (QoS 1)
+1713471276: auto-07F21BF6-ED35-8654-DF08-5818599CE6E4 1 subs/will
+1713471276: Sending SUBACK to auto-07F21BF6-ED35-8654-DF08-5818599CE6E4
+1713471276: Received SUBSCRIBE from auto-07F21BF6-ED35-8654-DF08-5818599CE6E4
+1713471276: 	subs/add (QoS 1)
+1713471276: auto-07F21BF6-ED35-8654-DF08-5818599CE6E4 1 subs/add
+1713471276: Sending SUBACK to auto-07F21BF6-ED35-8654-DF08-5818599CE6E4
+1713471276: Received SUBSCRIBE from auto-07F21BF6-ED35-8654-DF08-5818599CE6E4
+1713471276: 	subs/change (QoS 1)
+1713471276: auto-07F21BF6-ED35-8654-DF08-5818599CE6E4 1 subs/change
+1713471276: Sending SUBACK to auto-07F21BF6-ED35-8654-DF08-5818599CE6E4
+1713471297: New connection from 127.0.0.1:47295 on port 1884.
+1713471297: New client connected from 127.0.0.1:47295 as auto-7F5E7AFB-F55B-4453-2F6B-61CA96A76AFB (p2, c1, k1000).
+1713471297: No will message specified.
+1713471297: Sending CONNACK to auto-7F5E7AFB-F55B-4453-2F6B-61CA96A76AFB (0, 0)
+1713471297: Received SUBSCRIBE from auto-7F5E7AFB-F55B-4453-2F6B-61CA96A76AFB
+1713471297: 	topic/0%latency%32 (QoS 1)
+1713471297: Could not find topic in DB
+
+1713471297: Reset find_existing_topic
+
+1713471297: Reset insert_new_topic
+
+1713471297: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471297: auto-7F5E7AFB-F55B-4453-2F6B-61CA96A76AFB 1 topic/0
+1713471297: Sending SUBACK to auto-7F5E7AFB-F55B-4453-2F6B-61CA96A76AFB
+1713471300: New connection from 127.0.0.1:41099 on port 1884.
+1713471300: New connection from 127.0.0.1:48705 on port 1884.
+1713471300: New connection from 127.0.0.1:49387 on port 1884.
+1713471300: New connection from 127.0.0.1:48803 on port 1884.
+1713471300: New connection from 127.0.0.1:47017 on port 1884.
+1713471300: New connection from 127.0.0.1:54809 on port 1884.
+1713471300: New connection from 127.0.0.1:40791 on port 1884.
+1713471300: New connection from 127.0.0.1:60989 on port 1884.
+1713471300: New connection from 127.0.0.1:59819 on port 1884.
+1713471300: New client connected from 127.0.0.1:41099 as auto-8FFB0E74-94BD-B367-8647-315370CAAEB3 (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-8FFB0E74-94BD-B367-8647-315370CAAEB3 (0, 0)
+1713471300: New client connected from 127.0.0.1:48705 as auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 (0, 0)
+1713471300: New client connected from 127.0.0.1:49387 as auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B (0, 0)
+1713471300: New client connected from 127.0.0.1:48803 as auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879 (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879 (0, 0)
+1713471300: New client connected from 127.0.0.1:47017 as auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3 (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3 (0, 0)
+1713471300: New client connected from 127.0.0.1:54809 as auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE (0, 0)
+1713471300: New client connected from 127.0.0.1:40791 as auto-4A97AB6F-B51A-D01D-9535-318A8C35747F (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-4A97AB6F-B51A-D01D-9535-318A8C35747F (0, 0)
+1713471300: New client connected from 127.0.0.1:60989 as auto-09A5E100-A021-481C-8A4A-4512F80F98F1 (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-09A5E100-A021-481C-8A4A-4512F80F98F1 (0, 0)
+1713471300: New client connected from 127.0.0.1:59819 as auto-92E11145-847F-F57A-AD63-FA116C4CFAEE (p2, c1, k1000).
+1713471300: No will message specified.
+1713471300: Sending CONNACK to auto-92E11145-847F-F57A-AD63-FA116C4CFAEE (0, 0)
+1713471300: Received SUBSCRIBE from auto-8FFB0E74-94BD-B367-8647-315370CAAEB3
+1713471300: 	topic/2%latency%32 (QoS 1)
+1713471300: Could not find topic in DB
+
+1713471300: Reset find_existing_topic
+
+1713471300: Reset insert_new_topic
+
+1713471300: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471300: auto-8FFB0E74-94BD-B367-8647-315370CAAEB3 1 topic/2
+1713471300: Sending SUBACK to auto-8FFB0E74-94BD-B367-8647-315370CAAEB3
+1713471300: Received SUBSCRIBE from auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+1713471300: 	topic/0%latency%32 (QoS 1)
+1713471300: Adding clientid auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 and latQos 32 to topic topic/0 
+
+1713471300: Success: Added Latency Req 32 to topic topic/0 for client auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+
+1713471300: auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 1 topic/0
+1713471300: Sending SUBACK to auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+1713471300: Received SUBSCRIBE from auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B
+1713471300: 	topic/1%latency%28 (QoS 1)
+1713471300: Could not find topic in DB
+
+1713471300: Reset find_existing_topic
+
+1713471300: Reset insert_new_topic
+
+1713471300: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471300: auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B 1 topic/1
+1713471300: Sending SUBACK to auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B
+1713471300: Received SUBSCRIBE from auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+1713471300: 	topic/0%latency%25 (QoS 1)
+1713471300: Adding clientid auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879 and latQos 25 to topic topic/0 
+
+1713471300: Success: Added Latency Req 25 to topic topic/0 for client auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+
+1713471300: auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879 1 topic/0
+1713471300: Sending SUBACK to auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+1713471300: Received SUBSCRIBE from auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3
+1713471300: 	topic/1%latency%30 (QoS 1)
+1713471300: Adding clientid auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3 and latQos 30 to topic topic/1 
+
+1713471300: Success: Added Latency Req 30 to topic topic/1 for client auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3
+
+1713471300: auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3 1 topic/1
+1713471300: Sending SUBACK to auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3
+1713471300: Received SUBSCRIBE from auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE
+1713471300: 	topic/8%latency%25 (QoS 1)
+1713471300: Could not find topic in DB
+
+1713471300: Reset find_existing_topic
+
+1713471300: Reset insert_new_topic
+
+1713471300: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471300: auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE 1 topic/8
+1713471300: Sending SUBACK to auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE
+1713471300: Received SUBSCRIBE from auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+1713471300: 	topic/0%latency%34 (QoS 1)
+1713471300: Adding clientid auto-4A97AB6F-B51A-D01D-9535-318A8C35747F and latQos 34 to topic topic/0 
+
+1713471300: Success: Added Latency Req 34 to topic topic/0 for client auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+
+1713471300: auto-4A97AB6F-B51A-D01D-9535-318A8C35747F 1 topic/0
+1713471300: Sending SUBACK to auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+1713471300: Received SUBSCRIBE from auto-09A5E100-A021-481C-8A4A-4512F80F98F1
+1713471300: 	topic/0%latency%33 (QoS 1)
+1713471300: Adding clientid auto-09A5E100-A021-481C-8A4A-4512F80F98F1 and latQos 33 to topic topic/0 
+
+1713471300: Success: Added Latency Req 33 to topic topic/0 for client auto-09A5E100-A021-481C-8A4A-4512F80F98F1
+
+1713471300: auto-09A5E100-A021-481C-8A4A-4512F80F98F1 1 topic/0
+1713471300: Sending SUBACK to auto-09A5E100-A021-481C-8A4A-4512F80F98F1
+1713471300: Received SUBSCRIBE from auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+1713471300: 	topic/0%latency%35 (QoS 1)
+1713471300: Adding clientid auto-92E11145-847F-F57A-AD63-FA116C4CFAEE and latQos 35 to topic topic/0 
+
+1713471300: Success: Added Latency Req 35 to topic topic/0 for client auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+
+1713471300: auto-92E11145-847F-F57A-AD63-FA116C4CFAEE 1 topic/0
+1713471300: Sending SUBACK to auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+1713471327: Received SUBSCRIBE from auto-8FFB0E74-94BD-B367-8647-315370CAAEB3
+1713471327: 	topic/6%latency%27 (QoS 1)
+1713471327: Could not find topic in DB
+
+1713471327: Reset find_existing_topic
+
+1713471327: Reset insert_new_topic
+
+1713471327: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471327: auto-8FFB0E74-94BD-B367-8647-315370CAAEB3 1 topic/6
+1713471327: Sending SUBACK to auto-8FFB0E74-94BD-B367-8647-315370CAAEB3
+1713471327: Received SUBSCRIBE from auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+1713471327: 	topic/2%latency%28 (QoS 1)
+1713471327: Adding clientid auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 and latQos 28 to topic topic/2 
+
+1713471327: Success: Added Latency Req 28 to topic topic/2 for client auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+
+1713471327: auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 1 topic/2
+1713471327: Sending SUBACK to auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+1713471327: Received SUBSCRIBE from auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B
+1713471327: 	topic/3%latency%25 (QoS 1)
+1713471327: Could not find topic in DB
+
+1713471327: Reset find_existing_topic
+
+1713471327: Reset insert_new_topic
+
+1713471327: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471327: auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B 1 topic/3
+1713471327: Sending SUBACK to auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B
+1713471327: Received SUBSCRIBE from auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+1713471327: 	topic/1%latency%32 (QoS 1)
+1713471327: Adding clientid auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879 and latQos 32 to topic topic/1 
+
+1713471327: Success: Added Latency Req 32 to topic topic/1 for client auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+
+1713471327: auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879 1 topic/1
+1713471327: Sending SUBACK to auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+1713471327: Received SUBSCRIBE from auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3
+1713471327: 	topic/2%latency%26 (QoS 1)
+1713471327: Adding clientid auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3 and latQos 26 to topic topic/2 
+
+1713471327: Success: Added Latency Req 26 to topic topic/2 for client auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3
+
+1713471327: auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3 1 topic/2
+1713471327: Sending SUBACK to auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3
+1713471327: Received SUBSCRIBE from auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE
+1713471327: 	topic/2%latency%34 (QoS 1)
+1713471327: Adding clientid auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE and latQos 34 to topic topic/2 
+
+1713471327: Success: Added Latency Req 34 to topic topic/2 for client auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE
+
+1713471327: auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE 1 topic/2
+1713471327: Sending SUBACK to auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE
+1713471327: Received SUBSCRIBE from auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+1713471327: 	topic/6%latency%26 (QoS 1)
+1713471327: Adding clientid auto-4A97AB6F-B51A-D01D-9535-318A8C35747F and latQos 26 to topic topic/6 
+
+1713471327: Success: Added Latency Req 26 to topic topic/6 for client auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+
+1713471327: auto-4A97AB6F-B51A-D01D-9535-318A8C35747F 1 topic/6
+1713471327: Sending SUBACK to auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+1713471327: Received SUBSCRIBE from auto-09A5E100-A021-481C-8A4A-4512F80F98F1
+1713471327: 	topic/7%latency%27 (QoS 1)
+1713471327: Could not find topic in DB
+
+1713471327: Reset find_existing_topic
+
+1713471327: Reset insert_new_topic
+
+1713471327: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471327: auto-09A5E100-A021-481C-8A4A-4512F80F98F1 1 topic/7
+1713471327: Sending SUBACK to auto-09A5E100-A021-481C-8A4A-4512F80F98F1
+1713471327: Received SUBSCRIBE from auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+1713471327: 	topic/1%latency%28 (QoS 1)
+1713471327: Adding clientid auto-92E11145-847F-F57A-AD63-FA116C4CFAEE and latQos 28 to topic topic/1 
+
+1713471327: Success: Added Latency Req 28 to topic topic/1 for client auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+
+1713471327: auto-92E11145-847F-F57A-AD63-FA116C4CFAEE 1 topic/1
+1713471327: Sending SUBACK to auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+1713471354: Received SUBSCRIBE from auto-8FFB0E74-94BD-B367-8647-315370CAAEB3
+1713471354: 	topic/7%latency%33 (QoS 1)
+1713471354: Adding clientid auto-8FFB0E74-94BD-B367-8647-315370CAAEB3 and latQos 33 to topic topic/7 
+
+1713471354: Success: Added Latency Req 33 to topic topic/7 for client auto-8FFB0E74-94BD-B367-8647-315370CAAEB3
+
+1713471354: auto-8FFB0E74-94BD-B367-8647-315370CAAEB3 1 topic/7
+1713471354: Sending SUBACK to auto-8FFB0E74-94BD-B367-8647-315370CAAEB3
+1713471354: Received SUBSCRIBE from auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+1713471354: 	topic/3%latency%31 (QoS 1)
+1713471354: Adding clientid auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 and latQos 31 to topic topic/3 
+
+1713471354: Success: Added Latency Req 31 to topic topic/3 for client auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+
+1713471354: auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 1 topic/3
+1713471354: Sending SUBACK to auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+1713471354: Received SUBSCRIBE from auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B
+1713471354: 	topic/4%latency%29 (QoS 1)
+1713471354: Could not find topic in DB
+
+1713471354: Reset find_existing_topic
+
+1713471354: Reset insert_new_topic
+
+1713471354: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471354: auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B 1 topic/4
+1713471354: Sending SUBACK to auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B
+1713471354: Received SUBSCRIBE from auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+1713471354: 	topic/2%latency%29 (QoS 1)
+1713471354: Adding clientid auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879 and latQos 29 to topic topic/2 
+
+1713471354: Success: Added Latency Req 29 to topic topic/2 for client auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+
+1713471354: auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879 1 topic/2
+1713471354: Sending SUBACK to auto-26DE1766-3A1C-D4B0-D7AA-76C1E8997879
+1713471354: Received SUBSCRIBE from auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3
+1713471354: 	topic/5%latency%28 (QoS 1)
+1713471354: Could not find topic in DB
+
+1713471354: Reset find_existing_topic
+
+1713471354: Reset insert_new_topic
+
+1713471354: Success: Added topic, latency_req, and max_allowed_latency to DB
+
+1713471354: auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3 1 topic/5
+1713471354: Sending SUBACK to auto-A4FBE9C7-DDD6-A9A9-D1A3-7415F4DC0BD3
+1713471354: Received SUBSCRIBE from auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE
+1713471354: 	topic/6%latency%33 (QoS 1)
+1713471354: Adding clientid auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE and latQos 33 to topic topic/6 
+
+1713471354: Success: Added Latency Req 33 to topic topic/6 for client auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE
+
+1713471354: auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE 1 topic/6
+1713471354: Sending SUBACK to auto-5E91E049-1FB2-F4F5-3F56-B908D4F484CE
+1713471354: Received SUBSCRIBE from auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+1713471354: 	topic/7%latency%25 (QoS 1)
+1713471354: Adding clientid auto-4A97AB6F-B51A-D01D-9535-318A8C35747F and latQos 25 to topic topic/7 
+
+1713471354: Success: Added Latency Req 25 to topic topic/7 for client auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+
+1713471354: auto-4A97AB6F-B51A-D01D-9535-318A8C35747F 1 topic/7
+1713471354: Sending SUBACK to auto-4A97AB6F-B51A-D01D-9535-318A8C35747F
+1713471354: Received SUBSCRIBE from auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+1713471354: 	topic/2%latency%27 (QoS 1)
+1713471354: Adding clientid auto-92E11145-847F-F57A-AD63-FA116C4CFAEE and latQos 27 to topic topic/2 
+
+1713471354: Success: Added Latency Req 27 to topic topic/2 for client auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+
+1713471354: auto-92E11145-847F-F57A-AD63-FA116C4CFAEE 1 topic/2
+1713471354: Sending SUBACK to auto-92E11145-847F-F57A-AD63-FA116C4CFAEE
+1713471378: Received SUBSCRIBE from auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+1713471378: 	topic/4%latency%28 (QoS 1)
+1713471378: Adding clientid auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 and latQos 28 to topic topic/4 
+
+1713471378: Success: Added Latency Req 28 to topic topic/4 for client auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+
+1713471378: auto-32EB9BCC-19A0-9906-9E6F-B8659A671595 1 topic/4
+1713471378: Sending SUBACK to auto-32EB9BCC-19A0-9906-9E6F-B8659A671595
+1713471378: Received SUBSCRIBE from auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B
+1713471378: 	topic/5%latency%29 (QoS 1)
+1713471378: Adding clientid auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B and latQos 29 to topic topic/5 
+
+1713471378: Success: Added Latency Req 29 to topic topic/5 for client auto-AACB4D74-EB78-09A2-1E99-86A3EF91025B
+
