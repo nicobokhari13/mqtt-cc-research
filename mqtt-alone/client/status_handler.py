@@ -45,7 +45,7 @@ def getBrokerCpuUtil():
     return psutil.cpu_percent(interval=20)
 
 def getBrokerCpuTemp():
-    return psutil.sensors_temperatures()
+    return psutil.sensors_temperatures()['coretemp'][0].current
 
 def getBrokerMemoryUtil():
     return psutil.virtual_memory().percent
