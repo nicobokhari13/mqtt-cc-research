@@ -196,7 +196,7 @@ class AsyncMqtt:
 
         aioh = AsyncioHelper(self.loop, self.client)
 
-        self.client.connect("localhost", 1883, keepalive=1000)
+        self.client.connect("localhost", 1888, keepalive=1000)
 
         self.client.socket().setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
 

@@ -42,7 +42,7 @@ def logPublisherMetrics(time, mac, num_executions, battery, memory_util_perc, cp
         writer.writerow(data)
 
 def getBrokerCpuUtil():
-    return psutil.cpu_percent(interval=20)
+    return psutil.cpu_percent(interval=1)
 
 def getBrokerCpuTemp():
     return psutil.sensors_temperatures()['coretemp'][0].current
