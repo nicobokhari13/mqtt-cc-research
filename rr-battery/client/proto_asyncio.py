@@ -146,7 +146,7 @@ class AsyncMqtt:
             await asyncio.sleep(480)
             mapAssignments = algo.roundRobinGeneration()
             if mapAssignments:
-                print("ran algo after 5 minutes")
+                print("ran algo after 8 minutes")
                 return mapAssignments
             print("no assignments, checking back in 5 minutes")
 
@@ -202,12 +202,12 @@ class AsyncMqtt:
 
         while True: #infinite loop
             self.got_message = self.loop.create_future()
-            #wait_round_robin_routine = asyncio.ensure_future(self.runAlgo())
-            wait_for_cmd_routine = asyncio.ensure_future(self.lookForChange())
+            wait_round_robin_routine = asyncio.ensure_future(self.runAlgo())
+            #wait_for_cmd_routine = asyncio.ensure_future(self.lookForChange())
             wait_for_window_routine = asyncio.create_task(self.waitForTimeWindow())
-            done, pending = await asyncio.wait([wait_for_cmd_routine, wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
-            if wait_for_cmd_routine in done:
-                result = wait_for_cmd_routine.result()
+            done, pending = await asyncio.wait([wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
+            if wait_round_robin_routine in done:
+                result = wait_round_robin_routine.result()
             elif wait_for_window_routine in done:
                 result = wait_for_window_routine.result()
             # elif wait_round_robin_routine in done:
