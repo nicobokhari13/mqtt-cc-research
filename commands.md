@@ -19,3 +19,4 @@
 - TCP Dump
   - `sudo tcpdump -i wlp0s20f3 port 1883 -w filname.pcap`
   - `sudo tcpdump -i lo port 1883 -w filname.pcap`
+- To run subscirbers on windows, use `python` not `python3`
