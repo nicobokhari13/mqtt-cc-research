@@ -3,7 +3,8 @@ import csv
 import subprocess
 
 def main():
-    pubsfilename = "devices-rr-freq10.csv"
+    pubsfilename = sys.argv[1]
+    #pubsfilename = "devices-rr-freq20.csv"
     pidfilename = "pub_pidfile.txt"
     try: 
         with open(pubsfilename, 'r', newline='') as pubfile:
@@ -33,6 +34,9 @@ def main():
                 file.write(str(pid) + "\n")
             except subprocess.CalledProcessError as e:
                 print(f"Error with running {sub}: {e}")
+
+    while True:
+        print("running pubs")
 
 if __name__ == "__main__":
     main()

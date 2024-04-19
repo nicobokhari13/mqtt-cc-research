@@ -18194,3 +18194,20 @@
 1713466972: Sending PUBACK to auto-C4D8FDF4-149B-3EC6-1642-FAA0149558C7 (m286, rc0)
 1713466972: Received PUBLISH from auto-F00AE2F6-7386-9650-1115-0B17FE82BC6A (d0, q1, r0, m385, 'topic/0', ... (500000 bytes))
 1713466972: Sending PUBACK to auto-F00AE2F6-7386-9650-1115-0B17FE82BC6A (m385, rc0)
+1713490025: mosquitto version 2.0.18 starting
+1713490025: Config loaded from mqtt_cc.conf.
+1713490025: Opening ipv4 listen socket on port 1887.
+1713490025: Opening ipv6 listen socket on port 1887.
+1713490025: mosquitto version 2.0.18 running
+1713490025: Setting memory to prototype_db
+1713490025: before DB prepare
+1713490025: in prepare DB
+1713490025: opened DB
+1713490025: Created Tables
+1713490025: Success: Prepared Statements
+
+1713490027: New connection from 127.0.0.1:43367 on port 1887.
+1713490027: New client connected from 127.0.0.1:43367 as auto-626E603F-EFF2-1789-1F80-6D92A991CB1B (p2, c1, k1000).
+1713490027: No will message specified.
+1713490027: Sending CONNACK to auto-626E603F-EFF2-1789-1F80-6D92A991CB1B (0, 0)
+1713490027: Client auto-626E603F-EFF2-1789-1F80-6D92A991CB1B closed its connection.

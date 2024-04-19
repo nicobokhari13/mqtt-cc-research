@@ -6,4 +6,4 @@ file_path="$1"
 if [ ! -f "$file_path" ]; then
 exit 1
 fi
-python3 proto_client.py "$file_path" rr 900 0.15 3
+python3 proto_client.py "$file_path" rrBattery 900 0.05 3
