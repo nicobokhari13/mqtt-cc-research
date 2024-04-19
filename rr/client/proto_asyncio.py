@@ -203,7 +203,7 @@ class AsyncMqtt:
         while True: #infinite loop
             self.got_message = self.loop.create_future()
             wait_round_robin_routine = asyncio.ensure_future(self.runAlgo())
-            #ait_for_cmd_routine = asyncio.ensure_future(self.lookForChange())
+            #wait_for_cmd_routine = asyncio.ensure_future(self.lookForChange())
             wait_for_window_routine = asyncio.create_task(self.waitForTimeWindow())
             done, pending = await asyncio.wait([wait_round_robin_routine, wait_for_window_routine], return_when=asyncio.FIRST_COMPLETED)
             # if wait_for_cmd_routine in done:
