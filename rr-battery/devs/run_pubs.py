@@ -3,7 +3,9 @@ import csv
 import subprocess
 
 def main():
-    pubsfilename = "devices.csv"
+    pubsfilename = sys.argv[1]
+
+#    pubsfilename = "devices-rr-numtopic5.csv"
     pidfilename = "pub_pidfile.txt"
     try: 
         with open(pubsfilename, 'r', newline='') as pubfile:
