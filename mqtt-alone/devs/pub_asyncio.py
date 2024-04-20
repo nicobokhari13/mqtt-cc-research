@@ -140,6 +140,7 @@ class AsyncMqtt:
 
             # create sensing_task routines
         print(utils._publishes.items())
+    
         routines = [self.publish_to_topic(topic, freq) for topic,freq in utils._publishes.items()]
         # reset command
         #self.got_message = self.loop.create_future()

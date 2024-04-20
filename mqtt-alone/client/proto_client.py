@@ -87,7 +87,7 @@ def main():
 #    devices.addEnergyPerExecution(energy_per_execution)
 #    devices.addConcurrencyThreshold(threshold)
 #    utils._timeWindow = int(restart_window)
-    if in_sim == "sim" or in_sim == "MQTT":
+    if in_sim != "testbed":
         utils._in_sim = True
     elif in_sim == "testbed": 
         utils._in_sim = False
