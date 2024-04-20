@@ -1,3 +1,4 @@
 # To Do
-- Adjust for no circuit testbed with pluggable battery
-- Mention circuit contirbution as a way to make results more effective
+- Finished testbed
+- Continue sims
+- Perform more eval on surface with excel and paper writing
