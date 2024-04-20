@@ -7,7 +7,7 @@ import psutil
 # python3 sensor.py sim <username> <password> <startBattery> <MACAddress>
 def main():
     # extract input parameters
-    if(sys.argv[1] == "sim"):
+    if(sys.argv[1] != "testbed"):
         #print("Using default credentials and topics for subscriber")
         #USERNAME = sys.argv[2]
         #PASSWORD = sys.argv[3]

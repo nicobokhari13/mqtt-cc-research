@@ -71,7 +71,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
             # the device's new energy level after addition of the topic
             Enew = publishers._units[mac].currentEnergy() + Einc
             # the device's new energy level divided by its available battery
-            Eratio = Enew / device._battery
+            Eratio = Enew / publishers._units[mac]._battery
             # if the new energy level is less than the battery, and 
             # the new energy level's ratio to the battery is smaller than the min 
             if not Emin:
