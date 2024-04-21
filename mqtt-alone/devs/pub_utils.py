@@ -69,16 +69,16 @@ class PublisherUtils:
         elif frequency_range == 40:
             latency_min = 10
             latency_max = 50
-        elif frequency_range == 35:
+        elif frequency_range == 30:
             latency_min = 15
             latency_max = 45
-        elif frequency_range == 30:
+        elif frequency_range == 20:
             latency_min = 20
             latency_max = 40
-        elif frequency_range == 20:
+        elif frequency_range == 10:
             latency_min = 25
             latency_max = 35
-        
+    
         for i in range(len(topics)):
             random_latency = random.randint(latency_min, latency_max)
             self._publishes[topics[i]] = random_latency
