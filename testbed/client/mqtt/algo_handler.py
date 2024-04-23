@@ -1,7 +1,7 @@
 from algo_utils import Processing_Unit, Devices
 import json
 from proto_utils import ProtoUtils
-from proto_db import Database
+from mqtt.proto_db import Database
 
 def resetPublishingsAndDeviceExecutions():
     db = Database()
