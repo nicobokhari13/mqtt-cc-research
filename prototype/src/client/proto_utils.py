@@ -30,6 +30,7 @@ class ProtoUtils:
         self._logFile_testbed = "testbed-" + str(datetime.now()) + ".csv"
         
         self._in_sim = False
+        self._exp_type = ""
         self._remaining_batteries = {}
 
     def setCapacities(self, mac1, mac2):

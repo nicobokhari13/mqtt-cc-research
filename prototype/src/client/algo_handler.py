@@ -111,11 +111,13 @@ def generateAssignments(changedTopic = None, subLeft = None):
             # assignmentString = json.dumps(device._assignments)
             # Devices.addAssignmentsToCommand(deviceMac = device._mac, taskList = assignmentString)
     for macAddress, device in publishers._units.items():
-        if device._assignments:
-            assignmentString = json.dumps(device._assignments)
-            print(f"assignment string = {assignmentString}")
-            publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
-            db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys()) 
+        if not device._assignments:
+            device._assignments = {"None":"None"}
+        assignmentString = json.dumps(device._assignments)
+        print(f"assignment string = {assignmentString}")
+        publishers.addAssignmentsToCommand(deviceMac=macAddress, taskList=assignmentString)
+        db.updatePublishTableWithPublishingAssignments(MAC_ADDR=macAddress, TOPICS=device._assignments.keys()) 
+        
     db.closeDB()
     publishers.resetUnits()
     print(f"generated final command = {publishers._generated_cmd}")

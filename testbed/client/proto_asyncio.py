@@ -146,6 +146,7 @@ class AsyncMqtt:
     async def lookForChange(self):
         database = db.Database()
         while True:
+            await asyncio.sleep(480)    
             print("opening database")
             database.openDB()
             mapAssignments = None
@@ -163,6 +164,9 @@ class AsyncMqtt:
                 #print(update_list)
                 database.resetAddedAndChangedLatencyTopics(update_list)
                 mapAssignments = algo.generateAssignments()
+            else: 
+                algo.resetPublishingsAndDeviceExecutions()
+                map = algo.generateAssignments()
             if mapAssignments:
                 print("got assignments")
                 print(mapAssignments)
@@ -170,7 +174,6 @@ class AsyncMqtt:
                 return mapAssignments
             print("closing database")
             print("going to sleep")
-            await asyncio.sleep(480)    
 
 
     async def main(self):
