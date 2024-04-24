@@ -163,6 +163,9 @@ class AsyncMqtt:
                 print(update_list)
                 database.resetAddedAndChangedLatencyTopics(update_list)
                 mapAssignments = algo.generateAssignments()
+            else:
+                algo.resetPublishingsAndDeviceExecutions()
+                mapAssignments = algo.generateAssignments()
             if mapAssignments:
                 print("got assignments")
                 print(mapAssignments)
