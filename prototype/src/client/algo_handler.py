@@ -33,9 +33,6 @@ def generateAssignments(changedTopic = None, subLeft = None):
 
     # for each topic with none publishing
     for task in topicsWithNoPublishers: 
-        for mac, device in publishers._units.items():
-            print(f"mac: {mac}, device {device._assignments}")
-            print("------")
         topic = task[0]
         freq = task[1]
         print(f"Task: {task}")
@@ -87,15 +84,16 @@ def generateAssignments(changedTopic = None, subLeft = None):
             print(publishers._units[bestMac]._assignments)
             publishers._units[bestMac].addAssignment(topic, freq)
             print(publishers._units[bestMac]._assignments)
-            # we know bestMac uses Emin energy, so reverse operations to get Einc
+            #publishers._units[bestMac].resetExecutions()
+            # # we know bestMac uses Emin energy, so reverse operations to get Einc
             Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
             changeInExecutions = Einc / Devices._instance._ENERGY_PER_EXECUTION
             print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
             New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
-            print(f"{bestMac} now executes at {New_Executions}")
-            publishers._units[bestMac]._numExecutions = New_Executions
+            print(f"{bestMac} now executes at {publishers._units[bestMac]._numExecutions}")
+            # publishers._units[bestMac]._numExecutions = New_Executions
             # update num executions in DB
-            db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=New_Executions)
+            db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=publishers._units[bestMac]._numExecutions)
 
         bestMac = None
         Emin = None
