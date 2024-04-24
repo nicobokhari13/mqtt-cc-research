@@ -48,3 +48,4 @@ prototype/dev/
 temp/test
 sqlite/mqttcc.db-journal
 broker/mosquitto-2.0.18/lib/libmosquitto.so.1
+broker-oursystem/logs/mqtt_cc.log
