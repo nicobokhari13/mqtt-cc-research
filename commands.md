@@ -19,4 +19,5 @@
 - TCP Dump
   - `sudo tcpdump -i wlp0s20f3 port 1883 -w filname.pcap`
   - `sudo tcpdump -i lo port 1883 -w filname.pcap`
+  - `tshark -r input.pcap -w output.pcap "tcp.len > 32000"`
 - To run subscribers on windows, use `python` not `python3`
