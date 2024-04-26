@@ -47,7 +47,8 @@ class Database:
         deviceTable = '''CREATE TABLE IF NOT EXISTS devices (
                                 deviceMac TEXT PRIMARY KEY, 
                                 battery FLOAT, 
-                                executions INTEGER)'''
+                                executions FLOAT, 
+                                consumption FLOAT)'''
         self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
     def createPublishTable(self) -> None:
@@ -108,6 +109,11 @@ class Database:
     def updateDeviceExecutions(self, MAC_ADDR, NEW_EXECUTIONS):
         updateQuery = '''UPDATE devices SET executions = ? WHERE deviceMac = ?'''
         device_values = (NEW_EXECUTIONS,MAC_ADDR)
+        self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
+    
+    def updateDeviceConsumptions(self, MAC_ADDR, NEW_CONSUMPTIONS):
+        updateQuery = '''UPDATE devices SET consumption = ? WHERE deviceMac = ?'''
+        device_values = (NEW_CONSUMPTIONS,MAC_ADDR)
         self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
 
     def updateDeviceStatus(self, MAC_ADDR, NEW_BATTERY):

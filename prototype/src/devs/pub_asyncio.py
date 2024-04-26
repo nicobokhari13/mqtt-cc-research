@@ -94,14 +94,14 @@ class AsyncMqtt:
                 "battery": utils._battery,
                 #"cpu_temperature": utils.get_cpu_temperature(),
                 "cpu_temperature": "None",
-                "cpu_utilization_percentage": utils.get_cpu_utilization(),
-                "memory_utilization_percentage": utils.get_memory_utilization()
+                "cpu_utilization_percentage": "None",
+                "memory_utilization_percentage": "None"
             }
 
             status_str = json.dumps(status_json)
-
+            print("status =")
+            print(status_str)
             # publish status to status topic
-
 
             self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str,qos=1)
             print(f"{utils._deviceMac} publishing status")

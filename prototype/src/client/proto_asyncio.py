@@ -146,7 +146,7 @@ class AsyncMqtt:
     async def lookForChange(self):
         database = db.Database()
         while True:
-            await asyncio.sleep(480)    
+            await asyncio.sleep(180)    
             print("opening database")
             database.openDB()
             mapAssignments = None

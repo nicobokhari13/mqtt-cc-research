@@ -54,7 +54,8 @@ def main():
     in_sim = sys.argv[2]
     restart_window = sys.argv[3]
     energy_per_execution = sys.argv[4]
-    threshold = sys.argv[5]
+    comm_energy = sys.argv[5]
+    threshold = sys.argv[6]
     # devicePath sim 900 0.3 3
     print(f"Device File = {devicesFile}")
     print(f"Sim Value = {in_sim}")
@@ -84,6 +85,7 @@ def main():
     # create it once
     devices = Devices()
     devices.addEnergyPerExecution(energy_per_execution)
+    devices.addEnergyPerCommunicationExecution(energy=comm_energy)
     devices.addConcurrencyThreshold(threshold)
     utils._timeWindow = int(restart_window)
     print(utils._timeWindow)

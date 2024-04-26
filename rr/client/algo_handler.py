@@ -89,6 +89,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
             print(publishers._units[bestMac]._assignments)
             publishers._units[bestMac].addAssignment(topic, freq)
             print(publishers._units[bestMac]._assignments)
+
             # we know bestMac uses Emin energy, so reverse operations to get Einc
             Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
             changeInExecutions = Einc / Processing_Unit._ENERGY_PER_EXECUTION
@@ -153,17 +154,22 @@ def roundRobinGeneration():
             mac = capableDevices[i][0]
             battery = capableDevices[i][1]
             num_exec = capableDevices[i][2]
+            consumption = capableDevices[i][3]
             if mac not in publishers._units.keys():
-                publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
+                publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec, consumption=consumption))
 
             # get device publishing info with query
             if i == utils._topic_device_indices[topic]:
                 publishers._units[mac].addAssignment(topic, freq)
             publishers._units[mac].resetExecutions()
+            publishers._units[mac].updateConsumption(publishers._units[mac].energyIncrease(task=None))
 
     for mac, device in publishers._units.items():
         # update db's executions
         db.updateDeviceExecutions(MAC_ADDR=mac, NEW_EXECUTIONS=device._numExecutions)
+        
+        # update consumption
+
         # if there are no assignments given, give it the default value
         if not device._assignments:
             device._assignments = {"None":"None"}

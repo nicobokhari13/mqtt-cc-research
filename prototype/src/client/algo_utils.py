@@ -5,16 +5,20 @@ class Processing_Unit:
     _OBSERVATION_PERIOD = 60
     # same as publisher simulation start scripts (run_devXX.sh) 
 
-    def __init__(self, macAddr:str, capacity:float, executions):
+    def __init__(self, macAddr:str, capacity:float, executions: float, consumption:float):
         self._mac = macAddr
         self._freqs = list()
         self._battery = capacity
-        self._numExecutions = executions 
+        self._numExecutions = executions
+        self._consumption  = consumption
         self._assignments = {}
         self._freq_min = None
-
+ 
     def currentEnergy(self):
-        return self._numExecutions * Devices._instance._ENERGY_PER_EXECUTION
+        return self._consumption
+
+    def updateConsumption(self, energyIncrease):
+        self._consumption+=energyIncrease
 
     def resetMinimum(self):
         if self._freqs:
@@ -106,10 +110,11 @@ class Processing_Unit:
         self._numExecutions = self.calculateExecutions()
     
     def energyIncrease(self, task):
+        # energy Increase = sensing executions (total) * energy + change in communication executiation * energy
         newExecutions = self.calculateExecutions(newTask = task)
         changeInExecutions = newExecutions - self._numExecutions
         print(f"change in executions: {changeInExecutions}")
-        return changeInExecutions * Devices._instance._ENERGY_PER_EXECUTION
+        return (changeInExecutions * Devices._instance._ENERGY_PER_EXECUTION) + newExecutions * Devices._instance._COMM_ENERGY
     
     def addAssignment(self, topic:str, task, isNew = None):
         self._assignments[topic] = task
@@ -151,6 +156,9 @@ class Devices:
     
     def addEnergyPerExecution(self, energy):
         self._ENERGY_PER_EXECUTION = float(energy)
+
+    def addEnergyPerCommunicationExecution(self, energy):
+        self._COMM_ENERGY = float(energy)
 
     def addConcurrencyThreshold(self, threshold):
         self._CONCURRENCY_THRESHOLD = int(threshold)

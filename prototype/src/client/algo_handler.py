@@ -44,13 +44,14 @@ def generateAssignments(changedTopic = None, subLeft = None):
             mac = device[0]
             battery = device[1]
             num_exec = device[2]
+            consumption = device[3]
             # get device publishing info with query
             devicePublishings = db.devicePublishing(MAC_ADDR=mac) # list of tuples with (topic, max_allowed_latency)
 
             # create processing unit at key = mac
             # add device info as a Processing_Unit in Devices singleton
             if mac not in publishers._units.keys():
-                publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions=num_exec))
+                publishers.addProcessingUnit(Processing_Unit(macAddr=mac, capacity=battery, executions = num_exec, consumption=consumption))
 
             # add publishings to the device with macAddr = mac, and set device frequencies
             # add current device publishing info to assignments (topics that the device currently publishes to)
@@ -80,20 +81,20 @@ def generateAssignments(changedTopic = None, subLeft = None):
             
         if bestMac != None:
             # adding the assignment adds the task's frequency to the publishings variable
-            print(publishers._units[bestMac]._mac)
-            print(publishers._units[bestMac]._assignments)
+            
             publishers._units[bestMac].addAssignment(topic, freq)
-            print(publishers._units[bestMac]._assignments)
-            print(f"{bestMac} used to execute at {publishers._units[bestMac]._numExecutions}")
+            # executions changed
             publishers._units[bestMac].resetExecutions()
-            # # we know bestMac uses Emin energy, so reverse operations to get Einc
-            # Einc = (Emin * publishers._units[bestMac]._battery) - publishers._units[bestMac].currentEnergy()
-            # changeInExecutions = Einc / Devices._instance._ENERGY_PER_EXECUTION
-            #New_Executions = changeInExecutions + publishers._units[bestMac]._numExecutions
-            print(f"{bestMac} now executes at {publishers._units[bestMac]._numExecutions}")
-            # publishers._units[bestMac]._numExecutions = New_Executions
-            # update num executions in DB
+
+            # previous consumption
+            print(f"device {bestMac} previous consumption = {publishers._units[bestMac]._consumption}")
+            # recall Emin = Enew / battery -> Enew = Emin * battery
+            newConsumption = Emin * publishers._units[bestMac]._battery
+            publishers._units[bestMac].updateConsumption(newConsumption)
+            print(f"device {bestMac} updated consumption = {publishers._units[bestMac]._consumption}")
+            # update DB
             db.updateDeviceExecutions(MAC_ADDR=bestMac, NEW_EXECUTIONS=publishers._units[bestMac]._numExecutions)
+            db.updateDeviceConsumptions(MAC_ADDR=bestMac, NEW_CONSUMPTIONS=publishers._units[bestMac]._consumption)
 
         bestMac = None
         Emin = None

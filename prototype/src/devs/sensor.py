@@ -14,6 +14,7 @@ def main():
         MacAddr = sys.argv[2]
         battery = sys.argv[3]
         energy = sys.argv[4]
+        comm_energy = sys.argv[5]
         simValue = True
     else:
         #USERNAME = sys.argv[1]
@@ -24,7 +25,7 @@ def main():
         # topic list delimited by commas, no spaces
     # create single instance of pub_utils with cmd line parameters
     utils = pub_utils.PublisherUtils()
-    utils.setParameters(Mac_addr=MacAddr, start_battery=battery, in_sim=simValue, energy_per_execution=energy)
+    utils.setParameters(Mac_addr=MacAddr, start_battery=battery, in_sim=simValue, energy_per_execution=energy, comm_energy=comm_energy)
     # move execution to pub_asyncio
     run_async_publisher()
 
