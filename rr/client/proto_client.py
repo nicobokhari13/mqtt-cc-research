@@ -76,7 +76,7 @@ def main():
         mac = rows[i][1]
         startBattery = rows[i][2]
         database.addDevice(MAC_ADDR=mac, BATTERY=startBattery)
-        #status_handler.logPublisherMetrics(time=current_time, mac=mac, battery=startBattery, memory_util_perc="None", cpu_util_perc="None", cpu_temp="None")
+        status_handler.logPublisherMetrics(time=current_time, mac=mac, battery=startBattery, memory_util_perc="None", cpu_util_perc="None", cpu_temp="None")
         topicList = rows[i][5:len(rows[i])] # rest of rows are the topics
         for topic in topicList:
             database.addDeviceTopicCapability(MAC_ADDR=mac, TOPIC=topic)

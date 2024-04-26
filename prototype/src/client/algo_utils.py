@@ -23,12 +23,10 @@ class Processing_Unit:
             self._freq_min = None
     
     def calculateExecutions(self, newTask = None):
-        numExecutions = 0
+        #numExecutions = 0
         # threshold for execution interval MAY CHANGE
         # example: 28 <-> 30 <-> 32
         threshold = Devices._instance._CONCURRENCY_THRESHOLD
-        # list that will hold removals
-        removes = list()
         # copy of freqs
         freqCopy = copy.deepcopy(self._freqs)
 
@@ -36,41 +34,74 @@ class Processing_Unit:
         if newTask:  
             # if there is a new task, add it to freqs, change the min
             freqCopy.append(newTask)
-            self._freq_min = min(freqCopy)
+            #self._freq_min = min(freqCopy)
 
 
-        if self._freq_min:
-            freqCopy.remove(self._freq_min)
-        else:# if you don't have a minimum, then the list is empty, no executions -> 
+        if freqCopy: # if there are frequencies, then continue
+            #freqCopy.remove(self._freq_min)
+            print("don't remove min")
+            pass
+        else:# if you don't have any frequencies, then that means nothing is being added, so = 0 executions
             return 0
         # remove the min from the following calculations
         #freqCopy.remove(self._freq_min)
+        frequency_multiples = ()
+        same_execution_group = []
+        group_min = None
+        num_executions = 0 
+        multiplier = 2
 
-        # if freqCopy has any items other than the minimum just removed,
-        index = 1
         if freqCopy:
-            # loop through the frequencies
-            for freq in freqCopy:
-                multipleOfFreq = freq # cycle through their multiple < 60
-                while multipleOfFreq <= self._OBSERVATION_PERIOD:
-                    # if the multiple is not within a threshold of a multiple of the minimum
-                    if not((multipleOfFreq % self._freq_min < threshold) or ((self._freq_min - multipleOfFreq % self._freq_min) < threshold)):
-                        numExecutions +=1
-                    index += 1
-                    multipleOfFreq = multipleOfFreq * index
-                        
-        # place minimum back in
-        freqCopy.append(self._freq_min)
-        
-        # the number of executions is the addition of all the times a frequency occurs in the OBSERVATION PERIOD
-        numExecutions += self._OBSERVATION_PERIOD / self._freq_min
+            frequency_multiples = set(freqCopy)
+            # check if there exists a number in the set of frequency_multiples where |multiplreOfFreq - freq| < threshold
+            for freq in freqCopy: 
+                multipleOfFreq = freq * multiplier
+                while multipleOfFreq < self._OBSERVATION_PERIOD:
+                    frequency_multiples.add(multipleOfFreq)
+                    multiplier+=1
+                    multipleOfFreq = freq * multiplier
+                multiplier = 2
+            # convert the multiples back into a list for sorting in order
+            print(frequency_multiples, type(frequency_multiples))
+            frequency_multiples = list(frequency_multiples)
+            frequency_multiples.sort()
+            print(frequency_multiples, type(frequency_multiples))
 
-        # reset self._freqs_min to actual min if the min was changed for the newTask
-        if newTask:
-            self.resetMinimum()
+            # after inserting all all multiples, loop through again, find a group of elements that are within threshold
+            for i in range(len(frequency_multiples)):
+                if i == 0: # if this is the first element
+                    # then add it to the execution group 
+                    same_execution_group.append(frequency_multiples[i])
+                    group_min = frequency_multiples[i]
+                    print("added the first element")
+                else:
+                    if abs(frequency_multiples[i] - group_min) < threshold:
+                        # if the absolute value between the frequency multiple and group min is less than threshold
+                        # then add it to the same execution group
+                        same_execution_group.append(frequency_multiples[i])
+                        # the group_min shouldn't change 
+                        print("element in the same execution")
+                    else:
+                        # if this element is not within the group_min's threshold, then increase the number of executions, 
+                        num_executions+=1
+                        same_execution_group.clear()
+                        same_execution_group.append(frequency_multiples[i])
+                        group_min = frequency_multiples[i]
+                        print("element not in the same execution, resetting group")
+                        # reset the same_execution_group, and add the current element
+                        # increment the number of executions
+                        # reset group min
+                print("num execution = ", num_executions)
+                print('====')
+                print("index = ", i)
+                print("group = ", same_execution_group)
+            
+            if len(same_execution_group):
+                num_executions+=1
+            print("num executions = ", num_executions)
 
-        return numExecutions
-    
+            return num_executions
+
     def resetExecutions(self):
         self._numExecutions = self.calculateExecutions()
     
