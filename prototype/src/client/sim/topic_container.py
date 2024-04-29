@@ -9,10 +9,17 @@ class Topic_Container:
         return cls._instance
     
     def __init__(self) -> None:
+        self._default_num_topic = 8
+        self._total_topics = 0
         # possibly set some constants
         pass
 
     def setTopicStrings(self, numTopics):
+        if numTopics == 0:
+            print(f"setting default topic {self._default_num_topic}")
+            numTopics = self._default_num_topic
+        self._total_topics = numTopics
+        print(f"creating {numTopics} topics")
         self._topic_dict = dict()
         topic_list = self.generateTopics(numTopics)
         for topic in topic_list:

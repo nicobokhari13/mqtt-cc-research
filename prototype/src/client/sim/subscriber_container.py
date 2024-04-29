@@ -11,16 +11,17 @@ class Subscriber_Container:
     
     def __init__(self) -> None:
         # possibly set some constants
-        self._default_num_subs = 10
+        self._default_num_subs = 8
         pass
 
     def setUpLatQoS(self, num_subs):
-        print(f"creating {num_subs} subscribers")
         if num_subs == 0:
+            print(f"setting default subscribers {self._default_num_subs}")
             num_subs = self._default_num_subs
+        print(f"creating {num_subs} subscribers")
         topics = Topic_Container()
         for sub in range(num_subs):
-            num_subscriptions = random.randrange(start=100, stop=len(len(topics._topic_dict.keys())))
+            num_subscriptions = random.randrange(start=1, stop=topics._total_topics + 1)
             subscriptions = random.sample(population=topics._topic_dict.keys(), k=num_subscriptions)
             for subscription in subscriptions:
                 sub_lat_qos = random.randomrange(start=100, stop=10001)
