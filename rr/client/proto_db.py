@@ -47,7 +47,8 @@ class Database:
         deviceTable = '''CREATE TABLE IF NOT EXISTS devices (
                                 deviceMac TEXT PRIMARY KEY, 
                                 battery FLOAT, 
-                                executions INTEGER)'''
+                                executions FLOAT, 
+                                consumption FLOAT)'''
         self.execute_query_with_retry(query=deviceTable, requires_commit=True)
 
     def createPublishTable(self) -> None:
@@ -109,7 +110,12 @@ class Database:
         updateQuery = '''UPDATE devices SET executions = ? WHERE deviceMac = ?'''
         device_values = (NEW_EXECUTIONS,MAC_ADDR)
         self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
-
+    
+    def updateDeviceConsumptions(self, MAC_ADDR, NEW_CONSUMPTIONS):
+        updateQuery = '''UPDATE devices SET consumption = ? WHERE deviceMac = ?'''
+        device_values = (NEW_CONSUMPTIONS,MAC_ADDR)
+        self.execute_query_with_retry(query=updateQuery, values=device_values, requires_commit=True)
+    
     def updateDeviceStatus(self, MAC_ADDR, NEW_BATTERY):
         updateQuery = '''UPDATE devices SET battery = ? WHERE deviceMac = ?'''
         device_values = (NEW_BATTERY,MAC_ADDR)
@@ -125,8 +131,8 @@ class Database:
 
         
     def addDevice(self, MAC_ADDR, BATTERY):
-        insertQuery = '''INSERT INTO devices (deviceMac, battery, executions) VALUES (?,?,?)'''
-        device_values = (MAC_ADDR, BATTERY, 0)
+        insertQuery = '''INSERT INTO devices (deviceMac, battery, executions, consumption) VALUES (?,?,?,?)'''
+        device_values = (MAC_ADDR, BATTERY, 0,0)
         self.execute_query_with_retry(query=insertQuery, values=device_values, requires_commit=True)
 
     def addDeviceTopicCapability(self, MAC_ADDR, TOPIC):
@@ -146,6 +152,10 @@ class Database:
         updateQuery = '''UPDATE devices SET executions = 0'''
         self.execute_query_with_retry(query=updateQuery, requires_commit=True)
 
+    def resetDeviceConsumptions(self):
+        updateQuery = '''UPDATE devices SET consumption = 0'''
+        self.execute_query_with_retry(query=updateQuery, requires_commit=True)
+
     def resetDevicesPublishingToTopic(self, changedTopic):
         updateQuery = '''UPDATE publish 
                             SET publishing = 0 
@@ -162,6 +172,10 @@ class Database:
         selectQuery = '''SELECT deviceMac, executions FROM devices'''
         return self.execute_query_with_retry(query=selectQuery)
     
+    def getAllDeviceConsumptions(self):
+        selectQuery = '''SELECT deviceMac, consumption FROM devices'''
+        return self.execute_query_with_retry(query=selectQuery)
+
     def findAddedTopics(self):
         selectQuery = '''SELECT subscription FROM subscriptions WHERE added = 1'''
         return self.execute_query_with_retry(query=selectQuery)
@@ -177,7 +191,7 @@ class Database:
         return self.execute_query_with_retry(query=selectQuery)
     
     def getCapableDevicesAlphabetically(self, topicName):
-        selectQuery = '''SELECT devices.deviceMac, battery, executions
+        selectQuery = '''SELECT devices.deviceMac, battery, executions, consumption
                         FROM devices
                         LEFT JOIN publish
                         ON devices.deviceMac = publish.deviceMac

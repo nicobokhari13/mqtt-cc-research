@@ -1,4 +1,4 @@
-freqCopy = [5,7,21,37]
+freqCopy = [5,6,10, 12]
 
 threshold = 3
 # if freqCopy has any items other than the minimum just removed,

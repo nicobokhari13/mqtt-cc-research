@@ -129,13 +129,14 @@ class AsyncMqtt:
     
     async def appendExecutions(self, command):
         deviceExecutions = algo.getPublisherExecutions()
+        deviceConsumptions = algo.getPublisherConsumptions()
         print(deviceExecutions)
-        for device in deviceExecutions:
-            print(f"mac {device[0]} and executions = {device[1]}")
+        for device in deviceConsumptions:
+            print(f"mac {device[0]} and conssumption = {device[1]}")
             print(type(device[0]))
             print(type(device[1]))
             if device[0] in command.keys():
-                print("appending execution")
+                print("appending consumption")
                 command[device[0]] = str(command[device[0]]) + "," + str(device[1]) 
                 # append the device executions to the string with comma
         print(command)

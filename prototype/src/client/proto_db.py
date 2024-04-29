@@ -89,7 +89,7 @@ class Database:
         return self.execute_query_with_retry(query=selectQuery)
 
     def devicesCapableToPublish(self, topicName):
-        selectQuery = '''SELECT devices.deviceMac, battery, executions
+        selectQuery = '''SELECT devices.deviceMac, battery, executions, consumption
                         FROM devices
                         LEFT JOIN publish
                         ON devices.deviceMac = publish.deviceMac
@@ -131,8 +131,8 @@ class Database:
 
         
     def addDevice(self, MAC_ADDR, BATTERY):
-        insertQuery = '''INSERT INTO devices (deviceMac, battery, executions) VALUES (?,?,?)'''
-        device_values = (MAC_ADDR, BATTERY, 0)
+        insertQuery = '''INSERT INTO devices (deviceMac, battery, executions, consumption) VALUES (?,?,?,?)'''
+        device_values = (MAC_ADDR, BATTERY, 0, 0)
         self.execute_query_with_retry(query=insertQuery, values=device_values, requires_commit=True)
 
     def addDeviceTopicCapability(self, MAC_ADDR, TOPIC):
@@ -151,6 +151,10 @@ class Database:
     def resetDeviceExecutions(self):
         updateQuery = '''UPDATE devices SET executions = 0'''
         self.execute_query_with_retry(query=updateQuery, requires_commit=True)
+    
+    def resetDeviceConsumptions(self):
+        updateQuery = '''UPDATE devices SET consumption = 0'''
+        self.execute_query_with_retry(query=updateQuery, requires_commit=True)
 
     def resetDevicesPublishingToTopic(self, changedTopic):
         updateQuery = '''UPDATE publish 
@@ -168,6 +172,10 @@ class Database:
         selectQuery = '''SELECT deviceMac, executions FROM devices'''
         return self.execute_query_with_retry(query=selectQuery)
     
+    def getAllDeviceConsumptions(self):
+        selectQuery = '''SELECT deviceMac, consumption FROM devices'''
+        return self.execute_query_with_retry(query=selectQuery)
+
     def findAddedTopics(self):
         selectQuery = '''SELECT subscription FROM subscriptions WHERE added = 1'''
         return self.execute_query_with_retry(query=selectQuery)

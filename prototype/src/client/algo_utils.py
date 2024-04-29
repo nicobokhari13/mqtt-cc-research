@@ -114,7 +114,7 @@ class Processing_Unit:
         newExecutions = self.calculateExecutions(newTask = task)
         changeInExecutions = newExecutions - self._numExecutions
         print(f"change in executions: {changeInExecutions}")
-        return (changeInExecutions * Devices._instance._ENERGY_PER_EXECUTION) + newExecutions * Devices._instance._COMM_ENERGY
+        return (newExecutions * Devices._instance._ENERGY_PER_EXECUTION) + changeInExecutions * Devices._instance._COMM_ENERGY
     
     def addAssignment(self, topic:str, task, isNew = None):
         self._assignments[topic] = task

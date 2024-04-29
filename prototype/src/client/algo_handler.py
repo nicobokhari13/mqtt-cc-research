@@ -8,11 +8,13 @@ def resetPublishingsAndDeviceExecutions():
     db.openDB()
     db.resetPublishings()
     db.resetDeviceExecutions()
+    db.resetDeviceConsumptions()
     db.closeDB()
 
 def generateAssignments(changedTopic = None, subLeft = None):
     db = Database()
     db.openDB()
+    bestMacNumTopics = 0
     if changedTopic:
         db.resetDevicesPublishingToTopic(changedTopic)
         # if there was a change in a topic's max_allowed_latency,
@@ -75,9 +77,12 @@ def generateAssignments(changedTopic = None, subLeft = None):
             if not Emin:
                 bestMac = mac
                 Emin = Eratio
-            elif (Enew <= publishers._units[mac]._battery and Eratio < Emin):
+                # number of keys in the assignments' dictionary is the number of topics assigned to that 
+                bestMacNumTopics = len(publishers._units[bestMac]._assignments.keys())
+            elif (Enew <= publishers._units[mac]._battery and Eratio < Emin and len(publishers._units[mac]._assignments.keys()) < bestMacNumTopics):
                 bestMac = mac
                 Emin = Eratio
+                bestMacNumTopics = len(publishers._units[bestMac]._assignments.keys())
             
         if bestMac != None:
             # adding the assignment adds the task's frequency to the publishings variable
@@ -101,6 +106,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
         Einc = None
         Enew = None
         Eratio = None
+        bestMacNumTopics = 0
         
 
     # by this point, all the devices in Devices have their list of assignments
@@ -129,5 +135,12 @@ def getPublisherExecutions():
     rows = db.getAllDeviceExecutions() # list of tuples (deviceMac, executions)
     db.closeDB()       
     return rows 
+
+def getPublisherConsumptions():
+    db = Database()
+    db.openDB()
+    rows = db.getAllDeviceConsumptions()
+    db.closeDB()
+    return rows
 
 

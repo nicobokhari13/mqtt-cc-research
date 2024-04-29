@@ -40,7 +40,7 @@ class PublisherUtils:
             self._publishes = pub_cmd
 
     def decreaseSimEnergy(self):
-        energyConsumption = self._current_executions * self._ENERGY_PER_EXECUTION + self.getChangeInExecutions * self._COMM_ENERGY
+        energyConsumption = self._consumption
         #energyUsed = self._current_executions * self._ENERGY_PER_EXECUTION
         if self._battery != 0 and self._battery > energyConsumption: 
             self._battery = self._battery - energyConsumption
@@ -56,6 +56,9 @@ class PublisherUtils:
         # save the previous execution number
         self._previous_executions = self._current_executions
         self._current_executions = float(newExecutions)
+
+    def saveConsumption(self, energy):
+        self._consumption = float(energy)
     
     def getChangeInExecutions(self):
         return self._current_executions - self._previous_executions

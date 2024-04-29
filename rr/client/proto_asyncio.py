@@ -128,14 +128,15 @@ class AsyncMqtt:
         return None
     
     async def appendExecutions(self, command):
-        deviceExecutions = algo.getPublisherExecutions()
-        print(deviceExecutions)
-        for device in deviceExecutions:
-            print(f"mac {device[0]} and executions = {device[1]}")
+        #deviceExecutions = algo.getPublisherExecutions()
+        deviceConsumption = algo.getPublisherConsumptions()
+        #print(deviceExecutions)
+        for device in deviceConsumption:
+            print(f"mac {device[0]} and consumption = {device[1]}")
             print(type(device[0]))
             print(type(device[1]))
             if device[0] in command.keys():
-                print("appending execution")
+                print("appending consumption")
                 command[device[0]] = str(command[device[0]]) + "," + str(device[1]) 
                 # append the device executions to the string with comma
         print(command)
@@ -143,7 +144,8 @@ class AsyncMqtt:
     
     async def runAlgo(self):
         while True:
-            await asyncio.sleep(480)
+            await asyncio.sleep(180)
+            algo.resetPublishingsAndDeviceExecutions()
             mapAssignments = algo.roundRobinGeneration()
             if mapAssignments:
                 print("ran algo after 5 minutes")

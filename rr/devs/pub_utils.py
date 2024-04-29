@@ -19,8 +19,9 @@ class PublisherUtils:
         self._end_round = None # 
         self._publishes = None
         self._current_executions = 0
+        self._previous_executions = 0
 
-    def setParameters(self,Mac_addr, start_battery, in_sim, energy_per_execution):
+    def setParameters(self,Mac_addr, start_battery, in_sim, energy_per_execution, comm_energy):
         # Set Attributes to Parameters
         #self._USERNAME = username
         #self._PASSWORD = password
@@ -30,6 +31,7 @@ class PublisherUtils:
         self._CMD_TOPIC = "sensor/cmd/" + self._deviceMac # where IoT receives command on where to publish
         self._IN_SIM = in_sim
         self._ENERGY_PER_EXECUTION = float(energy_per_execution)
+        self._COMM_ENERGY = float(comm_energy)
 
     def setPublishing(self, pub_cmd:dict):
         if "None" in pub_cmd.keys():
@@ -38,9 +40,10 @@ class PublisherUtils:
             self._publishes = pub_cmd
 
     def decreaseSimEnergy(self):
-        energyUsed = self._current_executions * self._ENERGY_PER_EXECUTION
-        if self._battery != 0 and self._battery > energyUsed: 
-            self._battery = self._battery - energyUsed
+        energyConsumption = self._consumption
+        #energyUsed = self._current_executions * self._ENERGY_PER_EXECUTION
+        if self._battery != 0 and self._battery > energyConsumption: 
+            self._battery = self._battery - energyConsumption
             return True
         else: 
             self._battery = 0
@@ -50,7 +53,15 @@ class PublisherUtils:
         self._battery = psutil.sensors_battery().percent
 
     def saveNewExecutions(self, newExecutions):
+        # save the previous execution number
+        self._previous_executions = self._current_executions
         self._current_executions = float(newExecutions)
+
+    def saveConsumption(self, energy):
+        self._consumption = float(energy)
+
+    def getChangeInExecutions(self):
+        return self._current_executions - self._previous_executions
     
     def get_cpu_utilization(self):
         return psutil.cpu_percent(interval=5)

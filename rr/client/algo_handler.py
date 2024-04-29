@@ -10,11 +10,14 @@ def resetPublishingsAndDeviceExecutions():
     db.openDB()
     db.resetPublishings()
     db.resetDeviceExecutions()
+    db.resetDeviceConsumptions()
     db.closeDB()
 
 def generateAssignments(changedTopic = None, subLeft = None):
     db = Database()
     db.openDB()
+    bestMacNumTopics = 0
+
     if changedTopic:
         db.resetDevicesPublishingToTopic(changedTopic)
         # if there was a change in a topic's max_allowed_latency,
@@ -49,6 +52,7 @@ def generateAssignments(changedTopic = None, subLeft = None):
             mac = device[0]
             battery = device[1]
             num_exec = device[2]
+            consumption = device[3]
             # get device publishing info with query
             devicePublishings = db.devicePublishing(MAC_ADDR=mac) # list of tuples with (topic, max_allowed_latency)
 
@@ -132,6 +136,13 @@ def getPublisherExecutions():
     db.closeDB()       
     return rows 
 
+def getPublisherConsumptions():
+    db = Database()
+    db.openDB()
+    rows = db.getAllDeviceConsumptions()
+    db.closeDB()
+    return rows
+
 def roundRobinGeneration():
     db = Database()
     db.openDB()
@@ -167,7 +178,7 @@ def roundRobinGeneration():
     for mac, device in publishers._units.items():
         # update db's executions
         db.updateDeviceExecutions(MAC_ADDR=mac, NEW_EXECUTIONS=device._numExecutions)
-        
+        db.updateDeviceConsumptions(MAC_ADDR=mac, NEW_CONSUMPTIONS=device._consumption)
         # update consumption
 
         # if there are no assignments given, give it the default value

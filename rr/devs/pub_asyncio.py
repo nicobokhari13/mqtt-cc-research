@@ -94,14 +94,14 @@ class AsyncMqtt:
                 "battery": utils._battery,
                 #"cpu_temperature": utils.get_cpu_temperature(),
                 "cpu_temperature": "None",
-                "cpu_utilization_percentage": utils.get_cpu_utilization(),
-                "memory_utilization_percentage": utils.get_memory_utilization()
+                "cpu_utilization_percentage": "None",
+                "memory_utilization_percentage": "None"
             }
 
             status_str = json.dumps(status_json)
-
+            print("status = ")
+            print(status_str)
             # publish status to status topic
-
 
             self.client.publish(topic = utils._STATUS_TOPIC, payload = status_str,qos=1)
             print(f"{utils._deviceMac} publishing status")
@@ -122,11 +122,12 @@ class AsyncMqtt:
                 break
             index -= 1
         assignments = command[:index]
-        executions = command[index + 1:]
+        consumption = command[index + 1:]
         print(f"{utils._deviceMac} assignments {assignments}")
-        print(f"executing {executions} every minute")
+        print(f"consuming {consumption} every minute")
         print("=================")
-        utils.saveNewExecutions(executions)
+        #utils.saveNewExecutions(executions)
+        utils.saveConsumption(energy=consumption)
         return assignments
 
     async def main(self):

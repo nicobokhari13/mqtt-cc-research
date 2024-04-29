@@ -122,11 +122,11 @@ class AsyncMqtt:
                 break
             index -= 1
         assignments = command[:index]
-        executions = command[index + 1:]
+        consumption = command[index + 1:]
         print(f"{utils._deviceMac} assignments {assignments}")
-        print(f"executing {executions} every minute")
+        print(f"consuming {consumption} every minute")
         print("=================")
-        utils.saveNewExecutions(executions)
+        utils.saveConsumption(energy=consumption)
         return assignments
 
     async def main(self):

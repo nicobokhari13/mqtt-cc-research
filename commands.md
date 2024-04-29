@@ -21,3 +21,22 @@
   - `sudo tcpdump -i lo port 1883 -w filname.pcap`
   - `tshark -r input.pcap -w output.pcap "tcp.len > 32000"`
 - To run subscribers on windows, use `python` not `python3`
+
+
+New Algorithm with Sensing + Communication Energies
+```bash
+python3 proto_client.py /home/devnico/repos/research/mqtt_cc_research/prototype/src/devs/devices.csv sim 900 0.05 0.01 2 
+
+python3 subscriber.py sub000 topic/0%latency%5
+
+python3 subscriber.py sub001 topic/1%latency%6
+
+python3 subscriber.py sub002 topic/2%latency%10
+
+python3 subscriber.py sub003 topic/3%latency%12
+
+python3 sensor.py sim dev000 100 0.05 0.01
+
+python3 sensor.py sim dev001 100 0.05 0.01
+
+```
