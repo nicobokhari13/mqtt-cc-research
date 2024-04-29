@@ -13,8 +13,10 @@ class Devices:
     def __init__(self) -> None:
         # possibly set some constants
         self._units: Dict[str, Processing_Unit] = dict()
-        pass
-
+        self.SENSING_ENERGY = 0.5
+        self.COMMUNICATION_ENERGY = 0.1
+        self.CONCURRENCY_THRESHOLD_MILISEC = 1000 # in miliseconds 
+        self.OBSERVATION_PERIOD_MILISEC = 1000 * 3600
 class Processing_Unit:
 
     def __init__(self):
@@ -22,7 +24,7 @@ class Processing_Unit:
         self._battery = 100
         self._consumption = 0
         self._capable_topics = []
-        pass
+        self._num_executions_per_hour = 0
 
     def setMac(self, mac):
         self._device_mac = mac
@@ -41,6 +43,65 @@ class Processing_Unit:
             return True
         else:
             return False
+        
+    def setExecutions(self, new_value):
+        self._num_executions_per_hour = new_value
+
+    def updateConsumption(self, energy_increase):
+        self._consumption+=energy_increase
+
+    def calculateExecutions(self, new_task_freq = None):
+        threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
+        all_freqs = deepcopy(self._assignments.values())
+        if new_task_freq:
+            print("new frequency found")
+            all_freqs.append(new_task_freq)
+            print("new frequency added")
+        if not all_freqs:
+            # if no frequencies, there are no executions
+            return 0
+        freq_multiples = set(all_freqs)
+        execution_group = []
+        group_min = None
+        num_executions = 0
+        multiplier = 2
+
+        for freq in freq_multiples:
+            multiple = freq * multiplier
+            while multiple < Devices._instance.OBSERVATION_PERIOD_MILISEC:
+                freq_multiples.add(multiple)
+                multiple+=1
+                multiple = freq * multiplier
+            multiple = 2
+        freq_multiples = list(freq_multiples) 
+        freq_multiples.sort()
+        for i in range(len(freq_multiples)):
+            if i == 0:
+                execution_group.append(freq_multiples[i])
+                group_min = freq_multiples[i]
+                print("starting new execution")
+            else:
+                if abs(freq_multiples[i] - group_min) < threshold:
+                    execution_group.append(freq_multiples[i])
+                    print("freq occurs in same execution")
+                else:
+                    num_executions+=1
+                    execution_group.clear()
+                    execution_group.append(freq_multiples[i])
+                    group_min = freq_multiples[i]
+                    print("freq not in the same execution, resetting")
+        if len(execution_group):
+            num_executions+=1
+            
+        print(f"num execution = {num_executions}")
+
+        return num_executions
+    
+    def energyIncrease(self, task_freq):
+        newExecutions = self.calculateExecutions(new_task_freq=task_freq)
+        changeInExecutions = newExecutions - self._num_executions_per_hour
+        energyUsed = newExecutions * Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
+        return energyUsed
 
 class Publisher_Container:
     _instance = None
@@ -96,6 +157,7 @@ class Publisher_Container:
                 devices._units[rand_mac]._capable_topics.append(topic)
             # reset found to False
             found = False
+        # all topic capabilities are created, saved, and cover all topics
             
 
         
