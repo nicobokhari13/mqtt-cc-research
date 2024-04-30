@@ -38,7 +38,7 @@ pub_c.setEnergies(sense_energy=configuration._sense_energy, comm_energy=configur
     # dictionary with
         # key = topic
         # value = tuple (index of publishing device, [list of all capable devices])
-system_capability = {topic: (0, []) for topic in topic_c._topic_dict.keys()}
+system_capability = {topic: (None, []) for topic in topic_c._topic_dict.keys()}
 
 for topic in topic_c._topic_dict.keys(): # for every topic
     for device in pub_c._devices._units.values(): # find the device

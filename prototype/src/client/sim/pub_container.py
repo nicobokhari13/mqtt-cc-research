@@ -14,6 +14,7 @@ class Devices:
         # possibly set some constants
         self._units: Dict[str, Processing_Unit] = dict()
         self.OBSERVATION_PERIOD_MILISEC = 1000 * 3600
+        self._all_devices_energy_consumption = 0
 
     def setSensingEnergy(self, sense_energy):
         self.SENSING_ENERGY = sense_energy
@@ -32,7 +33,12 @@ class Devices:
             device._consumption = 0
             device._battery = 100
             device.setExecutions(new_value=0)
-
+        
+    def calculateTotalEnergyConsumption(self):
+        for device in self._units.values():
+            device_energy_used = self.SENSING_ENERGY * len(device._sense_timestamp) + self.COMMUNICATION_ENERGY * device.effectiveExecutions()
+            self._all_devices_energy_consumption+=device_energy_used
+        
 class Processing_Unit:
 
     def __init__(self):
@@ -46,6 +52,9 @@ class Processing_Unit:
 
     def setMac(self, mac):
         self._device_mac = mac
+
+    def addTimestamp(self, timestamp):
+        self._sense_timestamp.append(timestamp)
 
     def addAssignment(self, added_topic, added_qos):
         self._assignments[added_topic] = added_qos
@@ -67,6 +76,37 @@ class Processing_Unit:
 
     def updateConsumption(self, energy_increase):
         self._consumption+=energy_increase
+
+    # Performed to acquire device's total energy consumption
+    def effectiveExecutions(self):
+        threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
+        # all the times in which the device must communicate, including those within the same execution group
+        timestamp_set = set(self._sense_timestamp)
+        timestamp_set = list(timestamp_set)
+        timestamp_set.sort()
+        execution_group = []
+        group_min = None
+        for i in range(len(timestamp_set)):
+            if i == 0:
+                execution_group.append(timestamp_set[i])
+                group_min = timestamp_set[i]
+                print("starting new execution")
+            else:
+                if abs(timestamp_set[i] - group_min) < threshold:
+                    execution_group.append(timestamp_set[i])
+                    print("timestamp occurs in same execution")
+                else:
+                    num_executions+=1
+                    execution_group.clear()
+                    execution_group.append(timestamp_set[i])
+                    group_min = timestamp_set[i]
+                    print("timestamp not in the same execution, resetting")
+        if len(execution_group):
+            num_executions+=1
+        print(f"num execution = {num_executions}")
+
+        return num_executions
+
 
     # Performed for MQTT-CC only
     def calculateExecutions(self, new_task_freq = None):
