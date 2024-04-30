@@ -6,6 +6,8 @@ from topic_container import Topic_Container
 import random
 import sys
 import csv
+from mqtt_cc import MQTTCC
+from round_robin import RR
 
 # EXPERIMENT SET UP
 configuration = ConfigUtils()
@@ -90,18 +92,16 @@ def saveResults(algo_name:str, avg_energy_consumption:float):
         writer.writerow(data)
 
 def main():
+    # create algo objects
+    rr = RR()
+    cc = MQTTCC()
+    # for loop num rounds
+        # set up experiment 
+        # run cc
+        # reset anything in between algos
+        # run rr
+        # reset anyhting in between algos
+    # run saveResults with algo + total_consumption / num_rounds
     pass 
-# based on which variable that varies, store round results in different files
-    # filename = "results" + datetime.now
-    # if var_pubs -> filename += "pubs"
-    # elif var_subs -> filename += "subs"
-    # elif var_topics -> filename += "topics"
-
-# print to a csv requires
-    # filename, data
-
-# saveResults(energy_consumption, algorithm)
-    # if configuration._vary_pubs
-        # filename = file_paths["pub_path"] + filename + algorithm
 
 
