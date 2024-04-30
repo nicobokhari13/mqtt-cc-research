@@ -23,6 +23,8 @@ class ConfigUtils:
         # Energies
         self._sense_energy = float(self._config.get("CONSTANTS", "sense_energy"))
         self._comm_energy = float(self._config.get("CONSTANTS", "comm_energy"))
+        # Sim Rounds
+        self._sim_rounds = int(self._config.get("CONSTANTS","num_rounds"))
         #Max Variable Values
         self._max_pubs = int(self._config.get("VARS", "max_pubs"))
         self._max_subs = int(self._config.get("VARS", "max_subs"))

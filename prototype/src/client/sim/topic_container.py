@@ -16,7 +16,7 @@ class Topic_Container:
     def setDefaultNumTopics(self, default_num_topics):
         self._default_num_topics = default_num_topics
 
-    def setTopicStrings(self, numTopics):
+    def setupTopicStrings(self, numTopics):
         if numTopics == 0:
             print(f"setting default topic {self._default_num_topic}")
             numTopics = self._default_num_topic
@@ -43,13 +43,30 @@ class Topic_Container:
             return True
         else: 
             return False
-        
-    def ensureTopicCoverage(self):
+    
+    # Precondition: all topics are created, all subscribers created
+        # all frequencies assigned to all topics
+    # Postcondition: all_sense_timestamps is a dictionary where 
+        # key: topic from topic_dict
+        # value: list of frequency timestamps from 0 - T observation period 
+        # this object will be the same across all algorithms, need deepcopy for each
+        # only created once per round
+    def setupSenseTimestamps(self):
+        self._all_sense_timestamps = {}
+        multiplier = 1
         for topic in self._topic_dict.keys():
-            if self._topic_dict[topic] < -1:
-                self._topic_dict[topic] = random.randrange(start=100, stop=10001)
-            
-    
-    
-    
+            timestamp_list = []
+            freq = self._topic_dict[topic]
+            multiple  = freq * multiplier
+            while multiple < 3600000:
+                timestamp_list.append(multiple)
+                multiplier+=1
+                multiple  = freq * multiplier
+            # at the end of the loop timestamp_list has all of freq's timestamps < T
+            self._all_sense_timestamps[topic] = timestamp_list
+            multiplier = 1
+            timestamp_list.clear()   
+
+    def resetSenseTimestamps(self):
+        self._all_sense_timestamps.clear() 
     

@@ -24,6 +24,15 @@ class Devices:
     def setThreshold(self, threshold):
         self.CONCURRENCY_THRESHOLD_MILISEC = threshold
 
+    # Called after completing a round for 1 algorithm
+    # resets any parameters that may differ between algorithms
+    def resetUnits(self):
+        for device in self._units.values():
+            device.resetAssignments()
+            device._consumption = 0
+            device._battery = 100
+            device.setExecutions(new_value=0)
+
 class Processing_Unit:
 
     def __init__(self):
@@ -32,6 +41,8 @@ class Processing_Unit:
         self._consumption = 0
         self._capable_topics = []
         self._num_executions_per_hour = 0
+        # For calculating total energy consumption (for all algorithms)
+        self._sense_timestamp = []
 
     def setMac(self, mac):
         self._device_mac = mac
@@ -57,6 +68,7 @@ class Processing_Unit:
     def updateConsumption(self, energy_increase):
         self._consumption+=energy_increase
 
+    # Performed for MQTT-CC only
     def calculateExecutions(self, new_task_freq = None):
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
         all_freqs = deepcopy(self._assignments.values())
@@ -104,6 +116,7 @@ class Processing_Unit:
 
         return num_executions
     
+    # Performed by MQTT-CC only
     def energyIncrease(self, task_freq):
         newExecutions = self.calculateExecutions(new_task_freq=task_freq)
         changeInExecutions = newExecutions - self._num_executions_per_hour
@@ -121,11 +134,17 @@ class Publisher_Container:
     def __init__(self) -> None:
         # possibly set some constants
         self._devices = Devices()
+        self._total_devices = 0
         pass
     # PERFORM THIS FUNCTION FIRST BEFORE ANYTHING ELSE
     def setDefaultNumPubs(self, default_num_pubs):
         self._default_num_pubs = default_num_pubs
 
+    def setEnergies(self, sense_energy, comm_energy):
+        self._devices.setSensingEnergy(sense_energy)
+        self._devices.setCommEnergy(comm_energy)
+
+    # Precondition: numPubs is a whole number > 0
     def generatePublisherMacs(numPubs):
         pub_macs = []
         for i in range(numPubs):
@@ -134,21 +153,24 @@ class Publisher_Container:
         print(pub_macs)
         return pub_macs
 
-    def generateDevices(self, num_pubs):
+    def setupDevices(self, num_pubs):
         if num_pubs == 0:
             print(f"setting default devices {self._default_num_pubs}")
             num_pubs = self._default_num_pubs
+        self._total_devices = num_pubs
         print(f"creating {num_pubs} devices")
         device_macs = self.generatePublisherMacs(num_pubs)
         for mac in device_macs:
             self._devices._units[mac] = Processing_Unit()
             self._devices._units[mac].setMac(mac)
-
+        self.generateDeviceCapability()
+    
+    # Precondition: Topics are created 
     def generateDeviceCapability(self):
         found = False
         topics = Topic_Container()
         for unit in self._devices._units.values():
-            num_capable_publishes = random.randrange(start=1, stop=topics._total_topics + 1)
+            num_capable_publishes = random.randint(start=1, stop=topics._total_topics)
             # randomly sample this number of topics with their max_allowed_latency
             publishes = random.sample(population=topics._topic_dict.keys(), k=num_capable_publishes)
             unit.setCapableTopics(capability=publishes)
