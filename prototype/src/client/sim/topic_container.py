@@ -9,10 +9,12 @@ class Topic_Container:
         return cls._instance
     
     def __init__(self) -> None:
-        self._default_num_topic = 8
         self._total_topics = 0
         # possibly set some constants
         pass
+
+    def setDefaultNumTopics(self, default_num_topics):
+        self._default_num_topics = default_num_topics
 
     def setTopicStrings(self, numTopics):
         if numTopics == 0:

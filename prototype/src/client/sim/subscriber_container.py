@@ -11,8 +11,14 @@ class Subscriber_Container:
     
     def __init__(self) -> None:
         # possibly set some constants
-        self._default_num_subs = 8
         pass
+
+    def setDefaultNumPubs(self, default_num_subs):
+        self._default_num_subs = default_num_subs
+
+    def setLatencyMinMax(self, min, max):
+        self._lat_qos_min = min
+        self._lat_qos_max = max
 
     def setUpLatQoS(self, num_subs):
         if num_subs == 0:
@@ -24,6 +30,11 @@ class Subscriber_Container:
             num_subscriptions = random.randrange(start=1, stop=topics._total_topics + 1)
             subscriptions = random.sample(population=topics._topic_dict.keys(), k=num_subscriptions)
             for subscription in subscriptions:
-                sub_lat_qos = random.randomrange(start=100, stop=10001)
+                sub_lat_qos = random.randomrange(start=self._lat_qos_min, stop=self._lat_qos_max+1)
                 topics.updateQoS(topic_changed=subscription, sub_lat=sub_lat_qos)
-            
+
+    def ensureTopicCoverage(self):
+        topics = Topic_Container()
+        for topic in topics._topic_dict.keys():
+            if topics._topic_dict[topic] < -1:
+                topics._topic_dict[topic] = random.randrange(start=self._lat_qos_min, stop=self._lat_qos_max+1)

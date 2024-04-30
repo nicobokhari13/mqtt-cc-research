@@ -13,10 +13,17 @@ class Devices:
     def __init__(self) -> None:
         # possibly set some constants
         self._units: Dict[str, Processing_Unit] = dict()
-        self.SENSING_ENERGY = 0.5
-        self.COMMUNICATION_ENERGY = 0.1
-        self.CONCURRENCY_THRESHOLD_MILISEC = 1000 # in miliseconds 
         self.OBSERVATION_PERIOD_MILISEC = 1000 * 3600
+
+    def setSensingEnergy(self, sense_energy):
+        self.SENSING_ENERGY = sense_energy
+
+    def setCommEnergy(self, comm_energy):
+        self.COMMUNICATION_ENERGY = comm_energy
+
+    def setThreshold(self, threshold):
+        self.CONCURRENCY_THRESHOLD_MILISEC = threshold
+
 class Processing_Unit:
 
     def __init__(self):
@@ -113,8 +120,11 @@ class Publisher_Container:
     
     def __init__(self) -> None:
         # possibly set some constants
-        self._default_num_pubs = 8
+        self._devices = Devices()
         pass
+    # PERFORM THIS FUNCTION FIRST BEFORE ANYTHING ELSE
+    def setDefaultNumPubs(self, default_num_pubs):
+        self._default_num_pubs = default_num_pubs
 
     def generatePublisherMacs(numPubs):
         pub_macs = []
@@ -129,32 +139,30 @@ class Publisher_Container:
             print(f"setting default devices {self._default_num_pubs}")
             num_pubs = self._default_num_pubs
         print(f"creating {num_pubs} devices")
-        devices = Devices()
         device_macs = self.generatePublisherMacs(num_pubs)
         for mac in device_macs:
-            devices._units[mac] = Processing_Unit()
-            devices._units[mac].setMac(mac)
+            self._devices._units[mac] = Processing_Unit()
+            self._devices._units[mac].setMac(mac)
 
     def generateDeviceCapability(self):
         found = False
-        devices = Devices()
         topics = Topic_Container()
-        for unit in devices._units.values():
+        for unit in self._devices._units.values():
             num_capable_publishes = random.randrange(start=1, stop=topics._total_topics + 1)
             # randomly sample this number of topics with their max_allowed_latency
             publishes = random.sample(population=topics._topic_dict.keys(), k=num_capable_publishes)
             unit.setCapableTopics(capability=publishes)
         for topic in topics._topic_dict.keys():
-            for unit in devices._units.values():
+            for unit in self._devices._units.values():
                 if unit.capableOfPublishing(topic):
                     found = True
                     break
             if not found:
                 # if the topic is not covered by any device
                 # get a random device
-                rand_mac = random.choice(devices._units.keys())
+                rand_mac = random.choice(self._devices._units.keys())
                 # assign the topic t topicInCapable(self,)o it
-                devices._units[rand_mac]._capable_topics.append(topic)
+                self._devices._units[rand_mac]._capable_topics.append(topic)
             # reset found to False
             found = False
         # all topic capabilities are created, saved, and cover all topics
