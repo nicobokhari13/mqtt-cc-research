@@ -63,21 +63,20 @@ class RR:
         # pop fi from ti's timestamp list
         # if ti's timestamp list is empty, remove ti from the keys
         # return [ti, fi]
-        pass
 
     def rr_algo(self):
-        while len(self._experiment_timeline.keys() > 0):
-            [newTask, newTaskTimeStamp] = self.findNextTask()
-            # if the index of the publishing device is -1, or the index is at the end of the list
-            if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >len(self._system_capability[newTask][1])):
-                # set the index to the first publisher
-                self._system_capability[newTask][0] = 0
-            else:
-                self._system_capability[newTask][0]+= 1
-            publishing_mac = self._system_capability[newTask][1][self._system_capability[newTask][0]]
-            pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
-        # by this point, all timestamps have been allocated to devices according to RR
-        
+            while len(self._experiment_timeline.keys() > 0):
+                [newTask, newTaskTimeStamp] = self.findNextTask()
+                # if the index of the publishing device is -1, or the index is at the end of the list
+                if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >len(self._system_capability[newTask][1])):
+                    # set the index to the first publisher
+                    self._system_capability[newTask][0] = 0
+                else:
+                    self._system_capability[newTask][0]+= 1
+                publishing_mac = self._system_capability[newTask][1][self._system_capability[newTask][0]]
+                pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
+            # by this point, all timestamps have been allocated to devices according to RR
+
             # while len(timeline.keys()) > 0
             # [newTask, newTaskTimeStamp] = findNextTask()
             # get tuple for topic = newTask in system capability

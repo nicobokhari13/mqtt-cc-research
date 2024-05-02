@@ -25,18 +25,70 @@ class MQTTCC:
         pass
 
     # system capability used to track which publishers can publish to
-    def copyOfSystemCapability(self, capability):
-        self._system_publishing = deepcopy(capability)
+    def copyOfSystemCapability(self, capability:dict):
+        self._system_capability = deepcopy(capability)
 
     # timeline used to calculate total energy consumption
     def copyOfTopicTimeStamps(self):
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
     
+    def findNextTask(self):
+        fmin = -1
+        tmin = None
+        for topic in topic_c._topic_dict.keys():
+            # get the first timestamp for that topic
+            fi = self._experiment_timeline[topic][0] 
+            # if its min, set it as min
+            if (fmin < 0) or (fi < fmin):
+                tmin = topic
+                fmin = fi
+        # at this point fmin holds the next timestamp, and tmin holds which topic to publish to
+        # remove the timestamp from the topic's list
+        if tmin:
+            print("topic:",tmin)
+            self._experiment_timeline[tmin].pop(0)
+
+        if not self._experiment_timeline[tmin]:
+            print("topic list", tmin, self._experiment_timeline[tmin])
+            # if the list at this key is empty, remove the key
+            self._experiment_timeline.pop(key=tmin)
+        return [tmin, fmin]
+
     def mqttcc_algo(self):
-        Emin = None
+        Emin = -1
         Einc = None
+        EincMin = None
+        Enew = None
         Eratio = None
         bestMac = None
+        while len(self._experiment_timeline.keys() > 0):
+            [newTask, newTaskTimeStamp] = self.findNextTask()
+            for deviceMac in self._system_capability[newTask][1]:
+                # for each device capable of publishing to newTask
+                # calculate energy increase from adding the new task
+                Einc = pub_c._devices._units[deviceMac].energyIncrease(task_freq=topic_c._topic_dict[newTask])
+                Enew = pub_c._devices._units[deviceMac]._consumption + Einc
+                Eratio = Enew / pub_c._devices._units[deviceMac]._battery
+                if (Emin < 0) or (Enew <= pub_c._devices._units[deviceMac]._battery and Eratio < Emin):
+                    bestMac = deviceMac
+                    Emin = Eratio 
+                    EincMin = Einc
+                Einc = None
+                Enew = None
+                Eratio = None
+            if bestMac:
+                # if the device is the best for the new task
+                # assign it to the device
+                pub_c._devices._units[bestMac].addAssignment(added_topic=newTask, added_qos=topic_c._topic_dict[newTask])
+                # add the consumption estimate from mqttcc algo
+                pub_c._devices._units[bestMac].updateConsumption(EincMin)
+                # update number of executions
+                bestMac_new_executions = pub_c._devices._units[bestMac].calculateExecutions()
+                pub_c._devices._units[bestMac].setExecutions(new_value=bestMac_new_executions)
+                # add the task's timestamp to the device
+                pub_c._devices._units[bestMac].addTimestamp(timestamp=newTaskTimeStamp)
+        # by this point, all timestamps have been allocated to devices according to RR
+        
         # for each topic in topic_dict
             # get tuple from system publishing 
                 # for each device mac in the topic capability
@@ -45,6 +97,4 @@ class MQTTCC:
                 # if bestmac
                     # assign task to mac with addAssignment
                     # update consumption with energy increase
-        # calculate total energy consumption
-        pass
     
