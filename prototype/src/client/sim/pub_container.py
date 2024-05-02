@@ -124,8 +124,6 @@ class Processing_Unit:
     #     return num_executions
     def effectiveExecutions(self, new_task_timestamp = None):
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
-        times = []
-        executions_times = []
         time_stamps = list(self._sense_timestamp)
         if new_task_timestamp:
             time_stamps.append(new_task_timestamp)
@@ -134,10 +132,11 @@ class Processing_Unit:
         time_stamps.sort()
         last_execution_end = -threshold
         effective_executions = 0
-        for time in executions_times:
+        for time in time_stamps:
             if time >= last_execution_end + threshold:
                 effective_executions+=1
                 last_execution_end = time
+        print("executions = ", effective_executions)
         return effective_executions
     # # Performed for MQTT-CC only
     # def calculateExecutions(self, new_task_freq = None):
@@ -186,6 +185,7 @@ class Processing_Unit:
     def energyIncrease(self, task_timestamp):
         newExecutions = self.effectiveExecutions(new_task_timestamp=task_timestamp)
         changeInExecutions = newExecutions - self._num_executions_per_hour
+        print("change in executions = ", changeInExecutions)
         #print(f"change in execution = {changeInExecutions}")
         # the change in the number of sensing events = 1
         # change in the number of communication events is the change in effective executions

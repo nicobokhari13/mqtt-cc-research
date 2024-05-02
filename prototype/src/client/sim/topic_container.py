@@ -66,8 +66,6 @@ class Topic_Container:
             multiples = list(range(0, 3600000 + 1, freq))
             # at the end of the loop timestamp_list has all of freq's timestamps < T
             self._all_sense_timestamps[topic] = deepcopy(multiples)
-        print(self._all_sense_timestamps)
-        sys.exit()
             # example, if topic/1 publishes every 10ms, then topic/1: [10,20,30...]
 
     def resetSenseTimestamps(self):

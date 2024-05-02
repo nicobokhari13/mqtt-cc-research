@@ -11,7 +11,7 @@ from round_robin import RR
 
 # EXPERIMENT SET UP
 configuration = ConfigUtils()
-configuration.setConstants("config.ini")
+configuration.setConstants("config-topic.ini")
 file_paths = {
     "pub_path": "results_pubs/",
     "sub_path": "results_subs/",
