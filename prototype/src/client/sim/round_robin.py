@@ -22,12 +22,38 @@ class RR:
         pass
 
     def copyOfSystemCapability(self, capability):
-        self._system_publishing = deepcopy(capability)
+        # a dictionary with each topic's capable devices for publishing to t
+        self._system_capability = deepcopy(capability)
 
     def copyOfTopicTimeStamps(self):
+        # a dictionary with each topic's sense execution timestamp < T observation period
+            # topic/1: [10,20,30...]
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
 
+    def saveDevicesTotalEnergyConsumed(self):
+        self._total_energy_consumption+=pub_c._devices._all_devices_energy_consumption
+
     def findNextTask(self):
+        fmin = -1
+        tmin = None
+        for topic in topic_c._topic_dict.keys():
+            # get the first timestamp for that topic
+            fi = self._experiment_timeline[topic][0] 
+            # if its min, set it as min
+            if (fmin < 0) or (fi < fmin):
+                tmin = topic
+                fmin = fi
+        # at this point fmin holds the next timestamp, and tmin holds which topic to publish to
+        # remove the timestamp from the topic's list
+        if tmin:
+            print("topic:",tmin)
+            self._experiment_timeline[tmin].pop(0)
+
+        if not self._experiment_timeline[tmin]:
+            print("topic list", tmin, self._experiment_timeline[tmin])
+            # if the list at this key is empty, remove the key
+            self._experiment_timeline.pop(key=tmin)
+        return [tmin, fmin]
         # fmin = -1
         # tmin = None
         # for each topic in topic dict keys
@@ -40,13 +66,23 @@ class RR:
         pass
 
     def rr_algo(self):
-        # while len(timeline.keys()) > 0
+        while len(self._experiment_timeline.keys() > 0):
+            [newTask, newTaskTimeStamp] = self.findNextTask()
+            # if the index of the publishing device is -1, or the index is at the end of the list
+            if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >len(self._system_capability[newTask][1])):
+                # set the index to the first publisher
+                self._system_capability[newTask][0] = 0
+            else:
+                self._system_capability[newTask][0]+= 1
+            publishing_mac = self._system_capability[newTask][1][self._system_capability[newTask][0]]
+            pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
+        # by this point, all timestamps have been allocated to devices according to RR
+        
+            # while len(timeline.keys()) > 0
             # [newTask, newTaskTimeStamp] = findNextTask()
             # get tuple for topic = newTask in system capability
                 # if tuple[0] = None or tuple[0] + 1 > len(tuple[1]), set to 0
                 # else, tuple[0]+=1
                 # get mac from list tuple[1] at index tuple[0]
                 # add timestamp to device
-        # calculate total energy consumption
-        pass
 

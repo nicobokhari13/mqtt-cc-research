@@ -43,8 +43,8 @@ class Processing_Unit:
 
     def __init__(self):
         self._assignments = {} # topic: publishing latency
-        self._battery = 100
-        self._consumption = 0
+        self._battery = 100 # p.allEnergyCapacity
+        self._consumption = 0 # Ecurrent in the MQTTCC algo
         self._capable_topics = []
         self._num_executions_per_hour = 0
         # For calculating total energy consumption (for all algorithms)
@@ -77,16 +77,17 @@ class Processing_Unit:
     def updateConsumption(self, energy_increase):
         self._consumption+=energy_increase
 
-    # Performed to acquire device's total energy consumption
+    # Performed to acquire device's total energy consumption from self._sense_timestamp
     def effectiveExecutions(self):
+        print("calculating effective communication executions")
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
         # all the times in which the device must communicate, including those within the same execution group
-        timestamp_set = set(self._sense_timestamp)
+        timestamp_set = set(self._sense_timestamp) # removes repeated timestamps (tasks that automatically communicate at the same time)
         timestamp_set = list(timestamp_set)
-        timestamp_set.sort()
+        timestamp_set.sort() # sort ascending order
         execution_group = []
         group_min = None
-        for i in range(len(timestamp_set)):
+        for i in range(len(timestamp_set)): # this finds if the timestamps occur within the same execution
             if i == 0:
                 execution_group.append(timestamp_set[i])
                 group_min = timestamp_set[i]
@@ -110,6 +111,7 @@ class Processing_Unit:
 
     # Performed for MQTT-CC only
     def calculateExecutions(self, new_task_freq = None):
+        print("in mqttcc, calculating executions for device")
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
         all_freqs = deepcopy(self._assignments.values())
         if new_task_freq:
@@ -123,7 +125,7 @@ class Processing_Unit:
         execution_group = []
         group_min = None
         num_executions = 0
-        multiplier = 2
+        multiplier = 1
 
         for freq in freq_multiples:
             multiple = freq * multiplier
@@ -131,7 +133,7 @@ class Processing_Unit:
                 freq_multiples.add(multiple)
                 multiple+=1
                 multiple = freq * multiplier
-            multiple = 2
+            multiple = 1
         freq_multiples = list(freq_multiples) 
         freq_multiples.sort()
         for i in range(len(freq_multiples)):

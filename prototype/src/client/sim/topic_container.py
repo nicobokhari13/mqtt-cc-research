@@ -54,8 +54,8 @@ class Topic_Container:
     def setupSenseTimestamps(self):
         self._all_sense_timestamps = {}
         multiplier = 1
+        timestamp_list = []
         for topic in self._topic_dict.keys():
-            timestamp_list = []
             freq = self._topic_dict[topic]
             multiple  = freq * multiplier
             while multiple < 3600000:
@@ -64,6 +64,7 @@ class Topic_Container:
                 multiple  = freq * multiplier
             # at the end of the loop timestamp_list has all of freq's timestamps < T
             self._all_sense_timestamps[topic] = timestamp_list
+            # example, if topic/1 publishes every 10ms, then topic/1: [10,20,30...]
             multiplier = 1
             timestamp_list.clear()   
 

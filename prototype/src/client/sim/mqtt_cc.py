@@ -33,6 +33,10 @@ class MQTTCC:
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
     
     def mqttcc_algo(self):
+        Emin = None
+        Einc = None
+        Eratio = None
+        bestMac = None
         # for each topic in topic_dict
             # get tuple from system publishing 
                 # for each device mac in the topic capability
@@ -40,6 +44,7 @@ class MQTTCC:
                     # get best mac
                 # if bestmac
                     # assign task to mac with addAssignment
+                    # update consumption with energy increase
         # calculate total energy consumption
         pass
     
