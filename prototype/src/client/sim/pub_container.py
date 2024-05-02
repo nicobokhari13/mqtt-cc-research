@@ -89,42 +89,56 @@ class Processing_Unit:
 
     # Performed to acquire device's total energy consumption from self._sense_timestamp
     # also used by MQTT-CC to calculate executions as tasks are added
-    def effectiveExecutions(self, new_task_timestamp = None):
-        print("device Mac = ", self._device_mac)
-        print("calculating effective communication executions")
-        threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
-        # all the times in which the device must communicate, including those within the same execution group
-        timestamp_set = list(self._sense_timestamp)
-        if new_task_timestamp:
-            timestamp_set.append(new_task_timestamp)
-        if not timestamp_set:
-            return 0
-        timestamp_set = set(timestamp_set) # removes repeated timestamps (tasks that automatically communicate at the same time)
-        timestamp_set = list(timestamp_set)
-        timestamp_set.sort() # sort ascending order
-        execution_group = []
-        group_min = None
-        num_executions = 0
-        for i in range(len(timestamp_set)): # this finds if the timestamps occur within the same execution
-            if i == 0:
-                execution_group.append(timestamp_set[i])
-                group_min = timestamp_set[i]
-                #print("starting new execution")
-            else:
-                if abs(timestamp_set[i] - group_min) < threshold:
-                    execution_group.append(timestamp_set[i])
-                else:
-                    num_executions+=1
-                    execution_group.clear()
-                    execution_group.append(timestamp_set[i])
-                    group_min = timestamp_set[i]
-                    #print("timestamp not in the same execution, resetting")
-        if len(execution_group):
-            num_executions+=1
-        print(f"num execution = {num_executions}")
+    # def effectiveExecutions(self, new_task_timestamp = None):
+    #     threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
+    #     # all the times in which the device must communicate, including those within the same execution group
+    #     timestamp_set = list(self._sense_timestamp)
+    #     if new_task_timestamp:
+    #         timestamp_set.append(new_task_timestamp)
+    #     if not timestamp_set:
+    #         return 0
+    #     timestamp_set = set(timestamp_set) # removes repeated timestamps (tasks that automatically communicate at the same time)
+    #     timestamp_set = list(timestamp_set)
+    #     timestamp_set.sort() # sort ascending order
+    #     execution_group = []
+    #     group_min = None
+    #     num_executions = 0
+    #     for i in range(len(timestamp_set)): # this finds if the timestamps occur within the same execution
+    #         if i == 0:
+    #             execution_group.append(timestamp_set[i])
+    #             group_min = timestamp_set[i]
+    #             #print("starting new execution")
+    #         else:
+    #             if abs(timestamp_set[i] - group_min) < threshold:
+    #                 execution_group.append(timestamp_set[i])
+    #             else:
+    #                 num_executions+=1
+    #                 execution_group.clear()
+    #                 execution_group.append(timestamp_set[i])
+    #                 group_min = timestamp_set[i]
+    #                 #print("timestamp not in the same execution, resetting")
+    #     if len(execution_group):
+    #         num_executions+=1
+    #     print(f"num execution = {num_executions}")
 
-        return num_executions
-        
+    #     return num_executions
+    def effectiveExecutions(self, new_task_timestamp = None):
+        threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
+        times = []
+        executions_times = []
+        time_stamps = list(self._sense_timestamp)
+        if new_task_timestamp:
+            time_stamps.append(new_task_timestamp)
+        if not time_stamps:
+            return 0
+        time_stamps.sort()
+        last_execution_end = -threshold
+        effective_executions = 0
+        for time in executions_times:
+            if time >= last_execution_end + threshold:
+                effective_executions+=1
+                last_execution_end = time
+        return effective_executions
     # # Performed for MQTT-CC only
     # def calculateExecutions(self, new_task_freq = None):
     #     threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC

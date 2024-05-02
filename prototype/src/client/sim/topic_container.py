@@ -1,5 +1,6 @@
 import random
 from copy import deepcopy
+import sys
 
 class Topic_Container:
     _instance = None
@@ -57,21 +58,17 @@ class Topic_Container:
         # this object will be the same across all algorithms, need deepcopy for each
         # only created once per round
     def setupSenseTimestamps(self):
+        # TODO: use list(range(0, observation_period + 1, freq))
         self._all_sense_timestamps = {}
-        multiplier = 1
         timestamp_list = []
         for topic in self._topic_dict.keys():
             freq = self._topic_dict[topic]
-            multiple  = freq * multiplier
-            while multiple < 3600000:
-                timestamp_list.append(multiple)
-                multiplier+=1
-                multiple  = freq * multiplier
+            multiples = list(range(0, 3600000 + 1, freq))
             # at the end of the loop timestamp_list has all of freq's timestamps < T
-            self._all_sense_timestamps[topic] = deepcopy(timestamp_list)
+            self._all_sense_timestamps[topic] = deepcopy(multiples)
+        print(self._all_sense_timestamps)
+        sys.exit()
             # example, if topic/1 publishes every 10ms, then topic/1: [10,20,30...]
-            multiplier = 1
-            timestamp_list.clear()   
 
     def resetSenseTimestamps(self):
         self._all_sense_timestamps.clear() 
