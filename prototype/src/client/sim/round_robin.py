@@ -67,12 +67,12 @@ class RR:
 
     def rr_algo(self):
             while len(self._experiment_timeline.keys()) > 0:
-                print("=============")
-                print(self._system_capability)
+                #print("=============")
+                #print(self._system_capability)
                 [newTask, newTaskTimeStamp] = self.findNextTask()
-                print([newTask, newTaskTimeStamp])
+                #print([newTask, newTaskTimeStamp])
                 # if the index of the publishing device is -1, or the index is at the end of the list
-                print("index = ", self._system_capability[newTask][0])
+                #print("index = ", self._system_capability[newTask][0])
                 if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >= len(self._system_capability[newTask][1])):
                     # set the index to the first publisher
                     self._system_capability[newTask][0] = 0

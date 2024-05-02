@@ -35,6 +35,7 @@ class Devices:
             device._consumption = 0
             device._battery = 100
             device.setExecutions(new_value=0)
+            device._sense_timestamp = []
 
     def clearUnits(self):
         self._units.clear()
@@ -84,13 +85,21 @@ class Processing_Unit:
 
     def updateConsumption(self, energy_increase):
         self._consumption+=energy_increase
+        print("consumption = ", self._consumption)
 
     # Performed to acquire device's total energy consumption from self._sense_timestamp
-    def effectiveExecutions(self):
+    # also used by MQTT-CC to calculate executions as tasks are added
+    def effectiveExecutions(self, new_task_timestamp = None):
+        print("device Mac = ", self._device_mac)
         print("calculating effective communication executions")
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
         # all the times in which the device must communicate, including those within the same execution group
-        timestamp_set = set(self._sense_timestamp) # removes repeated timestamps (tasks that automatically communicate at the same time)
+        timestamp_set = list(self._sense_timestamp)
+        if new_task_timestamp:
+            timestamp_set.append(new_task_timestamp)
+        if not timestamp_set:
+            return 0
+        timestamp_set = set(timestamp_set) # removes repeated timestamps (tasks that automatically communicate at the same time)
         timestamp_set = list(timestamp_set)
         timestamp_set.sort() # sort ascending order
         execution_group = []
@@ -100,78 +109,73 @@ class Processing_Unit:
             if i == 0:
                 execution_group.append(timestamp_set[i])
                 group_min = timestamp_set[i]
-                print("starting new execution")
+                #print("starting new execution")
             else:
                 if abs(timestamp_set[i] - group_min) < threshold:
                     execution_group.append(timestamp_set[i])
-                    print("timestamp occurs in same execution")
                 else:
                     num_executions+=1
                     execution_group.clear()
                     execution_group.append(timestamp_set[i])
                     group_min = timestamp_set[i]
-                    print("timestamp not in the same execution, resetting")
+                    #print("timestamp not in the same execution, resetting")
         if len(execution_group):
             num_executions+=1
         print(f"num execution = {num_executions}")
 
         return num_executions
+        
+    # # Performed for MQTT-CC only
+    # def calculateExecutions(self, new_task_freq = None):
+    #     threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
+    #     all_freqs = deepcopy(list(self._assignments.values()))
+    #     if new_task_freq:
+    #         all_freqs.append(new_task_freq)
+    #     if not all_freqs:
+    #         # if no frequencies, there are no executions
+    #         return 0
+    #     freq_multiples = set(all_freqs)
+    #     execution_group = []
+    #     group_min = None
+    #     num_executions = 0
+    #     multiplier = 1
 
+    #     for freq in all_freqs:
+    #         multiple = freq * multiplier
+    #         while multiple < Devices._instance.OBSERVATION_PERIOD_MILISEC:
+    #             freq_multiples.add(multiple)
+    #             multiplier+=1
+    #             multiple = freq * multiplier
+    #         multiple = 1
+    #     freq_multiples = list(freq_multiples) 
+    #     freq_multiples.sort()
+    #     for i in range(len(freq_multiples)):
+    #         if i == 0:
+    #             execution_group.append(freq_multiples[i])
+    #             group_min = freq_multiples[i]
+    #         else:
+    #             if abs(freq_multiples[i] - group_min) < threshold:
+    #                 execution_group.append(freq_multiples[i])
+    #             else:
+    #                 num_executions+=1
+    #                 execution_group.clear()
+    #                 execution_group.append(freq_multiples[i])
+    #                 group_min = freq_multiples[i]
+    #     if len(execution_group):
+    #         num_executions+=1
+    #     #print(f"device mac = {self._device_mac}")
+    #     #print(f"num execution = {num_executions}")
 
-    # Performed for MQTT-CC only
-    def calculateExecutions(self, new_task_freq = None):
-        print("in mqttcc, calculating executions for device")
-        threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
-        all_freqs = deepcopy(self._assignments.values())
-        if new_task_freq:
-            print("new frequency found")
-            all_freqs.append(new_task_freq)
-            print("new frequency added")
-        if not all_freqs:
-            # if no frequencies, there are no executions
-            return 0
-        freq_multiples = set(all_freqs)
-        execution_group = []
-        group_min = None
-        num_executions = 0
-        multiplier = 1
-
-        for freq in freq_multiples:
-            multiple = freq * multiplier
-            while multiple < Devices._instance.OBSERVATION_PERIOD_MILISEC:
-                freq_multiples.add(multiple)
-                multiple+=1
-                multiple = freq * multiplier
-            multiple = 1
-        freq_multiples = list(freq_multiples) 
-        freq_multiples.sort()
-        for i in range(len(freq_multiples)):
-            if i == 0:
-                execution_group.append(freq_multiples[i])
-                group_min = freq_multiples[i]
-                print("starting new execution")
-            else:
-                if abs(freq_multiples[i] - group_min) < threshold:
-                    execution_group.append(freq_multiples[i])
-                    print("freq occurs in same execution")
-                else:
-                    num_executions+=1
-                    execution_group.clear()
-                    execution_group.append(freq_multiples[i])
-                    group_min = freq_multiples[i]
-                    print("freq not in the same execution, resetting")
-        if len(execution_group):
-            num_executions+=1
-            
-        print(f"num execution = {num_executions}")
-
-        return num_executions
+    #     return num_executions
     
     # Performed by MQTT-CC only
-    def energyIncrease(self, task_freq):
-        newExecutions = self.calculateExecutions(new_task_freq=task_freq)
+    def energyIncrease(self, task_timestamp):
+        newExecutions = self.effectiveExecutions(new_task_timestamp=task_timestamp)
         changeInExecutions = newExecutions - self._num_executions_per_hour
-        energyUsed = newExecutions * Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
+        #print(f"change in execution = {changeInExecutions}")
+        # the change in the number of sensing events = 1
+        # change in the number of communication events is the change in effective executions
+        energyUsed = Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
         return energyUsed
 
 class Publisher_Container:
@@ -235,7 +239,7 @@ class Publisher_Container:
             if not found:
                 # if the topic is not covered by any device
                 # get a random device
-                rand_mac = random.choice(self._devices._units.keys())
+                rand_mac = random.choice(list(self._devices._units.keys()))
                 # assign the topic t topicInCapable(self,)o it
                 self._devices._units[rand_mac]._capable_topics.append(topic)
             # reset found to False

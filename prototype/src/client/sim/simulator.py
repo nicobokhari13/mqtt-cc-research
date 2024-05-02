@@ -13,9 +13,9 @@ from round_robin import RR
 configuration = ConfigUtils()
 configuration.setConstants("config.ini")
 file_paths = {
-    "pub_path": "../results_pubs/",
-    "sub_path": "../results_subs/",
-    "topic_path": "../results_topics/"
+    "pub_path": "results_pubs/",
+    "sub_path": "results_subs/",
+    "topic_path": "results_topics/"
 }
 filename = "results_" + str(datetime.now()) + "_"
 
@@ -82,9 +82,12 @@ def experiment_setup():
     else:
         print("there is an error in your config file")
         sys.exit()
+    print("setting up timestamps")
     topic_c.setupSenseTimestamps()
     global system_capability 
+    print("setting up system capability")
     system_capability = createSystemCapability()
+    print(system_capability)
 
 # CSV Format for all files
     # algo_name, num_rounds, num_topic, num_pubs, num_subs, average_energy_consumption over all rounds
@@ -121,12 +124,22 @@ def main():
         rr_energy_consumption = pub_c._devices._all_devices_energy_consumption
         rr.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
 
-        # after running the algorithm, clear everything
+        # reset experiment for next algorithm
+        pub_c._devices.resetUnits()
+
+        cc.mqttcc_algo()
+        pub_c._devices.calculateTotalEnergyConsumption()
+        cc_energy_consumption = pub_c._devices._all_devices_energy_consumption
+        cc.saveDevicesTotalEnergyConsumed(cc_energy_consumption)
+        # after running the algorithms, clear everything before next round
         pub_c._devices.clearUnits()
         pub_c._devices.clearAllDeviceEnergyConsumption()
         topic_c.clearTopicDict()
+    # after all the rounds, calculate the average system energy consumption per round
     rr_avg_energy_consumption = rr._total_energy_consumption / configuration._sim_rounds
+    cc_avg_energy_consumption = cc._total_energy_consumption / configuration._sim_rounds
     saveResults(algo_name=rr._algo_name, avg_energy_consumption=rr_avg_energy_consumption)
+    saveResults(algo_name=cc._algo_name, avg_energy_consumption=cc_avg_energy_consumption)
 
     # for loop num rounds
         # set up experiment 

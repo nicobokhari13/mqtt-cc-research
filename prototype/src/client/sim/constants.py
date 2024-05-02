@@ -30,9 +30,9 @@ class ConfigUtils:
         self._max_subs = int(self._config.get("VARS", "max_subs"))
         self._max_topics = int(self._config.get("VARS", "max_topics"))
         # Define Variables
-        self._vary_pubs = bool(self._config.get("VARS", "vary_pubs"))
-        self._vary_subs = bool(self._config.get("VARS", "vary_subs"))
-        self._vary_topics = bool(self._config.get("VARS", "vary_topics"))
+        self._vary_pubs = self._config.get("VARS", "vary_pubs") == "true"
+        self._vary_subs = self._config.get("VARS", "vary_subs") == "true"
+        self._vary_topics = self._config.get("VARS", "vary_topics") == "true"
         # Define Defaults 
         self._default_num_pubs = int(self._config.get("DEFAULTS", "def_num_pubs"))
         self._default_num_subs = int(self._config.get("DEFAULTS", "def_num_subs"))
