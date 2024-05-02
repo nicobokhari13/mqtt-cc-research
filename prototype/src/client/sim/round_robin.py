@@ -30,8 +30,8 @@ class RR:
             # topic/1: [10,20,30...]
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
 
-    def saveDevicesTotalEnergyConsumed(self):
-        self._total_energy_consumption+=pub_c._devices._all_devices_energy_consumption
+    def saveDevicesTotalEnergyConsumed(self, round_energy_consumption):
+        self._total_energy_consumption+= round_energy_consumption
 
     def findNextTask(self):
         fmin = -1

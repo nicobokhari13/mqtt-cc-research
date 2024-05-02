@@ -43,6 +43,9 @@ class Topic_Container:
             return True
         else: 
             return False
+        
+    def clearTopicDict(self):
+        self._topic_dict.clear()
     
     # Precondition: all topics are created, all subscribers created
         # all frequencies assigned to all topics

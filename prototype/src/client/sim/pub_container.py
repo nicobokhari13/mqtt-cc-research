@@ -33,6 +33,12 @@ class Devices:
             device._consumption = 0
             device._battery = 100
             device.setExecutions(new_value=0)
+
+    def clearUnits(self):
+        self._units.clear()
+
+    def clearAllDeviceEnergyConsumption(self):
+        self._all_devices_energy_consumption = 0
         
     def calculateTotalEnergyConsumption(self):
         for device in self._units.values():

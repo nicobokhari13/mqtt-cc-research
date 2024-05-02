@@ -38,26 +38,30 @@ pub_c.setEnergies(sense_energy=configuration._sense_energy, comm_energy=configur
     # dictionary with
         # key = topic
         # value = tuple (index of publishing device, [list of all capable devices])
-system_capability = {topic: (-1, []) for topic in topic_c._topic_dict.keys()}
+system_capability = {}
 
-for topic in topic_c._topic_dict.keys(): # for every topic
-    for device in pub_c._devices._units.values(): # find the device
-        if device.capableOfPublishing(topic):
-            system_capability[topic][1].append(device._device_mac)
+# Precondition: all the topic strings are created
+def createSystemCapability():
+    capability = {topic: (-1, []) for topic in topic_c._topic_dict.keys()}
+    for topic in topic_c._topic_dict.keys(): # for every topic
+        for device in pub_c._devices._units.values(): # find the device
+            if device.capableOfPublishing(topic):
+                system_capability[topic][1].append(device._device_mac)
+    return capability
 
-def setup_exp_pub_vary():
+def setup_exp_vary_pub():
     exp_num_pub = random.randint(2, configuration._max_pubs)
     topic_c.setupTopicStrings(numTopics=0)
     sub_c.setUpLatQoS(num_subs=0)
     pub_c.setupDevices(num_pubs=exp_num_pub)
 
-def setup_exp_sub_vary():
+def setup_exp_vary_sub():
     exp_num_subs = random.randint(2, configuration._max_subs)
     topic_c.setupTopicStrings(numTopics=0)
     sub_c.setUpLatQoS(num_subs=exp_num_subs)
     pub_c.setupDevices(num_pubs=0)
 
-def setup_exp_topic_vary():
+def setup_exp_vary_topic():
     exp_num_topics = random.randint(2, configuration._max_topics)
     topic_c.setupTopicStrings(numTopics=exp_num_topics)
     sub_c.setUpLatQoS(num_subs=0)
@@ -67,15 +71,17 @@ def setup_exp_topic_vary():
 def experiment_setup():
     # based on the vary_xxx config settings, begin setup functions for the containers
     if configuration._vary_pubs:
-        setup_exp_pub_vary()
+        setup_exp_vary_pub()
     elif configuration._vary_subs:
-        setup_exp_sub_vary()        
+        setup_exp_vary_sub()        
     elif configuration._vary_topics:
-        setup_exp_topic_vary()
+        setup_exp_vary_topic()
     else:
         print("there is an error in your config file")
         sys.exit()
     topic_c.setupSenseTimestamps()
+    global system_capability 
+    system_capability = createSystemCapability()
 
 # CSV Format for all files
     # algo_name, num_rounds, num_topic, num_pubs, num_subs, average_energy_consumption over all rounds
@@ -95,6 +101,30 @@ def main():
     # create algo objects
     rr = RR()
     cc = MQTTCC()
+    global system_capability
+    for round in range(configuration._sim_rounds):
+        # set up experiment
+        experiment_setup()
+        # set system capability and timestamps for algorithms
+        rr.copyOfSystemCapability(system_capability)
+        rr.copyOfTopicTimeStamps(topic_c._all_sense_timestamps)
+        cc.copyOfSystemCapability(system_capability)
+        cc.copyOfTopicTimeStamps(topic_c._all_sense_timestamps)
+
+        # run RR first
+        rr.rr_algo()
+        # save the total energy consumption
+        pub_c._devices.calculateTotalEnergyConsumption()
+        rr_energy_consumption = pub_c._devices._all_devices_energy_consumption
+        rr.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
+
+        # after running the algorithm, clear everything
+        pub_c._devices.clearUnits()
+        pub_c._devices.clearAllDeviceEnergyConsumption()
+        topic_c.clearTopicDict()
+    rr_avg_energy_consumption = rr._total_energy_consumption / configuration._sim_rounds
+    saveResults(algo_name=rr._algo_name, avg_energy_consumption=rr_avg_energy_consumption)
+
     # for loop num rounds
         # set up experiment 
         # run cc
@@ -102,6 +132,3 @@ def main():
         # run rr
         # reset anyhting in between algos
     # run saveResults with algo + total_consumption / num_rounds
-    pass 
-
-
