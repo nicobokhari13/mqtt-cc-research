@@ -1,6 +1,8 @@
 import random
 from topic_container import Topic_Container
 
+topic_c = Topic_Container()
+
 class Subscriber_Container:
     _instance = None
 
@@ -28,16 +30,15 @@ class Subscriber_Container:
             num_subs = self._default_num_subs
         self._total_subs = num_subs
         print(f"creating {num_subs} subscribers")
-        topics = Topic_Container()
         for sub in range(num_subs):
-            num_subscriptions = random.randint(start=1, stop=topics._total_topics)
-            subscriptions = random.sample(population=topics._topic_dict.keys(), k=num_subscriptions)
+            num_subscriptions = random.randint(a=1, b=topic_c._total_topics)
+            subscriptions = random.sample(population=topic_c._topic_dict.keys(), k=num_subscriptions)
             for subscription in subscriptions:
-                sub_lat_qos = random.randomint(a=self._lat_qos_min, b=self._lat_qos_max)
-                topics.updateQoS(topic_changed=subscription, sub_lat=sub_lat_qos)
+                sub_lat_qos = random.randint(a=self._lat_qos_min, b=self._lat_qos_max)
+                topic_c.updateQoS(topic_changed=subscription, sub_lat=sub_lat_qos)
+        print(topic_c._topic_dict)
 
     def ensureTopicCoverage(self):
-        topics = Topic_Container()
-        for topic in topics._topic_dict.keys():
-            if topics._topic_dict[topic] < -1:
-                topics._topic_dict[topic] = random.randint(a=self._lat_qos_min, b=self._lat_qos_max)
+        for topic in topic_c._topic_dict.keys():
+            if topic_c._topic_dict[topic] < 0:
+                topic_c._topic_dict[topic] = random.randint(a=self._lat_qos_min, b=self._lat_qos_max)

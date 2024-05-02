@@ -1,4 +1,5 @@
 import random
+from copy import deepcopy
 
 class Topic_Container:
     _instance = None
@@ -14,13 +15,14 @@ class Topic_Container:
         pass
 
     def setDefaultNumTopics(self, default_num_topics):
-        self._default_num_topics = default_num_topics
+        self._default_num_topic = default_num_topics
 
     def setupTopicStrings(self, numTopics):
         if numTopics == 0:
             print(f"setting default topic {self._default_num_topic}")
             numTopics = self._default_num_topic
         self._total_topics = numTopics
+        print(self._total_topics)
         print(f"creating {numTopics} topics")
         self._topic_dict = dict()
         topic_list = self.generateTopics(numTopics)
@@ -66,7 +68,7 @@ class Topic_Container:
                 multiplier+=1
                 multiple  = freq * multiplier
             # at the end of the loop timestamp_list has all of freq's timestamps < T
-            self._all_sense_timestamps[topic] = timestamp_list
+            self._all_sense_timestamps[topic] = deepcopy(timestamp_list)
             # example, if topic/1 publishes every 10ms, then topic/1: [10,20,30...]
             multiplier = 1
             timestamp_list.clear()   

@@ -17,7 +17,7 @@ file_paths = {
     "sub_path": "../results_subs/",
     "topic_path": "../results_topics/"
 }
-filename = "results_" + datetime.now() + "_"
+filename = "results_" + str(datetime.now()) + "_"
 
 # create containers
 pub_c = Publisher_Container()
@@ -32,7 +32,7 @@ topic_c.setDefaultNumTopics(configuration._default_num_topics)
 # other constants
 sub_c.setLatencyMinMax(min=configuration._LAT_QOS_MIN, max=configuration._LAT_QOS_MAX)
 pub_c.setEnergies(sense_energy=configuration._sense_energy, comm_energy=configuration._comm_energy)
-
+pub_c.setThreshold(threshold=configuration._THRESHOLD_WINDOW)
 
 # create capability matrix
     # dictionary with
@@ -42,11 +42,11 @@ system_capability = {}
 
 # Precondition: all the topic strings are created
 def createSystemCapability():
-    capability = {topic: (-1, []) for topic in topic_c._topic_dict.keys()}
+    capability = {topic: [-1, []] for topic in topic_c._topic_dict.keys()}
     for topic in topic_c._topic_dict.keys(): # for every topic
         for device in pub_c._devices._units.values(): # find the device
             if device.capableOfPublishing(topic):
-                system_capability[topic][1].append(device._device_mac)
+                capability[topic][1].append(device._device_mac)
     return capability
 
 def setup_exp_vary_pub():
@@ -71,10 +71,13 @@ def setup_exp_vary_topic():
 def experiment_setup():
     # based on the vary_xxx config settings, begin setup functions for the containers
     if configuration._vary_pubs:
+        print("varying publishers")
         setup_exp_vary_pub()
     elif configuration._vary_subs:
+        print("varying subscribers")
         setup_exp_vary_sub()        
     elif configuration._vary_topics:
+        print("varying topics")
         setup_exp_vary_topic()
     else:
         print("there is an error in your config file")
@@ -107,9 +110,9 @@ def main():
         experiment_setup()
         # set system capability and timestamps for algorithms
         rr.copyOfSystemCapability(system_capability)
-        rr.copyOfTopicTimeStamps(topic_c._all_sense_timestamps)
+        rr.copyOfTopicTimeStamps()
         cc.copyOfSystemCapability(system_capability)
-        cc.copyOfTopicTimeStamps(topic_c._all_sense_timestamps)
+        cc.copyOfTopicTimeStamps()
 
         # run RR first
         rr.rr_algo()
@@ -132,3 +135,6 @@ def main():
         # run rr
         # reset anyhting in between algos
     # run saveResults with algo + total_consumption / num_rounds
+
+if __name__ == "__main__":
+    main()

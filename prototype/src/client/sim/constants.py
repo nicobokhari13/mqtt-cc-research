@@ -34,9 +34,9 @@ class ConfigUtils:
         self._vary_subs = bool(self._config.get("VARS", "vary_subs"))
         self._vary_topics = bool(self._config.get("VARS", "vary_topics"))
         # Define Defaults 
-        self._default_num_pubs = self._config.get("DEFAULTS", "def_num_pubs")
-        self._default_num_subs = self._config.get("DEFAULTS", "def_num_subs")
-        self._default_num_topics = self._config.get("DEFAULTS", "def_num_topics")
+        self._default_num_pubs = int(self._config.get("DEFAULTS", "def_num_pubs"))
+        self._default_num_subs = int(self._config.get("DEFAULTS", "def_num_subs"))
+        self._default_num_topics = int(self._config.get("DEFAULTS", "def_num_topics"))
 
 
 

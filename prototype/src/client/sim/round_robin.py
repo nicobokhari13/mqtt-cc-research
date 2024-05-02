@@ -38,21 +38,22 @@ class RR:
         tmin = None
         for topic in topic_c._topic_dict.keys():
             # get the first timestamp for that topic
-            fi = self._experiment_timeline[topic][0] 
+            if topic in self._experiment_timeline.keys():
+                fi = self._experiment_timeline[topic][0] 
             # if its min, set it as min
-            if (fmin < 0) or (fi < fmin):
-                tmin = topic
-                fmin = fi
+                if (fmin < 0) or (fi < fmin):
+                    tmin = topic
+                    fmin = fi
         # at this point fmin holds the next timestamp, and tmin holds which topic to publish to
         # remove the timestamp from the topic's list
         if tmin:
-            print("topic:",tmin)
             self._experiment_timeline[tmin].pop(0)
 
         if not self._experiment_timeline[tmin]:
             print("topic list", tmin, self._experiment_timeline[tmin])
             # if the list at this key is empty, remove the key
-            self._experiment_timeline.pop(key=tmin)
+            del self._experiment_timeline[tmin]
+        
         return [tmin, fmin]
         # fmin = -1
         # tmin = None
@@ -65,10 +66,14 @@ class RR:
         # return [ti, fi]
 
     def rr_algo(self):
-            while len(self._experiment_timeline.keys() > 0):
+            while len(self._experiment_timeline.keys()) > 0:
+                print("=============")
+                print(self._system_capability)
                 [newTask, newTaskTimeStamp] = self.findNextTask()
+                print([newTask, newTaskTimeStamp])
                 # if the index of the publishing device is -1, or the index is at the end of the list
-                if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >len(self._system_capability[newTask][1])):
+                print("index = ", self._system_capability[newTask][0])
+                if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >= len(self._system_capability[newTask][1])):
                     # set the index to the first publisher
                     self._system_capability[newTask][0] = 0
                 else:
@@ -76,7 +81,7 @@ class RR:
                 publishing_mac = self._system_capability[newTask][1][self._system_capability[newTask][0]]
                 pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
             # by this point, all timestamps have been allocated to devices according to RR
-
+            print("done with rr algo")
             # while len(timeline.keys()) > 0
             # [newTask, newTaskTimeStamp] = findNextTask()
             # get tuple for topic = newTask in system capability

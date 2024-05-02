@@ -3,6 +3,8 @@ from copy import deepcopy
 from topic_container import Topic_Container
 import random
 
+topic_c = Topic_Container()
+
 class Devices:
     _instance = None
     def __new__(cls, *args, **kwargs):
@@ -93,6 +95,7 @@ class Processing_Unit:
         timestamp_set.sort() # sort ascending order
         execution_group = []
         group_min = None
+        num_executions = 0
         for i in range(len(timestamp_set)): # this finds if the timestamps occur within the same execution
             if i == 0:
                 execution_group.append(timestamp_set[i])
@@ -192,8 +195,11 @@ class Publisher_Container:
         self._devices.setSensingEnergy(sense_energy)
         self._devices.setCommEnergy(comm_energy)
 
+    def setThreshold(self, threshold):
+        self._devices.setThreshold(threshold)
+
     # Precondition: numPubs is a whole number > 0
-    def generatePublisherMacs(numPubs):
+    def generatePublisherMacs(self, numPubs):
         pub_macs = []
         for i in range(numPubs):
             name = f"dev00{i}"
@@ -216,13 +222,12 @@ class Publisher_Container:
     # Precondition: Topics are created 
     def generateDeviceCapability(self):
         found = False
-        topics = Topic_Container()
         for unit in self._devices._units.values():
-            num_capable_publishes = random.randint(start=1, stop=topics._total_topics)
+            num_capable_publishes = random.randint(a=1, b=topic_c._total_topics)
             # randomly sample this number of topics with their max_allowed_latency
-            publishes = random.sample(population=topics._topic_dict.keys(), k=num_capable_publishes)
+            publishes = random.sample(population=topic_c._topic_dict.keys(), k=num_capable_publishes)
             unit.setCapableTopics(capability=publishes)
-        for topic in topics._topic_dict.keys():
+        for topic in topic_c._topic_dict.keys():
             for unit in self._devices._units.values():
                 if unit.capableOfPublishing(topic):
                     found = True
