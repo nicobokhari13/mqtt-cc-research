@@ -82,8 +82,8 @@ def experiment_setup():
     else:
         print("there is an error in your config file")
         sys.exit()
-    print("setting up timestamps")
-    topic_c.setupSenseTimestamps()
+    #print("setting up timestamps")
+    #topic_c.setupSenseTimestamps()
     global system_capability 
     print("setting up system capability")
     system_capability = createSystemCapability()
@@ -115,7 +115,7 @@ def main():
         rr.copyOfSystemCapability(system_capability)
         rr.copyOfTopicTimeStamps()
         cc.copyOfSystemCapability(system_capability)
-        cc.copyOfTopicTimeStamps()
+        #cc.copyOfTopicTimeStamps()
 
         # run RR first
         rr.rr_algo()
@@ -126,8 +126,9 @@ def main():
 
         # reset experiment for next algorithm
         pub_c._devices.resetUnits()
+        pub_c._devices.clearAllDeviceEnergyConsumption()
 
-        cc.mqttcc_algo()
+        cc.mqttcc_algo_idea_1()
         pub_c._devices.calculateTotalEnergyConsumption()
         cc_energy_consumption = pub_c._devices._all_devices_energy_consumption
         cc.saveDevicesTotalEnergyConsumed(cc_energy_consumption)

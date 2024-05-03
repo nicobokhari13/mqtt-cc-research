@@ -2,6 +2,7 @@ from pub_container import Publisher_Container
 from topic_container import Topic_Container
 from subscriber_container import Subscriber_Container
 from copy import deepcopy
+import sys
 
 # to access the singleton instance easily
 pub_c = Publisher_Container()
@@ -35,6 +36,8 @@ class MQTTCC:
     def copyOfTopicTimeStamps(self):
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
     
+    # TODO: Loop through each topic, allocate each topic instead of task
+
     def findNextTask(self):
         fmin = -1
         tmin = None
@@ -58,6 +61,44 @@ class MQTTCC:
         
         return [tmin, fmin]
 
+    def mqttcc_algo_idea_1(self):
+        for topic in topic_c._topic_dict.keys():
+            Emin = -1
+            Einc = None
+            EincMin = None
+            Enew = None
+            Eratio = None
+            bestMac = None
+            for deviceMac in self._system_capability[topic][1]:
+                print("\t devicemac = ", deviceMac)
+                Einc = pub_c._devices._units[deviceMac].energyIncrease(added_topic_freq=topic_c._topic_dict[topic])
+                Enew = pub_c._devices._units[deviceMac]._consumption + Einc
+                Eratio = Enew / pub_c._devices._units[deviceMac]._battery
+                print("\t Eratio = ", Eratio)
+                if (Emin < 0):
+                    bestMac = deviceMac
+                    Emin = Eratio 
+                    EincMin = Einc
+                elif ((Enew <= pub_c._devices._units[deviceMac]._battery) and (Eratio < Emin)):
+                    bestMac = deviceMac
+                    Emin = Eratio 
+                    EincMin = Einc
+                else:
+                    print("problem in the algo")
+                    sys.exit()
+                print("\t Emin = ", Emin)
+            if bestMac:
+                print("best mac = ", bestMac)
+                pub_c._devices._units[bestMac].addAssignment(added_topic=topic, added_qos=topic_c._topic_dict[topic])
+                pub_c._devices._units[bestMac].updateConsumption(EincMin)
+                new_execution_per_hour = pub_c._devices._units[bestMac].calculateExecutions()
+                pub_c._devices._units[bestMac].setExecutions(new_value=new_execution_per_hour)
+                print("==========")
+        # by this point, all timestamps have been allocated to devices according to RR
+        print("finished with mqtt_cc idea 1")
+                
+
+            
     def mqttcc_algo(self):
 
         while len(self._experiment_timeline.keys()) > 0:
@@ -70,7 +111,7 @@ class MQTTCC:
             Eratio = None
             bestMac = None
             for deviceMac in self._system_capability[newTask][1]:
-                print("\t devicemac = ", deviceMac)
+                print("\tdevicemac = ", deviceMac)
                 # for each device capable of publishing to newTask
                 # calculate energy increase from adding the new task
                 Einc = pub_c._devices._units[deviceMac].energyIncrease(newTaskTimeStamp)

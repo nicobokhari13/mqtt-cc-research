@@ -46,7 +46,10 @@ class Devices:
     def calculateTotalEnergyConsumption(self):
         for device in self._units.values():
             device_energy_used = self.SENSING_ENERGY * len(device._sense_timestamp) + self.COMMUNICATION_ENERGY * device.effectiveExecutions()
+            print("\tdeviceMac = ", device._device_mac)
+            print("\tenergy used = ", device_energy_used)
             self._all_devices_energy_consumption+=device_energy_used
+        print("system total = ", self._all_devices_energy_consumption)
         
 class Processing_Unit:
 
@@ -65,8 +68,11 @@ class Processing_Unit:
     def addTimestamp(self, timestamp):
         self._sense_timestamp.append(timestamp)
 
+    # When adding a topic to the device, we add all the timestamps that it senses/publishes to the topic we assigned it
     def addAssignment(self, added_topic, added_qos):
         self._assignments[added_topic] = added_qos
+        added_timestamps = list(range(0,Devices._instance.OBSERVATION_PERIOD_MILISEC + 1, added_qos))
+        self._sense_timestamp.extend(added_timestamps)
     
     def resetAssignments(self):
         self._assignments.clear()    
@@ -123,6 +129,7 @@ class Processing_Unit:
 
     #     return num_executions
     def effectiveExecutions(self, new_task_timestamp = None):
+        print("deviceMac = ", self._device_mac)
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
         time_stamps = list(self._sense_timestamp)
         if new_task_timestamp:
@@ -130,6 +137,7 @@ class Processing_Unit:
         if not time_stamps:
             return 0
         time_stamps.sort()
+        print("number of timestamps = ",len(time_stamps))
         last_execution_end = -threshold
         effective_executions = 0
         for time in time_stamps:
@@ -180,12 +188,32 @@ class Processing_Unit:
     #     #print(f"num execution = {num_executions}")
 
     #     return num_executions
-    
+
+    # Performed by MQTT-CC to calculate number of executions per hour
+    def calculateExecutions(self, new_freq = None):
+        threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
+        time_stamps = list(self._sense_timestamp)
+        if new_freq:
+            new_timestamps = list(range(0, Devices._instance.OBSERVATION_PERIOD_MILISEC) + 1, new_freq)
+            time_stamps.extend(new_timestamps)
+        if not time_stamps:
+            return 0
+        time_stamps.sort()
+        last_execution_end = -threshold
+        effective_executions = 0
+        for time in time_stamps:
+            if time >= last_execution_end + threshold:
+                effective_executions+=1
+                last_execution_end = time
+        print("\texecutions = ", effective_executions)
+        return effective_executions
+
     # Performed by MQTT-CC only
-    def energyIncrease(self, task_timestamp):
-        newExecutions = self.effectiveExecutions(new_task_timestamp=task_timestamp)
+    def energyIncrease(self, added_topic_freq):
+        #newExecutions = self.effectiveExecutions(new_task_timestamp=task_timestamp)
+        newExecutions = self.calculateExecutions(new_freq=added_topic_freq)
         changeInExecutions = newExecutions - self._num_executions_per_hour
-        print("change in executions = ", changeInExecutions)
+        print("\tchange in executions = ", changeInExecutions)
         #print(f"change in execution = {changeInExecutions}")
         # the change in the number of sensing events = 1
         # change in the number of communication events is the change in effective executions
