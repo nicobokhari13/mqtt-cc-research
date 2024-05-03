@@ -50,10 +50,11 @@ class Devices:
             self._all_devices_energy_consumption+=device_energy_used
             print("devicemac = ", device._device_mac)
             print("energy used = ", device_energy_used)
+           # print("timestamps = ", device._sense_timestamp)
             print("device capability", device._capable_topics)
             print("num executions = ", executions)
             print("length of timestamps = ",len(device._sense_timestamp))
-
+            print("--------")
 class Processing_Unit:
 
     def __init__(self):
