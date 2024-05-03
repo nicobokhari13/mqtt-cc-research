@@ -45,9 +45,15 @@ class Devices:
         
     def calculateTotalEnergyConsumption(self):
         for device in self._units.values():
-            device_energy_used = self.SENSING_ENERGY * len(device._sense_timestamp) + self.COMMUNICATION_ENERGY * device.effectiveExecutions()
+            executions = device.effectiveExecutions()
+            device_energy_used = self.SENSING_ENERGY * len(device._sense_timestamp) + self.COMMUNICATION_ENERGY * executions
             self._all_devices_energy_consumption+=device_energy_used
-        
+            print("devicemac = ", device._device_mac)
+            print("energy used = ", device_energy_used)
+            print("device capability", device._capable_topics)
+            print("num executions = ", executions)
+            print("length of timestamps = ",len(device._sense_timestamp))
+
 class Processing_Unit:
 
     def __init__(self):
@@ -85,7 +91,7 @@ class Processing_Unit:
 
     def updateConsumption(self, energy_increase):
         self._consumption+=energy_increase
-        print("consumption = ", self._consumption)
+        #print("consumption = ", self._consumption)
 
     # Performed to acquire device's total energy consumption from self._sense_timestamp
     # also used by MQTT-CC to calculate executions as tasks are added
@@ -136,7 +142,7 @@ class Processing_Unit:
             if time >= last_execution_end + threshold:
                 effective_executions+=1
                 last_execution_end = time
-        print("executions = ", effective_executions)
+        #print("executions = ", effective_executions)
         return effective_executions
     # # Performed for MQTT-CC only
     # def calculateExecutions(self, new_task_freq = None):
@@ -185,11 +191,12 @@ class Processing_Unit:
     def energyIncrease(self, task_timestamp):
         newExecutions = self.effectiveExecutions(new_task_timestamp=task_timestamp)
         changeInExecutions = newExecutions - self._num_executions_per_hour
-        print("change in executions = ", changeInExecutions)
+        #print("change in executions = ", changeInExecutions)
         #print(f"change in execution = {changeInExecutions}")
         # the change in the number of sensing events = 1
         # change in the number of communication events is the change in effective executions
-        energyUsed = newExecutions * Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
+        energyUsed = Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
+        # energyUsed = newExecutions * Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
         return energyUsed
 
 class Publisher_Container:
@@ -241,7 +248,7 @@ class Publisher_Container:
     def generateDeviceCapability(self):
         found = False
         for unit in self._devices._units.values():
-            num_capable_publishes = random.randint(a=1, b=topic_c._total_topics)
+            num_capable_publishes = random.randint(a=2, b=topic_c._total_topics)
             # randomly sample this number of topics with their max_allowed_latency
             publishes = random.sample(population=topic_c._topic_dict.keys(), k=num_capable_publishes)
             unit.setCapableTopics(capability=publishes)

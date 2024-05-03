@@ -84,7 +84,7 @@ class MQTTCC:
                 # if the device is the best for the new task
                 # assign it to the device
                 print("best mac = ", bestMac)
-                print("device increase = ", EincMin)
+                #print("device increase = ", EincMin)
                 #pub_c._devices._units[bestMac].addAssignment(added_topic=newTask, added_qos=topic_c._topic_dict[newTask])
                 # add the consumption estimate from mqttcc algo
                 pub_c._devices._units[bestMac].updateConsumption(EincMin)
