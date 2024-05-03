@@ -129,7 +129,7 @@ class Processing_Unit:
 
     #     return num_executions
     def effectiveExecutions(self, new_task_timestamp = None):
-        print("deviceMac = ", self._device_mac)
+        #print("deviceMac = ", self._device_mac)
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
         time_stamps = list(self._sense_timestamp)
         if new_task_timestamp:
@@ -137,14 +137,14 @@ class Processing_Unit:
         if not time_stamps:
             return 0
         time_stamps.sort()
-        print("number of timestamps = ",len(time_stamps))
+        #print("number of timestamps = ",len(time_stamps))
         last_execution_end = -threshold
         effective_executions = 0
         for time in time_stamps:
             if time >= last_execution_end + threshold:
                 effective_executions+=1
                 last_execution_end = time
-        print("executions = ", effective_executions)
+        #print("executions = ", effective_executions)
         return effective_executions
     # # Performed for MQTT-CC only
     # def calculateExecutions(self, new_task_freq = None):
@@ -194,7 +194,7 @@ class Processing_Unit:
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
         time_stamps = list(self._sense_timestamp)
         if new_freq:
-            new_timestamps = list(range(0, Devices._instance.OBSERVATION_PERIOD_MILISEC) + 1, new_freq)
+            new_timestamps = list(range(0, Devices._instance.OBSERVATION_PERIOD_MILISEC + 1, new_freq))
             time_stamps.extend(new_timestamps)
         if not time_stamps:
             return 0
@@ -217,7 +217,10 @@ class Processing_Unit:
         #print(f"change in execution = {changeInExecutions}")
         # the change in the number of sensing events = 1
         # change in the number of communication events is the change in effective executions
-        energyUsed = newExecutions * Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
+        # energy Used = num_sensing_tasks * sense_energy + num_comm_tasks * comm_energy
+        num_sensing_tasks_added = len(range(0,Devices._instance.OBSERVATION_PERIOD_MILISEC + 1, added_topic_freq))
+        energyUsed = num_sensing_tasks_added * Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
+        #energyUsed = newExecutions * Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
         return energyUsed
 
 class Publisher_Container:
@@ -269,7 +272,7 @@ class Publisher_Container:
     def generateDeviceCapability(self):
         found = False
         for unit in self._devices._units.values():
-            num_capable_publishes = random.randint(a=1, b=topic_c._total_topics)
+            num_capable_publishes = random.randint(a=2, b=topic_c._total_topics)
             # randomly sample this number of topics with their max_allowed_latency
             publishes = random.sample(population=topic_c._topic_dict.keys(), k=num_capable_publishes)
             unit.setCapableTopics(capability=publishes)

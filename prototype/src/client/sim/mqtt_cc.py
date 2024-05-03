@@ -70,11 +70,12 @@ class MQTTCC:
             Eratio = None
             bestMac = None
             for deviceMac in self._system_capability[topic][1]:
-                print("\t devicemac = ", deviceMac)
+                print("\tdevicemac = ", deviceMac)
                 Einc = pub_c._devices._units[deviceMac].energyIncrease(added_topic_freq=topic_c._topic_dict[topic])
                 Enew = pub_c._devices._units[deviceMac]._consumption + Einc
                 Eratio = Enew / pub_c._devices._units[deviceMac]._battery
-                print("\t Eratio = ", Eratio)
+                print("\tEratio = ", Eratio)
+                print("\tEnew = ", Enew)
                 if (Emin < 0):
                     bestMac = deviceMac
                     Emin = Eratio 
@@ -83,9 +84,6 @@ class MQTTCC:
                     bestMac = deviceMac
                     Emin = Eratio 
                     EincMin = Einc
-                else:
-                    print("problem in the algo")
-                    sys.exit()
                 print("\t Emin = ", Emin)
             if bestMac:
                 print("best mac = ", bestMac)
