@@ -1,6 +1,0 @@
-- keep track of Devices instance of Processing units
-- same idea of commands and sending number of executions
-- get next publisher by
-  - getting the index of the publisher in the Devices._units.key()
-  - increase the index until you find a publisher with the topic in the _assignments.keys OR index > number of publishers
-  - if the index is out of bounds, go back to index 0, and increase by 1 until you find a publisher with the topic in _assignments.keys()
