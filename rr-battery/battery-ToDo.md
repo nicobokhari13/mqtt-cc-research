@@ -1,8 +1,0 @@
-- execute the same rate as our system
-- use statuses to update batteries
-- reset assignments
-- always assign the topic to the publisher capable with the highest battery
-- send commands even if they are empty
-- need a way to process empty command strings
-  - "{"None" : "None"}"
-  - Turn into dictionary, if "None" is in the keys, then no publishing tasks, just wait for sleep
