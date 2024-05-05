@@ -1,5 +1,15 @@
-# Planning 
+# To Do
 
+## 5-4-24 Saturday Planning
+- Outline areas of codebase for the following features
+  - save results for a single round in the same file
+  - random task allocation algorithm
+  - device tracking of topic + qos + publishing time stamp
+  - what needs to be changed to try to add this to the testbed 
+- Determine number of rounds for each algorithm
+- Remove all metrics csv
+
+## Planning 
 - Consider energy consumption helper to acquire the timeline of frequnecies over period T
 - Publishing units should keep a frequency timeline with all frequency "timestamps" during the observation period
 - Topic Container should already create a timeline from 0 - T observation period with each mulitple of frequencies in the dictionary 
@@ -11,3 +21,4 @@
 - Configurables:
   - threshold
   - smallest latency - maximum latency in milliseconds
+
