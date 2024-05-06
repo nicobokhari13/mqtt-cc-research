@@ -54,19 +54,19 @@ def createSystemCapability():
     return capability
 
 def setup_exp_vary_pub():
-    exp_num_pub = random.randint(2, configuration._max_pubs)
+    exp_num_pub = random.randint(3, configuration._max_pubs)
     topic_c.setupTopicStrings(numTopics=0)
     sub_c.setUpLatQoS(num_subs=0)
     pub_c.setupDevices(num_pubs=exp_num_pub)
 
 def setup_exp_vary_sub():
-    exp_num_subs = random.randint(2, configuration._max_subs)
+    exp_num_subs = random.randint(3, configuration._max_subs)
     topic_c.setupTopicStrings(numTopics=0)
     sub_c.setUpLatQoS(num_subs=exp_num_subs)
     pub_c.setupDevices(num_pubs=0)
 
 def setup_exp_vary_topic():
-    exp_num_topics = random.randint(2, configuration._max_topics)
+    exp_num_topics = random.randint(3, configuration._max_topics)
     topic_c.setupTopicStrings(numTopics=exp_num_topics)
     sub_c.setUpLatQoS(num_subs=0)
     pub_c.setupDevices(num_pubs=0)
