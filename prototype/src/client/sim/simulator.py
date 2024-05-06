@@ -8,15 +8,18 @@ import sys
 import csv
 from mqtt_cc import MQTTCC
 from round_robin import RR
+from random_algo import Random
 
 config_file = sys.argv[1]
+last_msg = sys.argv[2]
 # EXPERIMENT SET UP
 configuration = ConfigUtils()
 configuration.setConstants(configFilePath=config_file)
 file_paths = {
     "pub_path": "results_pubs/",
     "sub_path": "results_subs/",
-    "topic_path": "results_topics/"
+    "topic_path": "results_topics/",
+    "threshold_path": "results_thresh/"
 }
 filename = "results_" + str(datetime.now()) + "_"
 
@@ -51,7 +54,7 @@ def createSystemCapability():
     return capability
 
 def setup_exp_vary_pub():
-    exp_num_pub = random.randint(5, configuration._max_pubs)
+    exp_num_pub = random.randint(2, configuration._max_pubs)
     topic_c.setupTopicStrings(numTopics=0)
     sub_c.setUpLatQoS(num_subs=0)
     pub_c.setupDevices(num_pubs=exp_num_pub)
@@ -63,8 +66,13 @@ def setup_exp_vary_sub():
     pub_c.setupDevices(num_pubs=0)
 
 def setup_exp_vary_topic():
-    exp_num_topics = random.randint(5, configuration._max_topics)
+    exp_num_topics = random.randint(2, configuration._max_topics)
     topic_c.setupTopicStrings(numTopics=exp_num_topics)
+    sub_c.setUpLatQoS(num_subs=0)
+    pub_c.setupDevices(num_pubs=0)
+
+def setup_default():
+    topic_c.setupTopicStrings(numTopics=0)
     sub_c.setUpLatQoS(num_subs=0)
     pub_c.setupDevices(num_pubs=0)
 
@@ -81,8 +89,10 @@ def experiment_setup():
         print("varying topics")
         setup_exp_vary_topic()
     else:
-        print("there is an error in your config file")
-        sys.exit()
+        print("using defaults")
+        print("varying threshold")
+        setup_default()
+        #sys.exit()
     print("setting up timestamps")
     topic_c.setupSenseTimestamps()
     global system_capability 
@@ -99,6 +109,8 @@ def saveResults(algo_name:str, num_round, num_topic, num_pubs, num_subs, total_e
         file_path = file_paths["sub_path"] + filename + "sub"
     elif configuration._vary_topics:
         file_path = file_paths["topic_path"] + filename + "topic"
+    else:
+        file_path = file_paths["threshold_path"] + filename + "thresh_" + configuration._THRESHOLD_WINDOW 
     data = [algo_name, num_round, num_topic, num_pubs, num_subs, total_energy_consumption]
     with open(file_path, 'a', newline='') as file:
         writer = csv.writer(file)
@@ -108,6 +120,7 @@ def main():
     # create algo objects
     rr = RR()
     cc = MQTTCC()
+    rand = Random()
     global system_capability
     for round in range(configuration._sim_rounds):
         print("round number: ", round)
@@ -116,34 +129,54 @@ def main():
         # set system capability and timestamps for algorithms
         rr.copyOfSystemCapability(system_capability)
         rr.copyOfTopicTimeStamps()
+        random.copyOfSystemCapability(system_capability)
+        random.copyOfTopicTimeStamps()    
         cc.copyOfSystemCapability(system_capability)
         cc.copyOfTopicTimeStamps()
 
-        # run RR first
+# SIMULATE ALGORITHMS
+# ====================
+        # run RR 
         rr.rr_algo()
         # save the total energy consumption
         pub_c._devices.calculateTotalEnergyConsumption()
         rr_energy_consumption = pub_c._devices._all_devices_energy_consumption
-        rr.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
-
+        #rr.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
+        saveResults(algo_name=rr._algo_name, num_round=round, num_topic=topic_c._total_topics, num_pubs=pub_c._total_devices, num_subs=sub_c._total_subs, total_energy_consumption=rr_energy_consumption)
         # reset experiment for next algorithm
         pub_c._devices.resetUnits()
         pub_c._devices.clearAllDeviceEnergyConsumption()
-
+# ====================
+        # run random
+        rand.random_algo()
+        # save the total energy consumption
+        pub_c._devices.calculateTotalEnergyConsumption()
+        random_energy_consumption = pub_c._devices._all_devices_energy_consumption
+        #random.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
+        saveResults(algo_name=rand._algo_name, num_round=round, num_topic=topic_c._total_topics, num_pubs=pub_c._total_devices, num_subs=sub_c._total_subs, total_energy_consumption=random_energy_consumption)
+        # reset experiment for next algorithm
+        pub_c._devices.resetUnits()
+        pub_c._devices.clearAllDeviceEnergyConsumption()
+# ====================
+        # run mqtt-cc
         cc.mqttcc_algo()
+        # save the total energy consumption
         pub_c._devices.calculateTotalEnergyConsumption()
         cc_energy_consumption = pub_c._devices._all_devices_energy_consumption
-        cc.saveDevicesTotalEnergyConsumed(cc_energy_consumption)
+        #cc.saveDevicesTotalEnergyConsumed(cc_energy_consumption)
+        saveResults(algo_name=cc._algo_name, num_round=round, num_topic=topic_c._total_topics, num_pubs=pub_c._total_devices, num_subs=sub_c._total_subs, total_energy_consumption=cc_energy_consumption)
 
-        # after running the algorithms, clear everything before next round
+
+# after running the algorithms, clear everything before next round
         pub_c._devices.clearUnits()
         pub_c._devices.clearAllDeviceEnergyConsumption()
         topic_c.clearTopicDict()
+    print(last_msg)
     # after all the rounds, calculate the average system energy consumption per round
-    rr_avg_energy_consumption = rr._total_energy_consumption / configuration._sim_rounds
-    cc_avg_energy_consumption = cc._total_energy_consumption / configuration._sim_rounds
-    saveResults(algo_name=rr._algo_name, avg_energy_consumption=rr_avg_energy_consumption)
-    saveResults(algo_name=cc._algo_name, avg_energy_consumption=cc_avg_energy_consumption)
+    # rr_avg_energy_consumption = rr._total_energy_consumption / configuration._sim_rounds
+    # cc_avg_energy_consumption = cc._total_energy_consumption / configuration._sim_rounds
+    # saveResults(algo_name=rr._algo_name, avg_energy_consumption=rr_avg_energy_consumption)
+    # saveResults(algo_name=cc._algo_name, avg_energy_consumption=cc_avg_energy_consumption)
 
     # for loop num rounds
         # set up experiment 
