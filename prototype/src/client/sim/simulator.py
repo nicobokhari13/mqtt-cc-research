@@ -9,9 +9,10 @@ import csv
 from mqtt_cc import MQTTCC
 from round_robin import RR
 
+config_file = sys.argv[1]
 # EXPERIMENT SET UP
 configuration = ConfigUtils()
-configuration.setConstants("config-subs.ini")
+configuration.setConstants(configFilePath=config_file)
 file_paths = {
     "pub_path": "results_pubs/",
     "sub_path": "results_subs/",
