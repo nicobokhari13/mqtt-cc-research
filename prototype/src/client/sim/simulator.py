@@ -91,15 +91,15 @@ def experiment_setup():
     print(system_capability)
 
 # CSV Format for all files
-    # algo_name, num_rounds, num_topic, num_pubs, num_subs, average_energy_consumption over all rounds
-def saveResults(algo_name:str, avg_energy_consumption:float):
+    # algo_name, num_round, num_topic, num_pubs, num_subs, total_energy_consumption
+def saveResults(algo_name:str, num_round, num_topic, num_pubs, num_subs, total_energy_consumption):
     if configuration._vary_pubs:
         file_path = file_paths["pub_path"] + filename + "pub"
     elif configuration._vary_subs:
         file_path = file_paths["sub_path"] + filename + "sub"
     elif configuration._vary_topics:
         file_path = file_paths["topic_path"] + filename + "topic"
-    data = [algo_name, configuration._sim_rounds, avg_energy_consumption]
+    data = [algo_name, num_round, num_topic, num_pubs, num_subs, total_energy_consumption]
     with open(file_path, 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(data)
@@ -110,6 +110,7 @@ def main():
     cc = MQTTCC()
     global system_capability
     for round in range(configuration._sim_rounds):
+        print("round number: ", round)
         # set up experiment
         experiment_setup()
         # set system capability and timestamps for algorithms
@@ -133,6 +134,7 @@ def main():
         pub_c._devices.calculateTotalEnergyConsumption()
         cc_energy_consumption = pub_c._devices._all_devices_energy_consumption
         cc.saveDevicesTotalEnergyConsumed(cc_energy_consumption)
+
         # after running the algorithms, clear everything before next round
         pub_c._devices.clearUnits()
         pub_c._devices.clearAllDeviceEnergyConsumption()

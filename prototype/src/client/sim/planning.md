@@ -4,8 +4,6 @@
 - Outline areas of codebase for the following features
   - save results for a single round in the same file
   - random task allocation algorithm
-  - device tracking of topic + qos + publishing time stamp
-  - what needs to be changed to try to add this to the testbed 
 - Determine number of rounds for each algorithm
 - Remove all metrics csv
 

@@ -2,13 +2,14 @@ from pub_container import Publisher_Container
 from topic_container import Topic_Container
 from subscriber_container import Subscriber_Container
 from copy import deepcopy
+import random 
 
 # to access the singleton instance easily
 pub_c = Publisher_Container()
 sub_c = Subscriber_Container()
 topic_c = Topic_Container()
 
-class RR:
+class Random:
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -17,7 +18,7 @@ class RR:
         return cls._instance
     
     def __init__(self):
-        self._algo_name = "rr"
+        self._algo_name = "random"
         self._total_energy_consumption = 0
         pass
 
@@ -30,8 +31,8 @@ class RR:
             # topic/1: [10,20,30...]
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
 
-    def saveDevicesTotalEnergyConsumed(self, round_energy_consumption):
-        self._total_energy_consumption+= round_energy_consumption
+    def saveDevicesTotalEnergyConsumed(self, random_energy_consumption):
+        self._total_energy_consumption+= random_energy_consumption
 
     def resetTotalConsumption(self):
         self._total_energy_consumption = 0
@@ -68,7 +69,7 @@ class RR:
         # if ti's timestamp list is empty, remove ti from the keys
         # return [ti, fi]
 
-    def rr_algo(self):
+    def random_algo(self):
             while len(self._experiment_timeline.keys()) > 0:
                 #print("=============")
                 #print(self._system_capability)
@@ -76,15 +77,14 @@ class RR:
                 #print([newTask, newTaskTimeStamp])
                 # if the index of the publishing device is -1, or the index is at the end of the list
                 #print("index = ", self._system_capability[newTask][0])
-                if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >= len(self._system_capability[newTask][1])):
-                    # set the index to the first publisher
-                    self._system_capability[newTask][0] = 0
-                else:
-                    self._system_capability[newTask][0]+= 1
-                publishing_mac = self._system_capability[newTask][1][self._system_capability[newTask][0]]
+
+                # get a random index in system_capability[topic][1]
+                random_index = random.randrange(start=0, stop=len(self._system_capability[newTask][1]))
+                self._system_capability[newTask][0] = random_index
+                publishing_mac = self._system_capability[newTask][1][random_index]
                 pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
             # by this point, all timestamps have been allocated to devices according to RR
-            print("done with rr algo")
+            print("done with random algo")
             # while len(timeline.keys()) > 0
             # [newTask, newTaskTimeStamp] = findNextTask()
             # get tuple for topic = newTask in system capability

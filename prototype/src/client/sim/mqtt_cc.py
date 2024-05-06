@@ -34,6 +34,9 @@ class MQTTCC:
     # timeline used to calculate total energy consumption
     def copyOfTopicTimeStamps(self):
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
+        
+    def resetTotalConsumption(self):
+        self._total_energy_consumption = 0
     
     def findNextTask(self):
         fmin = -1
