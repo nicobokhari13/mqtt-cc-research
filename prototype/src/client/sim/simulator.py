@@ -110,7 +110,8 @@ def saveResults(algo_name:str, num_round, num_topic, num_pubs, num_subs, total_e
     elif configuration._vary_topics:
         file_path = file_paths["topic_path"] + filename + "topic"
     else:
-        file_path = file_paths["threshold_path"] + filename + "thresh_" + configuration._THRESHOLD_WINDOW 
+        file_path = file_paths["threshold_path"] + filename + "thresh_" + str(configuration._THRESHOLD_WINDOW) 
+    file_path = file_path + ".csv"
     data = [algo_name, num_round, num_topic, num_pubs, num_subs, total_energy_consumption]
     with open(file_path, 'a', newline='') as file:
         writer = csv.writer(file)
@@ -129,8 +130,8 @@ def main():
         # set system capability and timestamps for algorithms
         rr.copyOfSystemCapability(system_capability)
         rr.copyOfTopicTimeStamps()
-        random.copyOfSystemCapability(system_capability)
-        random.copyOfTopicTimeStamps()    
+        rand.copyOfSystemCapability(system_capability)
+        rand.copyOfTopicTimeStamps()    
         cc.copyOfSystemCapability(system_capability)
         cc.copyOfTopicTimeStamps()
 

@@ -192,12 +192,9 @@ class Processing_Unit:
     def energyIncrease(self, task_timestamp):
         newExecutions = self.effectiveExecutions(new_task_timestamp=task_timestamp)
         changeInExecutions = newExecutions - self._num_executions_per_hour
-        #print("change in executions = ", changeInExecutions)
-        #print(f"change in execution = {changeInExecutions}")
         # the change in the number of sensing events = 1
         # change in the number of communication events is the change in effective executions
         energyUsed = Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
-        # energyUsed = newExecutions * Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
         return energyUsed
 
 class Publisher_Container:
