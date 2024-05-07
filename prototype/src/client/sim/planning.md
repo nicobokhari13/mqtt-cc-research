@@ -1,5 +1,10 @@
 # To Do
 
+## 5-6-24 Monday Planning
+- Finished acquiring data
+- Perform analysis
+- Start writing paper with % of average battery consumption reduction for the system or device
+
 ## 5-4-24 Saturday Planning
 - Outline areas of codebase for the following features
   - save results for a single round in the same file
