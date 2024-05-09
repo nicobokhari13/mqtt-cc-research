@@ -1,5 +1,17 @@
 # To Do
 
+## 5-9-24 Thursday Planning 
+- Separate RR into 
+  - max remaining battery
+  - min number of tasks
+- Consider system lasting time ("uptime")
+  - make observation period a configurable constant
+  - in code
+    - change configured constant until the first instance of a device consumption > capacity
+      - if this happens, change a boolean value to true
+      - if this boolean is true, only save the system's consumption for the previous observation period
+    - perform this for the max_batt, min_task, and random algorithms first as CC will take longer
+
 ## 5-6-24 Monday Planning
 - Finished acquiring data
 - Perform analysis
