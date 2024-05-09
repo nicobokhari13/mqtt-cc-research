@@ -98,6 +98,16 @@ class RR:
                 #print("=============")
                 #print(self._system_capability)
                 [newTask, newTaskTimeStamp] = self.findNextTask()
+                bestMac = self._system_capability[newTask][1][0]
+                minTasks = len(pub_c._devices._units[bestMac]._sense_timestamp)
+                for mac in self._system_capability[newTask][1]:
+                    macNumTasks = len(pub_c._devices._units[mac]._sense_timestamp)
+                    if macNumTasks < minTasks:
+                        bestMac = mac
+                        minTasks = macNumTasks 
+                pub_c._devices._units[bestMac].addTimestamp(timestamp=newTaskTimeStamp)
+                
+        print("done with min_task_algo")
                 # set bestMac = first device in system capability of newTask
                 # minTask = len(bestMac.sense_timestamp)
                 # loop through all macs in system capability of new Task
@@ -105,6 +115,4 @@ class RR:
                         # bestMac = mac
                         # minTask = len(mac.sense_timestamp)
             # pub_c.devices[bestMac].addtimestamp(newTaskTimestamp)
-            
-        pass
-        # publishing mac is the one where the length of the sense_timestamp is minimum
+            # publishing mac is the one where the length of the sense_timestamp is minimum

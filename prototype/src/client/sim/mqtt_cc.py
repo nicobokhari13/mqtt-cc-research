@@ -84,6 +84,10 @@ class MQTTCC:
                     Emin = Eratio 
                     EincMin = Einc
             if bestMac:
+                # After each allocation
+                    # update the consumption
+                    # add the timestmap
+                    # update the number of executions since efficient energy index depends on executions
                 # if the device is the best for the new task
                 # assign it to the device
                 print("best mac = ", bestMac)

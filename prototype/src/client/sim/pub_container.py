@@ -187,8 +187,8 @@ class Processing_Unit:
     #     #print(f"num execution = {num_executions}")
 
     #     return num_executions
-    
-    # Performed by MQTT-CC only
+
+    # Performed by MQTT-EES and maxBattery 
     def energyIncrease(self, task_timestamp):
         newExecutions = self.effectiveExecutions(new_task_timestamp=task_timestamp)
         changeInExecutions = newExecutions - self._num_executions_per_hour
