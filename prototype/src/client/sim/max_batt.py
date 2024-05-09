@@ -94,5 +94,15 @@ class RR:
                 # add timestamp to device
 
     def max_batt_algo(self):
+        while len(self._experiment_timeline.keys()) > 0:
+            [newTask, newTaskTimeStamp] = self.findNextTask()
+            # set bestMac = first device in system capability of newTask
+            # maxBattery = bestMac.battery - bestMac.consumption
+            # loop through all macs in system capability of new Task
+                # if maxBattery < (mac.battery - mac.consumption):
+                    # bestMac = mac
+                    # maxBattery = mac.battery - mac.consumption
+            # pub_c.devices[bestMac].addtimestamp(newTaskTimestamp)
+            
         pass
         # publishing mac is one where the publisher's capacity - consumption is maximum

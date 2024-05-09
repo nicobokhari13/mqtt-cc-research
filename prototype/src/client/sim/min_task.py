@@ -94,5 +94,17 @@ class RR:
                 # add timestamp to device
 
     def min_task_algo(self):
+        while len(self._experiment_timeline.keys()) > 0:
+                #print("=============")
+                #print(self._system_capability)
+                [newTask, newTaskTimeStamp] = self.findNextTask()
+                # set bestMac = first device in system capability of newTask
+                # minTask = len(bestMac.sense_timestamp)
+                # loop through all macs in system capability of new Task
+                    # if len(mac.sense_timestamp) < minTask:
+                        # bestMac = mac
+                        # minTask = len(mac.sense_timestamp)
+            # pub_c.devices[bestMac].addtimestamp(newTaskTimestamp)
+            
         pass
         # publishing mac is the one where the length of the sense_timestamp is minimum
