@@ -7,7 +7,9 @@ import random
 import sys
 import csv
 from mqtt_cc import MQTTCC
-from round_robin import RR
+#from round_robin import RR
+from max_batt import MB
+from min_task import MT
 from random_algo import Random
 
 config_file = sys.argv[1]
@@ -119,7 +121,9 @@ def saveResults(algo_name:str, num_round, num_topic, num_pubs, num_subs, total_e
 
 def main():
     # create algo objects
-    rr = RR()
+    #rr = RR()
+    max_battery = MB()
+    min_task = MT()
     cc = MQTTCC()
     rand = Random()
     global system_capability
@@ -128,8 +132,10 @@ def main():
         # set up experiment
         experiment_setup()
         # set system capability and timestamps for algorithms
-        rr.copyOfSystemCapability(system_capability)
-        rr.copyOfTopicTimeStamps()
+        max_battery.copyOfSystemCapability(system_capability)
+        max_battery.copyOfTopicTimeStamps()
+        min_task.copyOfSystemCapability(system_capability)
+        min_task.copyOfTopicTimeStamps()
         rand.copyOfSystemCapability(system_capability)
         rand.copyOfTopicTimeStamps()    
         cc.copyOfSystemCapability(system_capability)
@@ -137,16 +143,41 @@ def main():
 
 # SIMULATE ALGORITHMS
 # ====================
-        # run RR 
-        rr.rr_algo()
+        # run Min Task
+        min_task.min_task_algo()
         # save the total energy consumption
         pub_c._devices.calculateTotalEnergyConsumption()
-        rr_energy_consumption = pub_c._devices._all_devices_energy_consumption
-        #rr.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
-        saveResults(algo_name=rr._algo_name, num_round=round, num_topic=topic_c._total_topics, num_pubs=pub_c._total_devices, num_subs=sub_c._total_subs, total_energy_consumption=rr_energy_consumption)
+        mt_energy_consumption = pub_c._devices._all_devices_energy_consumption
+        #random.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
+        saveResults(algo_name=min_task._algo_name, num_round=round, num_topic=topic_c._total_topics, num_pubs=pub_c._total_devices, num_subs=sub_c._total_subs, total_energy_consumption=mt_energy_consumption)
         # reset experiment for next algorithm
         pub_c._devices.resetUnits()
         pub_c._devices.clearAllDeviceEnergyConsumption()
+
+# ====================
+
+        # run Max Battery 
+        max_battery.max_batt_algo()
+        # save the total energy consumption
+        pub_c._devices.calculateTotalEnergyConsumption()
+        mb_energy_consumption = pub_c._devices._all_devices_energy_consumption
+        #random.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
+        saveResults(algo_name=max_battery._algo_name, num_round=round, num_topic=topic_c._total_topics, num_pubs=pub_c._total_devices, num_subs=sub_c._total_subs, total_energy_consumption=mb_energy_consumption)
+        # reset experiment for next algorithm
+        pub_c._devices.resetUnits()
+        pub_c._devices.clearAllDeviceEnergyConsumption()
+
+# ====================
+        # # run RR 
+        # rr.rr_algo()
+        # # save the total energy consumption
+        # pub_c._devices.calculateTotalEnergyConsumption()
+        # rr_energy_consumption = pub_c._devices._all_devices_energy_consumption
+        # #rr.saveDevicesTotalEnergyConsumed(round_energy_consumption=rr_energy_consumption)
+        # saveResults(algo_name=rr._algo_name, num_round=round, num_topic=topic_c._total_topics, num_pubs=pub_c._total_devices, num_subs=sub_c._total_subs, total_energy_consumption=rr_energy_consumption)
+        # # reset experiment for next algorithm
+        # pub_c._devices.resetUnits()
+        # pub_c._devices.clearAllDeviceEnergyConsumption()
 # ====================
         # run random
         rand.random_algo()

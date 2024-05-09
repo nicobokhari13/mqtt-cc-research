@@ -8,7 +8,7 @@ pub_c = Publisher_Container()
 sub_c = Subscriber_Container()
 topic_c = Topic_Container()
 
-class RR:
+class MT:
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -30,8 +30,8 @@ class RR:
             # topic/1: [10,20,30...]
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
 
-    def saveDevicesTotalEnergyConsumed(self, round_energy_consumption):
-        self._total_energy_consumption+= round_energy_consumption
+    def saveDevicesTotalEnergyConsumed(self, MT_energy_consumption):
+        self._total_energy_consumption+= MT_energy_consumption
 
     def resetTotalConsumption(self):
         self._total_energy_consumption = 0
