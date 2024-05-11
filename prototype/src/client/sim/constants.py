@@ -15,6 +15,8 @@ class ConfigUtils:
     def setConstants(self, configFilePath):
         self._CONFIG_FILE_PATH = configFilePath
         self._config.read(self._CONFIG_FILE_PATH)
+        # Observation Period
+        self.OBSERVATION_PERIOD_MILISEC = int(self._config.get("CONSTANTS", "ob_period"))
         # Frequency Ranges
         self._LAT_QOS_MIN = int(self._config.get("CONSTANTS", "lat_qos_min_ms"))
         self._LAT_QOS_MAX = int(self._config.get("CONSTANTS", "lat_qos_max_ms"))
@@ -37,7 +39,6 @@ class ConfigUtils:
         self._default_num_pubs = int(self._config.get("DEFAULTS", "def_num_pubs"))
         self._default_num_subs = int(self._config.get("DEFAULTS", "def_num_subs"))
         self._default_num_topics = int(self._config.get("DEFAULTS", "def_num_topics"))
-
 
 
 

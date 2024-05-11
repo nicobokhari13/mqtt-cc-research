@@ -3,6 +3,7 @@ from topic_container import Topic_Container
 from subscriber_container import Subscriber_Container
 from copy import deepcopy
 import random 
+import simulator
 
 # to access the singleton instance easily
 pub_c = Publisher_Container()
@@ -81,8 +82,18 @@ class Random:
                 # get a random index in system_capability[topic][1]
                 random_index = random.randrange(start=0, stop=len(self._system_capability[newTask][1]))
                 self._system_capability[newTask][0] = random_index
-                publishing_mac = self._system_capability[newTask][1][random_index]
+                publishing_mac = self._system_capability[newTask][1][random_index]            
+                # TODO: check if the energy increase + device's consumption >= device's battery 
+                    # if so
+                    # save 
+                # TODO: get the amount of energy increase for adding the task to publishing_mac
+                # TODO: update the device's consumption
+                # TODO: add the timestamp to the device
                 pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
+                # TODO: update the executions for the device
+                
+
+
             # by this point, all timestamps have been allocated to devices according to RR
             print("done with random algo")
             # while len(timeline.keys()) > 0

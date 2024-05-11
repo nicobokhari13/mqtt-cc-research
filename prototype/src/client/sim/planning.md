@@ -1,5 +1,10 @@
 # To Do
 
+## 5-10-24 Friday Planning
+- Read VTC draft entirely
+- Consider necessary figures for intro, system workflow
+- Make observation period a configurable value
+
 ## 5-9-24 Thursday Planning 
 - Separate RR into 
   - max remaining battery

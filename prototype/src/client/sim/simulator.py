@@ -39,7 +39,6 @@ topic_c.setDefaultNumTopics(configuration._default_num_topics)
 sub_c.setLatencyMinMax(min=configuration._LAT_QOS_MIN, max=configuration._LAT_QOS_MAX)
 pub_c.setEnergies(sense_energy=configuration._sense_energy, comm_energy=configuration._comm_energy)
 pub_c.setThreshold(threshold=configuration._THRESHOLD_WINDOW)
-
 # create capability matrix
     # dictionary with
         # key = topic

@@ -2,6 +2,8 @@ from pub_container import Publisher_Container
 from topic_container import Topic_Container
 from subscriber_container import Subscriber_Container
 from copy import deepcopy
+import constants
+import simulator
 
 # to access the singleton instance easily
 pub_c = Publisher_Container()
@@ -62,7 +64,7 @@ class MQTTCC:
         return [tmin, fmin]
 
     def mqttcc_algo(self):
-
+        # add "end algorithm" boolean 
         while len(self._experiment_timeline.keys()) > 0:
             [newTask, newTaskTimeStamp] = self.findNextTask()
             print("topic ", newTask, " time ", newTaskTimeStamp)
@@ -83,6 +85,11 @@ class MQTTCC:
                     bestMac = deviceMac
                     Emin = Eratio 
                     EincMin = Einc
+                if (Enew >= pub_c._devices._units[deviceMac]._battery):
+                    print("device reduced to 0 for observation periods >= ", constants.ConfigUtils._instance.OBSERVATION_PERIOD_MILISEC)
+                    # TODO: save the total for (battery - consumption) like simulator.py that includes all other experiment configs
+                        # in metrics, only consider average consumption per device
+                    # end algorithm 
             if bestMac:
                 # After each allocation
                     # update the consumption

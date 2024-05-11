@@ -15,7 +15,6 @@ class Devices:
     def __init__(self) -> None:
         # possibly set some constants
         self._units: Dict[str, Processing_Unit] = dict()
-        self.OBSERVATION_PERIOD_MILISEC = 1000 * 3600
         self._all_devices_energy_consumption = 0
 
     def setSensingEnergy(self, sense_energy):
@@ -26,6 +25,9 @@ class Devices:
 
     def setThreshold(self, threshold):
         self.CONCURRENCY_THRESHOLD_MILISEC = threshold
+
+    def setObservationPeriod(self, period):
+        self.OBSERVATION_PERIOD_MILISEC = period
 
     # Called after completing a round for 1 algorithm
     # resets any parameters that may differ between algorithms
@@ -220,6 +222,9 @@ class Publisher_Container:
 
     def setThreshold(self, threshold):
         self._devices.setThreshold(threshold)
+
+    def setObservationPeriod(self, period):
+        self._devices.setObservationPeriod(self, period)
 
     # Precondition: numPubs is a whole number > 0
     def generatePublisherMacs(self, numPubs):
