@@ -5,12 +5,13 @@ from copy import deepcopy
 import random 
 from constants import ConfigUtils
 
+
 # to access the singleton instance easily
 pub_c = Publisher_Container()
 sub_c = Subscriber_Container()
 topic_c = Topic_Container()
 
-class Random:
+class Standard:
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -19,7 +20,7 @@ class Random:
         return cls._instance
     
     def __init__(self):
-        self._algo_name = "random"
+        self._algo_name = "mqtt_algo"
         self._total_energy_consumption = 0
         pass
 
@@ -71,8 +72,6 @@ class Random:
         # return [ti, fi]
 
     def random_algo(self):
-            config = ConfigUtils._instance
-            endAlgo = False
             while len(self._experiment_timeline.keys()) > 0:
                 #print("=============")
                 #print(self._system_capability)
@@ -84,20 +83,30 @@ class Random:
                 # get a random index in system_capability[topic][1]
                 random_index = random.randrange(start=0, stop=len(self._system_capability[newTask][1]))
                 self._system_capability[newTask][0] = random_index
-                publishing_mac = self._system_capability[newTask][1][random_index]
-                energyIncrease = pub_c._devices._units[publishing_mac].energyIncrease(task_timestamp=newTaskTimeStamp)
-                if energyIncrease + pub_c._devices._units[publishing_mac]._consumption >= pub_c._devices._units[publishing_mac]._battery:
-                    # save the current state
-                    print("last time = ",newTaskTimeStamp)
-                    endAlgo = True
-                    # exit algorithm
-                else:
-                    pub_c._devices._units[publishing_mac].updateConsumption(energyIncrease)
-                    pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
-                    pub_c._devices._units[publishing_mac].setExecutions(new_value=pub_c._devices._units[publishing_mac].effectiveExecutions())
-                if endAlgo:
-                    print("leaving random algo")
-                    break
+                publishing_mac = self._system_capability[newTask][1][random_index]            
+                pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
+
             print("done with random algo")
 
-
+    def mqtt_algo(self):
+        config = ConfigUtils._instance
+        endAlgo = False
+        while len(self._experiment_timeline.keys()) > 0:
+            [newTask, newTaskTimeStamp] = self.findNextTask()
+            print("time = ", newTaskTimeStamp)
+            for deviceMac in self._system_capability[newTask][1]:
+                energyIncrease = pub_c._devices._units[deviceMac].energyIncrease(task_timestamp=newTaskTimeStamp)
+                if energyIncrease + pub_c._devices._units[deviceMac]._consumption >= pub_c._devices._units[deviceMac]._battery:
+                    endAlgo = True
+                else:
+                    pub_c._devices._units[deviceMac].updateConsumption(energyIncrease)
+                    pub_c._devices._units[deviceMac].addTimestamp(timestamp=newTaskTimeStamp)
+                    pub_c._devices._units[deviceMac].setExecutions(new_value=pub_c._devices._units[deviceMac].effectiveExecutions())
+                if endAlgo:
+                    print("leaving standard mqtt algo")
+                    break
+            if endAlgo:
+                print("leaving standard mqtt algo")
+                break
+        print("done with standard algo")
+                  

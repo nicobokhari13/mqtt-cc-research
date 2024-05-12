@@ -32,15 +32,15 @@ class Topic_Container:
 
     def generateTopics(self, numTopics):
         topic_list = [f"topic/{i}" for i in range(numTopics)]
-        print(topic_list)
+        #print(topic_list)
         return topic_list
     
     def updateQoS(self, topic_changed, sub_lat):
         if self._topic_dict[topic_changed] < 0 or self._topic_dict[topic_changed] > sub_lat:
             self._topic_dict[topic_changed] = sub_lat
         else:
-            print(f"max allowed latency for {topic_changed} wasn't changed")
-    
+            #print(f"max allowed latency for {topic_changed} wasn't changed")
+            pass 
     def unusedTopics(self):
         if -1 in self._topic_dict.values():
             return True
@@ -49,6 +49,9 @@ class Topic_Container:
         
     def clearTopicDict(self):
         self._topic_dict.clear()
+    
+    def setObservationPeriod(self, period):
+        self._OBS_PERIOD = period
     
     # Precondition: all topics are created, all subscribers created
         # all frequencies assigned to all topics
@@ -63,7 +66,7 @@ class Topic_Container:
         timestamp_list = []
         for topic in self._topic_dict.keys():
             freq = self._topic_dict[topic]
-            multiples = list(range(0, 3600000 + 1, freq))
+            multiples = list(range(0, self._OBS_PERIOD + 1, freq))
             # at the end of the loop timestamp_list has all of freq's timestamps < T
             self._all_sense_timestamps[topic] = deepcopy(multiples)
             # example, if topic/1 publishes every 10ms, then topic/1: [10,20,30...]

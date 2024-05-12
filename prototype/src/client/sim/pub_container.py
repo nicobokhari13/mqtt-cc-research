@@ -224,7 +224,7 @@ class Publisher_Container:
         self._devices.setThreshold(threshold)
 
     def setObservationPeriod(self, period):
-        self._devices.setObservationPeriod(self, period)
+        self._devices.setObservationPeriod(period)
 
     # Precondition: numPubs is a whole number > 0
     def generatePublisherMacs(self, numPubs):
@@ -232,7 +232,7 @@ class Publisher_Container:
         for i in range(numPubs):
             name = f"dev00{i}"
             pub_macs.append(name)
-        print(pub_macs)
+        #print(pub_macs)
         return pub_macs
 
     def setupDevices(self, num_pubs):

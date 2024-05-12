@@ -3,7 +3,8 @@ from topic_container import Topic_Container
 from subscriber_container import Subscriber_Container
 from copy import deepcopy
 import constants
-import simulator
+from constants import ConfigUtils
+
 
 # to access the singleton instance easily
 pub_c = Publisher_Container()
@@ -64,7 +65,9 @@ class MQTTCC:
         return [tmin, fmin]
 
     def mqttcc_algo(self):
+        config = ConfigUtils._instance
         # add "end algorithm" boolean 
+        endAlgo = False
         while len(self._experiment_timeline.keys()) > 0:
             [newTask, newTaskTimeStamp] = self.findNextTask()
             print("topic ", newTask, " time ", newTaskTimeStamp)
@@ -87,9 +90,14 @@ class MQTTCC:
                     EincMin = Einc
                 if (Enew >= pub_c._devices._units[deviceMac]._battery):
                     print("device reduced to 0 for observation periods >= ", constants.ConfigUtils._instance.OBSERVATION_PERIOD_MILISEC)
-                    # TODO: save the total for (battery - consumption) like simulator.py that includes all other experiment configs
-                        # in metrics, only consider average consumption per device
-                    # end algorithm 
+                    print("last time = ",newTaskTimeStamp)
+                    endAlgo = True
+                    # exit algorithm
+                if endAlgo:
+                    break
+            if endAlgo:
+                print("leaving mqtt_cc algo")
+                break
             if bestMac:
                 # After each allocation
                     # update the consumption
@@ -108,15 +116,3 @@ class MQTTCC:
                 pub_c._devices._units[bestMac].setExecutions(new_value=bestMac_new_executions)
                 # add the task's timestamp to the device
                 print("========")
-
-        # by this point, all timestamps have been allocated to devices according to RR
-        
-        # for each topic in topic_dict
-            # get tuple from system publishing 
-                # for each device mac in the topic capability
-                    # perform the energyIncrease() function per device
-                    # get best mac
-                # if bestmac
-                    # assign task to mac with addAssignment
-                    # update consumption with energy increase
-    
