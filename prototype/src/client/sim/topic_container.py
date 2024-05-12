@@ -23,7 +23,7 @@ class Topic_Container:
             print(f"setting default topic {self._default_num_topic}")
             numTopics = self._default_num_topic
         self._total_topics = numTopics
-        print(self._total_topics)
+        #print(self._total_topics)
         print(f"creating {numTopics} topics")
         self._topic_dict = dict()
         topic_list = self.generateTopics(numTopics)

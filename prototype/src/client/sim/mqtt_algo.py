@@ -93,7 +93,7 @@ class Standard:
         endAlgo = False
         while len(self._experiment_timeline.keys()) > 0:
             [newTask, newTaskTimeStamp] = self.findNextTask()
-            print("time = ", newTaskTimeStamp)
+            #print("time = ", newTaskTimeStamp)
             for deviceMac in self._system_capability[newTask][1]:
                 energyIncrease = pub_c._devices._units[deviceMac].energyIncrease(task_timestamp=newTaskTimeStamp)
                 if energyIncrease + pub_c._devices._units[deviceMac]._consumption >= pub_c._devices._units[deviceMac]._battery:
@@ -107,6 +107,7 @@ class Standard:
                     break
             if endAlgo:
                 print("leaving standard mqtt algo")
-                break
+                return newTaskTimeStamp
         print("done with standard algo")
+        return None
                   

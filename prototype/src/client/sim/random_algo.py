@@ -97,7 +97,8 @@ class Random:
                     pub_c._devices._units[publishing_mac].setExecutions(new_value=pub_c._devices._units[publishing_mac].effectiveExecutions())
                 if endAlgo:
                     print("leaving random algo")
-                    break
+                    return newTaskTimeStamp
             print("done with random algo")
+            return None
 
 

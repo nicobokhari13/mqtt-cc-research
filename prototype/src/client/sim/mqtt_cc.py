@@ -70,7 +70,7 @@ class MQTTCC:
         endAlgo = False
         while len(self._experiment_timeline.keys()) > 0:
             [newTask, newTaskTimeStamp] = self.findNextTask()
-            print("topic ", newTask, " time ", newTaskTimeStamp)
+            #print("topic ", newTask, " time ", newTaskTimeStamp)
             Emin = -1
             Einc = None
             EincMin = None
@@ -78,7 +78,7 @@ class MQTTCC:
             Eratio = None
             bestMac = None
             for deviceMac in self._system_capability[newTask][1]:
-                print("\t devicemac = ", deviceMac)
+                #print("\t devicemac = ", deviceMac)
                 # for each device capable of publishing to newTask
                 # calculate energy increase from adding the new task
                 Einc = pub_c._devices._units[deviceMac].energyIncrease(newTaskTimeStamp)
@@ -89,7 +89,7 @@ class MQTTCC:
                     Emin = Eratio 
                     EincMin = Einc
                 if (Enew >= pub_c._devices._units[deviceMac]._battery):
-                    print("device reduced to 0 for observation periods >= ", constants.ConfigUtils._instance.OBSERVATION_PERIOD_MILISEC)
+                    #print("device reduced to 0 for observation periods >= ", constants.ConfigUtils._instance.OBSERVATION_PERIOD_MILISEC)
                     print("last time = ",newTaskTimeStamp)
                     endAlgo = True
                     # exit algorithm
@@ -97,7 +97,7 @@ class MQTTCC:
                     break
             if endAlgo:
                 print("leaving mqtt_cc algo")
-                break
+                return newTaskTimeStamp
             if bestMac:
                 # After each allocation
                     # update the consumption
@@ -105,7 +105,7 @@ class MQTTCC:
                     # update the number of executions since efficient energy index depends on executions
                 # if the device is the best for the new task
                 # assign it to the device
-                print("best mac = ", bestMac)
+                #print("best mac = ", bestMac)
                 #print("device increase = ", EincMin)
                 #pub_c._devices._units[bestMac].addAssignment(added_topic=newTask, added_qos=topic_c._topic_dict[newTask])
                 # add the consumption estimate from mqttcc algo
@@ -115,4 +115,5 @@ class MQTTCC:
                 bestMac_new_executions = pub_c._devices._units[bestMac].effectiveExecutions()
                 pub_c._devices._units[bestMac].setExecutions(new_value=bestMac_new_executions)
                 # add the task's timestamp to the device
-                print("========")
+                #print("========")
+        return None
