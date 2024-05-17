@@ -70,7 +70,7 @@ class MQTTCC:
         endAlgo = False
         while len(self._experiment_timeline.keys()) > 0:
             [newTask, newTaskTimeStamp] = self.findNextTask()
-            #print("topic ", newTask, " time ", newTaskTimeStamp)
+            print("topic ", newTask, " time ", newTaskTimeStamp)
             Emin = -1
             Einc = None
             EincMin = None
