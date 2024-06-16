@@ -63,7 +63,8 @@ class MQTTCC:
             del self._experiment_timeline[tmin]
         
         return [tmin, fmin]
-
+    
+    # implementation of MQTT-EES task allocation algorithm
     def mqttcc_algo(self):
         config = ConfigUtils._instance
         # add "end algorithm" boolean 
@@ -78,7 +79,6 @@ class MQTTCC:
             Eratio = None
             bestMac = None
             for deviceMac in self._system_capability[newTask][1]:
-                #print("\t devicemac = ", deviceMac)
                 # for each device capable of publishing to newTask
                 # calculate energy increase from adding the new task
                 Einc = pub_c._devices._units[deviceMac].energyIncrease(newTaskTimeStamp)
@@ -89,7 +89,6 @@ class MQTTCC:
                     Emin = Eratio 
                     EincMin = Einc
                 if (Enew >= pub_c._devices._units[deviceMac]._battery):
-                    #print("device reduced to 0 for observation periods >= ", constants.ConfigUtils._instance.OBSERVATION_PERIOD_MILISEC)
                     print("last time = ",newTaskTimeStamp)
                     endAlgo = True
                     # exit algorithm
@@ -105,9 +104,6 @@ class MQTTCC:
                     # update the number of executions since efficient energy index depends on executions
                 # if the device is the best for the new task
                 # assign it to the device
-                #print("best mac = ", bestMac)
-                #print("device increase = ", EincMin)
-                #pub_c._devices._units[bestMac].addAssignment(added_topic=newTask, added_qos=topic_c._topic_dict[newTask])
                 # add the consumption estimate from mqttcc algo
                 pub_c._devices._units[bestMac].updateConsumption(EincMin)
                 # update number of executions
@@ -115,5 +111,4 @@ class MQTTCC:
                 bestMac_new_executions = pub_c._devices._units[bestMac].effectiveExecutions()
                 pub_c._devices._units[bestMac].setExecutions(new_value=bestMac_new_executions)
                 # add the task's timestamp to the device
-                #print("========")
         return None

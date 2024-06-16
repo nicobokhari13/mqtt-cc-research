@@ -74,12 +74,8 @@ class Random:
             config = ConfigUtils._instance
             endAlgo = False
             while len(self._experiment_timeline.keys()) > 0:
-                #print("=============")
-                #print(self._system_capability)
                 [newTask, newTaskTimeStamp] = self.findNextTask()
-                #print([newTask, newTaskTimeStamp])
                 # if the index of the publishing device is -1, or the index is at the end of the list
-                #print("index = ", self._system_capability[newTask][0])
 
                 # get a random index in system_capability[topic][1]
                 random_index = random.randrange(start=0, stop=len(self._system_capability[newTask][1]))
@@ -87,7 +83,7 @@ class Random:
                 publishing_mac = self._system_capability[newTask][1][random_index]
                 energyIncrease = pub_c._devices._units[publishing_mac].energyIncrease(task_timestamp=newTaskTimeStamp)
                 if energyIncrease + pub_c._devices._units[publishing_mac]._consumption >= pub_c._devices._units[publishing_mac]._battery:
-                    # save the current state
+                    # save the system shut down time
                     print("last time = ",newTaskTimeStamp)
                     endAlgo = True
                     # exit algorithm

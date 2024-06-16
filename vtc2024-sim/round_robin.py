@@ -70,12 +70,8 @@ class RR:
 
     def rr_algo(self):
             while len(self._experiment_timeline.keys()) > 0:
-                #print("=============")
-                #print(self._system_capability)
                 [newTask, newTaskTimeStamp] = self.findNextTask()
-                #print([newTask, newTaskTimeStamp])
                 # if the index of the publishing device is -1, or the index is at the end of the list
-                #print("index = ", self._system_capability[newTask][0])
                 if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >= len(self._system_capability[newTask][1])):
                     # set the index to the first publisher
                     self._system_capability[newTask][0] = 0
@@ -85,11 +81,4 @@ class RR:
                 pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
             # by this point, all timestamps have been allocated to devices according to RR
             print("done with rr algo")
-            # while len(timeline.keys()) > 0
-            # [newTask, newTaskTimeStamp] = findNextTask()
-            # get tuple for topic = newTask in system capability
-                # if tuple[0] = None or tuple[0] + 1 > len(tuple[1]), set to 0
-                # else, tuple[0]+=1
-                # get mac from list tuple[1] at index tuple[0]
-                # add timestamp to device
 

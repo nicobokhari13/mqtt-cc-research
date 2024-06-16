@@ -94,43 +94,8 @@ class Processing_Unit:
 
     def updateConsumption(self, energy_increase):
         self._consumption+=energy_increase
-        #print("consumption = ", self._consumption)
 
-    # Performed to acquire device's total energy consumption from self._sense_timestamp
-    # also used by MQTT-CC to calculate executions as tasks are added
-    # def effectiveExecutions(self, new_task_timestamp = None):
-    #     threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
-    #     # all the times in which the device must communicate, including those within the same execution group
-    #     timestamp_set = list(self._sense_timestamp)
-    #     if new_task_timestamp:
-    #         timestamp_set.append(new_task_timestamp)
-    #     if not timestamp_set:
-    #         return 0
-    #     timestamp_set = set(timestamp_set) # removes repeated timestamps (tasks that automatically communicate at the same time)
-    #     timestamp_set = list(timestamp_set)
-    #     timestamp_set.sort() # sort ascending order
-    #     execution_group = []
-    #     group_min = None
-    #     num_executions = 0
-    #     for i in range(len(timestamp_set)): # this finds if the timestamps occur within the same execution
-    #         if i == 0:
-    #             execution_group.append(timestamp_set[i])
-    #             group_min = timestamp_set[i]
-    #             #print("starting new execution")
-    #         else:
-    #             if abs(timestamp_set[i] - group_min) < threshold:
-    #                 execution_group.append(timestamp_set[i])
-    #             else:
-    #                 num_executions+=1
-    #                 execution_group.clear()
-    #                 execution_group.append(timestamp_set[i])
-    #                 group_min = timestamp_set[i]
-    #                 #print("timestamp not in the same execution, resetting")
-    #     if len(execution_group):
-    #         num_executions+=1
-    #     print(f"num execution = {num_executions}")
-
-    #     return num_executions
+    # MQTT-EES Effective Executions Algo
     def effectiveExecutions(self, new_task_timestamp = None):
         threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
         time_stamps = list(self._sense_timestamp)
@@ -145,57 +110,12 @@ class Processing_Unit:
             if time >= last_execution_end + threshold:
                 effective_executions+=1
                 last_execution_end = time
-        #print("executions = ", effective_executions)
         return effective_executions
-    # # Performed for MQTT-CC only
-    # def calculateExecutions(self, new_task_freq = None):
-    #     threshold = Devices._instance.CONCURRENCY_THRESHOLD_MILISEC
-    #     all_freqs = deepcopy(list(self._assignments.values()))
-    #     if new_task_freq:
-    #         all_freqs.append(new_task_freq)
-    #     if not all_freqs:
-    #         # if no frequencies, there are no executions
-    #         return 0
-    #     freq_multiples = set(all_freqs)
-    #     execution_group = []
-    #     group_min = None
-    #     num_executions = 0
-    #     multiplier = 1
 
-    #     for freq in all_freqs:
-    #         multiple = freq * multiplier
-    #         while multiple < Devices._instance.OBSERVATION_PERIOD_MILISEC:
-    #             freq_multiples.add(multiple)
-    #             multiplier+=1
-    #             multiple = freq * multiplier
-    #         multiple = 1
-    #     freq_multiples = list(freq_multiples) 
-    #     freq_multiples.sort()
-    #     for i in range(len(freq_multiples)):
-    #         if i == 0:
-    #             execution_group.append(freq_multiples[i])
-    #             group_min = freq_multiples[i]
-    #         else:
-    #             if abs(freq_multiples[i] - group_min) < threshold:
-    #                 execution_group.append(freq_multiples[i])
-    #             else:
-    #                 num_executions+=1
-    #                 execution_group.clear()
-    #                 execution_group.append(freq_multiples[i])
-    #                 group_min = freq_multiples[i]
-    #     if len(execution_group):
-    #         num_executions+=1
-    #     #print(f"device mac = {self._device_mac}")
-    #     #print(f"num execution = {num_executions}")
-
-    #     return num_executions
-
-    # Performed by MQTT-EES and maxBattery 
+    # MQTT-EES Energy Increase Algo
     def energyIncrease(self, task_timestamp):
         newExecutions = self.effectiveExecutions(new_task_timestamp=task_timestamp)
         changeInExecutions = newExecutions - self._num_executions_per_hour
-        # the change in the number of sensing events = 1
-        # change in the number of communication events is the change in effective executions
         energyUsed = Devices._instance.SENSING_ENERGY + changeInExecutions * Devices._instance.COMMUNICATION_ENERGY
         return energyUsed
 
@@ -212,7 +132,7 @@ class Publisher_Container:
         self._devices = Devices()
         self._total_devices = 0
         pass
-    # PERFORM THIS FUNCTION FIRST BEFORE ANYTHING ELSE
+
     def setDefaultNumPubs(self, default_num_pubs):
         self._default_num_pubs = default_num_pubs
 
@@ -232,7 +152,6 @@ class Publisher_Container:
         for i in range(numPubs):
             name = f"dev00{i}"
             pub_macs.append(name)
-        #print(pub_macs)
         return pub_macs
 
     def setupDevices(self, num_pubs):

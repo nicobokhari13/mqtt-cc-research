@@ -1,3 +1,4 @@
+# D
 from pub_container import Publisher_Container
 from topic_container import Topic_Container
 from subscriber_container import Subscriber_Container
@@ -22,23 +23,28 @@ class MB:
         pass
 
     def copyOfSystemCapability(self, capability):
-        # a dictionary with each topic's capable devices for publishing to t
+        # a dictionary with each topic's capable devices for publishing to 
+        # key = topic, value = list of deviceMacs
         self._system_capability = deepcopy(capability)
 
     def copyOfTopicTimeStamps(self):
         # a dictionary with each topic's sense execution timestamp < T observation period
             # topic/1: [10,20,30...]
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
-
+        
     def saveDevicesTotalEnergyConsumed(self, MB_energy_consumption):
-        self._total_energy_consumption+= MB_energy_consumption
+        # total energy consumption = system's overall energy consumption
+        # where MB_energy_consumption is the energy consumed by a device
+        # which was allocated a sensing task because it had the maximum battery
+        # of all devices in the system at the time of allocation
+        self._total_energy_consumption += MB_energy_consumption
 
     def resetTotalConsumption(self):
         self._total_energy_consumption = 0
         
     def findNextTask(self):
-        fmin = -1
-        tmin = None
+        fmin = -1 # minimum timestamp occuring in the future
+        tmin = None # topic published to at fmin timestamp
         for topic in topic_c._topic_dict.keys():
             # get the first timestamp for that topic
             if topic in self._experiment_timeline.keys():
@@ -58,24 +64,11 @@ class MB:
             del self._experiment_timeline[tmin]
         
         return [tmin, fmin]
-        # fmin = -1
-        # tmin = None
-        # for each topic in topic dict keys
-            # if fmin < 0 or fi < fmin
-                # tmin = ti
-                # fmin = fi
-        # pop fi from ti's timestamp list
-        # if ti's timestamp list is empty, remove ti from the keys
-        # return [ti, fi]
 
     def rr_algo(self):
             while len(self._experiment_timeline.keys()) > 0:
-                #print("=============")
-                #print(self._system_capability)
                 [newTask, newTaskTimeStamp] = self.findNextTask()
-                #print([newTask, newTaskTimeStamp])
                 # if the index of the publishing device is -1, or the index is at the end of the list
-                #print("index = ", self._system_capability[newTask][0])
                 if (self._system_capability[newTask][0] < 0) or (self._system_capability[newTask][0] + 1 >= len(self._system_capability[newTask][1])):
                     # set the index to the first publisher
                     self._system_capability[newTask][0] = 0
@@ -85,17 +78,13 @@ class MB:
                 pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
             # by this point, all timestamps have been allocated to devices according to RR
             print("done with rr algo")
-            # while len(timeline.keys()) > 0
-            # [newTask, newTaskTimeStamp] = findNextTask()
-            # get tuple for topic = newTask in system capability
-                # if tuple[0] = None or tuple[0] + 1 > len(tuple[1]), set to 0
-                # else, tuple[0]+=1
-                # get mac from list tuple[1] at index tuple[0]
-                # add timestamp to device
 
     def max_batt_algo(self):
+        # while there are still sensing tasks in the experiemnt timeline, 
         while len(self._experiment_timeline.keys()) > 0:
+            # get the next sensing task and the time to perform task
             [newTask, newTaskTimeStamp] = self.findNextTask()
+            # set bestMac as the first element
             bestMac = self._system_capability[newTask][1][0]
             maxBattery = pub_c._devices._units[bestMac]._battery - pub_c._devices._units[bestMac]._consumption
             for deviceMac in self._system_capability[newTask][1]:

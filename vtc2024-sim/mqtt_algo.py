@@ -61,46 +61,30 @@ class Standard:
             del self._experiment_timeline[tmin]
         
         return [tmin, fmin]
-        # fmin = -1
-        # tmin = None
-        # for each topic in topic dict keys
-            # if fmin < 0 or fi < fmin
-                # tmin = ti
-                # fmin = fi
-        # pop fi from ti's timestamp list
-        # if ti's timestamp list is empty, remove ti from the keys
-        # return [ti, fi]
-
-    def random_algo(self):
-            while len(self._experiment_timeline.keys()) > 0:
-                #print("=============")
-                #print(self._system_capability)
-                [newTask, newTaskTimeStamp] = self.findNextTask()
-                #print([newTask, newTaskTimeStamp])
-                # if the index of the publishing device is -1, or the index is at the end of the list
-                #print("index = ", self._system_capability[newTask][0])
-
-                # get a random index in system_capability[topic][1]
-                random_index = random.randrange(start=0, stop=len(self._system_capability[newTask][1]))
-                self._system_capability[newTask][0] = random_index
-                publishing_mac = self._system_capability[newTask][1][random_index]            
-                pub_c._devices._units[publishing_mac].addTimestamp(timestamp=newTaskTimeStamp)
-
-            print("done with random algo")
 
     def mqtt_algo(self):
         config = ConfigUtils._instance
         endAlgo = False
+        # while there are sensing tasks on the timeline
         while len(self._experiment_timeline.keys()) > 0:
+            # get the next topic to be published to, and the timestamp
             [newTask, newTaskTimeStamp] = self.findNextTask()
             print("time = ", newTaskTimeStamp)
             for deviceMac in self._system_capability[newTask][1]:
+                # for each device capable of performing the sensing_task
+                # model the energy increase resulting from adding the task to the device
                 energyIncrease = pub_c._devices._units[deviceMac].energyIncrease(task_timestamp=newTaskTimeStamp)
+
                 if energyIncrease + pub_c._devices._units[deviceMac]._consumption >= pub_c._devices._units[deviceMac]._battery:
+                    # if energy increase goes above device battery, 
+                    # end algorithm
                     endAlgo = True
                 else:
+                    # subtract energy consumption from device's battery
                     pub_c._devices._units[deviceMac].updateConsumption(energyIncrease)
+                    # add the timestamp the device performs the sensing task
                     pub_c._devices._units[deviceMac].addTimestamp(timestamp=newTaskTimeStamp)
+                    # re-calculate the number of effective executions the device now performs
                     pub_c._devices._units[deviceMac].setExecutions(new_value=pub_c._devices._units[deviceMac].effectiveExecutions())
                 if endAlgo:
                     print("leaving standard mqtt algo")
