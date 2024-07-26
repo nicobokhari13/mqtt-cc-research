@@ -2,6 +2,9 @@
 
 ## 7-25-24 Switch to Surface
 Thinkpad is in the repair shop. 
+**Only do vtc 2024 code, inform Song that the previous simulation and testbed code hasn't been documented or organized yet. **
+Ask Song about making a GitHub organization (for the Pervasive Computing Lab )
+
 - check paths used, update them
 - survey all files, removed commented out sections
 - comment each file + purpose of structures
