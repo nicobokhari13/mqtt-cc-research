@@ -1,5 +1,14 @@
 # To Do
 
+## 7-25-24 Switch to Surface
+Thinkpad is in the repair shop. 
+- check paths used, update them
+- survey all files, removed commented out sections
+- comment each file + purpose of structures
+  - for each structure, determine functions that modify or read to it
+- write README with running instructions
+- write SPEC on project specification, control flow and diagrams
+
 ## 5-10-24 Friday Planning
 - Read VTC draft entirely
 - Consider necessary figures for intro, system workflow

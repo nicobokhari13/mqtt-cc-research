@@ -1,6 +1,6 @@
-from pub_container import Publisher_Container
-from topic_container import Topic_Container
-from subscriber_container import Subscriber_Container
+from container.publisher import Publisher_Container
+from container.topic import Topic_Container
+from container.subscriber import Subscriber_Container
 from copy import deepcopy
 
 # to access the singleton instance easily
@@ -8,7 +8,7 @@ pub_c = Publisher_Container()
 sub_c = Subscriber_Container()
 topic_c = Topic_Container()
 
-class RR:
+class MB:
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -17,7 +17,7 @@ class RR:
         return cls._instance
     
     def __init__(self):
-        self._algo_name = "rr"
+        self._algo_name = "MB"
         self._total_energy_consumption = 0
         pass
 
@@ -30,8 +30,8 @@ class RR:
             # topic/1: [10,20,30...]
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
 
-    def saveDevicesTotalEnergyConsumed(self, round_energy_consumption):
-        self._total_energy_consumption+= round_energy_consumption
+    def saveDevicesTotalEnergyConsumed(self, MB_energy_consumption):
+        self._total_energy_consumption+= MB_energy_consumption
 
     def resetTotalConsumption(self):
         self._total_energy_consumption = 0
@@ -93,3 +93,34 @@ class RR:
                 # get mac from list tuple[1] at index tuple[0]
                 # add timestamp to device
 
+    def max_batt_algo(self):
+        while len(self._experiment_timeline.keys()) > 0:
+            [newTask, newTaskTimeStamp] = self.findNextTask()
+            bestMac = self._system_capability[newTask][1][0]
+            maxBattery = pub_c._devices._units[bestMac]._battery - pub_c._devices._units[bestMac]._consumption
+            for deviceMac in self._system_capability[newTask][1]:
+                macRemainingBattery = pub_c._devices._units[deviceMac]._battery - pub_c._devices._units[deviceMac]._consumption
+                if maxBattery < macRemainingBattery:
+                    bestMac = deviceMac
+                    maxBattery = macRemainingBattery
+            # bestMac should have the mac of the device with the maximum remaining battery
+
+            # update consumption with energy increase from adding timestamp
+            energy_consumed = pub_c._devices._units[bestMac].energyIncrease(task_timestamp=newTaskTimeStamp)
+            pub_c._devices._units[bestMac].updateConsumption(energy_increase=energy_consumed)
+            #add timestamp 
+            pub_c._devices._units[bestMac].addTimestamp(timestamp=newTaskTimeStamp)
+
+            # update number of executions since energyIncrease depends on change in executions
+            bestMac_new_executions = pub_c._devices._units[bestMac].effectiveExecutions()
+            pub_c._devices._units[bestMac].setExecutions(new_value=bestMac_new_executions)
+        print("done with max_batt_algo")
+            # set bestMac = first device in system capability of newTask
+            # maxBattery = bestMac.battery - bestMac.consumption
+            # loop through all macs in system capability of new Task
+                # if maxBattery < (mac.battery - mac.consumption):
+                    # bestMac = mac
+                    # maxBattery = mac.battery - mac.consumption
+            # pub_c.devices[bestMac].addtimestamp(newTaskTimestamp)
+            
+        # publishing mac is one where the publisher's capacity - consumption is maximum

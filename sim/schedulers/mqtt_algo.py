@@ -1,6 +1,6 @@
-from pub_container import Publisher_Container
-from topic_container import Topic_Container
-from subscriber_container import Subscriber_Container
+from container.publisher import Publisher_Container
+from container.topic import Topic_Container
+from container.subscriber import Subscriber_Container
 from copy import deepcopy
 import random 
 from constants import ConfigUtils

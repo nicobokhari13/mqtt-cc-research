@@ -1,6 +1,6 @@
-from pub_container import Publisher_Container
-from topic_container import Topic_Container
-from subscriber_container import Subscriber_Container
+from container.publisher import Publisher_Container
+from container.topic import Topic_Container
+from container.subscriber import Subscriber_Container
 from copy import deepcopy
 
 # to access the singleton instance easily
@@ -8,7 +8,7 @@ pub_c = Publisher_Container()
 sub_c = Subscriber_Container()
 topic_c = Topic_Container()
 
-class MT:
+class RR:
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -17,7 +17,7 @@ class MT:
         return cls._instance
     
     def __init__(self):
-        self._algo_name = "MT"
+        self._algo_name = "rr"
         self._total_energy_consumption = 0
         pass
 
@@ -30,8 +30,8 @@ class MT:
             # topic/1: [10,20,30...]
         self._experiment_timeline = deepcopy(topic_c._all_sense_timestamps)
 
-    def saveDevicesTotalEnergyConsumed(self, MT_energy_consumption):
-        self._total_energy_consumption+= MT_energy_consumption
+    def saveDevicesTotalEnergyConsumed(self, round_energy_consumption):
+        self._total_energy_consumption+= round_energy_consumption
 
     def resetTotalConsumption(self):
         self._total_energy_consumption = 0
@@ -93,26 +93,3 @@ class MT:
                 # get mac from list tuple[1] at index tuple[0]
                 # add timestamp to device
 
-    def min_task_algo(self):
-        while len(self._experiment_timeline.keys()) > 0:
-                #print("=============")
-                #print(self._system_capability)
-                [newTask, newTaskTimeStamp] = self.findNextTask()
-                bestMac = self._system_capability[newTask][1][0]
-                minTasks = len(pub_c._devices._units[bestMac]._sense_timestamp)
-                for mac in self._system_capability[newTask][1]:
-                    macNumTasks = len(pub_c._devices._units[mac]._sense_timestamp)
-                    if macNumTasks < minTasks:
-                        bestMac = mac
-                        minTasks = macNumTasks 
-                pub_c._devices._units[bestMac].addTimestamp(timestamp=newTaskTimeStamp)
-                
-        print("done with min_task_algo")
-                # set bestMac = first device in system capability of newTask
-                # minTask = len(bestMac.sense_timestamp)
-                # loop through all macs in system capability of new Task
-                    # if len(mac.sense_timestamp) < minTask:
-                        # bestMac = mac
-                        # minTask = len(mac.sense_timestamp)
-            # pub_c.devices[bestMac].addtimestamp(newTaskTimestamp)
-            # publishing mac is the one where the length of the sense_timestamp is minimum

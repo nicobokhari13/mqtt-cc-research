@@ -1,6 +1,6 @@
 from typing import Dict
 from copy import deepcopy
-from topic_container import Topic_Container
+from sim.container.topic import Topic_Container
 import random
 
 topic_c = Topic_Container()
