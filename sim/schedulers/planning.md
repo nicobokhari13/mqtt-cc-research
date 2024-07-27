@@ -7,6 +7,7 @@ Ask Song about making a GitHub organization (for the Pervasive Computing Lab )
 
 - check paths used, update them
 - survey all files, removed commented out sections
+- write issues
 - comment each file + purpose of structures
   - for each structure, determine functions that modify or read to it
 - write README with running instructions
