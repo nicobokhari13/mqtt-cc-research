@@ -6,12 +6,15 @@ from container.subscriber import Subscriber_Container
 import random
 import sys
 import csv
-from mqtt_cc import MQTTCC
+from schedulers.mqtt_cc import MQTTCC
 #from round_robin import RR
 # from max_batt import MB
 # from min_task import MT
-from random_algo import Random
-from mqtt_algo import Standard
+from schedulers.random_algo import Random
+from schedulers.mqtt_algo import Standard
+
+#------------------------------------------#
+
 
 config_file = sys.argv[1]
 last_msg = sys.argv[2]
@@ -48,6 +51,9 @@ topic_c.setObservationPeriod(period=configuration.OBSERVATION_PERIOD_MILISEC)
         # value = tuple (index of publishing device, [list of all capable devices])
 system_capability = {}
 
+#------------------------------------------#
+
+
 # Precondition: all the topic strings are created
 def createSystemCapability():
     capability = {topic: [-1, []] for topic in topic_c._topic_dict.keys()}
@@ -57,11 +63,17 @@ def createSystemCapability():
                 capability[topic][1].append(device._device_mac)
     return capability
 
+#------------------------------------------#
+
+
 def setup_exp_vary_pub():
     exp_num_pub = random.randint(3, configuration._max_pubs)
     topic_c.setupTopicStrings(numTopics=0)
     sub_c.setUpLatQoS(num_subs=0)
     pub_c.setupDevices(num_pubs=exp_num_pub)
+
+#------------------------------------------#
+
 
 def setup_exp_vary_sub():
     exp_num_subs = random.randint(3, configuration._max_subs)
@@ -69,16 +81,25 @@ def setup_exp_vary_sub():
     sub_c.setUpLatQoS(num_subs=exp_num_subs)
     pub_c.setupDevices(num_pubs=0)
 
+#------------------------------------------#
+
+
 def setup_exp_vary_topic():
     exp_num_topics = random.randint(3, configuration._max_topics)
     topic_c.setupTopicStrings(numTopics=exp_num_topics)
     sub_c.setUpLatQoS(num_subs=0)
     pub_c.setupDevices(num_pubs=0)
 
+
+#------------------------------------------#
+
 def setup_default():
     topic_c.setupTopicStrings(numTopics=0)
     sub_c.setUpLatQoS(num_subs=0)
     pub_c.setupDevices(num_pubs=0)
+
+#------------------------------------------#
+
 
 # performed once before the rounds start
 def experiment_setup():
@@ -104,6 +125,9 @@ def experiment_setup():
     system_capability = createSystemCapability()
     #print(system_capability)
 
+#------------------------------------------#
+
+
 # CSV Format for all files
     # algo_name, num_round, num_topic, num_pubs, num_subs, total_energy_consumption
 def saveResults(algo_name:str, num_round, num_topic, num_pubs, num_subs, total_energy_consumption, time_end):
@@ -124,11 +148,17 @@ def saveResults(algo_name:str, num_round, num_topic, num_pubs, num_subs, total_e
         writer = csv.writer(file)
         writer.writerow(data)
 
+#------------------------------------------#
+
+
 def getConsumption():
     totalConsumption = 0
     for deviceMac in pub_c._devices._units.keys():
         totalConsumption += pub_c._devices._units[deviceMac]._consumption
     return totalConsumption
+
+#------------------------------------------#
+
 
 def main():
     # create algo objects

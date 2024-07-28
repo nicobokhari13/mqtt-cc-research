@@ -1,17 +1,24 @@
 import configparser
 
 class ConfigUtils:
+    ### Singleton Instance
     _instance = None
+    
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super().__new__(cls, *args, **kwargs)
         return cls._instance
-    
+
     def __init__(self):
         self._config = configparser.ConfigParser()
 
+#------------------------------------------#
+
+
     # PRECONDITION: ConfigUtils already initialized
-    # POSTCONDITION: All variables in the Singleton instance are set
+    # PARAMETERS:
+        # configFilePath : a valid file path in the project directory ./config
+    # POSTCONDITION: All of instance's variables set to constants defined in parameter file path
     def setConstants(self, configFilePath):
         self._CONFIG_FILE_PATH = configFilePath
         self._config.read(self._CONFIG_FILE_PATH)
