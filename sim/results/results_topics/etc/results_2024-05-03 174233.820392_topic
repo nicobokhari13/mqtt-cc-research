@@ -1,0 +1,22 @@
+rr,1,115.029
+cc,1,92.34400000000001
+[CONSTANTS]
+threshold_ms = 250
+lat_qos_min_ms = 1000
+lat_qos_max_ms = 5000
+sense_energy = 0.0005
+comm_energy = 0.005
+num_rounds = 1
+
+[VARS]
+vary_pubs = false
+vary_subs = false
+vary_topics = true
+max_pubs = 12
+max_subs = 12
+max_topics = 12
+
+[DEFAULTS]
+def_num_pubs = 8
+def_num_subs = 8
+def_num_topics = 8
